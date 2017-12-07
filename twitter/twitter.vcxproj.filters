@@ -13,33 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\modelo">
+      <UniqueIdentifier>{cb21aaa2-2583-40d6-a8d2-88856b933b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\modelo">
+      <UniqueIdentifier>{dbb38e86-34d4-43b8-891e-676e40f3f21e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\comunicacion">
+      <UniqueIdentifier>{d92527bb-bc48-4d51-bdc2-e48553a9acd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\comunicacion">
+      <UniqueIdentifier>{597df3d6-c92d-4b76-963f-f666f30958c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ConsumidorAPI.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="include\Aplicacion.h">
+      <Filter>Archivos de encabezado\modelo</Filter>
+    </ClInclude>
     <ClInclude Include="include\LineaDeTiempo.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\modelo</Filter>
     </ClInclude>
     <ClInclude Include="include\Tweet.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\modelo</Filter>
     </ClInclude>
     <ClInclude Include="include\Usuario.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\modelo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SolicitudUltimosTweets.h">
+      <Filter>Archivos de encabezado\comunicacion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ConsumidorAPI.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="source\Aplicacion.cpp">
+      <Filter>Archivos de código fuente\modelo</Filter>
+    </ClCompile>
     <ClCompile Include="source\LineaDeTiempo.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\modelo</Filter>
     </ClCompile>
     <ClCompile Include="source\Tweet.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\modelo</Filter>
     </ClCompile>
     <ClCompile Include="source\Usuario.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\modelo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SolicitudUltimosTweets.cpp">
+      <Filter>Archivos de código fuente\comunicacion</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

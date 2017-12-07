@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -113,12 +113,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Aplicacion.h" />
     <ClInclude Include="include\ConsumidorAPI.h" />
     <ClInclude Include="include\LineaDeTiempo.h" />
     <ClInclude Include="include\Tweet.h" />
     <ClInclude Include="include\Usuario.h" />
+    <ClInclude Include="include\SolicitudUltimosTweets.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\SolicitudUltimosTweets.cpp" />
+    <ClCompile Include="source\Aplicacion.cpp" />
     <ClCompile Include="source\ConsumidorAPI.cpp" />
     <ClCompile Include="source\LineaDeTiempo.cpp" />
     <ClCompile Include="source\Tweet.cpp" />

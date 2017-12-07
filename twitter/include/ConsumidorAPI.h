@@ -2,6 +2,7 @@
 
 // casablanca wrapper
 #include <casablanca_wrapper/include/HTTPCliente.h>
+#include <casablanca_wrapper/include/HTTPSolicitud.h>
 
 // protocolos
 #include <protocolos/include/OAuth2Consumidor.h>
@@ -24,6 +25,8 @@ public:
     // METODOS
 
     bool obtenerTokenDeAcceso();
+
+    herramientas::cpprest::HTTPRespuesta * realizarSolicitud(herramientas::cpprest::HTTPSolicitud * solicitud);
 
     // CONSULTAS
 
