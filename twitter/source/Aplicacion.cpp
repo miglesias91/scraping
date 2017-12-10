@@ -3,6 +3,7 @@
 // twitter
 #include <twitter/include/SolicitudUltimosTweets.h>
 
+using namespace scraping::twitter::modelo;
 using namespace scraping::twitter;
 using namespace herramientas;
 
@@ -19,11 +20,20 @@ Aplicacion::~Aplicacion()
     }
 }
 
-std::vector<scraping::twitter::modelo::Tweet> scraping::twitter::Aplicacion::leerUltimosTweets(scraping::twitter::modelo::Usuario * usuario, unsigned int cantidad_de_tweets)
+std::vector<Tweet> Aplicacion::leerUltimosTweets(Usuario * usuario, unsigned int cantidad_de_tweets)
 {
     comunicacion::SolicitudUltimosTweets solicitud_ultimos_tweets(usuario, cantidad_de_tweets);
 
     cpprest::HTTPRespuesta * respuetas_con_tweets = this->consumidor_api->realizarSolicitud(&solicitud_ultimos_tweets);
 
-    return std::vector<scraping::twitter::modelo::Tweet>();
+    std::vector<utiles::Json*> tweets_json = respuetas_con_tweets->getJson()->getAtributoArrayJson();
+
+    std::vector<modelo::Tweet> tweets;
+    for (std::vector<utiles::Json*>::iterator it = tweets_json.begin(); it != tweets_json.end(); it++)
+    {
+        Tweet nuevo_tweet(*it);
+        tweets.push_back(nuevo_tweet);
+    }
+
+    return tweets;
 }

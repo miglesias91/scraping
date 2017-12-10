@@ -9,11 +9,13 @@ namespace scraping
 {
 namespace twitter
 {
-        
+namespace modelo
+{
+
 class Aplicacion
 {
 public:
-    Aplicacion(ConsumidorAPI * consumidor_api = NULL);
+    Aplicacion(scraping::twitter::ConsumidorAPI * consumidor_api = NULL);
     virtual ~Aplicacion();
 
     // GETTERS
@@ -22,13 +24,14 @@ public:
 
     // METODOS
 
-    std::vector<scraping::twitter::modelo::Tweet> leerUltimosTweets(scraping::twitter::modelo::Usuario * usuario, unsigned int cantidad_de_tweets = 5);
+    std::vector<Tweet> leerUltimosTweets(Usuario * usuario, unsigned int cantidad_de_tweets = 5);
 
 private:
 
-    ConsumidorAPI * consumidor_api;
+    scraping::twitter::ConsumidorAPI * consumidor_api;
 };
 
+};
 };
 };
 
