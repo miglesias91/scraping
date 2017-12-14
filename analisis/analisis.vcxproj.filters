@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de código fuente\tecnicas">
+      <UniqueIdentifier>{4b864447-7b8e-4959-a346-94b5d8319592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\tecnicas">
+      <UniqueIdentifier>{7d3427ab-2545-4409-8d56-c3c7337fda86}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Analizador.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CantidadDeApariciones.h">
+      <Filter>Archivos de encabezado\tecnicas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FuerzaEnNoticia.h">
+      <Filter>Archivos de encabezado\tecnicas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IAnalizable.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ITecnica.h">
+      <Filter>Archivos de encabezado\tecnicas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Resultado.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sentimiento.h">
+      <Filter>Archivos de encabezado\tecnicas</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Analizador.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CantidadDeApariciones.cpp">
+      <Filter>Archivos de código fuente\tecnicas</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FuerzaEnNoticia.cpp">
+      <Filter>Archivos de código fuente\tecnicas</Filter>
+    </ClCompile>
+    <ClCompile Include="source\IAnalizable.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ITecnica.cpp">
+      <Filter>Archivos de código fuente\tecnicas</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Resultado.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sentimiento.cpp">
+      <Filter>Archivos de código fuente\tecnicas</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
