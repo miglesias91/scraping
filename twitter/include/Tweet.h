@@ -64,6 +64,8 @@ private:
 
     herramientas::utiles::Fecha fecha_creacion;
 
+    // esta en formato UTF8 xq obtiene el valor del Json (rapidjson) que contiene.
+    // (ir al test 'GettersYSettersCodificaciones' de 'herramientas_desarrollo' para ver como funciona.
     std::string texto;
 
     unsigned long long int id_usuario;

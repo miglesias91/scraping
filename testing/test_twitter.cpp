@@ -18,16 +18,16 @@ using namespace scraping::twitter;
 
 TEST(ScrapingTwitter, obtenerUltimosTweets)
 {
-    scraping::twitter::ConsumidorAPI * consumidor_api_twitter = new scraping::twitter::ConsumidorAPI("aXPpXInb16k0jKIswOYuUS3ly", "MhuDBpN9EtnafrIUHvJEbleJ3WKiFCSBIulwRVNvZTWoXGs2eV");
-    consumidor_api_twitter->obtenerTokenDeAcceso();
+    //scraping::twitter::ConsumidorAPI * consumidor_api_twitter = new scraping::twitter::ConsumidorAPI("aXPpXInb16k0jKIswOYuUS3ly", "MhuDBpN9EtnafrIUHvJEbleJ3WKiFCSBIulwRVNvZTWoXGs2eV");
+    //consumidor_api_twitter->obtenerTokenDeAcceso();
 
-    scraping::twitter::modelo::Aplicacion app(consumidor_api_twitter);
+    //scraping::twitter::modelo::Aplicacion app(consumidor_api_twitter);
 
-    scraping::twitter::modelo::Usuario clarin("clarincom");
+    //scraping::twitter::modelo::Usuario clarin("clarincom");
 
-    std::vector<scraping::twitter::modelo::Tweet> tweets = app.leerUltimosTweets(&clarin);
+    //std::vector<scraping::twitter::modelo::Tweet> tweets = app.leerUltimosTweets(&clarin);
 
-    ASSERT_EQ(true, true);
+    //ASSERT_EQ(true, true);
 }
 
 TEST(ScrapingTwitter, parsearTweetsCorrectamente)
@@ -51,14 +51,26 @@ TEST(ScrapingTwitter, parsearTweetsCorrectamente)
         tweets.push_back(nuevo_tweet);
     }
 
-    std::string texto_correcto_tweet_1 = "Jerusal\u00e9n: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza\u2026 https:\/\/t.co\/eqSJm9AkQB";
+    unsigned long long int id_parseado_tweet_1 = tweets[0]->getId();
     std::string texto_parseado_tweet_1 = tweets[0]->getTexto();
-    std::string texto_parseado_tweet_1_convertido = herramientas::utiles::Conversiones::utf82iso8859_1(texto_parseado_tweet_1);
+    herramientas::utiles::Fecha fecha_de_creacion_parseada_tweet_1 = tweets[0]->getFechaCreacion();
+    unsigned long long int id_usuario_parseado_tweet_1 = tweets[0]->getIdUsuario();
+    unsigned int tamanio_vector_hashtags_parseado_tweet_1 = tweets[0] ->getHashtags().size();
+
+    unsigned long long int id_correcto_tweet_1 = 939231521441046528;
+    std::string texto_correcto_tweet_1 = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https://t.co/eqSJm9AkQB";
+    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(8, 12, 2017);
+    unsigned long long int id_usuario_correcto_tweet_1 = 8105922;
+    unsigned int tamanio_vector_hashtags_correcto_tweet_1 = 0;
 
     for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
     {
         delete *it;
     }
 
-    ASSERT_EQ(texto_correcto_tweet_1.c_str(), texto_parseado_tweet_1.c_str());
+    ASSERT_EQ(id_correcto_tweet_1, id_parseado_tweet_1);
+    ASSERT_STREQ(texto_correcto_tweet_1.c_str(), texto_parseado_tweet_1.c_str());
+    ASSERT_EQ(true, fecha_de_creacion_correcta_tweet_1 == fecha_de_creacion_parseada_tweet_1);
+    ASSERT_EQ(id_usuario_correcto_tweet_1, id_usuario_parseado_tweet_1);
+    ASSERT_EQ(tamanio_vector_hashtags_correcto_tweet_1, tamanio_vector_hashtags_parseado_tweet_1);
 }

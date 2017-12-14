@@ -15,9 +15,7 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : herramientas::utiles::IC
 {
     unsigned long long int id = this->getJson()->getAtributoValorUint("id");
     std::string fecha_creacion_formato_twitter = this->getJson()->getAtributoValorString("created_at");
-    std::string texto_en_utf8 = this->getJson()->getAtributoValorString("text");
-    std::string texto = herramientas::utiles::Conversiones::utf82iso8859_1(texto_en_utf8);
-
+    std::string texto = this->getJson()->getAtributoValorString("text");
 
     herramientas::utiles::Json * user_json = this->getJson()->getAtributoValorJson("user");
     unsigned long long int id_usuario = user_json->getAtributoValorUint("id");
