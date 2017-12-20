@@ -9,3 +9,11 @@ CantidadDeApariciones::CantidadDeApariciones()
 CantidadDeApariciones::~CantidadDeApariciones()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

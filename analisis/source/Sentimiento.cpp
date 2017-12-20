@@ -9,3 +9,11 @@ Sentimiento::Sentimiento()
 Sentimiento::~Sentimiento()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

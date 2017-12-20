@@ -12,6 +12,14 @@ class Sentimiento
 public:
     Sentimiento();
     virtual ~Sentimiento();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };

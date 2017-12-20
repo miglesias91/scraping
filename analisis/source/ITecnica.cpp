@@ -9,3 +9,11 @@ ITecnica::ITecnica()
 ITecnica::~ITecnica()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

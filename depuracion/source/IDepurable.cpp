@@ -9,3 +9,11 @@ IDepurable::IDepurable()
 IDepurable::~IDepurable()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

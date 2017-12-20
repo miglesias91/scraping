@@ -12,6 +12,14 @@ class FuerzaEnNoticia
 public:
     FuerzaEnNoticia();
     virtual ~FuerzaEnNoticia();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };

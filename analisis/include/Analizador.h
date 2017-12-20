@@ -10,6 +10,14 @@ class Analizador
 public:
     Analizador();
     virtual ~Analizador();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };

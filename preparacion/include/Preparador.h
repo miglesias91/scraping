@@ -10,6 +10,14 @@ class Preparador
 public:
     Preparador();
     virtual ~Preparador();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };

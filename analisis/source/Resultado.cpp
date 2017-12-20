@@ -9,3 +9,11 @@ Resultado::Resultado()
 Resultado::~Resultado()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

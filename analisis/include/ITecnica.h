@@ -10,6 +10,14 @@ class ITecnica
 public:
     ITecnica();
     virtual ~ITecnica();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };

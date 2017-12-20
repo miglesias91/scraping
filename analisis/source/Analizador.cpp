@@ -9,3 +9,12 @@ Analizador::Analizador()
 Analizador::~Analizador()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS
+

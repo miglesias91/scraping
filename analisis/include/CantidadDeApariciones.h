@@ -12,6 +12,14 @@ class CantidadDeApariciones
 public:
     CantidadDeApariciones();
     virtual ~CantidadDeApariciones();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };

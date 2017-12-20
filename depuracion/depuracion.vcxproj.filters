@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\mapeo">
+      <UniqueIdentifier>{f794a179-020b-427f-8c60-47c0044755a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\mapeo">
+      <UniqueIdentifier>{49a181e6-31c6-40dc-8551-a8977a65aca2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Depurador.h">
@@ -21,6 +27,15 @@
     <ClInclude Include="include\IDepurable.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="include\ContenidoDepurado.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Registro.h">
+      <Filter>Archivos de encabezado\mapeo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MapaUTF8.h">
+      <Filter>Archivos de encabezado\mapeo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Depurador.cpp">
@@ -28,6 +43,15 @@
     </ClCompile>
     <ClCompile Include="source\IDepurable.cpp">
       <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ContenidoDepurado.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Registro.cpp">
+      <Filter>Archivos de código fuente\mapeo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MapaUTF8.cpp">
+      <Filter>Archivos de código fuente\mapeo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

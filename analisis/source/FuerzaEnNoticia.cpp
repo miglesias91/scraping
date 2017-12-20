@@ -9,3 +9,11 @@ FuerzaEnNoticia::FuerzaEnNoticia()
 FuerzaEnNoticia::~FuerzaEnNoticia()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

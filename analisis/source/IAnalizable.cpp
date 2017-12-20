@@ -9,3 +9,11 @@ IAnalizable::IAnalizable()
 IAnalizable::~IAnalizable()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

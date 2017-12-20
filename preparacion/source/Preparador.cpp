@@ -9,3 +9,11 @@ Preparador::Preparador()
 Preparador::~Preparador()
 {
 }
+
+// GETTERS
+
+// SETTERS
+
+// METODOS
+
+// CONSULTAS

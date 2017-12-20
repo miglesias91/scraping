@@ -8,15 +8,13 @@ namespace scraping
 namespace depuracion
 {
 
-class IDepurable
+class ContenidoDepurado
 {
 public:
-    IDepurable();
-    virtual ~IDepurable();
+    ContenidoDepurado(std::string texto_depurado = "");
+    virtual ~ContenidoDepurado();
 
     // GETTERS
-    
-    virtual std::string getTextoDepurable() = 0;
 
     // SETTERS
 
@@ -24,6 +22,9 @@ public:
 
     // CONSULTAS
 
+private:
+
+    std::string texto_depurado;
 };
 
 };

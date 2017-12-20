@@ -10,6 +10,14 @@ class IAnalizable
 public:
     IAnalizable();
     virtual ~IAnalizable();
+
+    // GETTERS
+
+    // SETTERS
+
+    // METODOS
+
+    // CONSULTAS
 };
 
 };
