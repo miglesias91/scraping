@@ -29,11 +29,17 @@ public:
 
     virtual ContenidoDepurado depurar(IDepurable * depurable);
 
-    virtual bool eliminarTildes(std::string & texto_a_depurar);
+    // 'texto_a_depurar' tiene que estar formateado como UTF8.
+    virtual unsigned int eliminarTildes(std::string & texto_a_depurar);
 
+    // 'texto_a_depurar' tiene que estar formateado como UTF8, y NO DEBE TENER CARACTERES ESPECIALES (es decir, primero hay que aplicarle el metodo 'reemplazarTodosLosCaracteresEspeciales').
     virtual bool todoMinuscula(std::string & texto_a_depurar);
 
-    virtual bool reemplazarCaracteresEspeciales(std::string & texto_a_depurar);
+    // 'texto_a_depurar' tiene que estar formateado como UTF8.
+    virtual unsigned int reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar);
+
+    // 'texto_a_depurar' tiene que estar formateado como UTF8.
+    virtual unsigned int eliminarSimbolosNoCaracteres(std::string & texto_a_depurar);
 
     // CONSULTAS
 

@@ -88,12 +88,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(repos)googletest\googletest\include;$(repos-git)herramientas_desarrollo;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include$(SolutionDir);;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(repos)googletest\googletest\include;$(repos-git)herramientas_desarrollo;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(repos)googletest\googletest\build_x64\Debug;$(SolutionDir)x64\Debug;$(repos)cpprestsdk\Binaries\x64\Debug;$(repos-git)herramientas_desarrollo\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;gtest.lib;gtest_main.lib;cpprest141d_2_10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>depuracion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;gtest.lib;gtest_main.lib;cpprest141d_2_10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -103,10 +103,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(repos)googletest\googletest\include;$(repos-git)herramientas_desarrollo;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(repos)googletest\googletest\build_x86\Release;$(SolutionDir)Release;$(repos)cpprestsdk\Binaries\Win32\Release;$(repos-git)herramientas_desarrollo\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>depuracion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;gtest.lib;gtest_main.lib;cpprest141_2_10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -116,10 +119,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(repos)googletest\googletest\include;$(repos-git)herramientas_desarrollo;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(repos)googletest\googletest\build_x64\Release;$(SolutionDir)x64\Release;$(repos)cpprestsdk\Binaries\x64\Release;$(repos-git)herramientas_desarrollo\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>depuracion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;gtest.lib;gtest_main.lib;cpprest141_2_10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

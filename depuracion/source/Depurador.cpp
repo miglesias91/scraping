@@ -1,5 +1,8 @@
 #include <depuracion/include/Depurador.h>
 
+// stl
+#include <algorithm>
+
 // utiles
 #include <utiles/include/FuncionesString.h>
 
@@ -43,34 +46,72 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
 {
     std::string texto_a_depurar = depurable->getTextoDepurable();
 
-    this->eliminarTildes(texto_a_depurar);
+    // 1ero: reemplazo los caracteres especiales: vocales con tildes, letras extrañas, 
+    this->reemplazarTodosLosCaracteresEspeciales(texto_a_depurar);
+
+    // 2do: reemplazo las mayusculas por minusculas.
     this->todoMinuscula(texto_a_depurar);
-    this->reemplazarCaracteresEspeciales(texto_a_depurar);
+
+    // 3ero: elimino los signos de puntuacion.
+    this->eliminarSignosDePuntuacion(texto_a_depurar);
 
     ContenidoDepurado texto_depurado(texto_a_depurar);
     return texto_depurado;
 }
 
-bool Depurador::eliminarTildes(std::string & texto_a_depurar)
+unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
 {
     std::vector<std::string> vocales_con_tilde = { u8"á", u8"é", u8"í", u8"ó", u8"ú" };
 
+    unsigned int cantidad_de_tildes_reemplazadas = 0;
     for (std::vector<std::string>::iterator it_vocal = vocales_con_tilde.begin(); it_vocal != vocales_con_tilde.end(); it_vocal++)
     {
-        herramientas::utiles::FuncionesString::reemplazarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
+        cantidad_de_tildes_reemplazadas += herramientas::utiles::FuncionesString::reemplazarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
     }
 
-    return true;
+    return cantidad_de_tildes_reemplazadas;
 }
 
 bool Depurador::todoMinuscula(std::string & texto_a_depurar)
 {
-    return false;
+    std::transform(texto_a_depurar.begin(), texto_a_depurar.end(), texto_a_depurar.begin(), ::tolower);
+    return true;
 }
 
-bool Depurador::reemplazarCaracteresEspeciales(std::string & texto_a_depurar)
+unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar)
 {
-    return false;
+    unsigned int cantidad_de_reemplazos = 0;
+    for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end(); it++)
+    {
+        unsigned char caracter_1 = *it;
+        if (194 <= caracter_1)
+        {
+            unsigned char caracter_2 = *(it + 1);
+
+            unsigned int valor_decimal_codeunit = (caracter_1 - 192) * 64 + caracter_2 - 128;
+
+            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codeunit);
+
+            texto_a_depurar.erase(it, it + 2);
+            texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
+
+            cantidad_de_reemplazos++;
+        }
+    }
+
+    return cantidad_de_reemplazos;
+}
+
+unsigned int Depurador::eliminarSimbolosNoCaracteres(std::string & texto_a_depurar)
+{
+    std::vector<std::string> vocales_con_tilde = { "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~" };
+
+    for (std::vector<std::string>::iterator it_vocal = vocales_con_tilde.begin(); it_vocal != vocales_con_tilde.end(); it_vocal++)
+    {
+        herramientas::utiles::FuncionesString::eliminarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
+    }
+
+    return true;
 }
 
 // GETTERS

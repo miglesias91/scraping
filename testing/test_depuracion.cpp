@@ -56,10 +56,25 @@ TEST(Depuracion, eliminarTildes)
 
 TEST(Depuracion, todoMinuscula)
 {
+    std::string oracion_con_mayusculas = "HabIa uNa veZ un CafE qUE uSaBa UnA cAmArA CoN MuChA EmOCiOn.";
+    std::string oracion_sin_mayusculas = "habia una vez un cafe que usaba una camara con mucha emocion.";
 
+    scraping::depuracion::Depurador depurador;
+
+    depurador.todoMinuscula(oracion_con_mayusculas);
+
+    ASSERT_STREQ(oracion_sin_mayusculas.c_str(), oracion_con_mayusculas.c_str());
 }
 
 TEST(Depuracion, reemplazarCaracteresEspeciales)
 {
+    std::string caracteres_normales_especiales_a_reemplazar = "µ a ¶ · ¸ ¹ º b » ¼ c ½ ¾ ¿ d À Á Â 1 Ã Ä Å Æ 2 Ç È É Ê Ë Ì Í Î Ï 3 Ð Ñ Ò Ó Ô Õ Ö × Ø Ù Ú Û Ü Ý Þ 4 ß à á â ã ä å æ";
+    std::string caracteres_reemplazados = "u a p . . ^1 o b >> 1/4 c 1/2 3/4 ? d A A A 1 A A A AE 2 C E E E E I I I I 3 D N O O O O O x O U U U U Y P 4 B a a a a a a ae";
 
+    scraping::depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+
+    depurador.reemplazarTodosLosCaracteresEspeciales(caracteres_normales_especiales_a_reemplazar);
+
+    ASSERT_STREQ(caracteres_reemplazados.c_str(), caracteres_normales_especiales_a_reemplazar.c_str());
 }
