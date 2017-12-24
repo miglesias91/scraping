@@ -52,8 +52,20 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
     // 2do: reemplazo las mayusculas por minusculas.
     this->todoMinuscula(texto_a_depurar);
 
-    // 3ero: elimino los signos de puntuacion.
-    this->eliminarSignosDePuntuacion(texto_a_depurar);
+    // 3ero: elimino los simbolos que no forman palabras.
+    this->eliminarSimbolosNoCaracteres(texto_a_depurar);
+
+    // 4to: paso de un texto con palabras a un vector con tokens.
+    std::vector<std::string> bolsa_de_palabras = this->tokenizarTexto(texto_a_depurar);
+
+    // 5to: elimino las preposiciones.
+    this->eliminarPreposiciones(bolsa_de_palabras);
+
+    // 6to: elimino las palabras con menos de 2 letras.
+    this->eliminarPalabrasMuyCortas(bolsa_de_palabras);
+
+    // 6to: elimino las palabras con mas de 15 letras.
+    this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
     ContenidoDepurado texto_depurado(texto_a_depurar);
     return texto_depurado;
@@ -76,6 +88,39 @@ bool Depurador::todoMinuscula(std::string & texto_a_depurar)
 {
     std::transform(texto_a_depurar.begin(), texto_a_depurar.end(), texto_a_depurar.begin(), ::tolower);
     return true;
+}
+
+unsigned int Depurador::eliminarSignosDePuntuacion(std::string & texto_a_depurar)
+{
+    std::vector<std::string> vocales_con_tilde = { "", "é", "í", "ó", "ú" };
+
+    unsigned int cantidad_de_signos_reemplazadas = 0;
+    for (std::vector<std::string>::iterator it_vocal = vocales_con_tilde.begin(); it_vocal != vocales_con_tilde.end(); it_vocal++)
+    {
+        cantidad_de_tildes_reemplazadas += herramientas::utiles::FuncionesString::reemplazarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
+    }
+
+    return cantidad_de_tildes_reemplazadas;
+}
+
+std::vector<std::string> Depurador::tokenizarTexto(std::string texto_a_tokenizar)
+{
+    return std::vector<std::string>();
+}
+
+unsigned int Depurador::eliminarPreposiciones(std::vector<std::string>& bolsa_de_palabras)
+{
+    return 0;
+}
+
+unsigned int Depurador::eliminarPalabrasMuyCortas(std::vector<std::string>& bolsa_de_palabras)
+{
+    return 0;
+}
+
+unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string>& bolsa_de_palabras)
+{
+    return 0;
 }
 
 unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar)
