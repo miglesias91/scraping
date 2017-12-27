@@ -2,12 +2,17 @@
 
 using namespace scraping::depuracion;
 
-ContenidoDepurado::ContenidoDepurado(std::string texto_depurado) : texto_depurado(texto_depurado)
+ContenidoDepurado::ContenidoDepurado(std::vector<std::string> bolsa_de_palabras_depurada) : bolsa_de_palabras_depurada(bolsa_de_palabras_depurada)
 {
 }
 
 ContenidoDepurado::~ContenidoDepurado()
 {
+}
+
+std::vector<std::string> ContenidoDepurado::getBolsaDePalabras()
+{
+    return this->bolsa_de_palabras_depurada;
 }
 
 // GETTERS

@@ -2,6 +2,7 @@
 
 // stl
 #include <string>
+#include <vector>
 
 namespace scraping
 {
@@ -11,10 +12,12 @@ namespace depuracion
 class ContenidoDepurado
 {
 public:
-    ContenidoDepurado(std::string texto_depurado = "");
+    ContenidoDepurado(std::vector<std::string> bolsa_de_palabras_depurada);
     virtual ~ContenidoDepurado();
 
     // GETTERS
+
+    std::vector<std::string> getBolsaDePalabras();
 
     // SETTERS
 
@@ -24,7 +27,7 @@ public:
 
 private:
 
-    std::string texto_depurado;
+    std::vector<std::string> bolsa_de_palabras_depurada;
 };
 
 };

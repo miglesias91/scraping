@@ -53,22 +53,22 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
     this->todoMinuscula(texto_a_depurar);
 
     // 3ero: elimino los simbolos que no forman palabras.
-    this->eliminarSimbolosNoCaracteres(texto_a_depurar);
+    this->eliminarSignosYPuntuacion(texto_a_depurar);
 
     // 4to: paso de un texto con palabras a un vector con tokens.
     std::vector<std::string> bolsa_de_palabras = this->tokenizarTexto(texto_a_depurar);
 
-    // 5to: elimino las preposiciones.
-    this->eliminarPreposiciones(bolsa_de_palabras);
-
-    // 6to: elimino las palabras con menos de 2 letras.
+    // 5to: elimino las palabras con menos de 2 letras.
     this->eliminarPalabrasMuyCortas(bolsa_de_palabras);
 
-    // 6to: elimino las palabras con mas de 15 letras.
+    // 7to: elimino las palabras con mas de 15 letras.
     this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
-    ContenidoDepurado texto_depurado(texto_a_depurar);
-    return texto_depurado;
+    // 8to: elimino las preposiciones.
+    this->eliminarPreposiciones(bolsa_de_palabras);
+
+    ContenidoDepurado contenido_depurado(bolsa_de_palabras);
+    return contenido_depurado;
 }
 
 unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
@@ -86,41 +86,79 @@ unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
 
 bool Depurador::todoMinuscula(std::string & texto_a_depurar)
 {
-    std::transform(texto_a_depurar.begin(), texto_a_depurar.end(), texto_a_depurar.begin(), ::tolower);
-    return true;
+    return herramientas::utiles::FuncionesString::todoMinuscula(texto_a_depurar);
 }
 
-unsigned int Depurador::eliminarSignosDePuntuacion(std::string & texto_a_depurar)
+unsigned int Depurador::eliminarSignosYPuntuacion(std::string & texto_a_depurar)
 {
-    std::vector<std::string> vocales_con_tilde = { "", "é", "í", "ó", "ú" };
-
-    unsigned int cantidad_de_signos_reemplazadas = 0;
-    for (std::vector<std::string>::iterator it_vocal = vocales_con_tilde.begin(); it_vocal != vocales_con_tilde.end(); it_vocal++)
-    {
-        cantidad_de_tildes_reemplazadas += herramientas::utiles::FuncionesString::reemplazarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
-    }
-
-    return cantidad_de_tildes_reemplazadas;
+    return herramientas::utiles::FuncionesString::eliminarSignosYPuntuacion(texto_a_depurar);
 }
 
 std::vector<std::string> Depurador::tokenizarTexto(std::string texto_a_tokenizar)
 {
-    return std::vector<std::string>();
+    return herramientas::utiles::FuncionesString::separar(texto_a_tokenizar);
 }
 
-unsigned int Depurador::eliminarPreposiciones(std::vector<std::string>& bolsa_de_palabras)
+unsigned int Depurador::eliminarPreposiciones(std::vector<std::string> & bolsa_de_palabras)
 {
-    return 0;
+    std::vector<std::string> preposiciones = { "a", "ante", "bajo", "cabe", "con", "contra", "cuando", "de", "desde", "donde", "durante", "en", "entre", "excepto", "hacia", "hasta", "mediante", "menos", "para", "por", "segun", "salvo", "sin", "so", "sobre", "tras", "versus", "via" };
+
+    unsigned int cantidad_de_preposiciones_eliminadas = 0;
+    for (std::vector<std::string>::iterator it_preposicion = preposiciones.begin(); it_preposicion != preposiciones.end(); it_preposicion++)
+    {
+        for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+        {
+            if (0 == it_preposicion->compare(*it_palabra))
+            {
+                it_palabra = bolsa_de_palabras.erase(it_palabra);
+                cantidad_de_preposiciones_eliminadas++;
+            }
+            else
+            {
+                it_palabra++;
+            }
+        }
+    }
+
+    return cantidad_de_preposiciones_eliminadas;
 }
 
-unsigned int Depurador::eliminarPalabrasMuyCortas(std::vector<std::string>& bolsa_de_palabras)
+unsigned int Depurador::eliminarPalabrasMuyCortas(std::vector<std::string> & bolsa_de_palabras)
 {
-    return 0;
+    unsigned int cantidad_de_palabras_cortas_eliminadas = 0;
+    for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+    {
+        if (3 > it_palabra->size())
+        {
+            it_palabra = bolsa_de_palabras.erase(it_palabra);
+            cantidad_de_palabras_cortas_eliminadas++;
+        }
+        else
+        {
+            it_palabra++;
+        }
+    }
+
+    return cantidad_de_palabras_cortas_eliminadas;
 }
 
-unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string>& bolsa_de_palabras)
+unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string> & bolsa_de_palabras)
 {
-    return 0;
+    unsigned int cantidad_de_palabras_largas_eliminadas = 0;
+    for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+    {
+        if (15 < it_palabra->size())
+        {
+            it_palabra = bolsa_de_palabras.erase(it_palabra);
+            cantidad_de_palabras_largas_eliminadas++;
+        }
+        else
+        {
+            it_palabra++;
+        }
+    }
+
+    return cantidad_de_palabras_largas_eliminadas;
 }
 
 unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar)
@@ -145,18 +183,6 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
     }
 
     return cantidad_de_reemplazos;
-}
-
-unsigned int Depurador::eliminarSimbolosNoCaracteres(std::string & texto_a_depurar)
-{
-    std::vector<std::string> vocales_con_tilde = { "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~" };
-
-    for (std::vector<std::string>::iterator it_vocal = vocales_con_tilde.begin(); it_vocal != vocales_con_tilde.end(); it_vocal++)
-    {
-        herramientas::utiles::FuncionesString::eliminarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
-    }
-
-    return true;
 }
 
 // GETTERS
