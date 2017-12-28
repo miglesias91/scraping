@@ -13,14 +13,14 @@ namespace mapeo
 class Registro
 {
 public:
-    Registro(unsigned int valor_hexa, unsigned char * valor_utf8, std::string descripcion, std::string traduccion);
+    Registro(unsigned int valor_hexa, unsigned char * utf8_codeunits_en_decimal, unsigned int cantidad_de_codeunits, std::string descripcion, std::string traduccion);
     virtual ~Registro();
 
     // GETTERS
 
     unsigned int getValorHexa();
 
-    unsigned char * getValorUTF8();
+    unsigned char * getCodeunitsUTF8EnDecimal();
 
     std::string getDescripcion();
 
@@ -38,7 +38,9 @@ private:
 
     unsigned int valor_hexa;
 
-    unsigned char valor_utf8[2];
+    unsigned char * utf8_codeunits_en_decimal;
+
+    unsigned int cantidad_de_codeunits;
 
     std::string descripcion;
 

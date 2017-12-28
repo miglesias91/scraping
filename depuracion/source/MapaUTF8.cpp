@@ -16,7 +16,7 @@ MapaUTF8::MapaUTF8(std::string path_archivo_mapa)
     std::string linea_mapeo;
 
     unsigned int hexa = 0;
-    unsigned char valor_utf8[2] = { 0,0 };
+    unsigned char * utf8_codeunits_en_decimal;
     std::string descripcion = "";
     std::string valor_traducido = "";
 
@@ -30,17 +30,27 @@ MapaUTF8::MapaUTF8(std::string path_archivo_mapa)
             hexa = std::stoul(campos[0], NULL, 16);
 
             std::vector<std::string> valores_utf8 = herramientas::utiles::FuncionesString::separar(campos[2]);
-            valor_utf8[0] = std::stoul(valores_utf8[0]);
-            valor_utf8[1] = std::stoul(valores_utf8[1]);
+
+            unsigned int cantidad_de_codeunits = valores_utf8.size();
+            utf8_codeunits_en_decimal = new unsigned char[cantidad_de_codeunits];
+
+            unsigned int i = 0;
+            for (std::vector<std::string>::iterator it = valores_utf8.begin(); it != valores_utf8.end(); it++)
+            {
+                utf8_codeunits_en_decimal[i] = std::stoul(*it);
+                i++;
+            }
 
             descripcion = campos[3];
 
             valor_traducido = campos[4];
 
-            Registro * nuevo_registro = new Registro(hexa, valor_utf8, descripcion, valor_traducido);
+            Registro * nuevo_registro = new Registro(hexa, utf8_codeunits_en_decimal, cantidad_de_codeunits, descripcion, valor_traducido);
 
             this->mapa_valores_hexa.insert(std::pair<unsigned int, Registro*>(hexa, nuevo_registro));
             this->mapa_valores_decimales_ncr.insert(std::pair<std::string, Registro*>(campos[1], nuevo_registro));
+
+            delete[] utf8_codeunits_en_decimal;
         }
     }
     catch (...)

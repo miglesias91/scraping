@@ -6,7 +6,11 @@
 #include <sstream>
 
 // twitter
+#include <twitter/include/Tweet.h>
+
+// depuracion
 #include <depuracion/include/Depurador.h>
+#include <depuracion/include/DepurableTweet.h>
 
 TEST(Depuracion, cargarMapeoCorrectamente)
 {
@@ -37,6 +41,34 @@ TEST(Depuracion, cargarMapeoCorrectamente)
     ASSERT_STREQ("1/4", mapa_utf8.getTraduccion("¼").c_str());
     ASSERT_STREQ("1/2", mapa_utf8.getTraduccion("½").c_str());
     ASSERT_STREQ("3/4", mapa_utf8.getTraduccion("¾").c_str());
+}
+
+TEST(Depuracion, depurarTexto)
+{
+    std::string texto = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
+
+    scraping::depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+
+    scraping::twitter::modelo::Tweet tweet;
+    tweet.setTexto(texto);
+
+    scraping::depuracion::DepurableTweet depurable_tweet(tweet);
+
+    scraping::depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_tweet);
+
+    std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
+
+    ASSERT_EQ(9, bolsa_de_palabras.size());
+    ASSERT_STREQ("jerusalen", bolsa_de_palabras[0].c_str());
+    ASSERT_STREQ("suenan", bolsa_de_palabras[1].c_str());
+    ASSERT_STREQ("sirenas", bolsa_de_palabras[2].c_str());
+    ASSERT_STREQ("alarma", bolsa_de_palabras[3].c_str());
+    ASSERT_STREQ("sur", bolsa_de_palabras[4].c_str());
+    ASSERT_STREQ("israel", bolsa_de_palabras[5].c_str());
+    ASSERT_STREQ("disparo", bolsa_de_palabras[6].c_str());
+    ASSERT_STREQ("cohete", bolsa_de_palabras[7].c_str());
+    ASSERT_STREQ("gaza", bolsa_de_palabras[8].c_str());
 }
 
 TEST(Depuracion, reemplazarCaracteresEspeciales)
@@ -89,6 +121,18 @@ TEST(Depuracion, eliminarSignosYPuntuacion)
     depurador.eliminarSignosYPuntuacion(oracion_con_simbolos_no_caracteres);
 
     ASSERT_STREQ(oracion_con_simbolos_no_caracteres.c_str(), oracion_sin_simbolos_no_caracteres.c_str());
+}
+
+TEST(Depuracion, eliminarURLs)
+{
+    std::string texto_con_urls = "Jerusalén: ftp:\/\/t.co\/asdijv1m2_1234.html#matorito suenan sirenas de alarma en el sur de Israel http:\/\/userid:password@example.com:8080\/ tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
+    std::string texto_sin_urls = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… ";
+
+    scraping::depuracion::Depurador depurador;
+
+    depurador.eliminarURLs(texto_con_urls);
+ 
+    ASSERT_STREQ(texto_con_urls.c_str(), texto_sin_urls.c_str());
 }
 
 TEST(Depuracion, eliminarPalabrasMuyCortas)

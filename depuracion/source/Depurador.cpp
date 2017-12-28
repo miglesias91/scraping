@@ -2,6 +2,8 @@
 
 // stl
 #include <algorithm>
+#include <regex>
+#include <iostream>
 
 // utiles
 #include <utiles/include/FuncionesString.h>
@@ -51,17 +53,20 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
 
     // 2do: reemplazo las mayusculas por minusculas.
     this->todoMinuscula(texto_a_depurar);
+    
+    // 3ero: reemplazo las mayusculas por minusculas.
+    this->eliminarURLs(texto_a_depurar);
 
-    // 3ero: elimino los simbolos que no forman palabras.
+    // 4to: elimino los simbolos que no forman palabras.
     this->eliminarSignosYPuntuacion(texto_a_depurar);
 
-    // 4to: paso de un texto con palabras a un vector con tokens.
+    // 5to: paso de un texto con palabras a un vector con tokens.
     std::vector<std::string> bolsa_de_palabras = this->tokenizarTexto(texto_a_depurar);
 
-    // 5to: elimino las palabras con menos de 2 letras.
+    // 6to: elimino las palabras con menos de 2 letras.
     this->eliminarPalabrasMuyCortas(bolsa_de_palabras);
 
-    // 7to: elimino las palabras con mas de 15 letras.
+    // 7mo: elimino las palabras con mas de 15 letras.
     this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
     // 8to: elimino las preposiciones.
@@ -92,6 +97,45 @@ bool Depurador::todoMinuscula(std::string & texto_a_depurar)
 unsigned int Depurador::eliminarSignosYPuntuacion(std::string & texto_a_depurar)
 {
     return herramientas::utiles::FuncionesString::eliminarSignosYPuntuacion(texto_a_depurar);
+}
+
+unsigned int Depurador::eliminarURLs(std::string & texto_a_depurar)
+{
+    std::vector<std::string> comienzo_de_urls = { "ftp", "http" };
+
+    unsigned int cantidad_de_urls_reemplazadas = 0;
+    for (std::vector<std::string>::iterator it_comienzo_url = comienzo_de_urls.begin(); it_comienzo_url != comienzo_de_urls.end(); it_comienzo_url++)
+    {
+        for (size_t posicion_ocurrencia = 0; ; posicion_ocurrencia += it_comienzo_url->length())
+        {
+            posicion_ocurrencia = texto_a_depurar.find(*it_comienzo_url, posicion_ocurrencia);
+
+            if (std::string::npos == posicion_ocurrencia)
+            {
+                break;
+            }
+
+            size_t posicion_primer_espacio_separador = texto_a_depurar.find(" ", posicion_ocurrencia);
+
+            unsigned int tamanio_url = 0;
+            if (std::string::npos == posicion_primer_espacio_separador)
+            {
+                tamanio_url = texto_a_depurar.size() - posicion_ocurrencia;
+            }
+            else
+            {
+                tamanio_url = posicion_primer_espacio_separador - posicion_ocurrencia;
+            }
+
+            texto_a_depurar.erase(posicion_ocurrencia, tamanio_url);
+
+            cantidad_de_urls_reemplazadas++;
+        }
+    }
+
+    herramientas::utiles::FuncionesString::eliminarEspaciosRedundantes(texto_a_depurar);
+
+    return cantidad_de_urls_reemplazadas;
 }
 
 std::vector<std::string> Depurador::tokenizarTexto(std::string texto_a_tokenizar)
@@ -167,18 +211,48 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
     for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end(); it++)
     {
         unsigned char caracter_1 = *it;
-        if (194 <= caracter_1)
-        {
+
+        if (241 <= caracter_1)
+        {// codepoint con 4 codeunits
+            unsigned char caracter_2 = *(it + 1);
+            unsigned char caracter_3 = *(it + 2);
+            unsigned char caracter_4 = *(it + 3);
+
+            unsigned int valor_decimal_codepoint = (caracter_1 - 240) * 262144 + (caracter_2 - 128) * 4096 + (caracter_3 - 128) * 64 + caracter_4 - 128;
+
+            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
+
+            texto_a_depurar.erase(it, it + 4);
+            texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
+
+            cantidad_de_reemplazos += 1;
+        }
+        else if (225 <= caracter_1)
+        {// codepoint con 3 codeunits
+            unsigned char caracter_2 = *(it + 1);
+            unsigned char caracter_3 = *(it + 2);
+
+            unsigned int valor_decimal_codepoint = (caracter_1 - 224) * 4096 + (caracter_2 - 128) * 64 + caracter_3 - 128;
+
+            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
+
+            texto_a_depurar.erase(it, it + 3);
+            texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
+
+            cantidad_de_reemplazos += 1;
+        }
+        else if (193 <= caracter_1)
+        {// codepoint con 2 codeunits
             unsigned char caracter_2 = *(it + 1);
 
-            unsigned int valor_decimal_codeunit = (caracter_1 - 192) * 64 + caracter_2 - 128;
+            unsigned int valor_decimal_codepoint = (caracter_1 - 192) * 64 + caracter_2 - 128;
 
-            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codeunit);
+            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             texto_a_depurar.erase(it, it + 2);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
 
-            cantidad_de_reemplazos++;
+            cantidad_de_reemplazos += 1;
         }
     }
 

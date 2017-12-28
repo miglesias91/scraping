@@ -41,6 +41,9 @@ public:
     // 'texto_a_depurar' tiene que estar formateado como UTF8.
     virtual unsigned int eliminarSignosYPuntuacion(std::string & texto_a_depurar);
 
+    // 'texto_a_depurar' tiene que estar formateado como UTF8.
+    virtual unsigned int eliminarURLs(std::string & texto_a_depurar);
+
     // 'texto_a_depurar' tiene que estar formateado como UTF8, y NO DEBE TENER CARACTERES ESPECIALES (es decir, primero hay que aplicarle el metodo 'reemplazarTodosLosCaracteresEspeciales').
     virtual std::vector<std::string> tokenizarTexto(std::string texto_a_tokenizar);
 

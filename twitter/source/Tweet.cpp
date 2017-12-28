@@ -13,6 +13,11 @@ using namespace scraping::twitter::modelo;
 
 Tweet::Tweet(herramientas::utiles::Json * tweet_json) : herramientas::utiles::IContieneJson(tweet_json)
 {
+    if (NULL == tweet_json)
+    {
+        return;
+    }
+
     unsigned long long int id = this->getJson()->getAtributoValorUint("id");
     std::string fecha_creacion_formato_twitter = this->getJson()->getAtributoValorString("created_at");
     std::string texto = this->getJson()->getAtributoValorString("text");

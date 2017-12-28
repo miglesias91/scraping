@@ -19,12 +19,15 @@
     <Filter Include="Archivos de encabezado\mapeo">
       <UniqueIdentifier>{49a181e6-31c6-40dc-8551-a8977a65aca2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\depurables">
+      <UniqueIdentifier>{426c5efd-6a47-4fb6-94af-5e6f9d88c6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\depurables">
+      <UniqueIdentifier>{7c8fcc98-5b5b-4bb9-8542-1b2cf15329ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Depurador.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\IDepurable.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\ContenidoDepurado.h">
@@ -36,12 +39,15 @@
     <ClInclude Include="include\MapaUTF8.h">
       <Filter>Archivos de encabezado\mapeo</Filter>
     </ClInclude>
+    <ClInclude Include="include\IDepurable.h">
+      <Filter>Archivos de encabezado\depurables</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DepurableTweet.h">
+      <Filter>Archivos de encabezado\depurables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Depurador.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="source\IDepurable.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="source\ContenidoDepurado.cpp">
@@ -52,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="source\MapaUTF8.cpp">
       <Filter>Archivos de código fuente\mapeo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\IDepurable.cpp">
+      <Filter>Archivos de código fuente\depurables</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DepurableTweet.cpp">
+      <Filter>Archivos de código fuente\depurables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

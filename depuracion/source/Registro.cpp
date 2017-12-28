@@ -2,14 +2,17 @@
 
 using namespace scraping::depuracion::mapeo;
 
-Registro::Registro(unsigned int valor_hexa, unsigned char * valor_utf8, std::string descripcion, std::string traduccion) :
-    valor_hexa(valor_hexa), descripcion(descripcion), traduccion(traduccion)
+Registro::Registro(unsigned int valor_hexa, unsigned char * utf8_codeunits_en_decimal, unsigned int cantidad_de_codeunits, std::string descripcion, std::string traduccion) :
+    valor_hexa(valor_hexa), utf8_codeunits_en_decimal(NULL), cantidad_de_codeunits(cantidad_de_codeunits), descripcion(descripcion), traduccion(traduccion)
 {
-    memcpy_s(this->valor_utf8, 2, valor_utf8, 2);
+    this->utf8_codeunits_en_decimal = new unsigned char[cantidad_de_codeunits];
+
+    memcpy_s(this->utf8_codeunits_en_decimal, cantidad_de_codeunits, utf8_codeunits_en_decimal, cantidad_de_codeunits);
 }
 
 Registro::~Registro()
 {
+    delete[] this->utf8_codeunits_en_decimal;
 }
 
 unsigned int Registro::getValorHexa()
@@ -17,9 +20,9 @@ unsigned int Registro::getValorHexa()
     return this->valor_hexa;
 }
 
-unsigned char * Registro::getValorUTF8()
+unsigned char * Registro::getCodeunitsUTF8EnDecimal()
 {
-    return this->valor_utf8;
+    return this->utf8_codeunits_en_decimal;
 }
 
 std::string Registro::getDescripcion()
