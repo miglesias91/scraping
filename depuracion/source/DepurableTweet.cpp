@@ -2,7 +2,7 @@
 
 using namespace scraping::depuracion;
 
-DepurableTweet::DepurableTweet(scraping::twitter::modelo::Tweet tweet_a_depurar) : tweet_a_depurar(tweet_a_depurar)
+DepurableTweet::DepurableTweet(scraping::twitter::modelo::Tweet tweet_a_depurar) : IDepurable(), tweet_a_depurar(tweet_a_depurar)
 {
 }
 

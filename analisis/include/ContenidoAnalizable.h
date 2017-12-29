@@ -9,14 +9,14 @@
 
 namespace scraping
 {
-namespace depuracion
+namespace analisis
 {
 
-class ContenidoDepurado
+class ContenidoAnalizable : public scraping::analisis::IAnalizable
 {
 public:
-    ContenidoDepurado(std::vector<std::string> bolsa_de_palabras_depurada);
-    virtual ~ContenidoDepurado();
+    ContenidoAnalizable(std::vector<std::string> bolsa_de_palabras_depurada);
+    virtual ~ContenidoAnalizable();
 
     // GETTERS
 

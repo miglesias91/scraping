@@ -36,10 +36,19 @@
     <ClInclude Include="include\ITecnica.h">
       <Filter>Archivos de encabezado\tecnicas</Filter>
     </ClInclude>
-    <ClInclude Include="include\Resultado.h">
+    <ClInclude Include="include\Sentimiento.h">
+      <Filter>Archivos de encabezado\tecnicas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ContenidoAnalizable.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\Sentimiento.h">
+    <ClInclude Include="include\ResultadoAnalisis.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ResultadoFuerzaEnNoticia.h">
+      <Filter>Archivos de encabezado\tecnicas</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IResultadoTecnica.h">
       <Filter>Archivos de encabezado\tecnicas</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,10 +68,19 @@
     <ClCompile Include="source\ITecnica.cpp">
       <Filter>Archivos de código fuente\tecnicas</Filter>
     </ClCompile>
-    <ClCompile Include="source\Resultado.cpp">
+    <ClCompile Include="source\Sentimiento.cpp">
+      <Filter>Archivos de código fuente\tecnicas</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ContenidoAnalizable.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="source\Sentimiento.cpp">
+    <ClCompile Include="source\ResultadoAnalisis.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ResultadoFuerzaEnNoticia.cpp">
+      <Filter>Archivos de código fuente\tecnicas</Filter>
+    </ClCompile>
+    <ClCompile Include="source\IResultadoTecnica.cpp">
       <Filter>Archivos de código fuente\tecnicas</Filter>
     </ClCompile>
   </ItemGroup>

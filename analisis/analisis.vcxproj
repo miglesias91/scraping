@@ -119,19 +119,25 @@
   <ItemGroup>
     <ClInclude Include="include\Analizador.h" />
     <ClInclude Include="include\CantidadDeApariciones.h" />
+    <ClInclude Include="include\ContenidoAnalizable.h" />
     <ClInclude Include="include\FuerzaEnNoticia.h" />
     <ClInclude Include="include\IAnalizable.h" />
+    <ClInclude Include="include\IResultadoTecnica.h" />
     <ClInclude Include="include\ITecnica.h" />
-    <ClInclude Include="include\Resultado.h" />
+    <ClInclude Include="include\ResultadoAnalisis.h" />
+    <ClInclude Include="include\ResultadoFuerzaEnNoticia.h" />
     <ClInclude Include="include\Sentimiento.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Analizador.cpp" />
     <ClCompile Include="source\CantidadDeApariciones.cpp" />
+    <ClCompile Include="source\ContenidoAnalizable.cpp" />
     <ClCompile Include="source\FuerzaEnNoticia.cpp" />
     <ClCompile Include="source\IAnalizable.cpp" />
+    <ClCompile Include="source\IResultadoTecnica.cpp" />
     <ClCompile Include="source\ITecnica.cpp" />
-    <ClCompile Include="source\Resultado.cpp" />
+    <ClCompile Include="source\ResultadoAnalisis.cpp" />
+    <ClCompile Include="source\ResultadoFuerzaEnNoticia.cpp" />
     <ClCompile Include="source\Sentimiento.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

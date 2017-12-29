@@ -1,5 +1,9 @@
 #pragma once
 
+// analisis
+#include <analisis/include/IAnalizable.h>
+#include <analisis/include/ResultadoAnalisis.h>
+
 namespace scraping
 {
 namespace analisis
@@ -16,6 +20,8 @@ public:
     // SETTERS
 
     // METODOS
+
+    virtual ResultadoAnalisis analizar(IAnalizable * contenido_a_analizar);
 
     // CONSULTAS
 };

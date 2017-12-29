@@ -5,11 +5,11 @@ namespace scraping
 namespace analisis
 {
 
-class Resultado
+class ResultadoAnalisis
 {
 public:
-    Resultado();
-    virtual ~Resultado();
+    ResultadoAnalisis();
+    virtual ~ResultadoAnalisis();
 
     // GETTERS
 
