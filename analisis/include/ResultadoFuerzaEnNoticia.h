@@ -22,9 +22,19 @@ public:
 
     // GETTERS
 
+    virtual float getFuerza(std::string palabra);
+
+    virtual std::vector<std::pair<std::string, float>> getTop(unsigned int cantidad_de_valores_a_recuperar = 10);
+
     // SETTERS
 
     // METODOS
+
+    virtual unsigned int cantidadDePalabras();
+
+    static bool compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b);
+
+    // metodos de IResultadoTecnica
 
     virtual bool agregarResultado(std::string palabra, float fuerza_en_noticia);
 
@@ -32,7 +42,7 @@ public:
 
 private:
 
-    std::unordered_map<std::string, unsigned int> fuerza_por_palabra;
+    std::unordered_map<std::string, float> fuerza_por_palabra;
 };
 
 };

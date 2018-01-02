@@ -132,6 +132,7 @@
     <ClCompile Include="main_testing.cpp" />
     <ClCompile Include="test_analisis.cpp" />
     <ClCompile Include="test_depuracion.cpp" />
+    <ClCompile Include="test_scraping.cpp" />
     <ClCompile Include="test_twitter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

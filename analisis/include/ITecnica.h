@@ -26,7 +26,7 @@ public:
 
     // METODOS
 
-    virtual IResultadoTecnica * aplicar(std::vector<std::string> bolsa_de_palabras) = 0;
+    virtual bool aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado) = 0;
 
     // CONSULTAS
 };

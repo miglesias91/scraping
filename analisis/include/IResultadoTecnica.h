@@ -4,6 +4,9 @@
 #include <string>
 #include <unordered_map>
 
+// herramientas
+#include <utiles/include/IContieneJson.h>
+
 namespace scraping
 {
 namespace analisis
@@ -11,13 +14,15 @@ namespace analisis
 namespace tecnicas
 {
 
-class IResultadoTecnica
+class IResultadoTecnica : public herramientas::utiles::IContieneJson
 {
 public:
     IResultadoTecnica();
     virtual ~IResultadoTecnica();
 
     // GETTERS
+
+    std::unordered_map<std::string, unsigned int> getFuerzaPorPalabra();
 
     // SETTERS
 

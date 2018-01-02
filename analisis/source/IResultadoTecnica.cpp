@@ -2,12 +2,17 @@
 
 using namespace scraping::analisis::tecnicas;
 
-IResultadoTecnica::IResultadoTecnica()
+IResultadoTecnica::IResultadoTecnica() : IContieneJson()
 {
 }
 
 IResultadoTecnica::~IResultadoTecnica()
 {
+}
+
+std::unordered_map<std::string, unsigned int> IResultadoTecnica::getFuerzaPorPalabra()
+{
+    return this->fuerza_por_palabra;
 }
 
 // GETTERS

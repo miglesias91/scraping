@@ -2,7 +2,11 @@
 
 using namespace scraping::analisis;
 
-ResultadoAnalisis::ResultadoAnalisis()
+ResultadoAnalisis::ResultadoAnalisis() : IContieneJson()
+{
+}
+
+ResultadoAnalisis::ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia) : IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia)
 {
 }
 

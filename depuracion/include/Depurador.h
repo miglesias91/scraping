@@ -42,6 +42,9 @@ public:
     virtual unsigned int eliminarSignosYPuntuacion(std::string & texto_a_depurar);
 
     // 'texto_a_depurar' tiene que estar formateado como UTF8.
+    virtual unsigned int eliminarCaracteresDeControl(std::string & texto_a_depurar);
+
+    // 'texto_a_depurar' tiene que estar formateado como UTF8.
     virtual unsigned int eliminarURLs(std::string & texto_a_depurar);
 
     // 'texto_a_depurar' tiene que estar formateado como UTF8, y NO DEBE TENER CARACTERES ESPECIALES (es decir, primero hay que aplicarle el metodo 'reemplazarTodosLosCaracteresEspeciales').
@@ -53,8 +56,11 @@ public:
     // eliminas las palabras muy largas de la bolsa de palabtas (palabra muy larga tiene mas de 15 letras).
     virtual unsigned int eliminarPalabrasMuyLargas(std::vector<std::string> & bolsa_de_palabras);
 
-    // eliminas las preposiciones de la bolas de palabras.
+    // eliminas las preposiciones de la bolsa de palabras.
     virtual unsigned int eliminarPreposiciones(std::vector<std::string> & bolsa_de_palabras);
+
+    // eliminas los pronombres de la bolsa de palabras.
+    virtual unsigned int eliminarPronombres(std::vector<std::string> & bolsa_de_palabras);
 
     // CONSULTAS
 

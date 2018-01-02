@@ -26,7 +26,7 @@ public:
     // metodos ITecnica
 
     // recibe una bolsa de palabras y devuelve un vector con la fuerza de cada palabra en la bolsa de palabras.
-    virtual ResultadoFuerzaEnNoticia aplicar(std::vector<std::string> bolsa_de_palabras);
+    virtual bool aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado);
 
     // CONSULTAS
 };

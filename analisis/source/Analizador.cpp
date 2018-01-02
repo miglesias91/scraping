@@ -21,7 +21,8 @@ ResultadoAnalisis Analizador::analizar(IAnalizable * contenido_a_analizar)
 
     std::vector<std::string> bolsa_de_palabras_a_analizar = contenido_a_analizar->getBolsaDePalabras();
 
-    tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia = fuerza_en_noticia.aplicar(bolsa_de_palabras_a_analizar);
+    tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia;
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_a_analizar, resultado_fuerza_en_noticia);
 
 
 

@@ -1,6 +1,6 @@
 #include <analisis/include/ITecnica.h>
 
-using namespace scraping::analisis;
+using namespace scraping::analisis::tecnicas;
 
 ITecnica::ITecnica()
 {

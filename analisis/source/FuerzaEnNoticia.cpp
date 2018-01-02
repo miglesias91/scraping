@@ -13,7 +13,7 @@ FuerzaEnNoticia::~FuerzaEnNoticia()
 {
 }
 
-ResultadoFuerzaEnNoticia FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras)
+bool FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado)
 {
     unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
     std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
@@ -39,22 +39,16 @@ ResultadoFuerzaEnNoticia FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa
     float factor_tamanio_de_bolsa = std::log10(cantidad_de_caracteres_en_bolsa_de_palabras);
 
     // 2do: calculo la fuerza de cada palabra en la bolsa de palabras
-    std::vector<std::pair<std::string, float>> fuerzas_por_palabra;
-    ResultadoFuerzaEnNoticia resultado;
     for (std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)
     {
         unsigned int cantidad_de_apariciones = it_apariciones->second;
 
         float fuerza_palabra_en_bolsa = factor_tamanio_de_bolsa * cantidad_de_apariciones;
 
-        std::pair<std::string, float> nuevo_par(it_apariciones->first, fuerza_palabra_en_bolsa);
-
-        fuerzas_por_palabra.push_back(nuevo_par);
-
         resultado.agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
     }
 
-    return fuerzas_por_palabra;
+    return true;
 }
 
 // GETTERS

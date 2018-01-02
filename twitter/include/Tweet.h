@@ -46,6 +46,12 @@ public:
 
     void agregarHashtags(std::string hashtag);
 
+    // metodos de IContieneJson
+    
+    virtual bool armarJson();
+
+    virtual bool parsearJson();
+
     // CONSULTAS
 
     bool contieneHashtag(std::string hashtag);
