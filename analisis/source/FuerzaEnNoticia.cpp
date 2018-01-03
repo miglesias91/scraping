@@ -5,7 +5,7 @@
 
 using namespace scraping::analisis::tecnicas;
 
-FuerzaEnNoticia::FuerzaEnNoticia()
+FuerzaEnNoticia::FuerzaEnNoticia(float fuerza_minima) : fuerza_minima(fuerza_minima)
 {
 }
 
@@ -45,7 +45,10 @@ bool FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResul
 
         float fuerza_palabra_en_bolsa = factor_tamanio_de_bolsa * cantidad_de_apariciones;
 
-        resultado.agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
+        if (fuerza_palabra_en_bolsa > this->fuerza_minima)
+        {
+            resultado.agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
+        }
     }
 
     return true;

@@ -112,28 +112,24 @@ bool Tweet::armarJson()
     this->getJson()->agregarAtributoValor("id_usuario", this->getIdUsuario());
     this->getJson()->agregarAtributoArray("hashtags", this->getHashtags());
 
-    return false;
+    return true;
 }
 
 bool Tweet::parsearJson()
 {
     unsigned long long int id = this->getJson()->getAtributoValorUint("id_tweet");
-    std::string fecha_creacion_formato_twitter = this->getJson()->getAtributoValorString("fecha_creacion");
-    std::string texto = this->getJson()->getAtributoValorString("text");
-
-    herramientas::utiles::Json * user_json = this->getJson()->getAtributoValorJson("user");
-    unsigned long long int id_usuario = user_json->getAtributoValorUint("id");
-    delete user_json;
-
-    herramientas::utiles::Json * entidades_json = this->getJson()->getAtributoValorJson("entities");
-    std::vector<std::string> hashtags = entidades_json->getAtributoArrayString("hashtags");
-    delete entidades_json;
+    std::string fecha_creacion = this->getJson()->getAtributoValorString("fecha_creacion");
+    std::string texto = this->getJson()->getAtributoValorString("texto");
+    unsigned long long int id_usuario = this->getJson()->getAtributoValorUint("id_usuario");
+    std::vector<std::string> hashtags = this->getJson()->getAtributoArrayString("hashtags");
 
     this->setId(id);
-    this->setFechaCreacion(this->parsearFechaEnFormatoTwitter(fecha_creacion_formato_twitter));
+    this->setFechaCreacion(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(fecha_creacion));
     this->setTexto(texto);
     this->setIdUsuario(id_usuario);
-    this->setHashtags(hashtags);;
+    this->setHashtags(hashtags);
+ 
+    return true;
 }
 
 // CONSULTAS

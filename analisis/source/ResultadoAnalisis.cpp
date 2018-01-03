@@ -14,6 +14,16 @@ ResultadoAnalisis::~ResultadoAnalisis()
 {
 }
 
+bool ResultadoAnalisis::armarJson()
+{
+    return false;
+}
+
+bool ResultadoAnalisis::parsearJson()
+{
+    return false;
+}
+
 // GETTERS
 
 // SETTERS

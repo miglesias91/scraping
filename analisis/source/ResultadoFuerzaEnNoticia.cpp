@@ -24,7 +24,10 @@ std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(unsi
 
     std::sort(vector_fuerza_por_palabra.begin(), vector_fuerza_por_palabra.end(), compararFuerzasMayorAMenor);
 
-    vector_fuerza_por_palabra.resize(cantidad_de_valores_a_recuperar);
+    if (vector_fuerza_por_palabra.size() > cantidad_de_valores_a_recuperar)
+    {
+        vector_fuerza_por_palabra.resize(cantidad_de_valores_a_recuperar);
+    }
 
     return vector_fuerza_por_palabra;
 }
@@ -44,6 +47,18 @@ bool ResultadoFuerzaEnNoticia::agregarResultado(std::string palabra, float fuerz
 
     this->fuerza_por_palabra[palabra] = fuerza_en_noticia;
     return true;
+}
+
+bool ResultadoFuerzaEnNoticia::armarJson()
+{
+
+
+    return false;
+}
+
+bool ResultadoFuerzaEnNoticia::parsearJson()
+{
+    return false;
 }
 
 unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()

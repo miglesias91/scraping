@@ -16,7 +16,7 @@ using namespace scraping;
 
 TEST(Scraping, depurarAnalizarPreparar)
 {
-    std::ifstream archivo_le_doy_mi_palabra("le_doy_mi_palabra_20171227.txt");
+    std::ifstream archivo_le_doy_mi_palabra("le_doy_mi_palabra_20171222.txt");
 
     std::stringstream sstream;
     sstream << archivo_le_doy_mi_palabra.rdbuf();
@@ -39,13 +39,12 @@ TEST(Scraping, depurarAnalizarPreparar)
 
     // ----- ANALISIS ----- //
 
-    analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
+    analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia(10);
 
     analisis::tecnicas::ResultadoFuerzaEnNoticia resultado_1;
     fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_1);
 
     std::vector<std::pair<std::string, float>> top_20 = resultado_1.getTop(20);
-
 
     // TODO: guardar
 

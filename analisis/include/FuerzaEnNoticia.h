@@ -14,7 +14,7 @@ namespace tecnicas
 class FuerzaEnNoticia : public ITecnica
 {
 public:
-    FuerzaEnNoticia();
+    FuerzaEnNoticia(float fuerza_minima = 0);
     virtual ~FuerzaEnNoticia();
 
     // GETTERS
@@ -29,6 +29,11 @@ public:
     virtual bool aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado);
 
     // CONSULTAS
+
+private:
+
+    // valor a partir del cual se consideran relevante la fuerza de un termino.
+    float fuerza_minima;
 };
 
 };

@@ -38,6 +38,12 @@ public:
 
     virtual bool agregarResultado(std::string palabra, float fuerza_en_noticia);
 
+    // metodos de IContieneJson
+
+    virtual bool armarJson();
+
+    virtual bool parsearJson();
+
     // CONSULTAS
 
 private:

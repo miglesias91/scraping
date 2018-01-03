@@ -25,6 +25,13 @@ public:
 
     // METODOS
 
+
+    // metodos de IContieneJson
+
+    virtual bool armarJson();
+
+    virtual bool parsearJson();
+
     // CONSULTAS
 
 private:
