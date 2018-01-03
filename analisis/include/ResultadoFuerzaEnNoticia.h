@@ -17,14 +17,14 @@ namespace tecnicas
 class ResultadoFuerzaEnNoticia : public IResultadoTecnica
 {
 public:
-    ResultadoFuerzaEnNoticia();
+    ResultadoFuerzaEnNoticia(unsigned int maximo_valores_a_almacenar = 20);
     virtual ~ResultadoFuerzaEnNoticia();
 
     // GETTERS
 
     virtual float getFuerza(std::string palabra);
 
-    virtual std::vector<std::pair<std::string, float>> getTop(unsigned int cantidad_de_valores_a_recuperar = 10);
+    virtual std::vector<std::pair<std::string, float>> getTop(unsigned int cantidad_de_valores_a_recuperar);
 
     // SETTERS
 
@@ -33,6 +33,8 @@ public:
     virtual unsigned int cantidadDePalabras();
 
     static bool compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b);
+
+    static bool compararFuerzasMenosAMayor(std::pair<std::string, float> a, std::pair<std::string, float> b);
 
     // metodos de IResultadoTecnica
 
@@ -47,6 +49,8 @@ public:
     // CONSULTAS
 
 private:
+
+    unsigned int maximo_valores_a_almacenar;
 
     std::unordered_map<std::string, float> fuerza_por_palabra;
 };

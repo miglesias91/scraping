@@ -5,7 +5,7 @@
 
 using namespace scraping::analisis::tecnicas;
 
-ResultadoFuerzaEnNoticia::ResultadoFuerzaEnNoticia() : IResultadoTecnica()
+ResultadoFuerzaEnNoticia::ResultadoFuerzaEnNoticia(unsigned int maximo_valores_a_almacenar) : IResultadoTecnica(), maximo_valores_a_almacenar(maximo_valores_a_almacenar)
 {
 }
 
@@ -51,9 +51,17 @@ bool ResultadoFuerzaEnNoticia::agregarResultado(std::string palabra, float fuerz
 
 bool ResultadoFuerzaEnNoticia::armarJson()
 {
+    this->getJson()->reset();
 
+    herramientas::utiles::Json * json = this->getJson();
+    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getTop(maximo_valores_a_almacenar);
 
-    return false;
+    for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
+    {
+        json->agregarAtributoValor(it->first, it->second);
+    }
+
+    return true;
 }
 
 bool ResultadoFuerzaEnNoticia::parsearJson()
@@ -69,6 +77,11 @@ unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()
 bool ResultadoFuerzaEnNoticia::compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b)
 {
     return a.second > b.second;
+}
+
+bool ResultadoFuerzaEnNoticia::compararFuerzasMenosAMayor(std::pair<std::string, float> a, std::pair<std::string, float> b)
+{
+    return a.second < b.second;
 }
 
 // CONSULTAS

@@ -36,6 +36,8 @@ public:
 
 private:
 
+    
+
     tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia;
 };
 

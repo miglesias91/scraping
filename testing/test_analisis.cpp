@@ -33,7 +33,19 @@ TEST(Analisis, fuerzaEnNoticia)
     std::vector<std::pair<std::string, float>> top_3 = resultado_2.getTop(3);
 }
 
-TEST(Analisis, parsearTweetsCorrectamente)
+TEST(Analisis, fuerzaEnNoticiaArmarJsonCorrectamente)
 {
+    tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
+    std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+
+    tecnicas::ResultadoFuerzaEnNoticia resultado_2;
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
+
+    resultado_2.armarJson();
+
+    std::string json_string = resultado_2.getJson()->jsonString();
+    std::string json_string_correcto = "{\"jerusalen\":}";
+
+    //ASSERT_STREQ()
 }
