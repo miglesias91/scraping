@@ -2,6 +2,10 @@
 
 // stl
 #include <algorithm>
+#include <iomanip>
+
+// herramientas
+#include <utiles/include/FuncionesString.h>
 
 using namespace scraping::analisis::tecnicas;
 
@@ -53,20 +57,39 @@ bool ResultadoFuerzaEnNoticia::armarJson()
 {
     this->getJson()->reset();
 
-    herramientas::utiles::Json * json = this->getJson();
     std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getTop(maximo_valores_a_almacenar);
 
+    std::vector<std::string> fuerzas_por_palabras;
     for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
     {
-        json->agregarAtributoValor(it->first, it->second);
+        std::ostringstream string_stream;
+        string_stream << std::setprecision(5) << it->second;
+
+        std::string registro = it->first + "_" + string_stream.str();
+        fuerzas_por_palabras.push_back(registro);
     }
+
+    herramientas::utiles::Json * json = this->getJson();
+    json->agregarAtributoArray("valores", fuerzas_por_palabras);
 
     return true;
 }
 
 bool ResultadoFuerzaEnNoticia::parsearJson()
 {
-    return false;
+    std::vector<std::string> json_fuerzas = this->getJson()->getAtributoArrayString("valores");
+
+    for (std::vector<std::string>::iterator it = json_fuerzas.begin(); it != json_fuerzas.end(); it++)
+    {
+        std::vector<std::string> campos = herramientas::utiles::FuncionesString::separar(*it, "_");
+
+        std::string termino = campos[0];
+        float fuerza = std::stof(campos[1]);
+
+        this->agregarResultado(termino, fuerza);
+    }
+
+    return true;
 }
 
 unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()

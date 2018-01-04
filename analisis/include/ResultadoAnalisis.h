@@ -14,12 +14,14 @@ namespace analisis
 class ResultadoAnalisis : public herramientas::utiles::IContieneJson
 {
 public:
-    ResultadoAnalisis();
-    ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia);
+
+    ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia());
 
     virtual ~ResultadoAnalisis();
 
     // GETTERS
+
+    tecnicas::ResultadoFuerzaEnNoticia * getResultadoFuerzaEnNoticia();
 
     // SETTERS
 
@@ -36,9 +38,7 @@ public:
 
 private:
 
-    
-
-    tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia;
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia;
 };
 
 };

@@ -42,6 +42,7 @@ TEST(Scraping, depurarAnalizarPreparar)
     analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia(10);
 
     analisis::tecnicas::ResultadoFuerzaEnNoticia resultado_1;
+
     fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_1);
 
     std::vector<std::pair<std::string, float>> top_20 = resultado_1.getTop(20);
