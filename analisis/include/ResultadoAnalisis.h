@@ -23,6 +23,14 @@ public:
 
     tecnicas::ResultadoFuerzaEnNoticia * getResultadoFuerzaEnNoticia();
 
+    // getters ISerializable
+
+    virtual std::vector<unsigned char> getContenido();
+
+    virtual std::string getPath();
+
+    virtual std::string getExtension();
+
     // SETTERS
 
     // METODOS
