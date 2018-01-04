@@ -87,3 +87,9 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
     ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
     ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
 }
+
+
+TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
+{
+
+}
