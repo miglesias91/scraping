@@ -16,7 +16,9 @@ using namespace scraping;
 
 TEST(Scraping, depurarAnalizarPreparar)
 {
-    std::ifstream archivo_le_doy_mi_palabra("le_doy_mi_palabra_20171222.txt");
+	// ----- EXTRACCION (simulada) ----- //
+
+	std::ifstream archivo_le_doy_mi_palabra("le_doy_mi_palabra_20171222.txt");
 
     std::stringstream sstream;
     sstream << archivo_le_doy_mi_palabra.rdbuf();

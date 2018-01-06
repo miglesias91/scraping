@@ -1,0 +1,18 @@
+{
+    "scraping" :
+    {
+        "scraping_local" : true,
+        "scraping_distribuido" : false,
+        "prefijo_tamanio" : 3,
+        "prefijo_medio" : "000",
+        "prefijo_contenido" : "001",
+        "prefijo_resultado" : "002"
+    },
+
+    "almacenamiento" :
+    {
+        "path_db" : "C:/temp/db_scraping",
+        "almacenamiento_local" : true,
+        "almacenamiento_distribuido" : false
+    }
+}

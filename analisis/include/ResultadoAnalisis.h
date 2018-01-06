@@ -11,7 +11,7 @@ namespace scraping
 namespace analisis
 {
 
-class ResultadoAnalisis : public herramientas::utiles::IContieneJson
+class ResultadoAnalisis : public herramientas::utiles::IContieneJson, public scraping::IAlmacenable
 {
 public:
 
@@ -22,14 +22,6 @@ public:
     // GETTERS
 
     tecnicas::ResultadoFuerzaEnNoticia * getResultadoFuerzaEnNoticia();
-
-    // getters ISerializable
-
-    virtual std::vector<unsigned char> getContenido();
-
-    virtual std::string getPath();
-
-    virtual std::string getExtension();
 
     // SETTERS
 
