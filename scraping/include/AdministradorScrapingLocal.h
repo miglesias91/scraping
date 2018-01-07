@@ -37,12 +37,6 @@ public:
 
     virtual bool modificar(std::vector<scraping::IAlmacenable*> almacenables);
 
-    virtual bool recuperarGrupo(std::string prefijo_grupo, std::vector<scraping::IAlmacenable*>* almacenables);
-
-    virtual unsigned long long int recuperarIDActual();
-
-    virtual void almacenarIDActual();
-
 private:
 
 };

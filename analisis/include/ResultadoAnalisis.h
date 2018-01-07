@@ -1,10 +1,13 @@
 #pragma once
 
-// analisis
-#include <analisis/include/ResultadoFuerzaEnNoticia.h>
-
 // herramientas
 #include <utiles/include/IContieneJson.h>
+
+// scraping
+#include <scraping/include/IAlmacenable.h>
+
+// analisis
+#include <analisis/include/ResultadoFuerzaEnNoticia.h>
 
 namespace scraping
 {
@@ -23,6 +26,10 @@ public:
 
     tecnicas::ResultadoFuerzaEnNoticia * getResultadoFuerzaEnNoticia();
 
+    // getters de IAlmacenable
+
+    virtual std::string getValorAlmacenable();
+
     // SETTERS
 
     // METODOS
@@ -33,6 +40,14 @@ public:
     virtual bool armarJson();
 
     virtual bool parsearJson();
+
+    // metodos de IAlmacenable
+
+    virtual void asignarNuevoId();
+
+    virtual void parsearValorAlmacenable(std::string valor_almacenable);
+
+    virtual std::string prefijoGrupo();
 
     // CONSULTAS
 

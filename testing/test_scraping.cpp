@@ -1,6 +1,9 @@
 // gtest
 #include <gtest/gtest.h>
 
+// scraping
+#include <scraping/include/ConfiguracionScraping.h>
+
 // depuracion
 #include <depuracion/include/Depurador.h>
 #include <depuracion/include/DepurableTweet.h>
@@ -13,6 +16,18 @@
 #include <twitter/include/Tweet.h>
 
 using namespace scraping;
+
+TEST(Scraping, levantarConfigCorrectamente)
+{
+    ConfiguracionScraping::leerConfiguracion("config_scraping.json");
+
+    ASSERT_EQ(true, ConfiguracionScraping::scrapingLocal());
+    ASSERT_EQ(false, ConfiguracionScraping::scrapingDistribuido());
+
+    ASSERT_EQ("001", ConfiguracionScraping::prefijoMedio());
+    ASSERT_EQ("002", ConfiguracionScraping::prefijoContenido());
+    ASSERT_EQ("003", ConfiguracionScraping::prefijoResultado());
+}
 
 TEST(Scraping, depurarAnalizarPreparar)
 {
@@ -52,9 +67,4 @@ TEST(Scraping, depurarAnalizarPreparar)
     // TODO: guardar
 
     // ----- PREPARACION ----- //
-}
-
-TEST(Scraping, parsearTweetsCorrectamente)
-{
-
 }

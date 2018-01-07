@@ -26,20 +26,20 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
 	if (administradorIniciado())
 	{
 		// TODO agregar log.
-		std::cout << "Administrador ya fue iniciado." << std::endl;
+		std::cout << "Scraping ya fue iniciado." << std::endl;
 		return;
 		// throw std::exception("Administrador ya fue iniciado.");
 	}
 
-	ConfiguracionAplicacion::leerConfiguracion(path_configuracion);
+	ConfiguracionScraping::leerConfiguracion(path_configuracion);
 
-	if (ConfiguracionAplicacion::aplicacionLocal())
+	if (ConfiguracionScraping::scrapingLocal())
 	{
-		crearAdministradorAplicacionLocal();
+		crearAdministradorScrapingLocal();
 	}
 	else
 	{
-		crearAdministradorAplicacionDistribuida();
+		crearAdministradorScrapingDistribuido();
 	}
 }
 
@@ -51,12 +51,12 @@ void IAdministradorScraping::liberar()
 	}
 }
 
-void IAdministradorScraping::crearAdministradorAplicacionLocal()
+void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
-	administrador = new AdministradorAplicacionLocal();
+	administrador = new AdministradorScrapingLocal();
 };
 
-void IAdministradorScraping::crearAdministradorAplicacionDistribuida() {};
+void IAdministradorScraping::crearAdministradorScrapingDistribuido() {};
 
 
 bool IAdministradorScraping::administradorIniciado()

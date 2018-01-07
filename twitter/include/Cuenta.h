@@ -3,6 +3,9 @@
 // stl
 #include <string>
 
+// extraccion
+#include <extraccion/include/Medio.h>
+
 namespace scraping
 {
 namespace twitter
@@ -10,11 +13,11 @@ namespace twitter
 namespace modelo
 {
 
-class Usuario
+class Cuenta : public scraping::extraccion::Medio
 {
 public:
-    Usuario(std::string nombre = "");
-    virtual ~Usuario();
+    Cuenta(std::string nombre = "");
+    virtual ~Cuenta();
 
     // GETTERS
 

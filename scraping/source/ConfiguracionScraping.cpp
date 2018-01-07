@@ -8,101 +8,52 @@ using namespace scraping;
 
 std::string ConfiguracionScraping::path_config;
 
-bool ConfiguracionScraping::aplicacion_local;
-bool ConfiguracionScraping::aplicacion_distribuida;
-bool ConfiguracionScraping::prefijo_habilitado;
-unsigned int ConfiguracionScraping::prefijo_tamanio;
+bool ConfiguracionScraping::scraping_local;
+bool ConfiguracionScraping::scraping_distribuido;
 std::string ConfiguracionScraping::prefijo_configuracion;
 
-std::string ConfiguracionScraping::prefijo_concepto;
-std::string ConfiguracionScraping::prefijo_termino;
-std::string ConfiguracionScraping::prefijo_consulta;
-std::string ConfiguracionScraping::prefijo_reporte;
-std::string ConfiguracionScraping::prefijo_seccion;
-std::string ConfiguracionScraping::prefijo_periodo;
-std::string ConfiguracionScraping::prefijo_fecha;
 std::string ConfiguracionScraping::prefijo_medio;
+std::string ConfiguracionScraping::prefijo_contenido;
+std::string ConfiguracionScraping::prefijo_resultado;
 
-std::string ConfiguracionScraping::prefijo_relaciones_concepto;
-std::string ConfiguracionScraping::prefijo_relaciones_termino;
-std::string ConfiguracionScraping::prefijo_relaciones_consulta;
-std::string ConfiguracionScraping::prefijo_relaciones_reporte;
-std::string ConfiguracionScraping::prefijo_relaciones_seccion;
-std::string ConfiguracionScraping::prefijo_relaciones_periodo;
-std::string ConfiguracionScraping::prefijo_relaciones_fecha;
-std::string ConfiguracionScraping::prefijo_relaciones_medio;
-
-std::string ConfiguracionScraping::clave_id_actual;
+std::string ConfiguracionScraping::clave_id_medio_actual;
+std::string ConfiguracionScraping::clave_id_contenido_actual;
 
 const unsigned int ConfiguracionScraping::tamanio_alocador = 1024;
 rapidjson::Document ConfiguracionScraping::documento_alocador;
 
 void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configuracion)
 {
-	std::ifstream archivo(path_archivo_configuracion);
+    std::ifstream archivo(path_archivo_configuracion);
 
     path_config = path_archivo_configuracion;
 
-	if (false == archivo.good())
-	{
-		throw - 1;
-	}
+    if (false == archivo.good())
+    {
+	    throw - 1;
+    }
 
-	std::ostringstream sstream;
-	sstream << archivo.rdbuf();
-	const std::string string_config(sstream.str());
+    std::ostringstream sstream;
+    sstream << archivo.rdbuf();
+    const std::string string_config(sstream.str());
 
-	rapidjson::Document config_json;
-	config_json.Parse(string_config.c_str());
+    rapidjson::Document config_json;
+    config_json.Parse(string_config.c_str());
 
-    rapidjson::Value & config_app_json = config_json["aplicacion"];
+    rapidjson::Value & config_scraping_json = config_json["scraping"];
 
-	aplicacion_local = config_app_json[ConfiguracionScraping::tagAplicacionLocal().c_str()].GetBool();
-	aplicacion_distribuida = config_app_json[ConfiguracionScraping::tagAplicacionDistribuida().c_str()].GetBool();
-	prefijo_habilitado = config_app_json[ConfiguracionScraping::tagPrefijoHabilitado().c_str()].GetBool();
-	prefijo_tamanio = config_app_json[ConfiguracionScraping::tagPrefijoTamanio().c_str()].GetUint();
+    scraping_local = config_scraping_json[ConfiguracionScraping::tagScrapingLocal().c_str()].GetBool();
+    scraping_distribuido = config_scraping_json[ConfiguracionScraping::tagScrapingDistribuido().c_str()].GetBool();
 
-	prefijo_configuracion = config_app_json[ConfiguracionScraping::tagPrefijoConfiguracion().c_str()].GetString();
-	prefijo_concepto = config_app_json[ConfiguracionScraping::tagPrefijoConcepto().c_str()].GetString();
-	prefijo_termino = config_app_json[ConfiguracionScraping::tagPrefijoTermino().c_str()].GetString();
-	prefijo_consulta = config_app_json[ConfiguracionScraping::tagPrefijoConsulta().c_str()].GetString();
-	prefijo_reporte = config_app_json[ConfiguracionScraping::tagPrefijoReporte().c_str()].GetString();
-	prefijo_seccion = config_app_json[ConfiguracionScraping::tagPrefijoSeccion().c_str()].GetString();
-	prefijo_periodo = config_app_json[ConfiguracionScraping::tagPrefijoPeriodo().c_str()].GetString();
-	prefijo_fecha = config_app_json[ConfiguracionScraping::tagPrefijoFecha().c_str()].GetString();
-	prefijo_medio = config_app_json[ConfiguracionScraping::tagPrefijoMedio().c_str()].GetString();
-
-    prefijo_relaciones_concepto = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesConcepto().c_str()].GetString();
-    prefijo_relaciones_termino = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesTermino().c_str()].GetString();
-    prefijo_relaciones_consulta = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesConsulta().c_str()].GetString();
-    prefijo_relaciones_reporte = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesReporte().c_str()].GetString();
-    prefijo_relaciones_seccion = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesSeccion().c_str()].GetString();
-    prefijo_relaciones_periodo = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesPeriodo().c_str()].GetString();
-    prefijo_relaciones_fecha = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesFecha().c_str()].GetString();
-    prefijo_relaciones_medio = config_app_json[ConfiguracionScraping::tagPrefijoRelacionesMedio().c_str()].GetString();
-
-	// recorto el prefijo al tamanio indicado en el archivo de config.
-	prefijo_configuracion.erase(prefijo_configuracion.begin() + prefijo_tamanio, prefijo_configuracion.end());
-	prefijo_concepto.erase(prefijo_concepto.begin() + prefijo_tamanio, prefijo_concepto.end());
-	prefijo_termino.erase(prefijo_termino.begin() + prefijo_tamanio, prefijo_termino.end());
-	prefijo_consulta.erase(prefijo_consulta.begin() + prefijo_tamanio, prefijo_consulta.end());
-	prefijo_reporte.erase(prefijo_reporte.begin() + prefijo_tamanio, prefijo_reporte.end());
-	prefijo_seccion.erase(prefijo_seccion.begin() + prefijo_tamanio, prefijo_seccion.end());
-	prefijo_fecha.erase(prefijo_fecha.begin() + prefijo_tamanio, prefijo_fecha.end());
-	prefijo_medio.erase(prefijo_medio.begin() + prefijo_tamanio, prefijo_medio.end());
-
-    prefijo_relaciones_concepto.erase(prefijo_relaciones_concepto.begin() + prefijo_tamanio, prefijo_relaciones_concepto.end());
-    prefijo_relaciones_termino.erase(prefijo_relaciones_termino.begin() + prefijo_tamanio, prefijo_relaciones_termino.end());
-    prefijo_relaciones_consulta.erase(prefijo_relaciones_consulta.begin() + prefijo_tamanio, prefijo_relaciones_consulta.end());
-    prefijo_relaciones_reporte.erase(prefijo_relaciones_reporte.begin() + prefijo_tamanio, prefijo_relaciones_reporte.end());
-    prefijo_relaciones_seccion.erase(prefijo_relaciones_seccion.begin() + prefijo_tamanio, prefijo_relaciones_seccion.end());
-    prefijo_relaciones_fecha.erase(prefijo_relaciones_fecha.begin() + prefijo_tamanio, prefijo_relaciones_fecha.end());
-    prefijo_relaciones_medio.erase(prefijo_relaciones_medio.begin() + prefijo_tamanio, prefijo_relaciones_medio.end());
+    prefijo_configuracion = config_scraping_json[ConfiguracionScraping::tagPrefijoConfiguracion().c_str()].GetString();
+    prefijo_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoMedio().c_str()].GetString();
+    prefijo_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoContenido().c_str()].GetString();
+    prefijo_resultado = config_scraping_json[ConfiguracionScraping::tagPrefijoResultado().c_str()].GetString();
 }
 
 rapidjson::Document::AllocatorType * ConfiguracionScraping::getAlocador()
 {
-	return &documento_alocador.GetAllocator();
+    return &documento_alocador.GetAllocator();
 }
 
 std::string ConfiguracionScraping::pathConfiguracion()
@@ -110,223 +61,76 @@ std::string ConfiguracionScraping::pathConfiguracion()
     return path_config;
 }
 
-bool ConfiguracionScraping::aplicacionLocal()
+bool ConfiguracionScraping::scrapingLocal()
 {
-	return aplicacion_local;
+    return scraping_local;
 }
 
-bool ConfiguracionScraping::aplicacionDistribuida()
+bool ConfiguracionScraping::scrapingDistribuido()
 {
-	return aplicacion_distribuida;
-}
-
-bool ConfiguracionScraping::prefijoHabilitado()
-{
-	return prefijo_habilitado;
-}
-
-unsigned int ConfiguracionScraping::prefijoTamanio()
-{
-	return prefijo_tamanio;
+    return scraping_distribuido;
 }
 
 std::string ConfiguracionScraping::prefijoConfiguracion()
 {
-	return prefijo_configuracion;
+    return prefijo_configuracion;
 }
 
 // ENTIDADES
-std::string ConfiguracionScraping::prefijoConcepto()
-{
-	return prefijo_concepto;
-}
-
-std::string ConfiguracionScraping::prefijoTermino()
-{
-	return prefijo_termino;
-}
-
-std::string ConfiguracionScraping::prefijoConsulta()
-{
-	return prefijo_consulta;
-}
-
-std::string ConfiguracionScraping::prefijoReporte()
-{
-	return prefijo_reporte;
-}
-
-std::string ConfiguracionScraping::prefijoSeccion()
-{
-	return prefijo_seccion;
-}
-
-std::string ConfiguracionScraping::prefijoPeriodo()
-{
-	return prefijo_periodo;
-}
-
-std::string ConfiguracionScraping::prefijoFecha()
-{
-	return prefijo_fecha;
-}
-
 std::string ConfiguracionScraping::prefijoMedio()
 {
-	return prefijo_medio;
+    return prefijo_medio;
 }
 
-// relaciones
-std::string ConfiguracionScraping::prefijoRelacionesConcepto()
+std::string ConfiguracionScraping::prefijoContenido()
 {
-    return prefijo_relaciones_concepto;
+    return prefijo_contenido;
 }
 
-std::string ConfiguracionScraping::prefijoRelacionesTermino()
+std::string ConfiguracionScraping::prefijoResultado()
 {
-    return prefijo_relaciones_termino;
+    return prefijo_resultado;
 }
 
-std::string ConfiguracionScraping::prefijoRelacionesConsulta()
+std::string ConfiguracionScraping::claveIDMedioActual()
 {
-    return prefijo_relaciones_consulta;
+    return "id_medio_actual";
 }
 
-std::string ConfiguracionScraping::prefijoRelacionesReporte()
+std::string ConfiguracionScraping::claveIDContenidoActual()
 {
-    return prefijo_relaciones_reporte;
+    return "id_contenido_actual";
 }
 
-std::string ConfiguracionScraping::prefijoRelacionesSeccion()
+std::string ConfiguracionScraping::tagScrapingLocal()
 {
-    return prefijo_relaciones_seccion;
+    return "scraping_local";
 }
 
-std::string ConfiguracionScraping::prefijoRelacionesPeriodo()
+std::string ConfiguracionScraping::tagScrapingDistribuido()
 {
-    return prefijo_relaciones_periodo;
-}
-
-std::string ConfiguracionScraping::prefijoRelacionesFecha()
-{
-    return prefijo_relaciones_fecha;
-}
-
-std::string ConfiguracionScraping::prefijoRelacionesMedio()
-{
-    return prefijo_relaciones_medio;
-}
-
-std::string ConfiguracionScraping::claveIDActual()
-{
-	return "id_actual";
-}
-
-std::string ConfiguracionScraping::tagAplicacionLocal()
-{
-	return "aplicacion_local";
-}
-
-std::string ConfiguracionScraping::tagAplicacionDistribuida()
-{
-	return "aplicacion_distribuida";
-}
-
-std::string ConfiguracionScraping::tagPrefijoHabilitado()
-{
-	return "prefijo_habilitado";
-}
-
-std::string ConfiguracionScraping::tagPrefijoTamanio()
-{
-	return "prefijo_tamanio";
+    return "scraping_distribuido";
 }
 
 std::string ConfiguracionScraping::tagPrefijoConfiguracion()
 {
-	return "prefijo_configuracion";
+    return "prefijo_configuracion";
 }
 
 // ENTIDADES
-std::string ConfiguracionScraping::tagPrefijoConcepto()
-{
-	return "prefijo_concepto";
-}
-
-std::string ConfiguracionScraping::tagPrefijoTermino()
-{
-	return "prefijo_termino";
-}
-
-std::string ConfiguracionScraping::tagPrefijoConsulta()
-{
-	return "prefijo_consulta";
-}
-
-std::string ConfiguracionScraping::tagPrefijoReporte()
-{
-	return "prefijo_reporte";
-}
-
-std::string ConfiguracionScraping::tagPrefijoSeccion()
-{
-	return "prefijo_seccion";
-}
-
-std::string ConfiguracionScraping::tagPrefijoPeriodo()
-{
-	return "prefijo_periodo";
-}
-
-std::string ConfiguracionScraping::tagPrefijoFecha()
-{
-	return "prefijo_fecha";
-}
-
 std::string ConfiguracionScraping::tagPrefijoMedio()
 {
-	return "prefijo_medio";
+    return "prefijo_medio";
 }
 
-// RELACIONES
-std::string ConfiguracionScraping::tagPrefijoRelacionesConcepto()
+std::string ConfiguracionScraping::tagPrefijoContenido()
 {
-    return "prefijo_relaciones_concepto";
+    return "prefijo_contenido";
 }
 
-std::string ConfiguracionScraping::tagPrefijoRelacionesTermino()
+std::string ConfiguracionScraping::tagPrefijoResultado()
 {
-    return "prefijo_relaciones_termino";
-}
-
-std::string ConfiguracionScraping::tagPrefijoRelacionesConsulta()
-{
-    return "prefijo_relaciones_consulta";
-}
-
-std::string ConfiguracionScraping::tagPrefijoRelacionesReporte()
-{
-    return "prefijo_relaciones_reporte";
-}
-
-std::string ConfiguracionScraping::tagPrefijoRelacionesSeccion()
-{
-    return "prefijo_relaciones_seccion";
-}
-
-std::string ConfiguracionScraping::tagPrefijoRelacionesPeriodo()
-{
-    return "prefijo_relaciones_periodo";
-}
-
-std::string ConfiguracionScraping::tagPrefijoRelacionesFecha()
-{
-    return "prefijo_relaciones_fecha";
-}
-
-std::string ConfiguracionScraping::tagPrefijoRelacionesMedio()
-{
-    return "prefijo_relaciones_medio";
+    return "prefijo_resultado";
 }
 
 ConfiguracionScraping::ConfiguracionScraping()

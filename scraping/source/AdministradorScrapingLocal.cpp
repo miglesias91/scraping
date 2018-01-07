@@ -5,8 +5,12 @@ using namespace scraping;
 // almacenamiento
 #include <almacenamiento/include/IAdministradorAlmacenamiento.h>
 
-// aplicacion
+// scraping
 #include <scraping/include/ConfiguracionScraping.h>
+
+// extraccion
+#include <extraccion/include/Medio.h>
+#include <extraccion/include/Contenido.h>
 
 AdministradorScrapingLocal::AdministradorScrapingLocal() : IAdministradorScraping()
 {
@@ -29,7 +33,8 @@ bool AdministradorScrapingLocal::abrirBD()
 
 bool AdministradorScrapingLocal::cerrarBD()
 {
-	this->almacenarIDActual();
+    IAdministradorScraping::almacenarIDActual<extraccion::Medio>();
+    IAdministradorScraping::almacenarIDActual<extraccion::Contenido>();
 
 	bool retorno = this->admin_almacenamiento->cerrar();
 
@@ -182,57 +187,4 @@ bool AdministradorScrapingLocal::modificar(std::vector<scraping::IAlmacenable*> 
     }
 
     return retorno;
-}
-
-bool AdministradorScrapingLocal::recuperarGrupo(std::string prefijo_grupo, std::vector<scraping::IAlmacenable*>* entidades)
-{
-	std::vector<almacenamiento::IAlmacenableClaveValor*> grupo;
-
-    this->admin_almacenamiento->recuperarGrupo(prefijo_grupo, grupo);
-
-    scraping::IAlmacenable* entidad = NULL;
-	for (std::vector<almacenamiento::IAlmacenableClaveValor*>::iterator it = grupo.begin(); it != grupo.end(); it++)
-	{
-
-	}
-
-	return true;
-}
-
-
-unsigned long long int AdministradorScrapingLocal::recuperarIDActual()
-{
-    std::string clave = ConfiguracionScraping::claveIDActual();
-    std::string grupo = ConfiguracionScraping ::prefijoConfiguracion();
-
-    almacenamiento::IAlmacenableClaveValor* clave_valor_a_recuperar = new almacenamiento::IAlmacenableClaveValor(clave, grupo);
-
-    bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia()->recuperar(clave_valor_a_recuperar);
-
-    std::string string_id_actual = clave_valor_a_recuperar->getValor();
-
-    unsigned long long int id_actual = 0;
-    if (false == string_id_actual.empty())
-    {
-        id_actual = std::stoull(string_id_actual);
-    }
-
-    GestorIDs::setIdActual(id_actual);
-
-    delete clave_valor_a_recuperar;
-
-    return id_actual;
-}
-
-void AdministradorScrapingLocal::almacenarIDActual()
-{
-    std::string clave = ConfiguracionAplicacion::claveIDActual();
-    std::string grupo = ConfiguracionAplicacion::prefijoConfiguracion();
-    std::string valor = std::to_string(GestorIDs::getIdActual());
-
-    almacenamiento::IAlmacenableClaveValor* clave_valor_a_recuperar = new almacenamiento::IAlmacenableClaveValor(clave, grupo, valor);
-
-    bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia()->modificar(clave_valor_a_recuperar);
-
-    delete clave_valor_a_recuperar;
 }

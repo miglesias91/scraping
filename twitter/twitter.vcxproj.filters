@@ -39,11 +39,11 @@
     <ClInclude Include="include\Tweet.h">
       <Filter>Archivos de encabezado\modelo</Filter>
     </ClInclude>
-    <ClInclude Include="include\Usuario.h">
-      <Filter>Archivos de encabezado\modelo</Filter>
-    </ClInclude>
     <ClInclude Include="include\SolicitudUltimosTweets.h">
       <Filter>Archivos de encabezado\comunicacion</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Cuenta.h">
+      <Filter>Archivos de encabezado\modelo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,11 +59,11 @@
     <ClCompile Include="source\Tweet.cpp">
       <Filter>Archivos de código fuente\modelo</Filter>
     </ClCompile>
-    <ClCompile Include="source\Usuario.cpp">
-      <Filter>Archivos de código fuente\modelo</Filter>
-    </ClCompile>
     <ClCompile Include="source\SolicitudUltimosTweets.cpp">
       <Filter>Archivos de código fuente\comunicacion</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Cuenta.cpp">
+      <Filter>Archivos de código fuente\modelo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

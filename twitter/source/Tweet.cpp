@@ -11,7 +11,7 @@
 
 using namespace scraping::twitter::modelo;
 
-Tweet::Tweet(herramientas::utiles::Json * tweet_json) : herramientas::utiles::IContieneJson(tweet_json)
+Tweet::Tweet(herramientas::utiles::Json * tweet_json) : Contenido(), herramientas::utiles::IContieneJson(tweet_json)
 {
     if (NULL == tweet_json)
     {
@@ -30,7 +30,7 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : herramientas::utiles::IC
     std::vector<std::string> hashtags = entidades_json->getAtributoArrayString("hashtags");
     delete entidades_json;
 
-    this->setId(id);
+    this->setIdTweet(id);
     this->setFechaCreacion(this->parsearFechaEnFormatoTwitter(fecha_creacion_formato_twitter));
     this->setTexto(texto);
     this->setIdUsuario(id_usuario);
@@ -43,7 +43,7 @@ Tweet::~Tweet()
 
 // GETTERS
 
-unsigned long long int Tweet::getId()
+unsigned long long int Tweet::getIdTweet()
 {
     return this->id;
 }
@@ -70,7 +70,7 @@ std::vector<std::string> Tweet::getHashtags()
 
 // SETTERS
 
-void Tweet::setId(unsigned long long int id)
+void Tweet::setIdTweet(unsigned long long int id)
 {
     this->id = id;
 }
@@ -106,7 +106,7 @@ bool Tweet::armarJson()
 {
     this->getJson()->reset();
 
-    this->getJson()->agregarAtributoValor("id_tweet", this->getId());
+    this->getJson()->agregarAtributoValor("id_tweet", this->getIdTweet());
     this->getJson()->agregarAtributoValor("fecha_creacion", this->getFechaCreacion().getStringAAAAMMDD());
     this->getJson()->agregarAtributoValor("texto", this->getTexto());
     this->getJson()->agregarAtributoValor("id_usuario", this->getIdUsuario());
@@ -123,7 +123,7 @@ bool Tweet::parsearJson()
     unsigned long long int id_usuario = this->getJson()->getAtributoValorUint("id_usuario");
     std::vector<std::string> hashtags = this->getJson()->getAtributoArrayString("hashtags");
 
-    this->setId(id);
+    this->setIdTweet(id);
     this->setFechaCreacion(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(fecha_creacion));
     this->setTexto(texto);
     this->setIdUsuario(id_usuario);

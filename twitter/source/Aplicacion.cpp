@@ -20,9 +20,9 @@ Aplicacion::~Aplicacion()
     }
 }
 
-std::vector<Tweet> Aplicacion::leerUltimosTweets(Usuario * usuario, unsigned int cantidad_de_tweets)
+std::vector<Tweet> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets)
 {
-    comunicacion::SolicitudUltimosTweets solicitud_ultimos_tweets(usuario, cantidad_de_tweets);
+    comunicacion::SolicitudUltimosTweets solicitud_ultimos_tweets(cuenta, cantidad_de_tweets);
 
     cpprest::HTTPRespuesta * respuetas_con_tweets = this->consumidor_api->realizarSolicitud(&solicitud_ultimos_tweets);
 

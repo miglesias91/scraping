@@ -2,7 +2,7 @@
 
 // twitter
 #include <twitter/include/ConsumidorAPI.h>
-#include <twitter/include/Usuario.h>
+#include <twitter/include/Cuenta.h>
 #include <twitter/include/Tweet.h>
 
 namespace scraping
@@ -24,7 +24,7 @@ public:
 
     // METODOS
 
-    std::vector<Tweet> leerUltimosTweets(Usuario * usuario, unsigned int cantidad_de_tweets = 5);
+    std::vector<Tweet> leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets = 5);
 
 private:
 

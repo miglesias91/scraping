@@ -4,6 +4,9 @@
 #include <utiles/include/IContieneJson.h>
 #include <utiles/include/Fecha.h>
 
+// extraccion
+#include <extraccion/include/Contenido.h>
+
 namespace scraping
 {
 namespace twitter
@@ -11,7 +14,7 @@ namespace twitter
 namespace modelo
 {
 
-class Tweet : public herramientas::utiles::IContieneJson
+class Tweet : public scraping::extraccion::Contenido, public herramientas::utiles::IContieneJson
 {
 public:
 
@@ -20,7 +23,7 @@ public:
 
     // GETTERS
 
-    unsigned long long int getId();
+    unsigned long long int getIdTweet();
 
     herramientas::utiles::Fecha getFechaCreacion();
 
@@ -32,7 +35,7 @@ public:
 
     // SETTERS
 
-    void setId(unsigned long long int id);
+    void setIdTweet(unsigned long long int id);
 
     void setFechaCreacion(herramientas::utiles::Fecha fecha_creacion);
 

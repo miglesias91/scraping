@@ -4,7 +4,7 @@
 #include <casablanca_wrapper/include/HTTPSolicitud.h>
 
 // twitter
-#include <twitter/include/Usuario.h>
+#include <twitter/include/Cuenta.h>
 
 namespace scraping
 {
@@ -16,7 +16,7 @@ namespace comunicacion
 class SolicitudUltimosTweets : public herramientas::cpprest::HTTPSolicitud
 {
 public:
-    SolicitudUltimosTweets(scraping::twitter::modelo::Usuario * usuario, unsigned int cantidad_de_tweets);
+    SolicitudUltimosTweets(scraping::twitter::modelo::Cuenta * cuenta, unsigned int cantidad_de_tweets);
     virtual ~SolicitudUltimosTweets();
 };
 

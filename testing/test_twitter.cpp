@@ -7,7 +7,7 @@
 
 // twitter
 #include <twitter/include/Aplicacion.h>
-#include <twitter/include/Usuario.h>
+#include <twitter/include/Cuenta.h>
 #include <twitter/include/Tweet.h>
 
 // herramenitas
@@ -51,7 +51,7 @@ TEST(ScrapingTwitter, parsearTweetsCorrectamente)
         tweets.push_back(nuevo_tweet);
     }
 
-    unsigned long long int id_parseado_tweet_1 = tweets[0]->getId();
+    unsigned long long int id_parseado_tweet_1 = tweets[0]->getIdTweet();
     std::string texto_parseado_tweet_1 = tweets[0]->getTexto();
     herramientas::utiles::Fecha fecha_de_creacion_parseada_tweet_1 = tweets[0]->getFechaCreacion();
     unsigned long long int id_usuario_parseado_tweet_1 = tweets[0]->getIdUsuario();

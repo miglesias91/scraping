@@ -121,7 +121,7 @@
     <ClInclude Include="include\ConsumidorAPI.h" />
     <ClInclude Include="include\LineaDeTiempo.h" />
     <ClInclude Include="include\Tweet.h" />
-    <ClInclude Include="include\Usuario.h" />
+    <ClInclude Include="include\Cuenta.h" />
     <ClInclude Include="include\SolicitudUltimosTweets.h" />
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +130,7 @@
     <ClCompile Include="source\ConsumidorAPI.cpp" />
     <ClCompile Include="source\LineaDeTiempo.cpp" />
     <ClCompile Include="source\Tweet.cpp" />
-    <ClCompile Include="source\Usuario.cpp" />
+    <ClCompile Include="source\Cuenta.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

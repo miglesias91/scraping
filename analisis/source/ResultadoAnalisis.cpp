@@ -15,9 +15,18 @@ ResultadoAnalisis::~ResultadoAnalisis()
     }
 }
 
+// GETTERS
+
 tecnicas::ResultadoFuerzaEnNoticia * ResultadoAnalisis::getResultadoFuerzaEnNoticia()
 {
     return this->resultado_fuerza_en_noticia;
+}
+
+// getters de IAlmacenable
+
+std::string ResultadoAnalisis::getValorAlmacenable()
+{
+    return this->getJson()->jsonString();
 }
 
 bool ResultadoAnalisis::armarJson()
@@ -31,6 +40,13 @@ bool ResultadoAnalisis::armarJson()
     return true;
 }
 
+// SETTERS
+
+// METODOS
+
+
+// metodos de IContieneJson
+
 bool ResultadoAnalisis::parsearJson()
 {
     herramientas::utiles::Json * json_fuerza_en_noticia = this->getJson()->getAtributoValorJson("fuerza_en_noticia");
@@ -41,10 +57,22 @@ bool ResultadoAnalisis::parsearJson()
     return true;
 }
 
-// GETTERS
+void ResultadoAnalisis::asignarNuevoId()
+{
+}
 
-// SETTERS
+void ResultadoAnalisis::parsearValorAlmacenable(std::string valor_almacenable)
+{
+    herramientas::utiles::Json * json_almacenable = new herramientas::utiles::Json(valor_almacenable);
 
-// METODOS
+    this->setJson(json_almacenable);
+
+    bool parseo_correcto = this->parsearJson();
+}
+
+std::string ResultadoAnalisis::prefijoGrupo()
+{
+    return std::string();
+}
 
 // CONSULTAS
