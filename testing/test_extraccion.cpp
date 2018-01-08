@@ -3,6 +3,7 @@
 
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
+#include <scraping/include/IAdministradorScraping.h>
 
 // twitter
 #include <twitter/include/Aplicacion.h>
@@ -42,7 +43,7 @@ TEST(Extraccion, almacenarYRecuperarCorrectamente)
     {
         nuevo_tweet = new modelo::Tweet(*it);
         nuevo_tweet->asignarNuevoId();
-        
+
         tweets.push_back(nuevo_tweet);
 
         cuenta.agregarContenidoParaAnalizar(nuevo_tweet);
@@ -57,6 +58,56 @@ TEST(Extraccion, almacenarYRecuperarCorrectamente)
     ASSERT_EQ(202, ids_tweets[2]);
     ASSERT_EQ(203, ids_tweets[3]);
     ASSERT_EQ(204, ids_tweets[4]);
+
+    // almaceno el medio (cuenta twitter).
+    scraping::IAdministradorScraping::getInstancia()->almacenar(&cuenta);
+
+    // almaceno los contenidos del medio (tweets de la cuenta).
+    for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
+    {
+        scraping::IAdministradorScraping::getInstancia()->almacenar(*it);
+    }
+
+    // recupero el medio.
+    modelo::Cuenta cuenta_recuperada;
+    cuenta_recuperada.setId(cuenta.getId()->copia());
+
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&cuenta_recuperada);
+
+    // recupero los contenidos del medio.
+    modelo::Tweet tweet_recuperado_1;
+    tweet_recuperado_1.setId(tweets[0]->getId()->copia());
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_1);
+
+    modelo::Tweet tweet_recuperado_2;
+    tweet_recuperado_2.setId(tweets[1]->getId()->copia());
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_2);
+
+    modelo::Tweet tweet_recuperado_3;
+    tweet_recuperado_3.setId(tweets[2]->getId()->copia());
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_3);
+
+    modelo::Tweet tweet_recuperado_4;
+    tweet_recuperado_4.setId(tweets[3]->getId()->copia());
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_4);
+
+    modelo::Tweet tweet_recuperado_5;
+    tweet_recuperado_5.setId(tweets[4]->getId()->copia());
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_5);
+
+    ASSERT_EQ(cuenta.getNombre(), cuenta_recuperada.getNombre());
+
+    ASSERT_EQ(tweets[0]->getIdTweet(), tweet_recuperado_1.getIdTweet());
+    ASSERT_EQ(tweets[1]->getIdTweet(), tweet_recuperado_2.getIdTweet());
+    ASSERT_EQ(tweets[2]->getIdTweet(), tweet_recuperado_3.getIdTweet());
+    ASSERT_EQ(tweets[3]->getIdTweet(), tweet_recuperado_4.getIdTweet());
+    ASSERT_EQ(tweets[4]->getIdTweet(), tweet_recuperado_5.getIdTweet());
+
+    ASSERT_EQ(tweets[0]->getTexto(), tweet_recuperado_1.getTexto());
+    ASSERT_EQ(tweets[1]->getTexto(), tweet_recuperado_2.getTexto());
+    ASSERT_EQ(tweets[2]->getTexto(), tweet_recuperado_3.getTexto());
+    ASSERT_EQ(tweets[3]->getTexto(), tweet_recuperado_4.getTexto());
+    ASSERT_EQ(tweets[4]->getTexto(), tweet_recuperado_5.getTexto());
 
     for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
     {

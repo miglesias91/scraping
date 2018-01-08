@@ -14,7 +14,7 @@ namespace twitter
 namespace modelo
 {
 
-class Tweet : public scraping::extraccion::Contenido, public herramientas::utiles::IContieneJson
+class Tweet : public scraping::extraccion::Contenido
 {
 public:
 
@@ -27,7 +27,7 @@ public:
 
     herramientas::utiles::Fecha getFechaCreacion();
 
-    std::string getTexto();
+    std::string getTextoTweet();
 
     unsigned long long int getIdUsuario();
 
@@ -39,7 +39,7 @@ public:
 
     void setFechaCreacion(herramientas::utiles::Fecha fecha_creacion);
 
-    void setTexto(std::string texto);
+    void setTextoTweet(std::string texto_tweet);
 
     void setIdUsuario(unsigned long long int id_usuario);
 
@@ -69,13 +69,13 @@ private:
 
     // ATRIBUTOS
 
-    unsigned long long int id;
+    unsigned long long int id_tweet;
 
     herramientas::utiles::Fecha fecha_creacion;
 
     // esta en formato UTF8 xq obtiene el valor del Json (rapidjson) que contiene.
     // (ir al test 'GettersYSettersCodificaciones' de 'herramientas_desarrollo' para ver como funciona.
-    std::string texto;
+    std::string texto_tweet;
 
     unsigned long long int id_usuario;
 

@@ -5,7 +5,8 @@
 #include <vector>
 
 // utiles
-#include  <utiles/include/GestorIDs.h>
+#include <utiles/include/GestorIDs.h>
+#include <utiles/include/IContieneJson.h>
 
 // scraping
 #include <scraping/include/IAlmacenable.h>
@@ -19,10 +20,10 @@ namespace scraping
 namespace extraccion
 {
 
-class Medio : public IAlmacenable
+class Medio : public IAlmacenable, public herramientas::utiles::IContieneJson
 {
 public:
-    Medio();
+    Medio(herramientas::utiles::Json * json = NULL);
     virtual ~Medio();
 
     // GETTERS

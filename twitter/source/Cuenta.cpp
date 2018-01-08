@@ -26,4 +26,24 @@ void Cuenta::setNombre(std::string nombre)
 
 // METODOS
 
+// metodos de IContieneJson
+
+bool Cuenta::armarJson()
+{
+    this->getJson()->reset();
+
+    this->getJson()->agregarAtributoValor("nombre_cuenta", this->getNombre());
+
+    return true;
+}
+
+bool Cuenta::parsearJson()
+{
+    std::string nombre_cuenta = this->getJson()->getAtributoValorString("nombre_cuenta");
+
+    this->setNombre(nombre_cuenta);
+
+    return true;
+}
+
 // CONSULTAS

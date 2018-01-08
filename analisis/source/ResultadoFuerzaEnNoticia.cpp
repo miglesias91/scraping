@@ -3,6 +3,7 @@
 // stl
 #include <algorithm>
 #include <iomanip>
+#include <sstream>
 
 // herramientas
 #include <utiles/include/FuncionesString.h>

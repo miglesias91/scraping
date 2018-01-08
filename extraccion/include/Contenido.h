@@ -4,7 +4,8 @@
 #include <string>
 
 // utiles
-#include  <utiles/include/GestorIDs.h>
+#include <utiles/include/GestorIDs.h>
+#include <utiles/include/IContieneJson.h>
 
 // scraping
 #include <scraping/include/IAlmacenable.h>
@@ -15,13 +16,15 @@ namespace scraping
 namespace extraccion
 {
 
-class Contenido : public IAlmacenable
+class Contenido : public IAlmacenable, public herramientas::utiles::IContieneJson
 {
 public:
-    Contenido();
+    Contenido(herramientas::utiles::Json * json = NULL);
     virtual ~Contenido();
 
     // GETTERS
+
+    virtual std::string getTexto();
 
     static std::string getClaveIDActual();
 
@@ -32,6 +35,8 @@ public:
     virtual std::string getValorAlmacenable();
 
     // SETTERS
+
+    virtual void setTexto(std::string texto);
 
     // METODOS
 
@@ -48,6 +53,10 @@ public:
 private:
 
     static herramientas::utiles::GestorIDs gestor_ids_contenidos;
+
+    // ATRIBUTOS
+
+    std::string texto;
 };
 
 };

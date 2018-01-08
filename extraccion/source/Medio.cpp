@@ -7,7 +7,7 @@ using namespace scraping::extraccion;
 
 herramientas::utiles::GestorIDs Medio::gestor_ids_medios;
 
-Medio::Medio() : IAlmacenable(ConfiguracionScraping::prefijoMedio())
+Medio::Medio(herramientas::utiles::Json * json) : IAlmacenable(ConfiguracionScraping::prefijoMedio()), IContieneJson(json)
 {
 }
 
@@ -29,7 +29,23 @@ std::vector<unsigned long long int> Medio::getIDsContenidosNoAnalizados()
 
 std::string Medio::getValorAlmacenable()
 {
-    return std::string();
+    this->armarJson();
+
+    herramientas::utiles::Json json_almacenable;
+
+    // agrego las ids no analizados.
+    json_almacenable.agregarAtributoArray("ids_contenidos_no_analizados", this->getIDsContenidosNoAnalizados());
+
+    // agrego las ids no analizados.
+    json_almacenable.agregarAtributoArray("ids_contenidos_analizados", this->getIDsContenidosAnalizados());
+
+    // seteo la info del medio.
+    herramientas::utiles::Json* json_info_medio = this->getJson();
+    json_almacenable.agregarAtributoJson("info_medio", json_info_medio);
+
+    std::string string_almacenable = json_almacenable.jsonString();
+
+    return string_almacenable;
 }
 
 std::string Medio::getClaveIDActual()
@@ -60,10 +76,24 @@ void Medio::asignarNuevoId()
 
 void Medio::parsearValorAlmacenable(std::string valor_almacenable)
 {
+    herramientas::utiles::Json json_almacenable(valor_almacenable);
 
+    // parseo los ids no analizados.
+    this->ids_contenidos_no_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_no_analizados");
+
+    // parseo los ids analizados.
+    this->ids_contenidos_no_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_no_analizados");
+
+    // parseo contenido
+    herramientas::utiles::Json* json_info_medio = json_almacenable.getAtributoValorJson("info_medio");
+
+    this->setJson(json_info_medio);
+    this->parsearJson();
+
+    // delete json_info_medio;
 }
 
 std::string Medio::prefijoGrupo()
 {
-    return std::string();
+    return ConfiguracionScraping::prefijoMedio();
 }

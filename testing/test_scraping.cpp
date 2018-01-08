@@ -1,6 +1,9 @@
 // gtest
 #include <gtest/gtest.h>
 
+// stl
+#include <fstream>
+
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 

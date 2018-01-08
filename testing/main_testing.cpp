@@ -5,11 +5,27 @@
 // vld
 #include <vld.h>
 
+// scraping
+#include <scraping/include/IAdministradorScraping.h>
+#include <scraping/include/ConfiguracionScraping.h>
+
 int main(int argc, char **argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
 
-	int result = RUN_ALL_TESTS();
+    scraping::ConfiguracionScraping::leerConfiguracion("config_scraping.json");
+
+    scraping::IAdministradorScraping::crearAdministradorScrapingLocal();
+
+    scraping::IAdministradorScraping::getInstancia()->abrirBD();
+
+    int result = RUN_ALL_TESTS();
+
+    scraping::IAdministradorScraping::getInstancia()->cerrarBD();
+
+    scraping::IAdministradorScraping::getInstancia()->borrarBD();
+
+    scraping::IAdministradorScraping::liberar();
 
 	std::getchar();
 
