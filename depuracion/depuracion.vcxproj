@@ -118,7 +118,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\ContenidoDepurado.h" />
-    <ClInclude Include="include\DepurableTweet.h" />
+    <ClInclude Include="include\ContenidoDepurable.h" />
     <ClInclude Include="include\Depurador.h" />
     <ClInclude Include="include\IDepurable.h" />
     <ClInclude Include="include\MapaUTF8.h" />
@@ -126,7 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ContenidoDepurado.cpp" />
-    <ClCompile Include="source\DepurableTweet.cpp" />
+    <ClCompile Include="source\ContenidoDepurable.cpp" />
     <ClCompile Include="source\Depurador.cpp" />
     <ClCompile Include="source\IDepurable.cpp" />
     <ClCompile Include="source\MapaUTF8.cpp" />

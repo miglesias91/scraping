@@ -1,6 +1,9 @@
 // gtest
 #include <gtest/gtest.h>
 
+// scraping
+#include <scraping/include/IAdministradorScraping.h>
+
 // analisis
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
@@ -88,8 +91,29 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
     ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
 }
 
-
 TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
 {
+    tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
+    std::vector<std::string> bolsa_de_palabras = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia();
+    fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+
+    ResultadoAnalisis resultado_analisis(resultado_fuerza_en_noticia);
+    resultado_analisis.setId(new herramientas::utiles::ID(123));
+
+    scraping::IAdministradorScraping::getInstancia()->almacenar(&resultado_analisis);
+
+    // recupero lo que acabo de almacenar.
+    ResultadoAnalisis resultado_analisis_a_recuperar;
+    resultado_analisis_a_recuperar.setId(resultado_analisis.getId()->copia());
+
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&resultado_analisis_a_recuperar);
+
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_nuevo = resultado_analisis_a_recuperar.getResultadoFuerzaEnNoticia();
+
+    ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
+    ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
+    ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
 }

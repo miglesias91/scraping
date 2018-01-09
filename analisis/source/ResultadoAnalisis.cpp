@@ -1,8 +1,11 @@
 #include <analisis/include/ResultadoAnalisis.h>
 
+// scraping
+#include <scraping/include/ConfiguracionScraping.h>
+
 using namespace scraping::analisis;
 
-ResultadoAnalisis::ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia) : IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia)
+ResultadoAnalisis::ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia) : IAlmacenable(ConfiguracionScraping::prefijoResultado()), IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia)
 {
 }
 
@@ -26,6 +29,8 @@ tecnicas::ResultadoFuerzaEnNoticia * ResultadoAnalisis::getResultadoFuerzaEnNoti
 
 std::string ResultadoAnalisis::getValorAlmacenable()
 {
+    this->armarJson();
+
     return this->getJson()->jsonString();
 }
 
@@ -72,7 +77,7 @@ void ResultadoAnalisis::parsearValorAlmacenable(std::string valor_almacenable)
 
 std::string ResultadoAnalisis::prefijoGrupo()
 {
-    return std::string();
+    return ConfiguracionScraping::prefijoResultado();
 }
 
 // CONSULTAS

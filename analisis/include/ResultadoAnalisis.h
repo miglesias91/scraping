@@ -14,7 +14,7 @@ namespace scraping
 namespace analisis
 {
 
-class ResultadoAnalisis : public herramientas::utiles::IContieneJson, public scraping::IAlmacenable
+class ResultadoAnalisis : public scraping::IAlmacenable, public herramientas::utiles::IContieneJson
 {
 public:
 

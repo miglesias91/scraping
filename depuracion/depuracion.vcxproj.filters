@@ -42,7 +42,7 @@
     <ClInclude Include="include\IDepurable.h">
       <Filter>Archivos de encabezado\depurables</Filter>
     </ClInclude>
-    <ClInclude Include="include\DepurableTweet.h">
+    <ClInclude Include="include\ContenidoDepurable.h">
       <Filter>Archivos de encabezado\depurables</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,7 +62,7 @@
     <ClCompile Include="source\IDepurable.cpp">
       <Filter>Archivos de código fuente\depurables</Filter>
     </ClCompile>
-    <ClCompile Include="source\DepurableTweet.cpp">
+    <ClCompile Include="source\ContenidoDepurable.cpp">
       <Filter>Archivos de código fuente\depurables</Filter>
     </ClCompile>
   </ItemGroup>

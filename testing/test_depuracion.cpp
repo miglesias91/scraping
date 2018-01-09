@@ -10,7 +10,7 @@
 
 // depuracion
 #include <depuracion/include/Depurador.h>
-#include <depuracion/include/DepurableTweet.h>
+#include <depuracion/include/ContenidoDepurable.h>
 
 TEST(Depuracion, cargarMapeoCorrectamente)
 {
@@ -53,9 +53,9 @@ TEST(Depuracion, depurarTexto)
     scraping::twitter::modelo::Tweet tweet;
     tweet.setTexto(texto);
 
-    scraping::depuracion::DepurableTweet depurable_tweet(tweet);
+    scraping::depuracion::ContenidoDepurable contenido_depurable(&tweet);
 
-    scraping::depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_tweet);
+    scraping::depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&contenido_depurable);
 
     std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
 
