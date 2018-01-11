@@ -16,6 +16,7 @@ std::string ConfiguracionScraping::prefijo_medio;
 std::string ConfiguracionScraping::prefijo_contenido;
 std::string ConfiguracionScraping::prefijo_resultado_medio;
 std::string ConfiguracionScraping::prefijo_resultado_contenido;
+std::string ConfiguracionScraping::prefijo_resultado_diario;
 
 std::string ConfiguracionScraping::clave_id_medio_actual;
 std::string ConfiguracionScraping::clave_id_contenido_actual;
@@ -51,6 +52,7 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
     prefijo_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoContenido().c_str()].GetString();
     prefijo_resultado_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoMedio().c_str()].GetString();
     prefijo_resultado_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoContenido().c_str()].GetString();
+    prefijo_resultado_diario = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoDiario().c_str()].GetString();
 }
 
 rapidjson::Document::AllocatorType * ConfiguracionScraping::getAlocador()
@@ -99,6 +101,11 @@ std::string ConfiguracionScraping::prefijoResultadoContenido()
     return prefijo_resultado_contenido;
 }
 
+std::string ConfiguracionScraping::prefijoResultadoDiario()
+{
+    return prefijo_resultado_diario;
+}
+
 std::string ConfiguracionScraping::claveIDMedioActual()
 {
     return "id_medio_actual";
@@ -143,6 +150,11 @@ std::string ConfiguracionScraping::tagPrefijoResultadoMedio()
 std::string ConfiguracionScraping::tagPrefijoResultadoContenido()
 {
     return "prefijo_resultado_contenido";
+}
+
+std::string ConfiguracionScraping::tagPrefijoResultadoDiario()
+{
+    return "prefijo_resultado_diario";
 }
 
 ConfiguracionScraping::ConfiguracionScraping()

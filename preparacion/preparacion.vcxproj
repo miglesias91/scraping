@@ -119,11 +119,13 @@
   <ItemGroup>
     <ClInclude Include="include\Preparador.h" />
     <ClInclude Include="include\ResultadoAnalisisContenido.h" />
+    <ClInclude Include="include\ResultadoAnalisisDiario.h" />
     <ClInclude Include="include\ResultadoAnalisisMedio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Preparador.cpp" />
     <ClCompile Include="source\ResultadoAnalisisContenido.cpp" />
+    <ClCompile Include="source\ResultadoAnalisisDiario.cpp" />
     <ClCompile Include="source\ResultadoAnalisisMedio.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

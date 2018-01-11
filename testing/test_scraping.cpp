@@ -36,6 +36,7 @@ TEST(Scraping, levantarConfigCorrectamente)
     ASSERT_EQ("002", ConfiguracionScraping::prefijoContenido());
     ASSERT_EQ("003", ConfiguracionScraping::prefijoResultadoMedio());
     ASSERT_EQ("004", ConfiguracionScraping::prefijoResultadoContenido());
+    ASSERT_EQ("005", ConfiguracionScraping::prefijoResultadoDiario());
 }
 
 TEST(Scraping, depurarAnalizarPreparar)

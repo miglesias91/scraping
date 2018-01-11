@@ -8,7 +8,8 @@
         "prefijo_medio" : "001",
         "prefijo_contenido" : "002",
         "prefijo_resultado_medio" : "003",
-        "prefijo_resultado_contenido" : "004"
+        "prefijo_resultado_contenido" : "004",
+        "prefijo_resultado_diario" : "005"
     },
 
     "almacenamiento" :
