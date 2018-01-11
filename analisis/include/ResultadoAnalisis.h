@@ -18,7 +18,7 @@ class ResultadoAnalisis : public scraping::IAlmacenable, public herramientas::ut
 {
 public:
 
-    ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia());
+    ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia);
 
     virtual ~ResultadoAnalisis();
 
@@ -34,6 +34,7 @@ public:
 
     // METODOS
 
+    virtual bool combinarCon(ResultadoAnalisis * resultado_a_combinar);
 
     // metodos de IContieneJson
 
@@ -46,8 +47,6 @@ public:
     virtual void asignarNuevoId();
 
     virtual void parsearValorAlmacenable(std::string valor_almacenable);
-
-    virtual std::string prefijoGrupo();
 
     // CONSULTAS
 

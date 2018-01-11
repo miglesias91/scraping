@@ -18,14 +18,28 @@ ResultadoFuerzaEnNoticia::~ResultadoFuerzaEnNoticia()
 {
 }
 
+// GETTERS
+
 float ResultadoFuerzaEnNoticia::getFuerza(std::string palabra)
 {
+    if (false == this->existePalabra(palabra))
+    {
+        return 0.0f;
+    }
+
     return this->fuerza_por_palabra[palabra];
+}
+
+std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getFuerzas()
+{
+    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra(this->fuerza_por_palabra.begin(), this->fuerza_por_palabra.end());
+
+    return vector_fuerza_por_palabra;
 }
 
 std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(unsigned int cantidad_de_valores_a_recuperar)
 {
-    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra(this->fuerza_por_palabra.begin(), this->fuerza_por_palabra.end());
+    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getFuerzas();
 
     std::sort(vector_fuerza_por_palabra.begin(), vector_fuerza_por_palabra.end(), compararFuerzasMayorAMenor);
 
@@ -37,15 +51,69 @@ std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(unsi
     return vector_fuerza_por_palabra;
 }
 
-// GETTERS
+// getters de IResultadoTecnica
+
+std::unordered_map<std::string, float> scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia::getFuerzaPorPalabra()
+{
+    return this->fuerza_por_palabra;
+}
 
 // SETTERS
 
 // METODOS
 
+unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()
+{
+    return this->fuerza_por_palabra.size();
+}
+
+bool ResultadoFuerzaEnNoticia::sumarFuerza(std::pair<std::string, float> fuerza_a_sumar)
+{
+    std::string palabra = fuerza_a_sumar.first;
+    float fuerza_a_agregar = fuerza_a_sumar.second;
+
+    std::unordered_map<std::string, float>::iterator it_fuerza = this->fuerza_por_palabra.find(palabra);
+
+    if (this->fuerza_por_palabra.end() != it_fuerza)
+    {
+        float nuevo_valor = it_fuerza->second + fuerza_a_agregar;
+        this->fuerza_por_palabra[palabra] = nuevo_valor;
+    }
+    else
+    {
+        this->fuerza_por_palabra[palabra] = fuerza_a_agregar;
+    }
+
+    return true;
+}
+
+bool ResultadoFuerzaEnNoticia::sumarFuerzas(ResultadoFuerzaEnNoticia * fuerza_a_sumar)
+{
+    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = fuerza_a_sumar->getFuerzas();
+
+    for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
+    {
+        this->sumarFuerza(*it);
+    }
+
+    return true;
+}
+
+bool ResultadoFuerzaEnNoticia::compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b)
+{
+    return a.second > b.second;
+}
+
+bool ResultadoFuerzaEnNoticia::compararFuerzasMenosAMayor(std::pair<std::string, float> a, std::pair<std::string, float> b)
+{
+    return a.second < b.second;
+}
+
+// metodos de IResultadoTecnica
+
 bool ResultadoFuerzaEnNoticia::agregarResultado(std::string palabra, float fuerza_en_noticia)
 {
-    if (this->fuerza_por_palabra.end() != this->fuerza_por_palabra.find(palabra))
+    if (this->existePalabra(palabra))
     {
         return false;
     }
@@ -53,6 +121,8 @@ bool ResultadoFuerzaEnNoticia::agregarResultado(std::string palabra, float fuerz
     this->fuerza_por_palabra[palabra] = fuerza_en_noticia;
     return true;
 }
+
+// metodos de IContieneJson
 
 bool ResultadoFuerzaEnNoticia::armarJson()
 {
@@ -93,19 +163,14 @@ bool ResultadoFuerzaEnNoticia::parsearJson()
     return true;
 }
 
-unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()
-{
-    return this->fuerza_por_palabra.size();
-}
-
-bool ResultadoFuerzaEnNoticia::compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b)
-{
-    return a.second > b.second;
-}
-
-bool ResultadoFuerzaEnNoticia::compararFuerzasMenosAMayor(std::pair<std::string, float> a, std::pair<std::string, float> b)
-{
-    return a.second < b.second;
-}
-
 // CONSULTAS
+
+bool ResultadoFuerzaEnNoticia::existePalabra(std::string palabra)
+{
+    if (this->fuerza_por_palabra.end() == this->fuerza_por_palabra.find(palabra))
+    {
+        return false;
+    }
+
+    return true;
+}

@@ -5,7 +5,7 @@
 
 using namespace scraping::analisis;
 
-ResultadoAnalisis::ResultadoAnalisis(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia) : IAlmacenable(ConfiguracionScraping::prefijoResultado()), IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia)
+ResultadoAnalisis::ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia) : IAlmacenable(grupo), IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia)
 {
 }
 
@@ -34,23 +34,27 @@ std::string ResultadoAnalisis::getValorAlmacenable()
     return this->getJson()->jsonString();
 }
 
+// SETTERS
+
+// METODOS
+
+bool ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)
+{
+    return this->resultado_fuerza_en_noticia->sumarFuerzas(resultado_a_combinar->getResultadoFuerzaEnNoticia());
+}
+
+// metodos de IContieneJson
+
 bool ResultadoAnalisis::armarJson()
 {
     this->getJson()->reset();
-    
+
     this->resultado_fuerza_en_noticia->armarJson();
 
     this->getJson()->agregarAtributoJson("fuerza_en_noticia", this->resultado_fuerza_en_noticia->getJson());
 
     return true;
 }
-
-// SETTERS
-
-// METODOS
-
-
-// metodos de IContieneJson
 
 bool ResultadoAnalisis::parsearJson()
 {
@@ -61,6 +65,8 @@ bool ResultadoAnalisis::parsearJson()
 
     return true;
 }
+
+// metodos de IAlmacenable
 
 void ResultadoAnalisis::asignarNuevoId()
 {
@@ -73,11 +79,6 @@ void ResultadoAnalisis::parsearValorAlmacenable(std::string valor_almacenable)
     this->setJson(json_almacenable);
 
     bool parseo_correcto = this->parsearJson();
-}
-
-std::string ResultadoAnalisis::prefijoGrupo()
-{
-    return ConfiguracionScraping::prefijoResultado();
 }
 
 // CONSULTAS

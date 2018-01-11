@@ -1,5 +1,10 @@
 #pragma once
 
+// analisis
+#include <analisis/include/ResultadoAnalisis.h>
+
+// preparacion
+
 namespace scraping
 {
 namespace preparacion
@@ -16,6 +21,8 @@ public:
     // SETTERS
 
     // METODOS
+
+    virtual bool combinar(std::vector<scraping::analisis::ResultadoAnalisis*> resultados_a_combinar, scraping::analisis::ResultadoAnalisis * resultado_combinacion);
 
     // CONSULTAS
 };

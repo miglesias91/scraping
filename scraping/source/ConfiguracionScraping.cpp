@@ -14,7 +14,8 @@ std::string ConfiguracionScraping::prefijo_configuracion;
 
 std::string ConfiguracionScraping::prefijo_medio;
 std::string ConfiguracionScraping::prefijo_contenido;
-std::string ConfiguracionScraping::prefijo_resultado;
+std::string ConfiguracionScraping::prefijo_resultado_medio;
+std::string ConfiguracionScraping::prefijo_resultado_contenido;
 
 std::string ConfiguracionScraping::clave_id_medio_actual;
 std::string ConfiguracionScraping::clave_id_contenido_actual;
@@ -48,7 +49,8 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
     prefijo_configuracion = config_scraping_json[ConfiguracionScraping::tagPrefijoConfiguracion().c_str()].GetString();
     prefijo_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoMedio().c_str()].GetString();
     prefijo_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoContenido().c_str()].GetString();
-    prefijo_resultado = config_scraping_json[ConfiguracionScraping::tagPrefijoResultado().c_str()].GetString();
+    prefijo_resultado_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoMedio().c_str()].GetString();
+    prefijo_resultado_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoContenido().c_str()].GetString();
 }
 
 rapidjson::Document::AllocatorType * ConfiguracionScraping::getAlocador()
@@ -87,9 +89,14 @@ std::string ConfiguracionScraping::prefijoContenido()
     return prefijo_contenido;
 }
 
-std::string ConfiguracionScraping::prefijoResultado()
+std::string ConfiguracionScraping::prefijoResultadoMedio()
 {
-    return prefijo_resultado;
+    return prefijo_resultado_medio;
+}
+
+std::string ConfiguracionScraping::prefijoResultadoContenido()
+{
+    return prefijo_resultado_contenido;
 }
 
 std::string ConfiguracionScraping::claveIDMedioActual()
@@ -128,9 +135,14 @@ std::string ConfiguracionScraping::tagPrefijoContenido()
     return "prefijo_contenido";
 }
 
-std::string ConfiguracionScraping::tagPrefijoResultado()
+std::string ConfiguracionScraping::tagPrefijoResultadoMedio()
 {
-    return "prefijo_resultado";
+    return "prefijo_resultado_medio";
+}
+
+std::string ConfiguracionScraping::tagPrefijoResultadoContenido()
+{
+    return "prefijo_resultado_contenido";
 }
 
 ConfiguracionScraping::ConfiguracionScraping()

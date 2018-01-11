@@ -15,7 +15,11 @@
 // analisis
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
-#include <analisis/include/ResultadoAnalisis.h>
+
+// preparacion
+#include <preparacion/include/Preparador.h>
+#include <preparacion/include/ResultadoAnalisisContenido.h>
+#include <preparacion/include/ResultadoAnalisisMedio.h>
 
 // twitter
 #include <twitter/include/Cuenta.h>
@@ -30,7 +34,8 @@ TEST(Scraping, levantarConfigCorrectamente)
 
     ASSERT_EQ("001", ConfiguracionScraping::prefijoMedio());
     ASSERT_EQ("002", ConfiguracionScraping::prefijoContenido());
-    ASSERT_EQ("003", ConfiguracionScraping::prefijoResultado());
+    ASSERT_EQ("003", ConfiguracionScraping::prefijoResultadoMedio());
+    ASSERT_EQ("004", ConfiguracionScraping::prefijoResultadoContenido());
 }
 
 TEST(Scraping, depurarAnalizarPreparar)
@@ -38,7 +43,7 @@ TEST(Scraping, depurarAnalizarPreparar)
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(50);
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(150);
 
-	// ----- EXTRACCION (simulada la parte de bajar el contenido de internet) ----- //
+    // ----- EXTRACCION (simulada la parte de bajar el contenido de internet) ----- //
 
     std::vector<std::string> paths_textos_extraidos = { "le_doy_mi_palabra_20171228.txt" ,"le_doy_mi_palabra_20171227.txt",
         "le_doy_mi_palabra_20171225.txt" ,"le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
@@ -49,7 +54,7 @@ TEST(Scraping, depurarAnalizarPreparar)
     for (std::vector<std::string>::iterator it = paths_textos_extraidos.begin(); it != paths_textos_extraidos.end(); it++)
     {
         std::string path_texto_extraido = *it;
-        
+
         std::ifstream archivo_texto(path_texto_extraido);
 
         std::stringstream sstream;
@@ -112,7 +117,7 @@ TEST(Scraping, depurarAnalizarPreparar)
         std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
         // guardo el analisis
-        analisis::ResultadoAnalisis resultado_analisis(resultado_fuerza_en_noticia);
+        scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
         resultado_analisis.setId((*it)->getId()->copia());
 
         scraping::IAdministradorScraping::getInstancia()->almacenar(&resultado_analisis);
@@ -130,13 +135,40 @@ TEST(Scraping, depurarAnalizarPreparar)
     std::vector<analisis::ResultadoAnalisis*> resultados;
     for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
     {
-        analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new analisis::ResultadoAnalisis();
+        analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
         resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
 
         scraping::IAdministradorScraping::getInstancia()->recuperar(resultado_analisis_a_recuperar);
 
         resultados.push_back(resultado_analisis_a_recuperar);
     }
+
+    preparacion::Preparador preparador;
+
+    analisis::ResultadoAnalisis * resultado_combinado = new preparacion::ResultadoAnalisisContenido();
+    preparador.combinar(resultados, resultado_combinado);
+
+    preparacion::ResultadoAnalisisMedio resultados_medio;
+    resultados_medio.setId(cuenta.getId()->copia());
+
+    scraping::IAdministradorScraping::getInstancia()->recuperar(&resultados_medio);
+
+    resultados_medio.combinarCon(resultado_combinado);
+
+    delete resultado_combinado;
+
+    // elimino los resultados
+    for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
+    {
+        delete *it;
+    }
+
+    // ResultadoAnalisisMedio resultado_por_medio;
+    // resultado_por_medio.setId(id_medio);
+    // 
+    // scraping::IAdministradorScraping::getInstancia()->recuperar(resultado_por_medio);
+    //
+    // resultado_por_medio.combinarResultados(resultados);
 
     // TO DO:
     // aca viene la parte de la preparacion, ver q onda:

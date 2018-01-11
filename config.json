@@ -3,14 +3,17 @@
     {
         "scraping_local" : true,
         "scraping_distribuido" : false,
-        "prefijo_medio" : "000",
-        "prefijo_contenido" : "001",
-        "prefijo_resultado" : "002"
+        "prefijo_configuracion" : "000",
+
+        "prefijo_medio" : "001",
+        "prefijo_contenido" : "002",
+        "prefijo_resultado_medio" : "003",
+        "prefijo_resultado_contenido" : "004"
     },
 
     "almacenamiento" :
     {
-        "path_db" : "C:/temp/db_scraping",
+        "path_db" : "C:/temp/db_scraping_debug",
         "almacenamiento_local" : true,
         "almacenamiento_distribuido" : false
     }

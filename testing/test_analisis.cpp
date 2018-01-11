@@ -7,11 +7,13 @@
 // analisis
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
-#include <analisis/include/ResultadoAnalisis.h>
+
+// preparacion
+#include <preparacion/include/ResultadoAnalisisContenido.h>
 
 using namespace scraping::analisis;
 
-TEST(Analisis, fuerzaEnNoticia)
+TEST(Analisis, fuerzaEnNoticiaAnalisisCorrecto)
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -62,6 +64,54 @@ TEST(Analisis, resultadoFuerzaEnNoticiaArmarJsonCorrectamente)
     ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado.getFuerza("gaza")));
 }
 
+TEST(Analisis, resultadoFuerzaEnNoticiaSumarFuerzasCorrectamente)
+{
+    tecnicas::FuerzaEnNoticia fuerza_en_noticia;
+
+    std::vector<std::string> bolsa_de_palabras_1 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+    std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
+
+    tecnicas::ResultadoFuerzaEnNoticia resultado_1;
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
+
+    tecnicas::ResultadoFuerzaEnNoticia resultado_2;
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
+
+    resultado_1.sumarFuerzas(&resultado_2);
+
+    ASSERT_EQ(std::round(1000. * 11.4948416), std::round(1000. * resultado_1.getFuerza("jerusalen")));
+    ASSERT_EQ(std::round(1000. * 7.66322803), std::round(1000. * resultado_1.getFuerza("israel")));
+    ASSERT_EQ(std::round(1000. * 3.83161402), std::round(1000. * resultado_1.getFuerza("gaza")));
+    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_1.getFuerza("holis")));
+    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_1.getFuerza("chau")));
+}
+
+TEST(Analisis, resultadoAnalisisCombinarCorrectamente)
+{
+    tecnicas::FuerzaEnNoticia fuerza_en_noticia;
+
+    std::vector<std::string> bolsa_de_palabras_1 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+    std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
+
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_1 = new tecnicas::ResultadoFuerzaEnNoticia();
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, *resultado_1);
+    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_1(resultado_1);
+
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new tecnicas::ResultadoFuerzaEnNoticia();
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, *resultado_2);
+    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_2(resultado_2);
+
+    resultado_analisis_1.combinarCon(&resultado_analisis_2);
+    
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_combinado = resultado_analisis_1.getResultadoFuerzaEnNoticia();
+
+    ASSERT_EQ(std::round(1000. * 11.4948416), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
+    ASSERT_EQ(std::round(1000. * 7.66322803), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
+    ASSERT_EQ(std::round(1000. * 3.83161402), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
+    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
+    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
+}
+
 TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
@@ -71,7 +121,7 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia();
     fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
 
-    ResultadoAnalisis resultado_analisis(resultado_fuerza_en_noticia);
+    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
 
     resultado_analisis.armarJson();
 
@@ -80,7 +130,7 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
 
     ASSERT_STREQ(json_string_correcto.c_str(), json_string.c_str());
 
-    ResultadoAnalisis resultado_analisis_nuevo;
+    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_nuevo;
     resultado_analisis_nuevo.setJson(new herramientas::utiles::Json(json_string_correcto));
     resultado_analisis_nuevo.parsearJson();
 
@@ -100,13 +150,13 @@ TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia();
     fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
 
-    ResultadoAnalisis resultado_analisis(resultado_fuerza_en_noticia);
+    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
     resultado_analisis.setId(new herramientas::utiles::ID(123));
 
     scraping::IAdministradorScraping::getInstancia()->almacenar(&resultado_analisis);
 
     // recupero lo que acabo de almacenar.
-    ResultadoAnalisis resultado_analisis_a_recuperar;
+    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_a_recuperar;
     resultado_analisis_a_recuperar.setId(resultado_analisis.getId()->copia());
 
     scraping::IAdministradorScraping::getInstancia()->recuperar(&resultado_analisis_a_recuperar);

@@ -5,6 +5,9 @@
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/Sentimiento.h>
 
+// preparacion
+#include <preparacion/include/ResultadoAnalisisContenido.h>
+
 using namespace scraping::analisis;
 
 Analizador::Analizador()
@@ -15,7 +18,7 @@ Analizador::~Analizador()
 {
 }
 
-ResultadoAnalisis Analizador::analizar(IAnalizable * contenido_a_analizar)
+ResultadoAnalisis * Analizador::analizar(IAnalizable * contenido_a_analizar)
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -26,7 +29,7 @@ ResultadoAnalisis Analizador::analizar(IAnalizable * contenido_a_analizar)
 
 
 
-    return ResultadoAnalisis();
+    return new scraping::preparacion::ResultadoAnalisisContenido();
 }
 
 // GETTERS

@@ -21,7 +21,7 @@ public:
 
     // METODOS
 
-    virtual ResultadoAnalisis analizar(IAnalizable * contenido_a_analizar);
+    virtual ResultadoAnalisis * analizar(IAnalizable * contenido_a_analizar);
 
     // CONSULTAS
 };
