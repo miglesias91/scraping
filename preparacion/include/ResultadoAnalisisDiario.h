@@ -18,6 +18,10 @@ public:
 
     // GETTERS
 
+    virtual herramientas::utiles::Json * getRegistroAExportar();
+
+    virtual ResultadoAnalisisMedio * getResultadoMedio(unsigned long long int id_medio);
+
     // getters de IAlmacenable
 
     virtual std::string getValorAlmacenable();
@@ -26,7 +30,7 @@ public:
 
     // METODOS
 
-    virtual void agregarMedio(ResultadoAnalisisMedio* resultado_medio);
+    virtual void agregarResultadoDeMedio(ResultadoAnalisisMedio* resultado_medio);
 
     // metodos de IContieneJson
 
@@ -41,13 +45,15 @@ public:
     virtual void parsearValorAlmacenable(std::string valor_almacenable);
 
     virtual std::string prefijoGrupo();
+
     // CONSULTAS
+    bool existeResultadoDeMedio(unsigned long long int id_medio);
 
 private:
 
     // ATRIBUTOS
 
-    std::vector<ResultadoAnalisisMedio*> resultados_medios;
+    std::unordered_map<unsigned long long int, ResultadoAnalisisMedio*> resultados_medios;
 };
 
 };
