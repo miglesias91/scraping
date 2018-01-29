@@ -115,6 +115,12 @@ bool ResultadoAnalisisDiario::parsearJson()
         this->agregarResultadoDeMedio(resultado_analisis_medio);
     }
 
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_medios.begin(); it != json_medios.end(); it++)
+    {
+        delete *it;
+    }
+    json_medios.clear();
+
     return true;
 }
 

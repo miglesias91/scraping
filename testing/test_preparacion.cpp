@@ -135,10 +135,10 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisDiarioCorrectamente)
 
     resultado_diario.agregarResultadoDeMedio(resultado_analisis_2);
 
-    // almacena el resultado diario
+    //// almacena el resultado diario
     scraping::IAdministradorScraping::getInstancia()->almacenar(&resultado_diario);
 
-    // lo recupero en otro resultado creado
+    //// lo recupero en otro resultado creado
     scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
     resultado_diario_recuperado.setId(resultado_diario.getId()->copia());
 
