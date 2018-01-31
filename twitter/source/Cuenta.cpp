@@ -2,7 +2,7 @@
 
 using namespace scraping::twitter::modelo;
 
-Cuenta::Cuenta(std::string nombre) : Medio(), nombre(nombre)
+Cuenta::Cuenta(std::string nombre) : Medio(), nombre(nombre), id_ultimo_tweet_analizado(0)
 {
 }
 
@@ -17,11 +17,20 @@ std::string Cuenta::getNombre()
     return this->nombre;
 }
 
+unsigned long long int Cuenta::getIdUltimoTweetAnalizado()
+{
+    return 0;
+}
+
 // SETTERS
 
 void Cuenta::setNombre(std::string nombre)
 {
     this->nombre = nombre;
+}
+
+void Cuenta::setIdUltimoTweetAnalizado(unsigned long long int id_ultimo_tweet_analizado)
+{
 }
 
 // METODOS
@@ -33,6 +42,8 @@ bool Cuenta::armarJson()
     this->getJson()->reset();
 
     this->getJson()->agregarAtributoValor("nombre_cuenta", this->getNombre());
+
+    this->getJson()->agregarAtributoValor("id_ultimo_tweet_analizado", this->getNombre());
 
     return true;
 }
