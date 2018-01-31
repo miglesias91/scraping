@@ -56,8 +56,9 @@ La idea es que haya UN REGISTRO POR DIA.
 
 ### 1 - Extraccion
 Cada medio extrae el contenido y lo guarda en la base de datos diaria. Como resultado, se generan 2 registros:
-    1) clave: <prefijo_medio><id_medio> | valor[JSON]: { [ids_contenidos_no_analizados] , [ids_contenidos_analizados] }
-    2) clave: <prefijo_contenido><id_contenido> | valor[TEXTO PLANO UTF8]: { texto a analizar }
+
+    1. clave: <prefijo_medio><id_medio> | valor[JSON]: { [ids_contenidos_no_analizados] , [ids_contenidos_analizados] }
+    2. clave: <prefijo_contenido><id_contenido> | valor[TEXTO PLANO UTF8]: { texto a analizar }
 
 ### 2 - Depuracion + Analisis
 Se recuperan los contenidos de cada medio, se lo depura y se lo analiza. El analisis puede consistir en aplicar 1 o mas algoritmos al contenido (por ahora, el unico aplicado es 'Fuerza En Noticia').
