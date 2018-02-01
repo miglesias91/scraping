@@ -9,13 +9,9 @@
         "prefijo_contenido" : "002",
         "prefijo_resultado_medio" : "003",
         "prefijo_resultado_contenido" : "004",
-        "prefijo_resultado_diario" : "005"
-    },
+        "prefijo_resultado_diario" : "005",
 
-    "almacenamiento" :
-    {
-        "path_db" : "C:/temp/db_scraping_debug",
-        "almacenamiento_local" : true,
-        "almacenamiento_distribuido" : false
+        "config_db_resultados_analisis_diario" : "config_db_resultados_analisis_diarios.json",
+        "config_db_info_scraping" : "config_db_info_scraping.json"
     }
 }

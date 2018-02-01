@@ -10,6 +10,10 @@ std::string ConfiguracionScraping::path_config;
 
 bool ConfiguracionScraping::scraping_local;
 bool ConfiguracionScraping::scraping_distribuido;
+
+std::string ConfiguracionScraping::archivo_config_db_info_scraping;
+std::string ConfiguracionScraping::archivo_config_db_resultados_analisis_diario;
+
 std::string ConfiguracionScraping::prefijo_configuracion;
 
 std::string ConfiguracionScraping::prefijo_medio;
@@ -47,6 +51,9 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
     scraping_local = config_scraping_json[ConfiguracionScraping::tagScrapingLocal().c_str()].GetBool();
     scraping_distribuido = config_scraping_json[ConfiguracionScraping::tagScrapingDistribuido().c_str()].GetBool();
 
+    archivo_config_db_info_scraping = config_scraping_json[ConfiguracionScraping::tagArchivoConfigDBInfoScraping().c_str()].GetString();
+    archivo_config_db_resultados_analisis_diario = config_scraping_json[ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios().c_str()].GetString();
+
     prefijo_configuracion = config_scraping_json[ConfiguracionScraping::tagPrefijoConfiguracion().c_str()].GetString();
     prefijo_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoMedio().c_str()].GetString();
     prefijo_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoContenido().c_str()].GetString();
@@ -73,6 +80,16 @@ bool ConfiguracionScraping::scrapingLocal()
 bool ConfiguracionScraping::scrapingDistribuido()
 {
     return scraping_distribuido;
+}
+
+std::string ConfiguracionScraping::archivoConfigDBInfoScraping()
+{
+    return archivo_config_db_info_scraping;
+}
+
+std::string ConfiguracionScraping::archivoConfigDBResultadosDiarios()
+{
+    return archivo_config_db_resultados_analisis_diario;
 }
 
 std::string ConfiguracionScraping::prefijoConfiguracion()
@@ -124,6 +141,16 @@ std::string ConfiguracionScraping::tagScrapingLocal()
 std::string ConfiguracionScraping::tagScrapingDistribuido()
 {
     return "scraping_distribuido";
+}
+
+std::string ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios()
+{
+    return "config_db_resultados_analisis_diario";
+}
+
+std::string ConfiguracionScraping::tagArchivoConfigDBInfoScraping()
+{
+    return "config_db_info_scraping";
 }
 
 std::string ConfiguracionScraping::tagPrefijoConfiguracion()

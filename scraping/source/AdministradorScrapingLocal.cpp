@@ -14,9 +14,9 @@ using namespace scraping;
 
 AdministradorScrapingLocal::AdministradorScrapingLocal() : IAdministradorScraping()
 {
-	almacenamiento::IAdministradorAlmacenamiento::iniciar(ConfiguracionScraping::pathConfiguracion());
+	//almacenamiento::IAdministradorAlmacenamiento::iniciar(ConfiguracionScraping::pathConfiguracion());
 
-    this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
+ //   this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
 }
 
 AdministradorScrapingLocal::~AdministradorScrapingLocal()

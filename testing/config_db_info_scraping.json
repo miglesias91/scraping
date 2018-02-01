@@ -1,0 +1,8 @@
+{
+    "almacenamiento" :
+    {
+        "path_db" : "C:/temp/db_info_scraping_debug",
+        "almacenamiento_local" : true,
+        "almacenamiento_distribuido" : false
+    }
+}

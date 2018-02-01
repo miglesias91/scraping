@@ -25,6 +25,10 @@ public:
 
     static bool scrapingLocal();
     static bool scrapingDistribuido();
+
+    static std::string archivoConfigDBInfoScraping();
+    static std::string archivoConfigDBResultadosDiarios();
+
     static std::string prefijoConfiguracion();
 
     static std::string prefijoMedio();
@@ -41,6 +45,10 @@ public:
 
     static std::string tagScrapingLocal();
     static std::string tagScrapingDistribuido();
+
+    static std::string tagArchivoConfigDBInfoScraping();
+    static std::string tagArchivoConfigDBResultadosDiarios();
+
     static std::string tagPrefijoConfiguracion();
 
     static std::string tagPrefijoMedio();
@@ -56,6 +64,9 @@ private:
     virtual ~ConfiguracionScraping();
 
     static std::string path_config;
+
+    static std::string archivo_config_db_resultados_analisis_diario;
+    static std::string archivo_config_db_info_scraping;
 
     static bool scraping_local;
     static bool scraping_distribuido;

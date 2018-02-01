@@ -14,7 +14,8 @@
 
     "almacenamiento" :
     {
-        "path_db" : "C:/temp/db_scraping_debug",
+        "path_db_resultados_analisis_diario" : "C:/temp/db_resultados_analisis_diario_debug",
+        "path_db_info_scraping" : "C:/temp/db_info_scraping_debug",
         "almacenamiento_local" : true,
         "almacenamiento_distribuido" : false
     }

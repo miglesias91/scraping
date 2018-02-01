@@ -28,9 +28,18 @@ public:
 
 	static bool administradorIniciado();
 
+    static bool administradorInfoIniciado();
+
+    static bool administradorResultadosAnalisisDiarioIniciado();
+
 	// GETTERS
 
 	static IAdministradorScraping* getInstancia();
+
+    static IAdministradorScraping* getInstanciaAdminInfo();
+
+    static IAdministradorScraping* getInstanciaAdminResultadosAnalisisDiario();
+
 
 	// SETTERS
 
@@ -66,6 +75,11 @@ public:
     void almacenarIDActual();
 
 protected:
+
+    // METODOS PROTEGIDOS
+
+    void iniciarDB(std::string path_config_db);
+
     // ATRIBUTOS
 
     almacenamiento::IAdministradorAlmacenamiento* admin_almacenamiento;
@@ -73,7 +87,12 @@ protected:
 private:
 	// ATRIBUTOS
 
-	static IAdministradorScraping* administrador;
+	static IAdministradorScraping * administrador;
+
+    static IAdministradorScraping * administrador_info;
+
+    static IAdministradorScraping * administrador_resultados_analisis_diario;
+
     
 };
 

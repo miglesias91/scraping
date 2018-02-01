@@ -19,7 +19,7 @@ std::string Cuenta::getNombre()
 
 unsigned long long int Cuenta::getIdUltimoTweetAnalizado()
 {
-    return 0;
+    return this->id_ultimo_tweet_analizado;
 }
 
 // SETTERS
@@ -31,6 +31,7 @@ void Cuenta::setNombre(std::string nombre)
 
 void Cuenta::setIdUltimoTweetAnalizado(unsigned long long int id_ultimo_tweet_analizado)
 {
+    this->id_ultimo_tweet_analizado = id_ultimo_tweet_analizado;
 }
 
 // METODOS
@@ -43,7 +44,7 @@ bool Cuenta::armarJson()
 
     this->getJson()->agregarAtributoValor("nombre_cuenta", this->getNombre());
 
-    this->getJson()->agregarAtributoValor("id_ultimo_tweet_analizado", this->getNombre());
+    this->getJson()->agregarAtributoValor("id_ultimo_tweet_analizado", this->getIdUltimoTweetAnalizado());
 
     return true;
 }
@@ -52,7 +53,11 @@ bool Cuenta::parsearJson()
 {
     std::string nombre_cuenta = this->getJson()->getAtributoValorString("nombre_cuenta");
 
+    unsigned long long int id_ultimo_tweet_analizado = this->getJson()->getAtributoValorUint("id_ultimo_tweet_analizado");
+
     this->setNombre(nombre_cuenta);
+
+    this->setIdUltimoTweetAnalizado(id_ultimo_tweet_analizado);
 
     return true;
 }
