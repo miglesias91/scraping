@@ -53,7 +53,7 @@ std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(unsi
 
 // getters de IResultadoTecnica
 
-std::unordered_map<std::string, float> scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia::getFuerzaPorPalabra()
+std::unordered_map<std::string, float> ResultadoFuerzaEnNoticia::getFuerzaPorPalabra()
 {
     return this->fuerza_por_palabra;
 }

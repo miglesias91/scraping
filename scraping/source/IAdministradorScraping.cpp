@@ -125,13 +125,16 @@ IAdministradorScraping* IAdministradorScraping::getInstanciaAdminResultadosAnali
     }
     else
     {
-        throw std::exception("Administrador de resulrados de analisis diarios de scraping no inicializado.");
+        throw std::exception("Administrador de resultados de analisis diarios de scraping no inicializado.");
     }
 }
 
 void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)
 {
-    almacenamiento::IAdministradorAlmacenamiento::iniciar(path_config_db);
+    //almacenamiento::IAdministradorAlmacenamiento::iniciar(path_config_db);
 
-    this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
+    //this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
+ 
+    unsigned long long int handler_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::iniciarNuevo(path_config_db);
+    this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia(handler_almacenamiento);
 }
