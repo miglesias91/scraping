@@ -60,40 +60,40 @@ TEST(Extraccion, almacenarYRecuperarCorrectamente)
     ASSERT_EQ(204, ids_tweets[4]);
 
     // almaceno el medio (cuenta twitter).
-    scraping::IAdministradorScraping::getInstancia()->almacenar(&cuenta);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
 
     // almaceno los contenidos del medio (tweets de la cuenta).
     for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
     {
-        scraping::IAdministradorScraping::getInstancia()->almacenar(*it);
+        scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(*it);
     }
 
     // recupero el medio.
     modelo::Cuenta cuenta_recuperada;
     cuenta_recuperada.setId(cuenta.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&cuenta_recuperada);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_recuperada);
 
     // recupero los contenidos del medio.
     modelo::Tweet tweet_recuperado_1;
     tweet_recuperado_1.setId(tweets[0]->getId()->copia());
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_1);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_1);
 
     modelo::Tweet tweet_recuperado_2;
     tweet_recuperado_2.setId(tweets[1]->getId()->copia());
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_2);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_2);
 
     modelo::Tweet tweet_recuperado_3;
     tweet_recuperado_3.setId(tweets[2]->getId()->copia());
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_3);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_3);
 
     modelo::Tweet tweet_recuperado_4;
     tweet_recuperado_4.setId(tweets[3]->getId()->copia());
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_4);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_4);
 
     modelo::Tweet tweet_recuperado_5;
     tweet_recuperado_5.setId(tweets[4]->getId()->copia());
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&tweet_recuperado_5);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_5);
 
     ASSERT_EQ(cuenta.getNombre(), cuenta_recuperada.getNombre());
 

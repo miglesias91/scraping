@@ -22,6 +22,19 @@ unsigned long long int Cuenta::getIdUltimoTweetAnalizado()
     return this->id_ultimo_tweet_analizado;
 }
 
+// metodos de IAlmacenable
+
+std::string Cuenta::getValorAlmacenable()
+{
+    this->armarJson();
+
+    herramientas::utiles::Json* json_info_contenido = this->getJson();
+
+    std::string string_almacenable = json_info_contenido->jsonString();
+
+    return string_almacenable;
+}
+
 // SETTERS
 
 void Cuenta::setNombre(std::string nombre)
@@ -60,6 +73,16 @@ bool Cuenta::parsearJson()
     this->setIdUltimoTweetAnalizado(id_ultimo_tweet_analizado);
 
     return true;
+}
+
+// metodos de IAlmacenable
+
+void Cuenta::parsearValorAlmacenable(std::string valor_almacenable)
+{
+    herramientas::utiles::Json * json_almacenable = new herramientas::utiles::Json(valor_almacenable);
+
+    this->setJson(json_almacenable);
+    this->parsearJson();
 }
 
 // CONSULTAS

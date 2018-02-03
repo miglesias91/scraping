@@ -21,7 +21,7 @@ AdministradorScrapingLocal::AdministradorScrapingLocal() : IAdministradorScrapin
 
 AdministradorScrapingLocal::~AdministradorScrapingLocal()
 {
-	almacenamiento::IAdministradorAlmacenamiento::liberar();
+	almacenamiento::IAdministradorAlmacenamiento::liberar(this->handler_almacenamiento);
 }
 
 bool AdministradorScrapingLocal::abrirBD()

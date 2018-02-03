@@ -25,6 +25,10 @@ public:
 
     unsigned long long int getIdUltimoTweetAnalizado();
 
+    // metodos de IAlmacenable
+
+    virtual std::string getValorAlmacenable();
+
     // SETTERS
 
     void setNombre(std::string nombre);
@@ -38,6 +42,10 @@ public:
     virtual bool armarJson();
 
     virtual bool parsearJson();
+
+    // metodos de IAlmacenable
+
+    virtual void parsearValorAlmacenable(std::string valor_almacenable);
 
     // CONSULTAS
 

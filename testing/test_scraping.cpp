@@ -69,10 +69,10 @@ TEST(Scraping, depurarAnalizarPreparar)
 
         cuenta.agregarContenidoParaAnalizar(&tweet);
 
-        IAdministradorScraping::getInstancia()->almacenar(&tweet);
+        IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&tweet);
     }
 
-    IAdministradorScraping::getInstancia()->almacenar(&cuenta);
+    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
 
     // ----- DEPURACION ----- //
 
@@ -83,7 +83,7 @@ TEST(Scraping, depurarAnalizarPreparar)
     twitter::modelo::Cuenta cuenta_a_analizar;
     cuenta_a_analizar.setId(cuenta.getId()->copia());
 
-    IAdministradorScraping::getInstancia()->recuperar(&cuenta_a_analizar);
+    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_a_analizar);
 
     std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta_a_analizar.getIDsContenidosNoAnalizados();
 
@@ -93,7 +93,7 @@ TEST(Scraping, depurarAnalizarPreparar)
         extraccion::Contenido * tweet = new twitter::modelo::Tweet();
         tweet->setId(new herramientas::utiles::ID(*it));
 
-        IAdministradorScraping::getInstancia()->recuperar(tweet);
+        IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(tweet);
 
         contenidos_a_recuperar.push_back(tweet);
     }
@@ -121,7 +121,7 @@ TEST(Scraping, depurarAnalizarPreparar)
         scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
         resultado_analisis.setId((*it)->getId()->copia());
 
-        scraping::IAdministradorScraping::getInstancia()->almacenar(&resultado_analisis);
+        scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
     }
 
     // elimino los contenidos xq ya no me sirven
@@ -139,7 +139,7 @@ TEST(Scraping, depurarAnalizarPreparar)
         analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
         resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
 
-        scraping::IAdministradorScraping::getInstancia()->recuperar(resultado_analisis_a_recuperar);
+        scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(resultado_analisis_a_recuperar);
 
         resultados.push_back(resultado_analisis_a_recuperar);
     }
@@ -152,7 +152,7 @@ TEST(Scraping, depurarAnalizarPreparar)
     preparacion::ResultadoAnalisisMedio resultados_medio;
     resultados_medio.setId(cuenta.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&resultados_medio);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultados_medio);
 
     resultados_medio.combinarCon(resultado_combinado);
 

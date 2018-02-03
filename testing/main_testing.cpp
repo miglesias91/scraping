@@ -17,15 +17,15 @@ int main(int argc, char **argv)
 
     scraping::IAdministradorScraping::crearAdministradorScrapingLocal();
 
-    scraping::IAdministradorScraping::getInstancia()->abrirBD();
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->abrirBD();
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->abrirBD();
 
     int result = RUN_ALL_TESTS();
 
-    scraping::IAdministradorScraping::getInstancia()->cerrarBD();
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->cerrarBD();
 
-    scraping::IAdministradorScraping::getInstancia()->borrarBD();
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->borrarBD();
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->cerrarBD();
 

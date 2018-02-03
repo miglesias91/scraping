@@ -15,7 +15,7 @@ IAdministradorScraping* IAdministradorScraping::administrador = NULL;
 IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
 IAdministradorScraping* IAdministradorScraping::administrador_resultados_analisis_diario = NULL;
 
-IAdministradorScraping::IAdministradorScraping() : admin_almacenamiento(NULL)
+IAdministradorScraping::IAdministradorScraping() : admin_almacenamiento(NULL), handler_almacenamiento(0)
 {
 }
 
@@ -65,8 +65,8 @@ void IAdministradorScraping::liberar()
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
-	administrador = new AdministradorScrapingLocal();
-    administrador->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
+	//administrador = new AdministradorScrapingLocal();
+ //   administrador->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
 
     administrador_info = new AdministradorScrapingLocal();
     administrador_info->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
@@ -135,6 +135,6 @@ void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)
 
     //this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
  
-    unsigned long long int handler_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::iniciarNuevo(path_config_db);
-    this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia(handler_almacenamiento);
+    this->handler_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::iniciarNuevo(path_config_db);
+    this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento);
 }

@@ -84,6 +84,8 @@ protected:
 
     almacenamiento::IAdministradorAlmacenamiento* admin_almacenamiento;
 
+    unsigned long long int handler_almacenamiento;
+
 private:
 	// ATRIBUTOS
 
@@ -130,7 +132,7 @@ unsigned long long int IAdministradorScraping::recuperarIDActual()
 
     almacenamiento::IAlmacenableClaveValor* clave_valor_a_recuperar = new almacenamiento::IAlmacenableClaveValor(clave, grupo);
 
-    bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia()->recuperar(clave_valor_a_recuperar);
+    bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento)->recuperar(clave_valor_a_recuperar);
 
     std::string string_id_actual = clave_valor_a_recuperar->getValor();
 
@@ -156,7 +158,7 @@ void IAdministradorScraping::almacenarIDActual()
 
     almacenamiento::IAlmacenableClaveValor* clave_valor_a_recuperar = new almacenamiento::IAlmacenableClaveValor(clave, grupo, valor);
 
-    bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia()->modificar(clave_valor_a_recuperar);
+    bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento)->modificar(clave_valor_a_recuperar);
 
     delete clave_valor_a_recuperar;
 }

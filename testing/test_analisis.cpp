@@ -153,13 +153,13 @@ TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
     resultado_analisis.setId(new herramientas::utiles::ID(123));
 
-    scraping::IAdministradorScraping::getInstancia()->almacenar(&resultado_analisis);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
 
     // recupero lo que acabo de almacenar.
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_a_recuperar;
     resultado_analisis_a_recuperar.setId(resultado_analisis.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstancia()->recuperar(&resultado_analisis_a_recuperar);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_analisis_a_recuperar);
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_nuevo = resultado_analisis_a_recuperar.getResultadoFuerzaEnNoticia();
 
