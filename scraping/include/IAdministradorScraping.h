@@ -18,34 +18,33 @@ public:
     IAdministradorScraping();
     virtual ~IAdministradorScraping();
 
-	static void iniciar(std::string path_configuracion);
+    static void iniciar(std::string path_configuracion);
 
-	static void liberar();
+    static void liberar();
 
-	static void crearAdministradorScrapingLocal();
+    static void crearAdministradorScrapingLocal();
 
-	static void crearAdministradorScrapingDistribuido();
+    static void crearAdministradorScrapingDistribuido();
 
-	static bool administradorIniciado();
+    static bool administradorIniciado();
 
     static bool administradorInfoIniciado();
 
     static bool administradorResultadosAnalisisDiarioIniciado();
 
-	// GETTERS
+    // GETTERS
 
-	static IAdministradorScraping* getInstancia();
+    static IAdministradorScraping* getInstancia();
 
     static IAdministradorScraping* getInstanciaAdminInfo();
 
     static IAdministradorScraping* getInstanciaAdminResultadosAnalisisDiario();
 
+    // SETTERS
 
-	// SETTERS
+    // METODOS
 
-	// METODOS
-
-	virtual bool abrirBD() = 0;
+    virtual bool abrirBD() = 0;
 
     virtual bool cerrarBD() = 0;
 
@@ -73,6 +72,8 @@ public:
 
     template<typename GRUPO>
     void almacenarIDActual();
+
+    virtual void recuperarIDsActuales();
 
 protected:
 
@@ -110,9 +111,9 @@ bool IAdministradorScraping::recuperarGrupo(std::string prefijo_grupo, std::vect
     {
         entidad = new GRUPO();
         unsigned long long int id = std::stoull((*it)->getClave());
-        entidad->setId(new scraping::ID(id));
+        entidad->setId(new herramientas::utiles::ID(id));
 
-        this->recuperar(entidad);
+        entidad->parsearValorAlmacenable((*it)->getValor());
 
         entidades_recuperadas->push_back(entidad);
 

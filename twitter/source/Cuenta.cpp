@@ -85,4 +85,11 @@ void Cuenta::parsearValorAlmacenable(std::string valor_almacenable)
     this->parsearJson();
 }
 
+// metodos de IHashable
+
+unsigned long long int Cuenta::hashcode()
+{
+    return herramientas::utiles::IHashable::hashear(this->getNombre());
+}
+
 // CONSULTAS

@@ -7,7 +7,7 @@ using namespace scraping::extraccion;
 
 herramientas::utiles::GestorIDs Medio::gestor_ids_medios;
 
-Medio::Medio(herramientas::utiles::Json * json) : IAlmacenable(ConfiguracionScraping::prefijoMedio()), IContieneJson(json)
+Medio::Medio(herramientas::utiles::Json * json) : IAlmacenable(ConfiguracionScraping::prefijoMedio()), IContieneJson(json), IHashable()
 {
 }
 

@@ -31,6 +31,11 @@ public:
 
     static std::string prefijoConfiguracion();
 
+    static std::string prefijoTwitter();
+    static std::string prefijoHTML();
+    static std::string prefijoFacebook();
+    static std::string prefijoRSS();
+
     static std::string prefijoMedio();
     static std::string prefijoContenido();
 
@@ -50,6 +55,11 @@ public:
     static std::string tagArchivoConfigDBResultadosDiarios();
 
     static std::string tagPrefijoConfiguracion();
+
+    static std::string tagPrefijoTwitter();
+    static std::string tagPrefijoHTML();
+    static std::string tagPrefijoFacebook();
+    static std::string tagPrefijoRSS();
 
     static std::string tagPrefijoMedio();
     static std::string tagPrefijoContenido();
@@ -71,6 +81,11 @@ private:
     static bool scraping_local;
     static bool scraping_distribuido;
     static std::string prefijo_configuracion;
+
+    static std::string prefijo_twitter;
+    static std::string prefijo_html;
+    static std::string prefijo_facebook;
+    static std::string prefijo_rss;
 
     static std::string prefijo_medio;
     static std::string prefijo_contenido;

@@ -14,9 +14,6 @@ using namespace scraping;
 
 AdministradorScrapingLocal::AdministradorScrapingLocal() : IAdministradorScraping()
 {
-	//almacenamiento::IAdministradorAlmacenamiento::iniciar(ConfiguracionScraping::pathConfiguracion());
-
- //   this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
 }
 
 AdministradorScrapingLocal::~AdministradorScrapingLocal()
@@ -26,19 +23,19 @@ AdministradorScrapingLocal::~AdministradorScrapingLocal()
 
 bool AdministradorScrapingLocal::abrirBD()
 {
-	bool retorno = this->admin_almacenamiento->abrir();
+    bool retorno = this->admin_almacenamiento->abrir();
 
-	return retorno;
+    return retorno;
 }
 
 bool AdministradorScrapingLocal::cerrarBD()
 {
-    IAdministradorScraping::almacenarIDActual<extraccion::Medio>();
-    IAdministradorScraping::almacenarIDActual<extraccion::Contenido>();
+    this->almacenarIDActual<extraccion::Medio>();
+    this->almacenarIDActual<extraccion::Contenido>();
 
-	bool retorno = this->admin_almacenamiento->cerrar();
+    bool retorno = this->admin_almacenamiento->cerrar();
 
-	return retorno;
+    return retorno;
 }
 
 bool AdministradorScrapingLocal::borrarBD()

@@ -2,8 +2,12 @@
 // gtest
 #include <gtest/gtest.h>
 
+#ifdef DEBUG || _DEBUG
+
 // vld
 #include <vld.h>
+
+#endif // DEBUG || _DEBUG
 
 // scraping
 #include <scraping/include/IAdministradorScraping.h>

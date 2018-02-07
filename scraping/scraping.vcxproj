@@ -121,12 +121,16 @@
   <ItemGroup>
     <ClInclude Include="include\AdministradorScrapingLocal.h" />
     <ClInclude Include="include\ConfiguracionScraping.h" />
+    <ClInclude Include="include\GestorMedios.h" />
+    <ClInclude Include="include\GestorTareas.h" />
     <ClInclude Include="include\IAdministradorScraping.h" />
     <ClInclude Include="include\IAlmacenable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AdministradorScrapingLocal.cpp" />
     <ClCompile Include="source\ConfiguracionScraping.cpp" />
+    <ClCompile Include="source\GestorMedios.cpp" />
+    <ClCompile Include="source\GestorTareas.cpp" />
     <ClCompile Include="source\IAdministradorScraping.cpp" />
     <ClCompile Include="source\IAlmacenable.cpp" />
   </ItemGroup>

@@ -7,6 +7,7 @@
 // utiles
 #include <utiles/include/GestorIDs.h>
 #include <utiles/include/IContieneJson.h>
+#include <utiles/include/IHashable.h>
 
 // scraping
 #include <scraping/include/IAlmacenable.h>
@@ -20,7 +21,7 @@ namespace scraping
 namespace extraccion
 {
 
-class Medio : public IAlmacenable, public herramientas::utiles::IContieneJson
+class Medio : public IAlmacenable, public herramientas::utiles::IContieneJson, public herramientas::utiles::IHashable
 {
 public:
     Medio(herramientas::utiles::Json * json = NULL);

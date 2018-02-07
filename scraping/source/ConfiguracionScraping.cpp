@@ -16,6 +16,11 @@ std::string ConfiguracionScraping::archivo_config_db_resultados_analisis_diario;
 
 std::string ConfiguracionScraping::prefijo_configuracion;
 
+std::string ConfiguracionScraping::prefijo_twitter;
+std::string ConfiguracionScraping::prefijo_html;
+std::string ConfiguracionScraping::prefijo_facebook;
+std::string ConfiguracionScraping::prefijo_rss;
+
 std::string ConfiguracionScraping::prefijo_medio;
 std::string ConfiguracionScraping::prefijo_contenido;
 std::string ConfiguracionScraping::prefijo_resultado_medio;
@@ -55,8 +60,15 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
     archivo_config_db_resultados_analisis_diario = config_scraping_json[ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios().c_str()].GetString();
 
     prefijo_configuracion = config_scraping_json[ConfiguracionScraping::tagPrefijoConfiguracion().c_str()].GetString();
+
+    prefijo_twitter = config_scraping_json[ConfiguracionScraping::tagPrefijoTwitter().c_str()].GetString();
+    prefijo_html = config_scraping_json[ConfiguracionScraping::tagPrefijoHTML().c_str()].GetString();
+    prefijo_facebook = config_scraping_json[ConfiguracionScraping::tagPrefijoFacebook().c_str()].GetString();
+    prefijo_rss = config_scraping_json[ConfiguracionScraping::tagPrefijoRSS().c_str()].GetString();
+
     prefijo_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoMedio().c_str()].GetString();
     prefijo_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoContenido().c_str()].GetString();
+    
     prefijo_resultado_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoMedio().c_str()].GetString();
     prefijo_resultado_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoContenido().c_str()].GetString();
     prefijo_resultado_diario = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoDiario().c_str()].GetString();
@@ -95,6 +107,26 @@ std::string ConfiguracionScraping::archivoConfigDBResultadosDiarios()
 std::string ConfiguracionScraping::prefijoConfiguracion()
 {
     return prefijo_configuracion;
+}
+
+std::string ConfiguracionScraping::prefijoTwitter()
+{
+    return prefijo_twitter;
+}
+
+std::string ConfiguracionScraping::prefijoHTML()
+{
+    return prefijo_html;
+}
+
+std::string ConfiguracionScraping::prefijoFacebook()
+{
+    return prefijo_facebook;
+}
+
+std::string ConfiguracionScraping::prefijoRSS()
+{
+    return prefijo_rss;
 }
 
 // ENTIDADES
@@ -156,6 +188,26 @@ std::string ConfiguracionScraping::tagArchivoConfigDBInfoScraping()
 std::string ConfiguracionScraping::tagPrefijoConfiguracion()
 {
     return "prefijo_configuracion";
+}
+
+std::string ConfiguracionScraping::tagPrefijoTwitter()
+{
+    return "prefijo_twitter";
+}
+
+std::string ConfiguracionScraping::tagPrefijoHTML()
+{
+    return "prefijo_html";
+}
+
+std::string ConfiguracionScraping::tagPrefijoFacebook()
+{
+    return "prefijo_facebook";
+}
+
+std::string ConfiguracionScraping::tagPrefijoRSS()
+{
+    return "prefijo_rss";
 }
 
 // ENTIDADES

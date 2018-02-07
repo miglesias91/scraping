@@ -1,7 +1,7 @@
 {
     "almacenamiento" :
     {
-        "path_db" : "C:/temp/db_info_scraping_debug-testing",
+        "path_db" : "C:/temp/db_resultados_analisis_diarios_debug-aplicacion",
         "almacenamiento_local" : true,
         "almacenamiento_distribuido" : false
     }

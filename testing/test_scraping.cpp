@@ -5,6 +5,7 @@
 #include <fstream>
 
 // scraping
+#include <scraping/include/GestorMedios.h>
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/IAdministradorScraping.h>
 
@@ -180,4 +181,36 @@ TEST(Scraping, depurarAnalizarPreparar)
     // clave: <prefijo_resultado_medio><id_medio> valor[JSON]: { [ termino_A : { fuerza_en_noticia : 18.9876, sentimiento : 0.95 }, ... , termino_N : {fuerza...} ] }
     //
     // 2) dsp deberia agarrar todos los registros generados para cada medio (el paso anterior), y juntarlos en el registro diario.
+}
+
+
+TEST(Scraping, gestionarCuentasDeTwitter)
+{
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    scraping::twitter::modelo::Cuenta cuenta_uno("cuenta_uno");
+    cuenta_uno.asignarNuevoId();
+
+    scraping::twitter::modelo::Cuenta cuenta_dos("cuenta_dos");
+    cuenta_dos.asignarNuevoId();
+
+    scraping::twitter::modelo::Cuenta cuenta_tres("cuenta_tres");
+    cuenta_tres.asignarNuevoId();
+
+    gestor_medios.agregarCuentaDeTwitter(&cuenta_uno);
+    gestor_medios.agregarCuentaDeTwitter(&cuenta_dos);
+    gestor_medios.agregarCuentaDeTwitter(&cuenta_tres);
+
+    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
+    gestor_medios.recuperarCuentasDeTwitter(cuentas_twitter_existentes);
+
+    ASSERT_EQ("cuenta_uno", cuentas_twitter_existentes[0]->getNombre());
+    ASSERT_EQ("cuenta_dos", cuentas_twitter_existentes[1]->getNombre());
+    ASSERT_EQ("cuenta_tres", cuentas_twitter_existentes[2]->getNombre());
+
+    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    {
+        delete *it;
+    }
+    cuentas_twitter_existentes.clear();
 }

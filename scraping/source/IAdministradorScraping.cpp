@@ -9,6 +9,10 @@ using namespace scraping;
 #include <scraping/include/AdministradorScrapingLocal.h>
 #include <scraping/include/ConfiguracionScraping.h>
 
+// extraccion
+#include <extraccion/include/Medio.h>
+#include <extraccion/include/Contenido.h>
+
 typedef scraping::IAdministradorScraping* (*admin)();
 
 IAdministradorScraping* IAdministradorScraping::administrador = NULL;
@@ -25,24 +29,24 @@ IAdministradorScraping::~IAdministradorScraping()
 
 void IAdministradorScraping::iniciar(std::string path_configuracion)
 {
-	if (administradorIniciado())
-	{
-		// TODO agregar log.
-		std::cout << "Scraping ya fue iniciado." << std::endl;
-		return;
-		// throw std::exception("Administrador ya fue iniciado.");
-	}
+    if (administradorIniciado())
+    {
+        // TODO agregar log.
+        std::cout << "Scraping ya fue iniciado." << std::endl;
+        return;
+        // throw std::exception("Administrador ya fue iniciado.");
+    }
 
-	ConfiguracionScraping::leerConfiguracion(path_configuracion);
+    ConfiguracionScraping::leerConfiguracion(path_configuracion);
 
-	if (ConfiguracionScraping::scrapingLocal())
-	{
-		crearAdministradorScrapingLocal();
-	}
-	else
-	{
-		crearAdministradorScrapingDistribuido();
-	}
+    if (ConfiguracionScraping::scrapingLocal())
+    {
+        crearAdministradorScrapingLocal();
+    }
+    else
+    {
+        crearAdministradorScrapingDistribuido();
+    }
 }
 
 void IAdministradorScraping::liberar()
@@ -65,9 +69,6 @@ void IAdministradorScraping::liberar()
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
-	//administrador = new AdministradorScrapingLocal();
- //   administrador->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
-
     administrador_info = new AdministradorScrapingLocal();
     administrador_info->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
 
@@ -129,12 +130,17 @@ IAdministradorScraping* IAdministradorScraping::getInstanciaAdminResultadosAnali
     }
 }
 
-void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)
+void scraping::IAdministradorScraping::recuperarIDsActuales()
 {
-    //almacenamiento::IAdministradorAlmacenamiento::iniciar(path_config_db);
+    unsigned long long int id_actual_medio = this->recuperarIDActual<scraping::extraccion::Medio>();
+    unsigned long long int id_actual_contenido = this->recuperarIDActual<scraping::extraccion::Contenido>();
 
-    //this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia();
- 
+    scraping::extraccion::Medio::getGestorIDs()->setIdActual(id_actual_medio);
+    scraping::extraccion::Contenido::getGestorIDs()->setIdActual(id_actual_contenido);
+}
+
+void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)
+{ 
     this->handler_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::iniciarNuevo(path_config_db);
     this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento);
 }

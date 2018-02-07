@@ -46,6 +46,10 @@ public:
     // metodos de IAlmacenable
 
     virtual void parsearValorAlmacenable(std::string valor_almacenable);
+    
+    // metodos de IHashable
+
+    virtual unsigned long long int hashcode();
 
     // CONSULTAS
 
