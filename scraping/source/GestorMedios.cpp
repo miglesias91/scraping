@@ -14,12 +14,21 @@ GestorMedios::~GestorMedios()
 {
 }
 
+bool GestorMedios::actualizarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * cuenta_a_actualizar)
+{
+    cuenta_a_actualizar->setGrupo(scraping::ConfiguracionScraping::prefijoTwitter());
+
+    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->modificar(cuenta_a_actualizar);
+
+    return false;
+}
+
 bool GestorMedios::recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter)
 {
     return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), &cuentas_de_twitter);
 }
 
-bool GestorMedios::agregarCuentaDeTwitter(scraping::extraccion::Medio * medio_nuevo)
+bool GestorMedios::agregarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * medio_nuevo)
 {
     medio_nuevo->setGrupo(scraping::ConfiguracionScraping::prefijoTwitter());
 

@@ -27,7 +27,7 @@ public:
 
     // metodos de IAlmacenable
 
-    virtual std::string getValorAlmacenable();
+    // virtual std::string getValorAlmacenable();
 
     // SETTERS
 
@@ -45,7 +45,7 @@ public:
 
     // metodos de IAlmacenable
 
-    virtual void parsearValorAlmacenable(std::string valor_almacenable);
+    // virtual void parsearValorAlmacenable(std::string valor_almacenable);
     
     // metodos de IHashable
 

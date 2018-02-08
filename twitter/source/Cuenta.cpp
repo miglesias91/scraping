@@ -24,16 +24,16 @@ unsigned long long int Cuenta::getIdUltimoTweetAnalizado()
 
 // metodos de IAlmacenable
 
-std::string Cuenta::getValorAlmacenable()
-{
-    this->armarJson();
-
-    herramientas::utiles::Json* json_info_contenido = this->getJson();
-
-    std::string string_almacenable = json_info_contenido->jsonString();
-
-    return string_almacenable;
-}
+//std::string Cuenta::getValorAlmacenable()
+//{
+//    this->armarJson();
+//
+//    herramientas::utiles::Json* json_info_contenido = this->getJson();
+//
+//    std::string string_almacenable = json_info_contenido->jsonString();
+//
+//    return string_almacenable;
+//}
 
 // SETTERS
 
@@ -77,13 +77,13 @@ bool Cuenta::parsearJson()
 
 // metodos de IAlmacenable
 
-void Cuenta::parsearValorAlmacenable(std::string valor_almacenable)
-{
-    herramientas::utiles::Json * json_almacenable = new herramientas::utiles::Json(valor_almacenable);
-
-    this->setJson(json_almacenable);
-    this->parsearJson();
-}
+//void Cuenta::parsearValorAlmacenable(std::string valor_almacenable)
+//{
+//    herramientas::utiles::Json * json_almacenable = new herramientas::utiles::Json(valor_almacenable);
+//
+//    this->setJson(json_almacenable);
+//    this->parsearJson();
+//}
 
 // metodos de IHashable
 

@@ -139,6 +139,12 @@ void scraping::IAdministradorScraping::recuperarIDsActuales()
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(id_actual_contenido);
 }
 
+void scraping::IAdministradorScraping::almacenarIDsActuales()
+{
+    this->almacenarIDActual<scraping::extraccion::Medio>();
+    this->almacenarIDActual<scraping::extraccion::Contenido>();
+}
+
 void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)
 { 
     this->handler_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::iniciarNuevo(path_config_db);

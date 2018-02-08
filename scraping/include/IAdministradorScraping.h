@@ -75,6 +75,8 @@ public:
 
     virtual void recuperarIDsActuales();
 
+    virtual void almacenarIDsActuales();
+
 protected:
 
     // METODOS PROTEGIDOS
@@ -128,7 +130,7 @@ bool IAdministradorScraping::recuperarGrupo(std::string prefijo_grupo, std::vect
 template<typename GRUPO>
 unsigned long long int IAdministradorScraping::recuperarIDActual()
 {
-    std::string clave = GRUPO::claveIDActual();
+    std::string clave = GRUPO::getClaveIDActual();
     std::string grupo = ConfiguracionScraping::prefijoConfiguracion();
 
     almacenamiento::IAlmacenableClaveValor* clave_valor_a_recuperar = new almacenamiento::IAlmacenableClaveValor(clave, grupo);

@@ -31,7 +31,7 @@ std::vector<Tweet> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int c
     std::vector<modelo::Tweet> tweets;
     for (std::vector<utiles::Json*>::iterator it = tweets_json.begin(); it != tweets_json.end(); it++)
     {
-        Tweet nuevo_tweet(*it);
+         Tweet nuevo_tweet(*it);
         tweets.push_back(nuevo_tweet);
     }
 

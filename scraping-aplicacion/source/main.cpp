@@ -17,6 +17,7 @@
 #include <scraping/include/IAdministradorScraping.h>
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/GestorMedios.h>
+#include <scraping/include/GestorTareas.h>
 
 void agregarNuevasCuentasDeTwitter()
 {
@@ -73,8 +74,11 @@ int main(int argc, char ** argv)
     // agrego las nuevas cuentas de twitter a agregar.
     agregarNuevasCuentasDeTwitter();
 
+    scraping::aplicacion::GestorTareas::scrapearTwitter();
+
     // cierro la aplicacion
 
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenarIDsActuales();
     scraping::IAdministradorScraping::getInstanciaAdminInfo()->cerrarBD();
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->cerrarBD();
