@@ -38,18 +38,26 @@ void GestorTareas::scrapearTwitter()
     {
         scraping::twitter::modelo::Cuenta * cuenta = *it;
 
-        std::vector<scraping::twitter::modelo::Tweet> tweets = app.leerUltimosTweets(cuenta);
+        std::vector<scraping::twitter::modelo::Tweet*> tweets = app.leerUltimosTweets(cuenta);
         
-        for (std::vector<scraping::twitter::modelo::Tweet>::iterator it = tweets.begin(); it != tweets.end(); it++)
+        for (std::vector<scraping::twitter::modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
         {
-            it->asignarNuevoId();
+            scraping::twitter::modelo::Tweet* tweet = *it;
 
-            cuenta->agregarContenidoParaAnalizar(&(*it));
+            tweet->asignarNuevoId();
 
-            cuenta->setIdUltimoTweetAnalizado(it->getIdTweet());
+            cuenta->agregarContenidoParaAnalizar(tweet);
 
-            gestor_analisis_diario.almacenarContenidoParaAnalizar(&(*it));
+            cuenta->setIdUltimoTweetAnalizado(tweet->getIdTweet());
+
+            gestor_analisis_diario.almacenarContenidoParaAnalizar(tweet);
         }
+
+        for (std::vector<scraping::twitter::modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
+        {
+            delete *it;
+        }
+        tweets.clear();
 
         gestor_analisis_diario.almacenarMedioConContenidoParaAnalizar(cuenta);
 

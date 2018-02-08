@@ -20,7 +20,7 @@ Aplicacion::~Aplicacion()
     }
 }
 
-std::vector<Tweet> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets)
+std::vector<Tweet*> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets)
 {
     comunicacion::SolicitudUltimosTweets solicitud_ultimos_tweets(cuenta, cantidad_de_tweets);
 
@@ -28,10 +28,10 @@ std::vector<Tweet> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int c
 
     std::vector<utiles::Json*> tweets_json = respuetas_con_tweets->getJson()->getAtributoArrayJson();
 
-    std::vector<modelo::Tweet> tweets;
+    std::vector<modelo::Tweet*> tweets;
     for (std::vector<utiles::Json*>::iterator it = tweets_json.begin(); it != tweets_json.end(); it++)
     {
-         Tweet nuevo_tweet(*it);
+        Tweet * nuevo_tweet = new Tweet(*it);
         tweets.push_back(nuevo_tweet);
     }
 

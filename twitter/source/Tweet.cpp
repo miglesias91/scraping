@@ -27,7 +27,19 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : Contenido(tweet_json)
     delete user_json;
 
     herramientas::utiles::Json * entidades_json = this->getJson()->getAtributoValorJson("entities");
-    std::vector<std::string> hashtags = entidades_json->getAtributoArrayString("hashtags");
+    std::vector<herramientas::utiles::Json*> hashtags_json = entidades_json->getAtributoArrayJson("hashtags");
+    std::vector<std::string> hashtags;
+    for (std::vector<herramientas::utiles::Json*>::iterator it = hashtags_json.begin(); it != hashtags_json.end(); it++)
+    {
+        std::string hashtag = (*it)->getAtributoValorString("text");
+        hashtags.push_back(hashtag);
+    }
+
+    for (std::vector<herramientas::utiles::Json*>::iterator it = hashtags_json.begin(); it != hashtags_json.end(); it++)
+    {
+        delete *it;
+    }
+
     delete entidades_json;
 
     this->setIdTweet(id_tweet);
