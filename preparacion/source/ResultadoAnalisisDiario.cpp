@@ -1,5 +1,8 @@
 #include <preparacion/include/ResultadoAnalisisDiario.h>
 
+// herramientas
+#include <utiles/include/Fecha.h>
+
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 
@@ -25,9 +28,7 @@ ResultadoAnalisisDiario::~ResultadoAnalisisDiario()
     this->resultados_medios.clear();
 }
 
-
 // GETTERS
-
 
 herramientas::utiles::Json * ResultadoAnalisisDiario::getRegistroAExportar()
 {
@@ -42,6 +43,15 @@ ResultadoAnalisisMedio * ResultadoAnalisisDiario::getResultadoMedio(unsigned lon
     }
 
     return this->resultados_medios[id_medio];
+}
+
+herramientas::utiles::ID ResultadoAnalisisDiario::getIDDiario()
+{
+    std::string id_string = herramientas::utiles::Fecha::getFechaActual().getStringAAAAMMDD();
+
+    unsigned long long int id = std::stoull(id_string);
+
+    return herramientas::utiles::ID(id);
 }
 
 // getters de IAlmacenable

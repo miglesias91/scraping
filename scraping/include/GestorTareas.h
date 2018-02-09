@@ -25,6 +25,10 @@ public:
 
     static void scrapearTwitter();
 
+    static void depurarYAnalizarTwitter();
+
+    static void prepararYAlmacenarTwitter();
+
     // CONSULTAS
 
 private:

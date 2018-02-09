@@ -112,7 +112,6 @@ TEST(Scraping, depurarAnalizarPreparar)
         analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia(10);
 
         analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
-        fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
 
         fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
 
@@ -123,6 +122,8 @@ TEST(Scraping, depurarAnalizarPreparar)
         resultado_analisis.setId((*it)->getId()->copia());
 
         scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
+
+        cuenta_a_analizar.setearContenidoComoAnalizado(*it);
     }
 
     // elimino los contenidos xq ya no me sirven

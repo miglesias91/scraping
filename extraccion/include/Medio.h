@@ -43,6 +43,8 @@ public:
 
     // SETTERS
 
+    virtual bool setearContenidoComoAnalizado(Contenido* contenido);
+
     // METODOS
 
     virtual void agregarContenidoParaAnalizar(Contenido* contenido);

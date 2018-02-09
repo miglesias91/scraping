@@ -60,6 +60,22 @@ herramientas::utiles::GestorIDs * Medio::getGestorIDs()
 
 // SETTERS
 
+bool Medio::setearContenidoComoAnalizado(Contenido * contenido)
+{
+    std::vector<unsigned long long int>::iterator it_a_mover = std::find(this->ids_contenidos_no_analizados.begin(), this->ids_contenidos_no_analizados.end(), contenido->getId()->numero());
+
+    if (this->ids_contenidos_no_analizados.end() == it_a_mover)
+    {
+        return false;
+    }
+
+    this->ids_contenidos_analizados.push_back(*it_a_mover);
+
+    this->ids_contenidos_no_analizados.erase(it_a_mover);
+
+    return false;
+}
+
 // METODOS
 
 void Medio::agregarContenidoParaAnalizar(Contenido * contenido)

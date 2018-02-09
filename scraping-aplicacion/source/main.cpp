@@ -75,6 +75,9 @@ int main(int argc, char ** argv)
     agregarNuevasCuentasDeTwitter();
 
     scraping::aplicacion::GestorTareas::scrapearTwitter();
+    scraping::aplicacion::GestorTareas::depurarYAnalizarTwitter();
+    scraping::aplicacion::GestorTareas::prepararYAlmacenarTwitter();
+
 
     // cierro la aplicacion
 

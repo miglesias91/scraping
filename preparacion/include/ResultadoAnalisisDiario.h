@@ -22,6 +22,8 @@ public:
 
     virtual ResultadoAnalisisMedio * getResultadoMedio(unsigned long long int id_medio);
 
+    static herramientas::utiles::ID getIDDiario();
+
     // getters de IAlmacenable
 
     virtual std::string getValorAlmacenable();
