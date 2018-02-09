@@ -28,6 +28,10 @@ public:
     bool recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter);
 
     bool agregarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * medio_nuevo);
+    
+    bool almacenarIDActualMedio();
+
+    void recuperarIDActualMedio();
 
     // CONSULTAS
 

@@ -71,7 +71,7 @@ public:
     unsigned long long int recuperarIDActual();
 
     template<typename GRUPO>
-    void almacenarIDActual();
+    bool almacenarIDActual();
 
     virtual void recuperarIDsActuales();
 
@@ -153,7 +153,7 @@ unsigned long long int IAdministradorScraping::recuperarIDActual()
 }
 
 template<typename GRUPO>
-void IAdministradorScraping::almacenarIDActual()
+bool IAdministradorScraping::almacenarIDActual()
 {
     std::string clave = GRUPO::getClaveIDActual();
     std::string grupo = ConfiguracionScraping::prefijoConfiguracion();
@@ -164,6 +164,8 @@ void IAdministradorScraping::almacenarIDActual()
     bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento)->modificar(clave_valor_a_recuperar);
 
     delete clave_valor_a_recuperar;
+
+    return retorno;
 }
 
 };

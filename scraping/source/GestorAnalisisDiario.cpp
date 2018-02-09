@@ -40,6 +40,11 @@ bool GestorAnalisisDiario::almacenarResultadoAnalisisDiario(scraping::preparacio
     return scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(resultado_a_almacenar);
 }
 
+bool GestorAnalisisDiario::almacenarIDActualContenido()
+{
+    return scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenarIDActual<scraping::extraccion::Contenido>();
+}
+
 bool GestorAnalisisDiario::recuperarContenido(scraping::extraccion::Contenido * contenido_a_almacenar)
 {
     return IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(contenido_a_almacenar);
@@ -59,3 +64,11 @@ bool GestorAnalisisDiario::recuperarResultadoAnalisisDiario(scraping::preparacio
 {
     return IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(resultado_a_recuperar);
 }
+
+void GestorAnalisisDiario::recuperarIDActualContenido()
+{
+    unsigned long long int id_actual_contenido = IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperarIDActual<scraping::extraccion::Contenido>();
+
+    scraping::extraccion::Contenido::getGestorIDs()->setIdActual(id_actual_contenido);
+}
+

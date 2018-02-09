@@ -48,6 +48,7 @@ void GestorTareas::scrapearTwitter()
     scraping::twitter::modelo::Aplicacion app(consumidor_api_twitter);
 
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
+    gestor_analisis_diario.recuperarIDActualContenido();
     for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         scraping::twitter::modelo::Cuenta * cuenta = *it;
@@ -63,6 +64,14 @@ void GestorTareas::scrapearTwitter()
             cuenta->agregarContenidoParaAnalizar(tweet);
 
             gestor_analisis_diario.almacenarContenido(tweet);
+            gestor_analisis_diario.almacenarIDActualContenido();
+        }
+
+        if(0 < tweets.size())
+        {// trajo por lo menos un tweet nuevo, entonces actualizo sus datos.
+            cuenta->setIdUltimoTweetAnalizado(tweets[0]->getIdTweet());
+            gestor_analisis_diario.almacenarMedio(cuenta);
+            gestor_medios.actualizarCuentaDeTwitter(cuenta);
         }
 
         for (std::vector<scraping::twitter::modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
@@ -70,13 +79,6 @@ void GestorTareas::scrapearTwitter()
             delete *it;
         }
         tweets.clear();
-
-        if(0 > tweets.size())
-        {// trajo por lo menos un tweet nuevo, entonces actualizo sus datos.
-            cuenta->setIdUltimoTweetAnalizado(tweets[0]->getIdTweet());
-            gestor_analisis_diario.almacenarMedio(cuenta);
-            gestor_medios.actualizarCuentaDeTwitter(cuenta);
-        }
     }
 
     for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)

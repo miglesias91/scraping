@@ -34,3 +34,15 @@ bool GestorMedios::agregarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * me
 
     return scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(medio_nuevo);
 }
+
+bool GestorMedios::almacenarIDActualMedio()
+{
+    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenarIDActual<scraping::extraccion::Medio>();
+}
+
+void GestorMedios::recuperarIDActualMedio()
+{
+    unsigned long long int id_actual_medio = IAdministradorScraping::getInstanciaAdminInfo()->recuperarIDActual<scraping::extraccion::Medio>();
+
+    scraping::extraccion::Medio::getGestorIDs()->setIdActual(id_actual_medio);
+}
