@@ -16,7 +16,7 @@ SolicitudUltimosTweets::SolicitudUltimosTweets(scraping::twitter::modelo::Cuenta
         uri += "&since_id=" + std::to_string(cuenta->getIdUltimoTweetAnalizado());
     }
 
-    uri += "&trim_user=true";
+    uri += "&trim_user=true&tweet_mode=extended";
 
     this->setURI(uri);
 

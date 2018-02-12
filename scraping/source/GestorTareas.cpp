@@ -128,7 +128,7 @@ void GestorTareas::depurarYAnalizarTwitter()
 
             // ----- ANALISIS ----- //
 
-            analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia(10);
+            analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
             analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
 
@@ -140,7 +140,6 @@ void GestorTareas::depurarYAnalizarTwitter()
             scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
             resultado_analisis.setId((*it)->getId()->copia());
 
-            //scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
             gestor_analisis.almacenarResultadoAnalisis(&resultado_analisis);
 
             cuenta_a_analizar->setearContenidoComoAnalizado(*it);
@@ -183,7 +182,6 @@ void GestorTareas::prepararYAlmacenarTwitter()
             analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
             resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
 
-            //scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(resultado_analisis_a_recuperar);
             gestor_analisis.recuperarResultadoAnalisis(resultado_analisis_a_recuperar);
 
             resultados.push_back(resultado_analisis_a_recuperar);
@@ -197,7 +195,6 @@ void GestorTareas::prepararYAlmacenarTwitter()
         preparacion::ResultadoAnalisisMedio * resultados_medio = new preparacion::ResultadoAnalisisMedio();
         resultados_medio->setId(cuenta_a_preparar->getId()->copia());
 
-        //scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultados_medio);
         gestor_analisis.recuperarResultadoAnalisis(resultados_medio);
 
         resultados_medio->combinarCon(resultado_combinado);
@@ -207,7 +204,6 @@ void GestorTareas::prepararYAlmacenarTwitter()
         scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
         resultado_diario_recuperado.setId(scraping::preparacion::ResultadoAnalisisDiario::getIDDiario().copia());
 
-        //scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_diario_recuperado);
         gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario_recuperado);
 
         resultado_diario_recuperado.agregarResultadoDeMedio(resultados_medio);

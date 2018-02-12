@@ -25,7 +25,6 @@ void agregarNuevasCuentasDeTwitter()
     scraping::aplicacion::GestorMedios gestor_medios;
     gestor_medios.recuperarIDActualMedio();
 
-
     std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
     gestor_medios.recuperarCuentasDeTwitter(cuentas_twitter_existentes);
 
@@ -82,7 +81,6 @@ int main(int argc, char ** argv)
     scraping::aplicacion::GestorTareas::depurarYAnalizarTwitter();
     scraping::aplicacion::GestorTareas::prepararYAlmacenarTwitter();
 
-
     // cierro la aplicacion
 
     scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenarIDsActuales();
@@ -90,7 +88,7 @@ int main(int argc, char ** argv)
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->cerrarBD();
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->borrarBD();
+    // scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->borrarBD();
 
     scraping::IAdministradorScraping::liberar();
 

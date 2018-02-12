@@ -35,5 +35,7 @@ std::vector<Tweet*> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int 
         tweets.push_back(nuevo_tweet);
     }
 
+    delete respuetas_con_tweets;
+
     return tweets;
 }

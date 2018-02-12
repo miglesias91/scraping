@@ -37,6 +37,12 @@ public:
 
     // CONSULTAS
 
+    // devuelve 'true' si existe traduccion para el valor decimal del caracter especial.
+    bool existeTraduccion(unsigned int valor_hexa);
+
+    // devuelve 'true' si existe traduccion para el caracter especial.
+    bool existeTraduccion(std::string caracter_especial);
+
 private:
 
     // ATRIBUTOS

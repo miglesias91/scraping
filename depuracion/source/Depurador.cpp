@@ -110,6 +110,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
             unsigned char caracter_3 = *(it + 2);
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 224) * 4096 + (caracter_2 - 128) * 64 + caracter_3 - 128;
+            
 
             std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
 

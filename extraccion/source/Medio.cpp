@@ -98,7 +98,7 @@ void Medio::parsearValorAlmacenable(std::string valor_almacenable)
     this->ids_contenidos_no_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_no_analizados");
 
     // parseo los ids analizados.
-    this->ids_contenidos_no_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_no_analizados");
+    this->ids_contenidos_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_analizados");
 
     // parseo contenido
     herramientas::utiles::Json* json_info_medio = json_almacenable.getAtributoValorJson("info_medio");

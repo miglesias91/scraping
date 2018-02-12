@@ -69,20 +69,52 @@ MapaUTF8::~MapaUTF8()
     }
 }
 
+
+// GETTERS
+
 std::string MapaUTF8::getTraduccion(unsigned int valor_hexa)
 {
+    if (false == this->existeTraduccion(valor_hexa))
+    {
+        return std::string("");
+    }
+
     return this->mapa_valores_hexa[valor_hexa]->getTraduccion();
 }
 
 std::string MapaUTF8::getTraduccion(std::string caracter_especial)
 {
+    if (false == this->existeTraduccion(caracter_especial))
+    {
+        return std::string("");
+    }
+
     return this->mapa_valores_decimales_ncr[caracter_especial]->getTraduccion();
 }
-
-// GETTERS
 
 // SETTERS
 
 // METODOS
 
 // CONSULTAS
+bool MapaUTF8::existeTraduccion(unsigned int valor_hexa)
+{
+    std::unordered_map<unsigned int, Registro*>::iterator it = this->mapa_valores_hexa.find(valor_hexa);
+
+    if (it != this->mapa_valores_hexa.end())
+    {
+        return true;
+    }
+    return false;
+}
+
+bool MapaUTF8::existeTraduccion(std::string caracter_especial)
+{
+    std::unordered_map<std::string, Registro*>::iterator it = this->mapa_valores_decimales_ncr.find(caracter_especial);
+
+    if (it != this->mapa_valores_decimales_ncr.end())
+    {
+        return true;
+    }
+    return false;
+}

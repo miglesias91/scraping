@@ -20,7 +20,7 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : Contenido(tweet_json)
 
     unsigned long long int id_tweet = this->getJson()->getAtributoValorUint("id");
     std::string fecha_creacion_formato_twitter = this->getJson()->getAtributoValorString("created_at");
-    std::string texto = this->getJson()->getAtributoValorString("text");
+    std::string texto = this->getJson()->getAtributoValorString("full_text");
 
     herramientas::utiles::Json * user_json = this->getJson()->getAtributoValorJson("user");
     unsigned long long int id_usuario = user_json->getAtributoValorUint("id");
