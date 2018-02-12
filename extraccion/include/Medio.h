@@ -3,11 +3,13 @@
 // stl
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 // utiles
 #include <utiles/include/GestorIDs.h>
 #include <utiles/include/IContieneJson.h>
 #include <utiles/include/IHashable.h>
+#include <utiles/include/Fecha.h>
 
 // scraping
 #include <scraping/include/IAlmacenable.h>
@@ -28,6 +30,10 @@ public:
     virtual ~Medio();
 
     // GETTERS
+
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getMapaIDsContenidosAnalizados();
+
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getMapaIDsContenidosNoAnalizados();
 
     std::vector<unsigned long long int> getIDsContenidosAnalizados();
 
@@ -65,9 +71,9 @@ private:
 
     // ATRIBUTOS
 
-    std::vector<unsigned long long int> ids_contenidos_analizados;
+    std::unordered_map<std::string,std::vector<unsigned long long int>> mapa_ids_contenidos_analizados;
 
-    std::vector<unsigned long long int> ids_contenidos_no_analizados;
+    std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_no_analizados;
 };
 
 };

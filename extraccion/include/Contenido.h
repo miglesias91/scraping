@@ -6,6 +6,7 @@
 // utiles
 #include <utiles/include/GestorIDs.h>
 #include <utiles/include/IContieneJson.h>
+#include <utiles/include/Fecha.h>
 
 // scraping
 #include <scraping/include/IAlmacenable.h>
@@ -24,6 +25,8 @@ public:
 
     // GETTERS
 
+    virtual herramientas::utiles::Fecha getFecha();
+
     virtual std::string getTexto();
 
     static std::string getClaveIDActual();
@@ -35,6 +38,8 @@ public:
     virtual std::string getValorAlmacenable();
 
     // SETTERS
+
+    virtual void setFecha(herramientas::utiles::Fecha fecha);
 
     virtual void setTexto(std::string texto);
 
@@ -55,6 +60,8 @@ private:
     static herramientas::utiles::GestorIDs gestor_ids_contenidos;
 
     // ATRIBUTOS
+
+    herramientas::utiles::Fecha fecha;
 
     std::string texto;
 };

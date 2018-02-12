@@ -16,6 +16,11 @@ Contenido::~Contenido()
 }
 // GETTERS
 
+herramientas::utiles::Fecha Contenido::getFecha()
+{
+    return this->fecha;
+}
+
 std::string Contenido::getTexto()
 {
     return this->texto;
@@ -26,7 +31,7 @@ std::string Contenido::getClaveIDActual()
     return ConfiguracionScraping::claveIDContenidoActual();
 }
 
-herramientas::utiles::GestorIDs * scraping::extraccion::Contenido::getGestorIDs()
+herramientas::utiles::GestorIDs * Contenido::getGestorIDs()
 {
     return &gestor_ids_contenidos;
 }
@@ -51,6 +56,11 @@ std::string Contenido::getValorAlmacenable()
 }
 
 // SETTERS
+
+void Contenido::setFecha(herramientas::utiles::Fecha fecha)
+{
+    this->fecha = fecha;
+}
 
 void Contenido::setTexto(std::string texto)
 {

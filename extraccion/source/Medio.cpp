@@ -15,16 +15,40 @@ Medio::~Medio()
 {
 }
 
+std::vector<std::pair<std::string, std::vector<unsigned long long int>>> Medio::getMapaIDsContenidosAnalizados()
+{
+    return std::vector<std::pair<std::string, std::vector<unsigned long long int>>>(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_analizados.end());
+}
+
+std::vector<std::pair<std::string, std::vector<unsigned long long int>>> Medio::getMapaIDsContenidosNoAnalizados()
+{
+    return std::vector<std::pair<std::string, std::vector<unsigned long long int>>>(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_no_analizados.end());
+}
+
 // GETTERS
 
 std::vector<unsigned long long int> Medio::getIDsContenidosAnalizados()
 {
-    return this->ids_contenidos_analizados;
+    std::vector<unsigned long long int> ids_contenidos_analizados;
+
+    for (std::unordered_map<std::string, std::vector<unsigned long long int>>::iterator it = this->mapa_ids_contenidos_analizados.begin(); it != this->mapa_ids_contenidos_analizados.end(); it++)
+    {
+        ids_contenidos_analizados.insert(ids_contenidos_analizados.end(), it->second.begin(), it->second.end());
+    }
+
+    return ids_contenidos_analizados;
 }
 
 std::vector<unsigned long long int> Medio::getIDsContenidosNoAnalizados()
 {
-    return this->ids_contenidos_no_analizados;
+    std::vector<unsigned long long int> ids_contenidos_no_analizados;
+
+    for (std::unordered_map<std::string, std::vector<unsigned long long int>>::iterator it = this->mapa_ids_contenidos_no_analizados.begin(); it != this->mapa_ids_contenidos_no_analizados.end(); it++)
+    {
+        ids_contenidos_no_analizados.insert(ids_contenidos_no_analizados.end(), it->second.begin(), it->second.end());
+    }
+
+    return ids_contenidos_no_analizados;
 }
 
 std::string Medio::getValorAlmacenable()
@@ -33,17 +57,56 @@ std::string Medio::getValorAlmacenable()
 
     herramientas::utiles::Json json_almacenable;
 
-    // agrego las ids no analizados.
-    json_almacenable.agregarAtributoArray("ids_contenidos_no_analizados", this->getIDsContenidosNoAnalizados());
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> vector_mapa_ids_contenidos_analizados(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_analizados.end());
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> vector_mapa_ids_contenidos_no_analizados(this->mapa_ids_contenidos_no_analizados.begin(), this->mapa_ids_contenidos_no_analizados.end());
 
-    // agrego las ids no analizados.
-    json_almacenable.agregarAtributoArray("ids_contenidos_analizados", this->getIDsContenidosAnalizados());
+    std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_analizados;
+    std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_no_analizados;
+
+    for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = vector_mapa_ids_contenidos_analizados.begin(); it != vector_mapa_ids_contenidos_analizados.end(); it++)
+    {
+        std::string fecha = it->first;
+        std::vector<unsigned long long int> ids = it->second;
+
+        herramientas::utiles::Json * json_ids_contenidos_analizados = new herramientas::utiles::Json();
+
+        json_ids_contenidos_analizados->agregarAtributoValor("fecha", fecha);
+        json_ids_contenidos_analizados->agregarAtributoArray("ids", ids);
+
+        json_mapa_ids_contenidos_analizados.push_back(json_ids_contenidos_analizados);
+    }
+
+    for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = vector_mapa_ids_contenidos_no_analizados.begin(); it != vector_mapa_ids_contenidos_no_analizados.end(); it++)
+    {
+        std::string fecha = it->first;
+        std::vector<unsigned long long int> ids = it->second;
+
+        herramientas::utiles::Json * json_ids_contenidos_no_analizados = new herramientas::utiles::Json();
+
+        json_ids_contenidos_no_analizados->agregarAtributoValor("fecha", fecha);
+        json_ids_contenidos_no_analizados->agregarAtributoArray("ids", ids);
+
+        json_mapa_ids_contenidos_no_analizados.push_back(json_ids_contenidos_no_analizados);
+    }
+
+    json_almacenable.agregarAtributoArray("mapa_ids_contenidos_analizados", json_mapa_ids_contenidos_analizados);
+    json_almacenable.agregarAtributoArray("mapa_ids_contenidos_no_analizados", json_mapa_ids_contenidos_no_analizados);
 
     // seteo la info del medio.
     herramientas::utiles::Json* json_info_medio = this->getJson();
     json_almacenable.agregarAtributoJson("info_medio", json_info_medio);
 
     std::string string_almacenable = json_almacenable.jsonString();
+
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_analizados.begin(); it != json_mapa_ids_contenidos_analizados.end(); it++)
+    {
+        delete *it;
+    }
+
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_no_analizados.begin(); it != json_mapa_ids_contenidos_no_analizados.end(); it++)
+    {
+        delete *it;
+    }
 
     return string_almacenable;
 }
@@ -62,25 +125,34 @@ herramientas::utiles::GestorIDs * Medio::getGestorIDs()
 
 bool Medio::setearContenidoComoAnalizado(Contenido * contenido)
 {
-    std::vector<unsigned long long int>::iterator it_a_mover = std::find(this->ids_contenidos_no_analizados.begin(), this->ids_contenidos_no_analizados.end(), contenido->getId()->numero());
+    std::string string_fecha = contenido->getFecha().getStringAAAAMMDD();
 
-    if (this->ids_contenidos_no_analizados.end() == it_a_mover)
+    std::vector<unsigned long long int> * ids_contenidos_no_analizados = &this->mapa_ids_contenidos_no_analizados[string_fecha];
+
+    std::vector<unsigned long long int>::iterator it_a_mover = std::find(ids_contenidos_no_analizados->begin(), ids_contenidos_no_analizados->end(), contenido->getId()->numero());
+
+    if (ids_contenidos_no_analizados->end() == it_a_mover)
     {
         return false;
     }
 
-    this->ids_contenidos_analizados.push_back(*it_a_mover);
+    std::vector<unsigned long long int> * ids_contenidos_analizados = &this->mapa_ids_contenidos_analizados[string_fecha];
+    ids_contenidos_analizados->push_back(*it_a_mover);
 
-    this->ids_contenidos_no_analizados.erase(it_a_mover);
+    ids_contenidos_no_analizados->erase(it_a_mover);
 
-    return false;
+    return true;
 }
 
 // METODOS
 
 void Medio::agregarContenidoParaAnalizar(Contenido * contenido)
 {
-    this->ids_contenidos_no_analizados.push_back(contenido->getId()->numero());
+    std::string string_fecha = contenido->getFecha().getStringAAAAMMDD();
+
+    std::vector<unsigned long long int> * ids_contenidos_no_analizados = &this->mapa_ids_contenidos_no_analizados[string_fecha];
+
+    ids_contenidos_no_analizados->push_back(contenido->getId()->numero());
 }
 
 // metodos de IAlmacenable
@@ -94,11 +166,24 @@ void Medio::parsearValorAlmacenable(std::string valor_almacenable)
 {
     herramientas::utiles::Json json_almacenable(valor_almacenable);
 
-    // parseo los ids no analizados.
-    this->ids_contenidos_no_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_no_analizados");
+    std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_analizados = json_almacenable.getAtributoArrayJson("mapa_ids_contenidos_analizados");
+    std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_no_analizados = json_almacenable.getAtributoArrayJson("mapa_ids_contenidos_no_analizados");
 
-    // parseo los ids analizados.
-    this->ids_contenidos_analizados = json_almacenable.getAtributoArrayUint("ids_contenidos_analizados");
+    for(std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_analizados.begin(); it != json_mapa_ids_contenidos_analizados.end(); it++)
+    {
+        std::string fecha = (*it)->getAtributoValorString("fecha");
+        std::vector<unsigned long long int> ids = (*it)->getAtributoArrayUint("ids");
+
+        this->mapa_ids_contenidos_analizados[fecha] = ids;
+    }
+
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_no_analizados.begin(); it != json_mapa_ids_contenidos_no_analizados.end(); it++)
+    {
+        std::string fecha = (*it)->getAtributoValorString("fecha");
+        std::vector<unsigned long long int> ids = (*it)->getAtributoArrayUint("ids");
+
+        this->mapa_ids_contenidos_no_analizados[fecha] = ids;
+    }
 
     // parseo contenido
     herramientas::utiles::Json* json_info_medio = json_almacenable.getAtributoValorJson("info_medio");
@@ -106,6 +191,15 @@ void Medio::parsearValorAlmacenable(std::string valor_almacenable)
     this->setJson(json_info_medio);
     this->parsearJson();
 
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_analizados.begin(); it != json_mapa_ids_contenidos_analizados.end(); it++)
+    {
+        delete *it;
+    }
+
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_no_analizados.begin(); it != json_mapa_ids_contenidos_no_analizados.end(); it++)
+    {
+        delete *it;
+    }
     // delete json_info_medio;
 }
 

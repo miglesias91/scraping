@@ -57,10 +57,10 @@ TEST(ScrapingTwitter, parsearTweetsCorrectamente)
     unsigned long long int id_usuario_parseado_tweet_1 = tweets[0]->getIdUsuario();
     unsigned int tamanio_vector_hashtags_parseado_tweet_1 = tweets[0] ->getHashtags().size();
 
-    unsigned long long int id_correcto_tweet_1 = 939231521441046528;
-    std::string texto_correcto_tweet_1 = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https://t.co/eqSJm9AkQB";
-    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(8, 12, 2017);
-    unsigned long long int id_usuario_correcto_tweet_1 = 8105922;
+    unsigned long long int id_correcto_tweet_1 = 708067963060916224;
+    std::string texto_correcto_tweet_1 = "@jeremycloud Who would win in a battle between a Barred Owl and a Cooper's Hawk? https://t.co/FamikDro2h";
+    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(10, 1, 2016);
+    unsigned long long int id_usuario_correcto_tweet_1 = 4449621923;
     unsigned int tamanio_vector_hashtags_correcto_tweet_1 = 0;
 
     for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)

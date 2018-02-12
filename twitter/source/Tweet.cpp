@@ -90,6 +90,8 @@ void Tweet::setIdTweet(unsigned long long int id_tweet)
 void Tweet::setFechaCreacion(herramientas::utiles::Fecha fecha_creacion)
 {
     this->fecha_creacion = fecha_creacion;
+
+    this->Contenido::setFecha(fecha_creacion);
 }
 
 void Tweet::setTextoTweet(std::string texto_tweet)

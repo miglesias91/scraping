@@ -70,7 +70,11 @@ void GestorTareas::scrapearTwitter()
         if(0 < tweets.size())
         {// trajo por lo menos un tweet nuevo, entonces actualizo sus datos.
             cuenta->setIdUltimoTweetAnalizado(tweets[0]->getIdTweet());
+
+            // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
             gestor_analisis_diario.almacenarMedio(cuenta);
+
+            // almaceno el id del ultimo tweet analizado.
             gestor_medios.actualizarCuentaDeTwitter(cuenta);
         }
 
@@ -105,6 +109,7 @@ void GestorTareas::depurarYAnalizarTwitter()
     {
         scraping::twitter::modelo::Cuenta * cuenta_a_analizar = *it;
 
+        // recupero todos los ids no analizados, sin importar la fecha.
         std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta_a_analizar->getIDsContenidosNoAnalizados();
 
         std::vector<extraccion::Contenido*> contenidos_a_recuperar;
@@ -142,8 +147,10 @@ void GestorTareas::depurarYAnalizarTwitter()
 
             gestor_analisis.almacenarResultadoAnalisis(&resultado_analisis);
 
+            // seteo el contenido como analizado.
             cuenta_a_analizar->setearContenidoComoAnalizado(*it);
 
+            // almaceno las listas de ids analizados.
             gestor_medios.actualizarCuentaDeTwitter(cuenta_a_analizar);
         }
 
@@ -174,6 +181,8 @@ void GestorTareas::prepararYAlmacenarTwitter()
     {
         scraping::twitter::modelo::Cuenta * cuenta_a_preparar = *it;
 
+        // recupero los ids ya analizados para prepararlos. TODO: ACA TENGO QUE RECUPERARLOS AGRUPADOS POR FECHAS, PARA PODER ITERAR SEGUN LAS FECHAS.
+        // std::vector<std::pair<std::string,unsigned long long int>> ids_contenidos_analizados = cuenta_a_preparar->getIDsContenidosAnalizados();
         std::vector<unsigned long long int> ids_contenidos_analizados = cuenta_a_preparar->getIDsContenidosAnalizados();
 
         std::vector<analisis::ResultadoAnalisis*> resultados;
