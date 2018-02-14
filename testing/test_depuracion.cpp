@@ -133,6 +133,13 @@ TEST(Depuracion, eliminarURLs)
     depurador.eliminarURLs(texto_con_urls);
  
     ASSERT_STREQ(texto_con_urls.c_str(), texto_sin_urls.c_str());
+
+    std::string texto_con_urls_2 = "#YCRT Dirigentes sindicales y políticos santacruceños se reunieron con @cfkargentina para \nanalizar el estado de situación que atraviesa el yacimiento, tras los más de 400 despidos dispuestos por la intervención del Gobierno Nacional \nhttps://t.co/ptle5JWGte https://t.co/rM23gXjjqg";
+    std::string texto_sin_urls_2 = "#YCRT Dirigentes sindicales y políticos santacruceños se reunieron con @cfkargentina para \nanalizar el estado de situación que atraviesa el yacimiento, tras los más de 400 despidos dispuestos por la intervención del Gobierno Nacional \n ";
+    
+    depurador.eliminarURLs(texto_con_urls_2);
+
+    ASSERT_STREQ(texto_con_urls_2.c_str(), texto_sin_urls_2.c_str());
 }
 
 TEST(Depuracion, eliminarPalabrasMuyCortas)

@@ -178,7 +178,7 @@ unsigned int Depurador::eliminarURLs(std::string & texto_a_depurar)
     unsigned int cantidad_de_urls_reemplazadas = 0;
     for (std::vector<std::string>::iterator it_comienzo_url = comienzo_de_urls.begin(); it_comienzo_url != comienzo_de_urls.end(); it_comienzo_url++)
     {
-        for (size_t posicion_ocurrencia = 0; ; posicion_ocurrencia += it_comienzo_url->length())
+        for (size_t posicion_ocurrencia = 0; ;)
         {
             posicion_ocurrencia = texto_a_depurar.find(*it_comienzo_url, posicion_ocurrencia);
 
