@@ -63,6 +63,8 @@ public:
 
     bool contieneHashtag(std::string hashtag);
 
+    bool esRetweet();
+
     // OPERADORES
 
 private:
@@ -84,6 +86,8 @@ private:
     unsigned long long int id_usuario;
 
     std::vector<std::string> hashtags;
+
+    bool es_retweet;
 
     Tweet * tweet_retweeteado;
 };

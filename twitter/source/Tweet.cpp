@@ -11,7 +11,7 @@
 
 using namespace scraping::twitter::modelo;
 
-Tweet::Tweet(herramientas::utiles::Json * tweet_json) : tweet_retweeteado(NULL), Contenido(tweet_json)
+Tweet::Tweet(herramientas::utiles::Json * tweet_json) : tweet_retweeteado(NULL), es_retweet(false), Contenido(tweet_json)
 {
     if (NULL == tweet_json)
     {
@@ -26,6 +26,7 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : tweet_retweeteado(NULL),
     {// si el texto comienza con "RT" entonces es un retweet.
         this->tweet_retweeteado = new Tweet(this->getJson()->getAtributoValorJson("retweeted_status"));
         texto = this->tweet_retweeteado->getTexto();
+        this->es_retweet = true;
     }
 
     herramientas::utiles::Json * user_json = this->getJson()->getAtributoValorJson("user");
@@ -156,6 +157,14 @@ bool Tweet::armarJson()
     this->getJson()->agregarAtributoValor("texto_tweet", this->getTextoTweet());
     this->getJson()->agregarAtributoValor("id_usuario", this->getIdUsuario());
     this->getJson()->agregarAtributoArray("hashtags", this->getHashtags());
+    this->getJson()->agregarAtributoValor("es_retweet", this->esRetweet());
+
+    if (this->esRetweet())
+    {
+        this->getTweetRetweeteado()->armarJson();
+
+        this->getJson()->agregarAtributoJson("tweet_retweeteado", this->getTweetRetweeteado()->getJson());
+    }
 
     return true;
 }
@@ -167,6 +176,14 @@ bool Tweet::parsearJson()
     std::string texto_tweet = this->getJson()->getAtributoValorString("texto_tweet");
     unsigned long long int id_usuario = this->getJson()->getAtributoValorUint("id_usuario");
     std::vector<std::string> hashtags = this->getJson()->getAtributoArrayString("hashtags");
+    this->es_retweet = this->getJson()->getAtributoValorBool("es_retweet");
+
+    if (this->esRetweet())
+    {
+        this->tweet_retweeteado = new Tweet();
+        this->tweet_retweeteado->setJson(this->getJson()->getAtributoValorJson("tweet_retweeteado"));
+        this->tweet_retweeteado->parsearJson();
+    }
 
     this->setIdTweet(id);
     this->setFechaCreacion(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(fecha_creacion));
@@ -186,6 +203,11 @@ bool Tweet::contieneHashtag(std::string hashtag)
         return false;
     }
     return true;
+}
+
+bool Tweet::esRetweet()
+{
+    return this->es_retweet;
 }
 
 // OPERADORES
