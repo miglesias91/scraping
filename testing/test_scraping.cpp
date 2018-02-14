@@ -40,15 +40,15 @@ TEST(Scraping, levantarConfigCorrectamente)
     ASSERT_EQ("005", ConfiguracionScraping::prefijoResultadoDiario());
 }
 
-TEST(Scraping, depurarAnalizarPreparar)
+TEST(Scraping, DISABLED_depurarAnalizarPreparar)
 {
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(50);
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(150);
 
     // ----- EXTRACCION (simulada la parte de bajar el contenido de internet) ----- //
 
-    std::vector<std::string> paths_textos_extraidos = { "le_doy_mi_palabra_20171228.txt" ,"le_doy_mi_palabra_20171227.txt",
-        "le_doy_mi_palabra_20171225.txt" ,"le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
+    std::vector<std::string> paths_textos_extraidos = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
+        "le_doy_mi_palabra_20171225.txt", "le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
 
     twitter::modelo::Cuenta cuenta("le doy mi palabra");
     cuenta.asignarNuevoId();

@@ -11,7 +11,7 @@
 
 using namespace scraping::twitter::modelo;
 
-Tweet::Tweet(herramientas::utiles::Json * tweet_json) : Contenido(tweet_json)
+Tweet::Tweet(herramientas::utiles::Json * tweet_json) : tweet_retweeteado(NULL), Contenido(tweet_json)
 {
     if (NULL == tweet_json)
     {
@@ -21,6 +21,12 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : Contenido(tweet_json)
     unsigned long long int id_tweet = this->getJson()->getAtributoValorUint("id");
     std::string fecha_creacion_formato_twitter = this->getJson()->getAtributoValorString("created_at");
     std::string texto = this->getJson()->getAtributoValorString("full_text");
+
+    if ("RT" == texto.substr(0, 2))
+    {// si el texto comienza con "RT" entonces es un retweet.
+        this->tweet_retweeteado = new Tweet(this->getJson()->getAtributoValorJson("retweeted_status"));
+        texto = this->tweet_retweeteado->getTexto();
+    }
 
     herramientas::utiles::Json * user_json = this->getJson()->getAtributoValorJson("user");
     unsigned long long int id_usuario = user_json->getAtributoValorUint("id");
@@ -51,6 +57,11 @@ Tweet::Tweet(herramientas::utiles::Json * tweet_json) : Contenido(tweet_json)
 
 Tweet::~Tweet()
 {
+    if (NULL != this->tweet_retweeteado)
+    {
+        delete this->tweet_retweeteado;
+        this->tweet_retweeteado = NULL;
+    }
 }
 
 // GETTERS
@@ -78,6 +89,11 @@ unsigned long long int Tweet::getIdUsuario()
 std::vector<std::string> Tweet::getHashtags()
 {
     return this->hashtags;
+}
+
+Tweet * Tweet::getTweetRetweeteado()
+{
+    return this->tweet_retweeteado;
 }
 
 // SETTERS
@@ -109,6 +125,17 @@ void Tweet::setIdUsuario(unsigned long long int id_usuario)
 void Tweet::setHashtags(std::vector<std::string> hashtags)
 {
     this->hashtags = hashtags;
+}
+
+void Tweet::setTweetRetweeteado(Tweet * tweet_retweeteado)
+{
+    if (NULL != this->tweet_retweeteado)
+    {
+        delete this->tweet_retweeteado;
+        this->tweet_retweeteado = NULL;
+    }
+
+    this->tweet_retweeteado = tweet_retweeteado;
 }
 
 // METODOS

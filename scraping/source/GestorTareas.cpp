@@ -182,47 +182,58 @@ void GestorTareas::prepararYAlmacenarTwitter()
         scraping::twitter::modelo::Cuenta * cuenta_a_preparar = *it;
 
         // recupero los ids ya analizados para prepararlos. TODO: ACA TENGO QUE RECUPERARLOS AGRUPADOS POR FECHAS, PARA PODER ITERAR SEGUN LAS FECHAS.
-        // std::vector<std::pair<std::string,unsigned long long int>> ids_contenidos_analizados = cuenta_a_preparar->getIDsContenidosAnalizados();
-        std::vector<unsigned long long int> ids_contenidos_analizados = cuenta_a_preparar->getIDsContenidosAnalizados();
+        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = cuenta_a_preparar->getMapaIDsContenidosAnalizados();
+        //std::vector<unsigned long long int> ids_contenidos_analizados = cuenta_a_preparar->getIDsContenidosAnalizados();
 
-        std::vector<analisis::ResultadoAnalisis*> resultados;
-        for (std::vector<unsigned long long int>::iterator it = ids_contenidos_analizados.begin(); it != ids_contenidos_analizados.end(); it++)
+        for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = mapa_ids_contenidos_analizados.begin(); it != mapa_ids_contenidos_analizados.end(); it++)
         {
-            analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
-            resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
+            std::string string_fecha = it->first;
+            std::vector<unsigned long long int> ids_contenidos_analizados_por_fecha = it->second;
 
-            gestor_analisis.recuperarResultadoAnalisis(resultado_analisis_a_recuperar);
+            std::vector<analisis::ResultadoAnalisis*> resultados;
+            for (std::vector<unsigned long long int>::iterator it = ids_contenidos_analizados_por_fecha.begin(); it != ids_contenidos_analizados_por_fecha.end(); it++)
+            {
+                analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
+                resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
 
-            resultados.push_back(resultado_analisis_a_recuperar);
-        }
+                gestor_analisis.recuperarResultadoAnalisis(resultado_analisis_a_recuperar);
 
-        preparacion::Preparador preparador;
+                resultados.push_back(resultado_analisis_a_recuperar);
+            }
 
-        analisis::ResultadoAnalisis * resultado_combinado = new preparacion::ResultadoAnalisisContenido();
-        preparador.combinar(resultados, resultado_combinado);
+            preparacion::Preparador preparador;
 
-        preparacion::ResultadoAnalisisMedio * resultados_medio = new preparacion::ResultadoAnalisisMedio();
-        resultados_medio->setId(cuenta_a_preparar->getId()->copia());
+            //analisis::ResultadoAnalisis * resultado_combinado = new preparacion::ResultadoAnalisisContenido();
+            preparacion::ResultadoAnalisisMedio * resultado_combinado = new preparacion::ResultadoAnalisisMedio();
+            resultado_combinado->setId(cuenta_a_preparar->getId()->copia());
 
-        gestor_analisis.recuperarResultadoAnalisis(resultados_medio);
+            preparador.combinar(resultados, resultado_combinado);
 
-        resultados_medio->combinarCon(resultado_combinado);
+            //preparacion::ResultadoAnalisisMedio * resultados_medio = new preparacion::ResultadoAnalisisMedio();
+            //resultados_medio->setId(cuenta_a_preparar->getId()->copia());
 
-        delete resultado_combinado;
+            //gestor_analisis.recuperarResultadoAnalisis(resultados_medio);
 
-        scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
-        resultado_diario_recuperado.setId(scraping::preparacion::ResultadoAnalisisDiario::getIDDiario().copia());
+            //resultados_medio->combinarCon(resultado_combinado);
 
-        gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario_recuperado);
+            //delete resultado_combinado;
 
-        resultado_diario_recuperado.agregarResultadoDeMedio(resultados_medio);
+            scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
+            //resultado_diario_recuperado.setId(scraping::preparacion::ResultadoAnalisisDiario::getIDDiario().copia());
+            resultado_diario_recuperado.setId(new herramientas::utiles::ID(std::stoul(string_fecha)));
 
-        gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
+            gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario_recuperado);
 
-        // elimino los resultados
-        for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
-        {
-            delete *it;
+            //resultado_diario_recuperado.agregarResultadoDeMedio(resultados_medio);
+            resultado_diario_recuperado.agregarResultadoDeMedio(resultado_combinado);
+
+            gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
+
+            // elimino los resultados
+            for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
+            {
+                delete *it;
+            }
         }
     }
 

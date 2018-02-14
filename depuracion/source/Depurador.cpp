@@ -99,7 +99,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
-            texto_a_depurar.erase(it, it + 4);
+            it = texto_a_depurar.erase(it, it + 4);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
 
             cantidad_de_reemplazos += 1;
@@ -114,7 +114,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
-            texto_a_depurar.erase(it, it + 3);
+            it = texto_a_depurar.erase(it, it + 3);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
 
             cantidad_de_reemplazos += 1;
@@ -127,10 +127,16 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
-            texto_a_depurar.erase(it, it + 2);
+            it = texto_a_depurar.erase(it, it + 2);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
 
             cantidad_de_reemplazos += 1;
+        }
+
+        if (it == texto_a_depurar.end())
+        {// el ultimo caracter es especial, entonces entra en este if.
+         // esto evita que pinche cuando entra de nuevo el 'for' e intenta incrementar el iterator.
+            break;
         }
     }
 

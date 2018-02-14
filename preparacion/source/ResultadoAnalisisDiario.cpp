@@ -69,7 +69,19 @@ std::string ResultadoAnalisisDiario::getValorAlmacenable()
 
 void ResultadoAnalisisDiario::agregarResultadoDeMedio(ResultadoAnalisisMedio * resultado_medio)
 {
-    this->resultados_medios.insert(std::pair<unsigned long long int, ResultadoAnalisisMedio*>(resultado_medio->getId()->numero(), resultado_medio));
+    unsigned long long int id_medio = resultado_medio->getId()->numero();
+
+    //this->resultados_medios.insert(std::pair<unsigned long long int, ResultadoAnalisisMedio*>(id_medio, resultado_medio));
+
+    std::unordered_map<unsigned long long int, ResultadoAnalisisMedio*>::iterator it_medio = this->resultados_medios.find(id_medio);
+
+    if (this->resultados_medios.end() == it_medio)
+    {// si no existe, entonces lo agrego directamente.
+        this->resultados_medios[id_medio] = resultado_medio;
+        return;
+    }
+
+    this->resultados_medios[id_medio]->combinarCon(resultado_medio);
 }
 
 // metodos de IContieneJson

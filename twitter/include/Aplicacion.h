@@ -25,7 +25,7 @@ public:
     // METODOS
 
     // se almacena memoria para los tweets pero no se libera, entonces los tweets deben ser ELIMINADOS luego de ser usados.
-    std::vector<Tweet*> leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets = 5);
+    std::vector<Tweet*> leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets = 200);
 
 private:
 

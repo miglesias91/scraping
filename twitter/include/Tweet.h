@@ -33,6 +33,8 @@ public:
 
     std::vector<std::string> getHashtags();
 
+    Tweet * getTweetRetweeteado();
+
     // SETTERS
 
     void setIdTweet(unsigned long long int id);
@@ -44,6 +46,8 @@ public:
     void setIdUsuario(unsigned long long int id_usuario);
 
     void setHashtags(std::vector<std::string> hashtags);
+    
+    void setTweetRetweeteado(Tweet * tweet_retweeteado);
 
     // METODOS
 
@@ -80,6 +84,8 @@ private:
     unsigned long long int id_usuario;
 
     std::vector<std::string> hashtags;
+
+    Tweet * tweet_retweeteado;
 };
 
 };
