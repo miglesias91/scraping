@@ -51,6 +51,8 @@ public:
 
     virtual bool setearContenidoComoAnalizado(Contenido* contenido);
 
+    virtual bool setearContenidoComoHistorico(Contenido* contenido);
+
     // METODOS
 
     virtual void agregarContenidoParaAnalizar(Contenido* contenido);
@@ -71,9 +73,12 @@ private:
 
     // ATRIBUTOS
 
+    std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_no_analizados;
+    
     std::unordered_map<std::string,std::vector<unsigned long long int>> mapa_ids_contenidos_analizados;
 
-    std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_no_analizados;
+    std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_historicos;
+
 };
 
 };

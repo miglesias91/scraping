@@ -181,9 +181,7 @@ void GestorTareas::prepararYAlmacenarTwitter()
     {
         scraping::twitter::modelo::Cuenta * cuenta_a_preparar = *it;
 
-        // recupero los ids ya analizados para prepararlos. TODO: ACA TENGO QUE RECUPERARLOS AGRUPADOS POR FECHAS, PARA PODER ITERAR SEGUN LAS FECHAS.
         std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = cuenta_a_preparar->getMapaIDsContenidosAnalizados();
-        //std::vector<unsigned long long int> ids_contenidos_analizados = cuenta_a_preparar->getIDsContenidosAnalizados();
 
         for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = mapa_ids_contenidos_analizados.begin(); it != mapa_ids_contenidos_analizados.end(); it++)
         {
@@ -203,36 +201,35 @@ void GestorTareas::prepararYAlmacenarTwitter()
 
             preparacion::Preparador preparador;
 
-            //analisis::ResultadoAnalisis * resultado_combinado = new preparacion::ResultadoAnalisisContenido();
             preparacion::ResultadoAnalisisMedio * resultado_combinado = new preparacion::ResultadoAnalisisMedio();
             resultado_combinado->setId(cuenta_a_preparar->getId()->copia());
 
             preparador.combinar(resultados, resultado_combinado);
 
-            //preparacion::ResultadoAnalisisMedio * resultados_medio = new preparacion::ResultadoAnalisisMedio();
-            //resultados_medio->setId(cuenta_a_preparar->getId()->copia());
-
-            //gestor_analisis.recuperarResultadoAnalisis(resultados_medio);
-
-            //resultados_medio->combinarCon(resultado_combinado);
-
-            //delete resultado_combinado;
-
             scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
-            //resultado_diario_recuperado.setId(scraping::preparacion::ResultadoAnalisisDiario::getIDDiario().copia());
             resultado_diario_recuperado.setId(new herramientas::utiles::ID(std::stoul(string_fecha)));
 
             gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario_recuperado);
 
-            //resultado_diario_recuperado.agregarResultadoDeMedio(resultados_medio);
             resultado_diario_recuperado.agregarResultadoDeMedio(resultado_combinado);
 
             gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
 
-            // elimino los resultados
+            // actualizo el los ids historicos del medio y elimino los resultados
             for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
             {
+                extraccion::Contenido * contenido_historico = new twitter::modelo::Tweet();
+                contenido_historico->setId((*it)->getId()->copia());
+                contenido_historico->setFecha(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(string_fecha));
+
+                cuenta_a_preparar->setearContenidoComoHistorico(contenido_historico);
+
+                // almaceno las listas de ids historicos.
+                gestor_medios.actualizarCuentaDeTwitter(cuenta_a_preparar);
+
                 delete *it;
+
+                delete contenido_historico;
             }
         }
     }
