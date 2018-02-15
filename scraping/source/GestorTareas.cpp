@@ -188,6 +188,11 @@ void GestorTareas::prepararYAlmacenarTwitter()
             std::string string_fecha = it->first;
             std::vector<unsigned long long int> ids_contenidos_analizados_por_fecha = it->second;
 
+            if (ids_contenidos_analizados_por_fecha.empty())
+            {// si no hay ids para analizar, entonces sigo con la siguiente lista de ids.
+                continue;
+            }
+
             std::vector<analisis::ResultadoAnalisis*> resultados;
             for (std::vector<unsigned long long int>::iterator it = ids_contenidos_analizados_por_fecha.begin(); it != ids_contenidos_analizados_por_fecha.end(); it++)
             {
