@@ -88,8 +88,6 @@ int main(int argc, char ** argv)
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->cerrarBD();
 
-    // scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->borrarBD();
-
     scraping::IAdministradorScraping::liberar();
 
     std::getchar();

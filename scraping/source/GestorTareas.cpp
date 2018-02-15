@@ -213,6 +213,8 @@ void GestorTareas::prepararYAlmacenarTwitter()
 
             resultado_diario_recuperado.agregarResultadoDeMedio(resultado_combinado);
 
+            delete resultado_combinado;
+
             gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
 
             // actualizo el los ids historicos del medio y elimino los resultados

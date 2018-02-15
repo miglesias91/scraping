@@ -32,6 +32,8 @@ public:
 
     // METODOS
 
+    // ResultadoAnalisisDiario NO SE ENCARGAR DE ELIMINAR la memoria del "resultado_medio" pasado por parametro.
+    // Es decir que "resultado_medio" se debe eliminar luego de ser usado por esta funcion (a menos que se siga utilizando).
     virtual void agregarResultadoDeMedio(ResultadoAnalisisMedio* resultado_medio);
 
     // metodos de IContieneJson

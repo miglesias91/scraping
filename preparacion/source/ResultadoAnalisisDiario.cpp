@@ -71,14 +71,11 @@ void ResultadoAnalisisDiario::agregarResultadoDeMedio(ResultadoAnalisisMedio * r
 {
     unsigned long long int id_medio = resultado_medio->getId()->numero();
 
-    //this->resultados_medios.insert(std::pair<unsigned long long int, ResultadoAnalisisMedio*>(id_medio, resultado_medio));
-
     std::unordered_map<unsigned long long int, ResultadoAnalisisMedio*>::iterator it_medio = this->resultados_medios.find(id_medio);
 
     if (this->resultados_medios.end() == it_medio)
-    {// si no existe, entonces lo agrego directamente.
-        this->resultados_medios[id_medio] = resultado_medio;
-        return;
+    {// si no existe, entonces agrego uno nuevo.
+        this->resultados_medios[id_medio] = new ResultadoAnalisisMedio();
     }
 
     this->resultados_medios[id_medio]->combinarCon(resultado_medio);
@@ -135,6 +132,8 @@ bool ResultadoAnalisisDiario::parsearJson()
         resultado_analisis_medio->parsearJson();
 
         this->agregarResultadoDeMedio(resultado_analisis_medio);
+
+        delete resultado_analisis_medio;
     }
 
     for (std::vector<herramientas::utiles::Json*>::iterator it = json_medios.begin(); it != json_medios.end(); it++)

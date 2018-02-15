@@ -124,6 +124,11 @@ std::string Medio::getValorAlmacenable()
         delete *it;
     }
 
+    for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_historicos.begin(); it != json_mapa_ids_contenidos_historicos.end(); it++)
+    {
+        delete *it;
+    }
+
     return string_almacenable;
 }
 
