@@ -15,7 +15,6 @@ using namespace scraping;
 
 typedef scraping::IAdministradorScraping* (*admin)();
 
-IAdministradorScraping* IAdministradorScraping::administrador = NULL;
 IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
 IAdministradorScraping* IAdministradorScraping::administrador_resultados_analisis_diario = NULL;
 
@@ -29,7 +28,7 @@ IAdministradorScraping::~IAdministradorScraping()
 
 void IAdministradorScraping::iniciar(std::string path_configuracion)
 {
-    if (administradorIniciado())
+    if (administradorInfoIniciado() || administradorResultadosAnalisisDiarioIniciado())
     {
         // TODO agregar log.
         std::cout << "Scraping ya fue iniciado." << std::endl;
@@ -51,11 +50,6 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
 
 void IAdministradorScraping::liberar()
 {
-	if (true == administradorIniciado())
-	{
-		delete administrador;
-	}
-
     if (true == administradorInfoIniciado())
     {
         delete administrador_info;
@@ -78,11 +72,6 @@ void IAdministradorScraping::crearAdministradorScrapingLocal()
 
 void IAdministradorScraping::crearAdministradorScrapingDistribuido() {};
 
-bool IAdministradorScraping::administradorIniciado()
-{
-	return administrador != NULL;
-}
-
 bool IAdministradorScraping::administradorInfoIniciado()
 {
     return administrador_info != NULL;
@@ -93,18 +82,6 @@ bool IAdministradorScraping::administradorResultadosAnalisisDiarioIniciado()
     return administrador_resultados_analisis_diario != NULL;
 }
 // GETTERS
-
-IAdministradorScraping* IAdministradorScraping::getInstancia()
-{
-	if (administradorIniciado())
-	{
-		return administrador;
-	}
-	else
-	{
-		throw std::exception("Administrador de aplicacion no inicializado.");
-	}
-}
 
 IAdministradorScraping* IAdministradorScraping::getInstanciaAdminInfo()
 {

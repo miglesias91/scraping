@@ -26,15 +26,11 @@ public:
 
     static void crearAdministradorScrapingDistribuido();
 
-    static bool administradorIniciado();
-
     static bool administradorInfoIniciado();
 
     static bool administradorResultadosAnalisisDiarioIniciado();
 
     // GETTERS
-
-    static IAdministradorScraping* getInstancia();
 
     static IAdministradorScraping* getInstanciaAdminInfo();
 
@@ -91,8 +87,6 @@ protected:
 
 private:
 	// ATRIBUTOS
-
-	static IAdministradorScraping * administrador;
 
     static IAdministradorScraping * administrador_info;
 

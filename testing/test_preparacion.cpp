@@ -152,6 +152,9 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisDiarioCorrectamente)
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_combinado = resultado_analisis_recuperado_1->getResultadoFuerzaEnNoticia();
 
+    delete resultado_analisis_1;
+    delete resultado_analisis_2;
+
     ASSERT_EQ(std::round(100. * 11.4948416), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
     ASSERT_EQ(std::round(100. * 7.66322803), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
     ASSERT_EQ(std::round(100. * 3.83161402), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
