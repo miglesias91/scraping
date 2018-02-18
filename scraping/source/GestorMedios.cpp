@@ -14,6 +14,11 @@ GestorMedios::~GestorMedios()
 {
 }
 
+bool GestorMedios::recuperarTodos(std::vector<scraping::extraccion::Medio*>& medios)
+{
+    return false;
+}
+
 bool GestorMedios::actualizarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * cuenta_a_actualizar)
 {
     cuenta_a_actualizar->setGrupo(scraping::ConfiguracionScraping::prefijoTwitter());

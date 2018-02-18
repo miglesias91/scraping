@@ -23,6 +23,8 @@ public:
 
     // METODOS
 
+    bool recuperarTodos(std::vector<scraping::extraccion::Medio*> & medios);
+
     bool actualizarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * cuenta_a_actualizar);
 
     bool recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter);
