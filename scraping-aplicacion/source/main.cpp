@@ -90,7 +90,7 @@ int main(int argc, char ** argv)
 
     scraping::IAdministradorScraping::liberar();
 
-    std::getchar();
+    // std::getchar();
 
     return 0;
 }

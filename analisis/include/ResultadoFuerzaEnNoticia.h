@@ -17,7 +17,7 @@ namespace tecnicas
 class ResultadoFuerzaEnNoticia : public IResultadoTecnica
 {
 public:
-    ResultadoFuerzaEnNoticia(unsigned int maximo_valores_a_almacenar = 20);
+    ResultadoFuerzaEnNoticia(unsigned int maximo_valores_a_almacenar = 100);
     virtual ~ResultadoFuerzaEnNoticia();
 
     // GETTERS
