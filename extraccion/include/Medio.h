@@ -57,6 +57,8 @@ public:
 
     virtual void agregarContenidoParaAnalizar(Contenido* contenido);
 
+    virtual Medio * clonar() = 0;
+
     // metodos de IAlmacenable
 
     virtual void asignarNuevoId();

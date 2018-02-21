@@ -185,7 +185,95 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
 }
 
 
-TEST(Scraping, gestionarCuentasDeTwitter)
+TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
+{
+    // creo cuentas de prueba.
+    scraping::twitter::modelo::Cuenta * cuenta_uno = new scraping::twitter::modelo::Cuenta("cuenta_uno");
+    cuenta_uno->asignarNuevoId();
+
+    scraping::twitter::modelo::Cuenta * cuenta_dos = new scraping::twitter::modelo::Cuenta("cuenta_dos");
+    cuenta_dos->asignarNuevoId();
+
+    scraping::twitter::modelo::Cuenta * cuenta_tres = new scraping::twitter::modelo::Cuenta("cuenta_tres");
+    cuenta_tres->asignarNuevoId();
+
+    scraping::twitter::modelo::Cuenta * cuenta_cuatro = new scraping::twitter::modelo::Cuenta("cuenta_cuatro");
+    cuenta_cuatro->asignarNuevoId();
+
+    scraping::twitter::modelo::Cuenta * cuenta_cinco = new scraping::twitter::modelo::Cuenta("cuenta_cinco");
+    cuenta_cinco->asignarNuevoId();
+
+    // almaceno las cuentas.
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
+    gestor_medios.gestionar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
+
+    //gestor_medios.almacenar(cuenta_uno);
+    //gestor_medios.almacenar(cuenta_dos);
+    //gestor_medios.almacenar(cuenta_tres);
+    //gestor_medios.almacenar(cuenta_cuatro);
+    //gestor_medios.almacenar(cuenta_cinco);
+
+    //gestor_medios.guardarCambios();
+
+    //// recupero las cuentas recien almacenadas.
+
+    //std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_recuperadas;
+    //gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+
+    ////gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+    ////
+    ////gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+
+    ////gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+
+    ////gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+
+    //ASSERT_EQ("cuenta_uno", cuentas_twitter_recuperadas[0]->getNombre());
+    //ASSERT_EQ("cuenta_dos", cuentas_twitter_recuperadas[1]->getNombre());
+    //ASSERT_EQ("cuenta_tres", cuentas_twitter_recuperadas[2]->getNombre());
+
+    //for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_recuperadas.begin(); it != cuentas_twitter_recuperadas.end(); it++)
+    //{
+    //    delete *it;
+    //}
+    //cuentas_twitter_recuperadas.clear();
+
+    //// elimino 2 de las 3 cuentas recien almacenadas.
+
+    //gestor_medios.eliminar(cuenta_uno);
+    //gestor_medios.eliminar(cuenta_tres);
+
+    //gestor_medios.guardarCambios();
+
+    //// recupero la cuenta que me quedo.
+
+    //gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+
+    //ASSERT_EQ("cuenta_dos", cuentas_twitter_recuperadas[0]->getNombre());
+
+    //// elimino la que quedo asi no queda ninguna cuenta almacenada.
+
+    //gestor_medios.eliminar(cuenta_dos);
+
+    //gestor_medios.guardarCambios();
+
+    //for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_recuperadas.begin(); it != cuentas_twitter_recuperadas.end(); it++)
+    //{
+    //    delete *it;
+    //}
+    //cuentas_twitter_recuperadas.clear();
+
+    delete cuenta_uno;
+    delete cuenta_dos;
+    delete cuenta_tres;
+    delete cuenta_cuatro;
+    delete cuenta_cinco;
+}
+
+TEST(Scraping, DISABLED_gestionarCuentasDeTwitter)
 {
     scraping::aplicacion::GestorMedios gestor_medios;
 

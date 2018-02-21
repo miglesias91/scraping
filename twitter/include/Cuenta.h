@@ -25,10 +25,6 @@ public:
 
     unsigned long long int getIdUltimoTweetAnalizado();
 
-    // metodos de IAlmacenable
-
-    // virtual std::string getValorAlmacenable();
-
     // SETTERS
 
     void setNombre(std::string nombre);
@@ -37,15 +33,15 @@ public:
 
     // METODOS
 
+    // metodos de Medio
+
+    virtual Medio * clonar();
+
     // metodos de IContieneJson
 
     virtual bool armarJson();
 
     virtual bool parsearJson();
-
-    // metodos de IAlmacenable
-
-    // virtual void parsearValorAlmacenable(std::string valor_almacenable);
     
     // metodos de IHashable
 
