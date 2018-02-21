@@ -49,6 +49,8 @@ public:
 
     // SETTERS
 
+    virtual std::string getGrupoMedio() = 0;
+
     virtual bool setearContenidoComoAnalizado(Contenido* contenido);
 
     virtual bool setearContenidoComoHistorico(Contenido* contenido);

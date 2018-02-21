@@ -2,6 +2,9 @@
 
 using namespace scraping::twitter::modelo;
 
+// scraping
+#include <scraping/include/ConfiguracionScraping.h>
+
 Cuenta::Cuenta(std::string nombre) : Medio(), nombre(nombre), id_ultimo_tweet_analizado(0)
 {
 }
@@ -20,6 +23,11 @@ std::string Cuenta::getNombre()
 unsigned long long int Cuenta::getIdUltimoTweetAnalizado()
 {
     return this->id_ultimo_tweet_analizado;
+}
+
+std::string Cuenta::getGrupoMedio()
+{
+    return scraping::ConfiguracionScraping::prefijoTwitter();
 }
 
 // SETTERS

@@ -25,6 +25,10 @@ public:
 
     unsigned long long int getIdUltimoTweetAnalizado();
 
+    // getters de Medio
+
+    virtual std::string getGrupoMedio();
+
     // SETTERS
 
     void setNombre(std::string nombre);

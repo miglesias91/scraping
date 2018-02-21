@@ -39,7 +39,7 @@ public:
     void recuperarIDActualMedio();
 
     template <class MEDIO>
-    bool gestionar(std::string prefijo_grupo, std::vector<MEDIO*> & medios_a_recuperar);
+    std::vector<MEDIO*> gestionar(std::string prefijo_grupo);
 
     template <class MEDIO>
     bool recuperar(std::string prefijo_grupo, std::vector<MEDIO*> & medios_a_recuperar);
@@ -87,7 +87,7 @@ private:
 };
 
 template <class MEDIO>
-bool GestorMedios::gestionar(std::string prefijo_grupo, std::vector<MEDIO*> & medios_a_gestionar)
+std::vector<MEDIO*> GestorMedios::gestionar(std::string prefijo_grupo)
 {
     if (prefijo_grupo.empty())
     {
@@ -97,14 +97,16 @@ bool GestorMedios::gestionar(std::string prefijo_grupo, std::vector<MEDIO*> & me
 
     this->prefijo_grupo = prefijo_grupo;
 
-    bool valor_retorno = scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_gestionar);
+    std::vector<MEDIO*> medios_a_recuperar;
 
-    for (std::vector<MEDIO*>::iterator it = medios_a_gestionar.begin(); it != medios_a_gestionar.end(); it++)
+    bool valor_retorno = scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_recuperar);
+
+    for (std::vector<MEDIO*>::iterator it = medios_a_recuperar.begin(); it != medios_a_recuperar.end(); it++)
     {
         this->medios_existentes.push_back(*it);
     }
 
-    return valor_retorno;
+    return medios_a_recuperar;
 };
 
 template <class MEDIO>
