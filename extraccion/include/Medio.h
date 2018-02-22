@@ -39,6 +39,12 @@ public:
 
     std::vector<unsigned long long int> getIDsContenidosNoAnalizados();
 
+    herramientas::utiles::Fecha getFechaContenidoHistoricoMasReciente();
+
+    herramientas::utiles::Fecha getFechaContenidoHistoricoMasAntiguo();
+
+    unsigned long long int getCantidadDeContenidosHistoricos();
+
     static std::string getClaveIDActual();
 
     static herramientas::utiles::GestorIDs * getGestorIDs();
@@ -50,7 +56,6 @@ public:
     virtual std::string getValorAlmacenable();
 
     // SETTERS
-
 
     virtual bool setearContenidoComoAnalizado(Contenido* contenido);
 

@@ -1,5 +1,8 @@
 #include <extraccion/include/Medio.h>
 
+// stl
+#include <algorithm>
+
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 
@@ -49,6 +52,47 @@ std::vector<unsigned long long int> Medio::getIDsContenidosNoAnalizados()
     }
 
     return ids_contenidos_no_analizados;
+}
+
+herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasReciente()
+{
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> vector_mapa_ids_contenidos_historicos(this->mapa_ids_contenidos_historicos.begin(), this->mapa_ids_contenidos_historicos.end());
+
+    if (vector_mapa_ids_contenidos_historicos.empty())
+    {
+        return herramientas::utiles::Fecha(0, 0, 0);
+    }
+
+    std::sort(vector_mapa_ids_contenidos_historicos.begin(), vector_mapa_ids_contenidos_historicos.end());
+
+    return herramientas::utiles::Fecha::parsearFormatoAAAAMMDD((vector_mapa_ids_contenidos_historicos.end() - 1)->first);
+}
+
+herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasAntiguo()
+{
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> vector_mapa_ids_contenidos_historicos(this->mapa_ids_contenidos_historicos.begin(), this->mapa_ids_contenidos_historicos.end());
+
+    if (vector_mapa_ids_contenidos_historicos.empty())
+    {
+        return herramientas::utiles::Fecha(0, 0, 0);
+    }
+
+    std::sort(vector_mapa_ids_contenidos_historicos.begin(), vector_mapa_ids_contenidos_historicos.end());
+
+    return herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(vector_mapa_ids_contenidos_historicos.begin()->first);
+}
+
+unsigned long long int Medio::getCantidadDeContenidosHistoricos()
+{
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> vector_mapa_ids_contenidos_historicos(this->mapa_ids_contenidos_historicos.begin(), this->mapa_ids_contenidos_historicos.end());
+
+    unsigned long long int cantidad_de_contenidos_historicos = 0;
+    for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = vector_mapa_ids_contenidos_historicos.begin(); it != vector_mapa_ids_contenidos_historicos.end(); it++)
+    {
+        cantidad_de_contenidos_historicos += it->second.size();
+    }
+
+    return cantidad_de_contenidos_historicos;
 }
 
 std::string Medio::getValorAlmacenable()
