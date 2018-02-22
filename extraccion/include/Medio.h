@@ -42,6 +42,8 @@ public:
     static std::string getClaveIDActual();
 
     static herramientas::utiles::GestorIDs * getGestorIDs();
+    
+    virtual std::string getGrupoMedio() = 0;
 
     // getters de IAlmacenable
 
@@ -49,7 +51,6 @@ public:
 
     // SETTERS
 
-    virtual std::string getGrupoMedio() = 0;
 
     virtual bool setearContenidoComoAnalizado(Contenido* contenido);
 
