@@ -181,7 +181,7 @@ void GestorTareas::prepararYAlmacenarTwitter()
     {
         scraping::twitter::modelo::Cuenta * cuenta_a_preparar = *it;
 
-        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = cuenta_a_preparar->getMapaIDsContenidosAnalizados();
+        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = cuenta_a_preparar->getParesIDsContenidosAnalizados();
 
         for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = mapa_ids_contenidos_analizados.begin(); it != mapa_ids_contenidos_analizados.end(); it++)
         {

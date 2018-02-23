@@ -54,6 +54,10 @@ scraping::extraccion::Medio * Cuenta::clonar()
 
     clon->setIdUltimoTweetAnalizado(this->getIdUltimoTweetAnalizado());
 
+    clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
+    clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
+    clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+
     return clon;
 }
 

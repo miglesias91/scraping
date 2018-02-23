@@ -31,9 +31,15 @@ public:
 
     // GETTERS
 
-    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getMapaIDsContenidosAnalizados();
+    std::unordered_map<std::string, std::vector<unsigned long long int>> getMapaIDsContenidosAnalizados();
 
-    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getMapaIDsContenidosNoAnalizados();
+    std::unordered_map<std::string, std::vector<unsigned long long int>> getMapaIDsContenidosNoAnalizados();
+
+    std::unordered_map<std::string, std::vector<unsigned long long int>> getMapaIDsContenidosHistoricos();
+
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getParesIDsContenidosAnalizados();
+
+    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getParesIDsContenidosNoAnalizados();
 
     std::vector<unsigned long long int> getIDsContenidosAnalizados();
 
@@ -56,6 +62,12 @@ public:
     virtual std::string getValorAlmacenable();
 
     // SETTERS
+
+    void setMapaIDsContenidosAnalizados(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa);
+
+    void setMapaIDsContenidosNoAnalizados(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa);
+
+    void setMapaIDsContenidosHistoricos(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa);
 
     virtual bool setearContenidoComoAnalizado(Contenido* contenido);
 

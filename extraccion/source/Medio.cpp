@@ -18,12 +18,27 @@ Medio::~Medio()
 {
 }
 
-std::vector<std::pair<std::string, std::vector<unsigned long long int>>> Medio::getMapaIDsContenidosAnalizados()
+std::unordered_map<std::string, std::vector<unsigned long long int>> Medio::getMapaIDsContenidosAnalizados()
+{
+    return this->mapa_ids_contenidos_analizados;
+}
+
+std::unordered_map<std::string, std::vector<unsigned long long int>> Medio::getMapaIDsContenidosNoAnalizados()
+{
+    return this->mapa_ids_contenidos_no_analizados;
+}
+
+std::unordered_map<std::string, std::vector<unsigned long long int>> Medio::getMapaIDsContenidosHistoricos()
+{
+    return this->mapa_ids_contenidos_historicos;
+}
+
+std::vector<std::pair<std::string, std::vector<unsigned long long int>>> Medio::getParesIDsContenidosAnalizados()
 {
     return std::vector<std::pair<std::string, std::vector<unsigned long long int>>>(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_analizados.end());
 }
 
-std::vector<std::pair<std::string, std::vector<unsigned long long int>>> Medio::getMapaIDsContenidosNoAnalizados()
+std::vector<std::pair<std::string, std::vector<unsigned long long int>>> Medio::getParesIDsContenidosNoAnalizados()
 {
     return std::vector<std::pair<std::string, std::vector<unsigned long long int>>>(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_no_analizados.end());
 }
@@ -84,6 +99,11 @@ herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasAntiguo()
 
 unsigned long long int Medio::getCantidadDeContenidosHistoricos()
 {
+    if (this->mapa_ids_contenidos_historicos.empty())
+    {
+        return 0;
+    }
+
     std::vector<std::pair<std::string, std::vector<unsigned long long int>>> vector_mapa_ids_contenidos_historicos(this->mapa_ids_contenidos_historicos.begin(), this->mapa_ids_contenidos_historicos.end());
 
     unsigned long long int cantidad_de_contenidos_historicos = 0;
@@ -187,6 +207,21 @@ herramientas::utiles::GestorIDs * Medio::getGestorIDs()
 }
 
 // SETTERS
+
+void Medio::setMapaIDsContenidosAnalizados(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa)
+{
+    this->mapa_ids_contenidos_analizados = mapa;
+}
+
+void Medio::setMapaIDsContenidosNoAnalizados(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa)
+{
+    this->mapa_ids_contenidos_no_analizados = mapa;
+}
+
+void Medio::setMapaIDsContenidosHistoricos(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa)
+{
+    this->mapa_ids_contenidos_historicos = mapa;
+}
 
 bool Medio::setearContenidoComoAnalizado(Contenido * contenido)
 {
