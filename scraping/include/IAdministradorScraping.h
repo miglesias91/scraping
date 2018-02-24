@@ -133,7 +133,7 @@ unsigned long long int IAdministradorScraping::recuperarIDActual()
 
     std::string string_id_actual = clave_valor_a_recuperar->getValor();
 
-    unsigned long long int id_actual = 0;
+    unsigned long long int id_actual = 1;
     if (false == string_id_actual.empty())
     {
         id_actual = std::stoull(string_id_actual);
