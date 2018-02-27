@@ -46,11 +46,6 @@ void IAlmacenable::setGrupo(std::string grupo)
 
 // METODOS
 
-//void IAlmacenable::asignarNuevoId()
-//{
-//    this->setId(herramientas::utiles::GestorIDs::nuevoID());
-//}
-
 bool IAlmacenable::comparador(IAlmacenable * a, IAlmacenable * b)
 {
     return a->getId()->numero() < b->getId()->numero();
