@@ -1,0 +1,16 @@
+{
+    "log" :
+    {
+    	"nombre" : "scraping",
+    	"tamanio_cola_async" : 0,
+    	"agrupar_por_fecha" : true,
+    	"nivel_log" : "debug",
+    	"nivel_flush" : "debug",
+    	"patron" : "",
+    	"salidas" :
+    	[
+    		"log_global_visu.txt",
+            "log_scraping.txt"
+    	]
+    }
+}

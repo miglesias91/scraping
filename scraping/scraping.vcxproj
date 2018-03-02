@@ -130,6 +130,8 @@
     <ClInclude Include="include\GestorTareas.h" />
     <ClInclude Include="include\IAdministradorScraping.h" />
     <ClInclude Include="include\IAlmacenable.h" />
+    <ClInclude Include="include\ScrapingIniciadoPreviamente.h" />
+    <ClInclude Include="include\ScrapingNoInicializado.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AdministradorScrapingLocal.cpp" />
@@ -139,6 +141,8 @@
     <ClCompile Include="source\GestorTareas.cpp" />
     <ClCompile Include="source\IAdministradorScraping.cpp" />
     <ClCompile Include="source\IAlmacenable.cpp" />
+    <ClCompile Include="source\ScrapingIniciadoPreviamente.cpp" />
+    <ClCompile Include="source\ScrapingNoInicializado.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

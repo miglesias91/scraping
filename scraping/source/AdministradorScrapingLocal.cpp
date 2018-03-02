@@ -53,6 +53,8 @@ bool AdministradorScrapingLocal::almacenar(scraping::IAlmacenable * entidad)
 
 	bool retorno = this->admin_almacenamiento->almacenar(entidad_a_almacenar);
 
+    log->debug("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor: '" + valor + "' }");
+
 	delete entidad_a_almacenar;
 
 	return retorno;
@@ -79,6 +81,8 @@ bool AdministradorScrapingLocal::almacenar(std::vector<scraping::IAlmacenable*> 
             break;
         }
 
+        log->debug("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor: '" + valor + "' }");
+
         delete entidad_a_almacenar;
     }
 
@@ -96,7 +100,12 @@ bool AdministradorScrapingLocal::recuperar(scraping::IAlmacenable * entidad)
 
     if (existe_valor)
     {
+        log->debug("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor recuperado: '" + clave_valor_a_recuperar->getValor() + "' }");
         entidad->parsearValorAlmacenable(clave_valor_a_recuperar->getValor());
+    }
+    else
+    {
+        log->debug("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE RECUPERO NINGUN VALOR }");
     }
 
 	delete clave_valor_a_recuperar;

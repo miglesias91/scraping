@@ -1,10 +1,14 @@
 #include <scraping/include/ConfiguracionScraping.h>
 
-using namespace scraping;
-
 // stl
 #include <fstream>
 #include <sstream>
+
+// utiles
+#include <utiles/include/Json.h>
+#include <utiles/include/ImposibleAbrirArchivo.h>
+
+using namespace scraping;
 
 std::string ConfiguracionScraping::path_config;
 
@@ -30,8 +34,7 @@ std::string ConfiguracionScraping::prefijo_resultado_diario;
 std::string ConfiguracionScraping::clave_id_medio_actual;
 std::string ConfiguracionScraping::clave_id_contenido_actual;
 
-const unsigned int ConfiguracionScraping::tamanio_alocador = 1024;
-rapidjson::Document ConfiguracionScraping::documento_alocador;
+std::string ConfiguracionScraping::archivo_config_log;
 
 void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configuracion)
 {
@@ -41,42 +44,51 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
 
     if (false == archivo.good())
     {
-	    throw - 1;
+	    throw herramientas::utiles::excepciones::ImposibleAbrirArchivo(path_archivo_configuracion);
     }
 
     std::ostringstream sstream;
     sstream << archivo.rdbuf();
     const std::string string_config(sstream.str());
 
-    rapidjson::Document config_json;
-    config_json.Parse(string_config.c_str());
+    herramientas::utiles::Json * config_json = NULL;
+    herramientas::utiles::Json * config_scraping_json = NULL;
 
-    rapidjson::Value & config_scraping_json = config_json["scraping"];
+    try
+    {
+        config_json = new herramientas::utiles::Json(string_config);
+        config_scraping_json = config_json->getAtributoValorJson("scraping");
 
-    scraping_local = config_scraping_json[ConfiguracionScraping::tagScrapingLocal().c_str()].GetBool();
-    scraping_distribuido = config_scraping_json[ConfiguracionScraping::tagScrapingDistribuido().c_str()].GetBool();
+        scraping_local = config_scraping_json->getAtributoValorBool(ConfiguracionScraping::tagScrapingLocal());
+        scraping_distribuido = config_scraping_json->getAtributoValorBool(ConfiguracionScraping::tagScrapingDistribuido());
 
-    archivo_config_db_info_scraping = config_scraping_json[ConfiguracionScraping::tagArchivoConfigDBInfoScraping().c_str()].GetString();
-    archivo_config_db_resultados_analisis_diario = config_scraping_json[ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios().c_str()].GetString();
+        archivo_config_db_info_scraping = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBInfoScraping());
+        archivo_config_db_resultados_analisis_diario = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios());
 
-    prefijo_configuracion = config_scraping_json[ConfiguracionScraping::tagPrefijoConfiguracion().c_str()].GetString();
+        prefijo_configuracion = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoConfiguracion());
 
-    prefijo_twitter = config_scraping_json[ConfiguracionScraping::tagPrefijoTwitter().c_str()].GetString();
-    prefijo_html = config_scraping_json[ConfiguracionScraping::tagPrefijoHTML().c_str()].GetString();
-    prefijo_facebook = config_scraping_json[ConfiguracionScraping::tagPrefijoFacebook().c_str()].GetString();
-    prefijo_rss = config_scraping_json[ConfiguracionScraping::tagPrefijoRSS().c_str()].GetString();
+        prefijo_twitter = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoTwitter());
+        prefijo_html = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoHTML());
+        prefijo_facebook = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoFacebook());
+        prefijo_rss = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoRSS());
 
-    prefijo_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoMedio().c_str()].GetString();
-    prefijo_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoContenido().c_str()].GetString();
-    
-    prefijo_resultado_medio = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoMedio().c_str()].GetString();
-    prefijo_resultado_contenido = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoContenido().c_str()].GetString();
-    prefijo_resultado_diario = config_scraping_json[ConfiguracionScraping::tagPrefijoResultadoDiario().c_str()].GetString();
-}
+        prefijo_medio = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoMedio());
+        prefijo_contenido = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoContenido());
 
-rapidjson::Document::AllocatorType * ConfiguracionScraping::getAlocador()
-{
-    return &documento_alocador.GetAllocator();
+        prefijo_resultado_medio = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoResultadoMedio());
+        prefijo_resultado_contenido = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoResultadoContenido());
+        prefijo_resultado_diario = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoResultadoDiario());
+    }
+    catch (herramientas::utiles::excepciones::Excepcion & e)
+    {
+        delete config_scraping_json;
+        delete config_json;
+
+        throw;
+    }
+
+    delete config_scraping_json;
+    delete config_json;
 }
 
 std::string ConfiguracionScraping::pathConfiguracion()
@@ -153,6 +165,11 @@ std::string ConfiguracionScraping::prefijoResultadoContenido()
 std::string ConfiguracionScraping::prefijoResultadoDiario()
 {
     return prefijo_resultado_diario;
+}
+
+std::string ConfiguracionScraping::archivoConfigLog()
+{
+    return archivo_config_log;
 }
 
 std::string ConfiguracionScraping::claveIDMedioActual()
@@ -234,6 +251,11 @@ std::string ConfiguracionScraping::tagPrefijoResultadoContenido()
 std::string ConfiguracionScraping::tagPrefijoResultadoDiario()
 {
     return "prefijo_resultado_diario";
+}
+
+std::string ConfiguracionScraping::tagArchivoConfigLog()
+{
+    return "log_scraping";
 }
 
 ConfiguracionScraping::ConfiguracionScraping()

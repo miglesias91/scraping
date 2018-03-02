@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\excepciones">
+      <UniqueIdentifier>{d19cb696-4a18-4981-86f8-24ed2ecba483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\excepciones">
+      <UniqueIdentifier>{f8ccc1b9-5bcd-4ab6-884f-ecbe14d79312}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\AdministradorScrapingLocal.cpp">
@@ -36,6 +42,12 @@
     <ClCompile Include="source\GestorAnalisisDiario.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="source\ScrapingIniciadoPreviamente.cpp">
+      <Filter>Archivos de código fuente\excepciones</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScrapingNoInicializado.cpp">
+      <Filter>Archivos de código fuente\excepciones</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AdministradorScrapingLocal.h">
@@ -58,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="include\GestorAnalisisDiario.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ScrapingIniciadoPreviamente.h">
+      <Filter>Archivos de encabezado\excepciones</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ScrapingNoInicializado.h">
+      <Filter>Archivos de encabezado\excepciones</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

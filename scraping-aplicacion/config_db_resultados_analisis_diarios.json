@@ -3,6 +3,7 @@
     {
         "path_db" : "C:/temp/db_resultados_analisis_diarios_debug-aplicacion",
         "almacenamiento_local" : true,
-        "almacenamiento_distribuido" : false
+        "almacenamiento_distribuido" : false,
+        "log_db" : "log_db_resultados-scraping.json"
     }
 }

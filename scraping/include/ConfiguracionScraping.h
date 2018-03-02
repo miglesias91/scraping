@@ -3,9 +3,6 @@
 // stl
 #include <string>
 
-// rapidjson
-#include <rapidjson/document.h>
-
 namespace scraping
 {
 
@@ -14,10 +11,6 @@ class ConfiguracionScraping
 public:
 
     static void leerConfiguracion(std::string path_archivo_configuracion);
-
-    // METODOS
-
-    static rapidjson::Document::AllocatorType * getAlocador();
 
     // CONFIGURACIONES
 
@@ -46,6 +39,8 @@ public:
     static std::string claveIDMedioActual();
     static std::string claveIDContenidoActual();
 
+    static std::string archivoConfigLog();
+
     // TAGS
 
     static std::string tagScrapingLocal();
@@ -67,6 +62,8 @@ public:
     static std::string tagPrefijoResultadoMedio();
     static std::string tagPrefijoResultadoContenido();
     static std::string tagPrefijoResultadoDiario();
+
+    static std::string tagArchivoConfigLog();
 
 private:
 
@@ -96,9 +93,8 @@ private:
     static std::string clave_id_medio_actual;
     static std::string clave_id_contenido_actual;
 
-    static const unsigned int tamanio_alocador;
+    static std::string archivo_config_log;
 
-    static rapidjson::Document documento_alocador;
 };
 
 };

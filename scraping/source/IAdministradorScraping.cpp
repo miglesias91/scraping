@@ -8,6 +8,8 @@ using namespace scraping;
 // aplicacion
 #include <scraping/include/AdministradorScrapingLocal.h>
 #include <scraping/include/ConfiguracionScraping.h>
+#include <scraping/include/ScrapingIniciadoPreviamente.h>
+#include <scraping/include/ScrapingNoInicializado.h>
 
 // extraccion
 #include <extraccion/include/Medio.h>
@@ -17,6 +19,7 @@ typedef scraping::IAdministradorScraping* (*admin)();
 
 IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
 IAdministradorScraping* IAdministradorScraping::administrador_resultados_analisis_diario = NULL;
+herramientas::log::Logger * IAdministradorScraping::log = NULL;
 
 IAdministradorScraping::IAdministradorScraping() : admin_almacenamiento(NULL), handler_almacenamiento(0)
 {
@@ -30,13 +33,19 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
 {
     if (administradorInfoIniciado() || administradorResultadosAnalisisDiarioIniciado())
     {
-        // TODO agregar log.
-        std::cout << "Scraping ya fue iniciado." << std::endl;
-        return;
-        // throw std::exception("Administrador ya fue iniciado.");
+        throw excepciones::ScrapingIniciadoPreviamente();
     }
 
-    ConfiguracionScraping::leerConfiguracion(path_configuracion);
+    try
+    {
+        ConfiguracionScraping::leerConfiguracion(path_configuracion);
+    }
+    catch (herramientas::utiles::excepciones::Excepcion & e)
+    {
+        throw;
+    }
+
+    log = herramientas::log::AdministradorLog::iniciarNuevo(ConfiguracionScraping::archivoConfigLog());
 
     if (ConfiguracionScraping::scrapingLocal())
     {
@@ -63,8 +72,12 @@ void IAdministradorScraping::liberar()
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
+    log->info("iniciando admin info scraping.");
+
     administrador_info = new AdministradorScrapingLocal();
     administrador_info->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
+
+    log->info("iniciando admin resultados scraping.");
 
     administrador_resultados_analisis_diario = new AdministradorScrapingLocal();
     administrador_resultados_analisis_diario->iniciarDB(ConfiguracionScraping::archivoConfigDBResultadosDiarios());
@@ -91,7 +104,7 @@ IAdministradorScraping* IAdministradorScraping::getInstanciaAdminInfo()
     }
     else
     {
-        throw std::exception("Administrador de informacion de scraping no inicializado.");
+        throw excepciones::ScrapingNoInicializado("admin info");
     }
 }
 
@@ -103,7 +116,7 @@ IAdministradorScraping* IAdministradorScraping::getInstanciaAdminResultadosAnali
     }
     else
     {
-        throw std::exception("Administrador de resultados de analisis diarios de scraping no inicializado.");
+        throw excepciones::ScrapingNoInicializado("admin resultados");
     }
 }
 
@@ -112,14 +125,21 @@ void scraping::IAdministradorScraping::recuperarIDsActuales()
     unsigned long long int id_actual_medio = this->recuperarIDActual<scraping::extraccion::Medio>();
     unsigned long long int id_actual_contenido = this->recuperarIDActual<scraping::extraccion::Contenido>();
 
+    log->debug("id actuales recuperados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
+
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(id_actual_medio);
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(id_actual_contenido);
 }
 
 void scraping::IAdministradorScraping::almacenarIDsActuales()
 {
+    unsigned long long int id_actual_medio = scraping::extraccion::Medio::getGestorIDs()->getIdActual();
+    unsigned long long int id_actual_contenido = scraping::extraccion::Contenido::getGestorIDs()->getIdActual();
+
     this->almacenarIDActual<scraping::extraccion::Medio>();
     this->almacenarIDActual<scraping::extraccion::Contenido>();
+
+    log->debug("id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
 }
 
 void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)

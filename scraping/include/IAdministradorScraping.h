@@ -3,6 +3,9 @@
 // stl
 #include <vector>
 
+// log
+#include <log/include/AdministradorLog.h>
+
 // almacenamiento
 #include <almacenamiento/include/IAdministradorAlmacenamiento.h>
 
@@ -84,6 +87,8 @@ protected:
     almacenamiento::IAdministradorAlmacenamiento* admin_almacenamiento;
 
     unsigned long long int handler_almacenamiento;
+
+    static herramientas::log::Logger * log;
 
 private:
 	// ATRIBUTOS
