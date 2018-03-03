@@ -49,6 +49,8 @@ void GestorTareas::scrapearTwitter()
 
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
     gestor_analisis_diario.recuperarIDActualContenido();
+
+    scraping::IAdministradorScraping::log->marca("EXTRAYENDO TWEETS DE CUENTAS.");
     for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         scraping::twitter::modelo::Cuenta * cuenta = *it;

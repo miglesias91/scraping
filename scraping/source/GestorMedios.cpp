@@ -189,6 +189,8 @@ bool GestorMedios::actualizarCuentaDeTwitter(scraping::twitter::modelo::Cuenta *
 
 bool GestorMedios::recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter)
 {
+    scraping::IAdministradorScraping::log->info("recuperarCuentasDeTwitter: recuperando las cuentas de twitter existentes.");
+
     return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), &cuentas_de_twitter);
 }
 

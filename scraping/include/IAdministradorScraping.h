@@ -35,6 +35,8 @@ public:
 
     // GETTERS
 
+    static herramientas::log::Logger * log;
+
     static IAdministradorScraping* getInstanciaAdminInfo();
 
     static IAdministradorScraping* getInstanciaAdminResultadosAnalisisDiario();
@@ -88,8 +90,6 @@ protected:
 
     unsigned long long int handler_almacenamiento;
 
-    static herramientas::log::Logger * log;
-
 private:
 	// ATRIBUTOS
 
@@ -106,6 +106,8 @@ bool IAdministradorScraping::recuperarGrupo(std::string prefijo_grupo, std::vect
     std::vector<almacenamiento::IAlmacenableClaveValor*> grupo;
 
     this->admin_almacenamiento->recuperarGrupo(prefijo_grupo, grupo);
+
+    log->debug("recuperarGrupo: " + std::to_string(grupo.size()) + " entidades recuperadas.");
 
     GRUPO* entidad = NULL;
     for (std::vector<almacenamiento::IAlmacenableClaveValor*>::iterator it = grupo.begin(); it != grupo.end(); it++)
@@ -137,6 +139,8 @@ unsigned long long int IAdministradorScraping::recuperarIDActual()
     bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento)->recuperar(clave_valor_a_recuperar);
 
     std::string string_id_actual = clave_valor_a_recuperar->getValor();
+
+    log->debug("recuperarIDActual: { clave: " + clave + " - id_actual: " + string_id_actual + ".");
 
     unsigned long long int id_actual = 1;
     if (false == string_id_actual.empty())

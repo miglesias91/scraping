@@ -1,5 +1,8 @@
 #include <twitter/include/Aplicacion.h>
 
+// scraping
+#include <scraping/include/IAdministradorScraping.h>
+
 // twitter
 #include <twitter/include/SolicitudUltimosTweets.h>
 
@@ -22,6 +25,8 @@ Aplicacion::~Aplicacion()
 
 std::vector<Tweet*> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int cantidad_de_tweets)
 {
+    scraping::IAdministradorScraping::log->info("leerUltimosTweets:{ cuenta: " + cuenta->getNombre() + " - cantidad de tweets: " + std::to_string(cantidad_de_tweets) + " }");
+
     comunicacion::SolicitudUltimosTweets solicitud_ultimos_tweets(cuenta, cantidad_de_tweets);
 
     cpprest::HTTPRespuesta * respuetas_con_tweets = this->consumidor_api->realizarSolicitud(&solicitud_ultimos_tweets);
@@ -36,6 +41,8 @@ std::vector<Tweet*> Aplicacion::leerUltimosTweets(Cuenta * cuenta, unsigned int 
     }
 
     delete respuetas_con_tweets;
+
+    scraping::IAdministradorScraping::log->info("leerUltimosTweets: tweets leidos: " + std::to_string(tweets.size()) + ".");
 
     return tweets;
 }

@@ -125,8 +125,6 @@ void scraping::IAdministradorScraping::recuperarIDsActuales()
     unsigned long long int id_actual_medio = this->recuperarIDActual<scraping::extraccion::Medio>();
     unsigned long long int id_actual_contenido = this->recuperarIDActual<scraping::extraccion::Contenido>();
 
-    log->debug("id actuales recuperados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
-
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(id_actual_medio);
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(id_actual_contenido);
 }
