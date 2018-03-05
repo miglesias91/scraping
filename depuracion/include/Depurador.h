@@ -68,7 +68,7 @@ public:
 private:
 
     // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal.
-    mapeo::MapaUTF8 * mapa_utf8;
+    static mapeo::MapaUTF8 * mapa_utf8;
 
 };
 

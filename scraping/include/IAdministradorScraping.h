@@ -35,8 +35,6 @@ public:
 
     // GETTERS
 
-    static herramientas::log::Logger * log;
-
     static IAdministradorScraping* getInstanciaAdminInfo();
 
     static IAdministradorScraping* getInstanciaAdminResultadosAnalisisDiario();

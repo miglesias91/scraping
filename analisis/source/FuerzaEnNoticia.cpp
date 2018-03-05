@@ -3,6 +3,9 @@
 // stl
 #include <unordered_map>
 
+// scraping
+#include <scraping/include/Logger.h>
+
 using namespace scraping::analisis::tecnicas;
 
 FuerzaEnNoticia::FuerzaEnNoticia(float fuerza_minima) : fuerza_minima(fuerza_minima)
@@ -13,7 +16,7 @@ FuerzaEnNoticia::~FuerzaEnNoticia()
 {
 }
 
-bool FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado)
+double FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado)
 {
     unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
     std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
@@ -38,6 +41,8 @@ bool FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResul
 
     float factor_tamanio_de_bolsa = std::log10(cantidad_de_caracteres_en_bolsa_de_palabras);
 
+    scraping::Logger::info("FuerzaEnNoticia::aplicar: { cantidad de caracteres = " + std::to_string(cantidad_de_caracteres_en_bolsa_de_palabras) + " - factor tamanio bolsa = '" + std::to_string(factor_tamanio_de_bolsa) + "'}");
+
     // 2do: calculo la fuerza de cada palabra en la bolsa de palabras
     for (std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)
     {
@@ -51,7 +56,7 @@ bool FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResul
         }
     }
 
-    return true;
+    return factor_tamanio_de_bolsa;
 }
 
 // GETTERS

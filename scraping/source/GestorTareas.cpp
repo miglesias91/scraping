@@ -4,6 +4,7 @@
 #include <scraping/include/GestorMedios.h>
 #include <scraping/include/GestorAnalisisDiario.h>
 #include <scraping/include/IAdministradorScraping.h>
+#include <scraping/include/Logger.h>
 
 // depuracion
 #include <depuracion/include/Depurador.h>
@@ -36,6 +37,8 @@ GestorTareas::~GestorTareas()
 
 void GestorTareas::scrapearTwitter()
 {
+    scraping::Logger::marca("INICIO SCRAPERO TWITTER.");
+
     // recupero las cuentas de twitter.
     scraping::aplicacion::GestorMedios gestor_medios;
 
@@ -50,7 +53,7 @@ void GestorTareas::scrapearTwitter()
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
     gestor_analisis_diario.recuperarIDActualContenido();
 
-    scraping::IAdministradorScraping::log->marca("EXTRAYENDO TWEETS DE CUENTAS.");
+    scraping::Logger::marca("EXTRAYENDO TWEETS DE CUENTAS.");
     for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         scraping::twitter::modelo::Cuenta * cuenta = *it;
@@ -73,6 +76,8 @@ void GestorTareas::scrapearTwitter()
         {// trajo por lo menos un tweet nuevo, entonces actualizo sus datos.
             cuenta->setIdUltimoTweetAnalizado(tweets[0]->getIdTweet());
 
+            scraping::Logger::info("scrapearTwitter: { cuenta = '" + cuenta->getNombre() + "' - id_ultimo_tweet_analizado = '" + std::to_string(cuenta->getIdUltimoTweetAnalizado()) + "' }");
+
             // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
             gestor_analisis_diario.almacenarMedio(cuenta);
 
@@ -92,10 +97,14 @@ void GestorTareas::scrapearTwitter()
         delete *it;
     }
     cuentas_twitter_existentes.clear();
+
+    scraping::Logger::marca("FIN SCRAPERO TWITTER.");
 }
 
 void GestorTareas::depurarYAnalizarTwitter()
 {
+    scraping::Logger::marca("INICIO DEPURACION Y ANALISIS TWITTER.");
+
     depuracion::Depurador depurador;
     depurador.cargarMapeoUTF8("mapeo_utf8.json");
 
@@ -107,6 +116,7 @@ void GestorTareas::depurarYAnalizarTwitter()
 
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
 
+    scraping::Logger::marca("DEPURANDO TWEETS DE CUENTAS.");
     for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         scraping::twitter::modelo::Cuenta * cuenta_a_analizar = *it;
@@ -125,6 +135,7 @@ void GestorTareas::depurarYAnalizarTwitter()
             contenidos_a_recuperar.push_back(tweet);
         }
 
+        scraping::Logger::marca("DEPURANDO TWEETS DE '" + cuenta_a_analizar->getNombre() + "'.");
         for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
         {
             depuracion::ContenidoDepurable depurable_tweet(*it);
@@ -139,7 +150,9 @@ void GestorTareas::depurarYAnalizarTwitter()
 
             analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
 
-            fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+            double factor_tamanio_bolsa = fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+
+            scraping::Logger::info("depurarYAnalizarTwitter: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
 
             std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
@@ -168,6 +181,8 @@ void GestorTareas::depurarYAnalizarTwitter()
         delete *it;
     }
     cuentas_twitter_existentes.clear();
+
+    scraping::Logger::marca("FIN DEPURACION Y ANALISIS TWITTER.");
 }
 
 void GestorTareas::prepararYAlmacenarTwitter()

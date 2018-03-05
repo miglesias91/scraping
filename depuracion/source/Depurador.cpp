@@ -8,38 +8,47 @@
 // utiles
 #include <utiles/include/FuncionesString.h>
 
+// scraping
+#include <scraping/include/Logger.h>
+
 using namespace scraping::depuracion;
 
-Depurador::Depurador() : mapa_utf8(NULL)
+mapeo::MapaUTF8 * Depurador::mapa_utf8 = NULL;
+
+Depurador::Depurador()
 {
 }
 
 Depurador::~Depurador()
 {
-    if (NULL != this->mapa_utf8)
+    if (NULL != mapa_utf8)
     {
-        delete this->mapa_utf8;
-        this->mapa_utf8 = NULL;
+        delete mapa_utf8;
+        mapa_utf8 = NULL;
     }
 }
 
 bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
 {
-    if (NULL != this->mapa_utf8)
+    if (NULL != mapa_utf8)
     {
-        delete this->mapa_utf8;
+        scraping::Logger::info("cargarMapeoUTF8: mapa_utf8 ya esta cargado.");
+        return true;
     }
-
 
     try
     {
-        this->mapa_utf8 = new mapeo::MapaUTF8(path_archivo_mapeo);
+        scraping::Logger::info("cargarMapeoUTF8: cargando mapa '" + path_archivo_mapeo + "'.");
+        mapa_utf8 = new mapeo::MapaUTF8(path_archivo_mapeo);
     }
     catch (...)
     {
-        this->mapa_utf8 = NULL;
+        mapa_utf8 = NULL;
+        scraping::Logger::error("cargarMapeoUTF8: mapa '" + path_archivo_mapeo + "' ERROR AL CARGAR.");
         return false;
     }
+
+    scraping::Logger::info("cargarMapeoUTF8: mapa '" + path_archivo_mapeo + "' cargado OK.");
 
     return true;
 }
@@ -49,34 +58,46 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
     std::string texto_a_depurar = depurable->getTextoDepurable();
 
     // 1ero: reemplazo los caracteres especiales: vocales con tildes, letras extrañas, 
-    this->reemplazarTodosLosCaracteresEspeciales(texto_a_depurar);
+    unsigned int caracteres_especiales_reemplazados = this->reemplazarTodosLosCaracteresEspeciales(texto_a_depurar);
 
     // 2do: reemplazo las mayusculas por minusculas.
-    this->todoMinuscula(texto_a_depurar);
-    
+    bool pasado_a_minuscula = this->todoMinuscula(texto_a_depurar);
+
     // 3ero: reemplazo las mayusculas por minusculas.
-    this->eliminarURLs(texto_a_depurar);
+    unsigned int urls_eliminadas = this->eliminarURLs(texto_a_depurar);
 
     // 4to: elimino los simbolos que no forman palabras.
-    this->eliminarSignosYPuntuacion(texto_a_depurar);
+    unsigned int caracteres_signos_puntuacion_eliminados = this->eliminarSignosYPuntuacion(texto_a_depurar);
 
     // 5to: elimino los caracteres de control de texto.
-    this->eliminarCaracteresDeControl(texto_a_depurar);
+    unsigned int caracteres_de_control_eliminados = this->eliminarCaracteresDeControl(texto_a_depurar);
 
     // 6to: paso de un texto con palabras a un vector con tokens.
     std::vector<std::string> bolsa_de_palabras = this->tokenizarTexto(texto_a_depurar);
 
     // 7mo: elimino las palabras con menos de 2 letras.
-    this->eliminarPalabrasMuyCortas(bolsa_de_palabras);
+    unsigned int cantidad_palabras_muy_cortas_eliminadas = this->eliminarPalabrasMuyCortas(bolsa_de_palabras);
 
     // 8vo: elimino las palabras con mas de 15 letras.
-    this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
+    unsigned int cantidad_palabras_muy_largas_eliminadas = this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
     // 9no: elimino las preposiciones.
-    this->eliminarPreposiciones(bolsa_de_palabras);
+    unsigned int cantidad_preposiciones_eliminadas = this->eliminarPreposiciones(bolsa_de_palabras);
 
     // 10mo: elimino pronombres.
-    this->eliminarPronombres(bolsa_de_palabras);
+    unsigned int cantidad_pronombres_eliminados = this->eliminarPronombres(bolsa_de_palabras);
+
+    scraping::Logger::debug("depurar: {\n"  
+        "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" + 
+        "pasado a minuscula: " + std::to_string(pasado_a_minuscula) + ",\n" +
+        "urls eliminadas: " + std::to_string(urls_eliminadas) + ",\n" +
+        "signos y puntuacion eliminados: " + std::to_string(caracteres_signos_puntuacion_eliminados) + ",\n" +
+        "caracteres de control eliminados: " + std::to_string(caracteres_de_control_eliminados) + ",\n" +
+        "palabras muy cortas eliminadas: " + std::to_string(cantidad_palabras_muy_cortas_eliminadas) + ",\n" +
+        "palabras muy largas eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n" +
+        "preposiciones eliminadas: " + std::to_string(cantidad_preposiciones_eliminadas) + ",\n" +
+        "pronombres eliminados: " + std::to_string(cantidad_pronombres_eliminados) + "\n}"
+    );
 
     ContenidoDepurado contenido_depurado(bolsa_de_palabras);
     return contenido_depurado;
@@ -97,7 +118,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 240) * 262144 + (caracter_2 - 128) * 4096 + (caracter_3 - 128) * 64 + caracter_4 - 128;
 
-            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             it = texto_a_depurar.erase(it, it + 4);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
@@ -112,7 +133,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
             unsigned int valor_decimal_codepoint = (caracter_1 - 224) * 4096 + (caracter_2 - 128) * 64 + caracter_3 - 128;
             
 
-            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             it = texto_a_depurar.erase(it, it + 3);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
@@ -125,7 +146,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 192) * 64 + caracter_2 - 128;
 
-            std::string reemplazo = this->mapa_utf8->getTraduccion(valor_decimal_codepoint);
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             it = texto_a_depurar.erase(it, it + 2);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
@@ -150,7 +171,7 @@ unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
     unsigned int cantidad_de_tildes_reemplazadas = 0;
     for (std::vector<std::string>::iterator it_vocal = vocales_con_tilde.begin(); it_vocal != vocales_con_tilde.end(); it_vocal++)
     {
-        cantidad_de_tildes_reemplazadas += herramientas::utiles::FuncionesString::reemplazarOcurrencias(texto_a_depurar, (*it_vocal), this->mapa_utf8->getTraduccion(*it_vocal));
+        cantidad_de_tildes_reemplazadas += herramientas::utiles::FuncionesString::reemplazarOcurrencias(texto_a_depurar, (*it_vocal), mapa_utf8->getTraduccion(*it_vocal));
     }
 
     return cantidad_de_tildes_reemplazadas;

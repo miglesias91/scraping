@@ -2,6 +2,7 @@
 
 // scraping
 #include <scraping/include/IAdministradorScraping.h>
+#include <scraping/include/Logger.h>
 
 // protocolos
 #include <protocolos/include/OAuth2.h>
@@ -20,18 +21,18 @@ ConsumidorAPI::~ConsumidorAPI()
 
 bool ConsumidorAPI::obtenerTokenDeAcceso()
 {
-    scraping::IAdministradorScraping::log->debug("obtenerTokenDeAcceso: { clave publica: " + this->consumidor_oauth2.getClavePublica() +
+    scraping::Logger::debug("obtenerTokenDeAcceso: { clave publica: " + this->consumidor_oauth2.getClavePublica() +
         " - clave privada: " + this->consumidor_oauth2.getClavePublica() + " - uri cliente:" + this->cliente_twitter.getURI() + "}");
 
     bool exito = protocolos::OAuth2::solicitarTokenAcceso(&this->consumidor_oauth2, this->cliente_twitter.getURI());
 
     if (exito)
     {
-        scraping::IAdministradorScraping::log->info("obtenerTokenAcceso: exitoso!");
+        scraping::Logger::info("obtenerTokenAcceso: exitoso!");
     }
     else
     {
-        scraping::IAdministradorScraping::log->error("obtenerTokenAcceso: NO SE OBTUVO");
+        scraping::Logger::error("obtenerTokenAcceso: NO SE OBTUVO");
     }
 
     return exito;
@@ -57,11 +58,11 @@ herramientas::cpprest::HTTPRespuesta * ConsumidorAPI::realizarSolicitud(cpprest:
     log_solicitud = utility::conversions::to_utf8string(solicitud->getSolicitud()->to_string());
 #endif // DEBUG || _DEBUG
 
-    scraping::IAdministradorScraping::log->debug("realizarSolicitud: { " + log_solicitud + "}");
+    scraping::Logger::debug("realizarSolicitud: { " + log_solicitud + "}");
 
     herramientas::cpprest::HTTPRespuesta * rta = this->cliente_twitter.solicitar(solicitud);
 
-    scraping::IAdministradorScraping::log->debug("realizarSolicitud: { razon respuesta: " + rta->getRazon() + "}");
+    scraping::Logger::debug("realizarSolicitud: { razon respuesta: " + rta->getRazon() + "}");
 
     return rta;
 }

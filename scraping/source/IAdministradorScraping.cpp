@@ -7,6 +7,7 @@ using namespace scraping;
 
 // aplicacion
 #include <scraping/include/AdministradorScrapingLocal.h>
+#include <scraping/include/Logger.h>
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/ScrapingIniciadoPreviamente.h>
 #include <scraping/include/ScrapingNoInicializado.h>
@@ -45,7 +46,7 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
         throw;
     }
 
-    log = herramientas::log::AdministradorLog::iniciarNuevo(ConfiguracionScraping::archivoConfigLog());
+    Logger::iniciar(ConfiguracionScraping::archivoConfigLog());
 
     if (ConfiguracionScraping::scrapingLocal())
     {

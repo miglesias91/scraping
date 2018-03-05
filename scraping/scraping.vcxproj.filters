@@ -48,6 +48,9 @@
     <ClCompile Include="source\ScrapingNoInicializado.cpp">
       <Filter>Archivos de código fuente\excepciones</Filter>
     </ClCompile>
+    <ClCompile Include="source\Logger.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AdministradorScrapingLocal.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="include\ScrapingNoInicializado.h">
       <Filter>Archivos de encabezado\excepciones</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Logger.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
