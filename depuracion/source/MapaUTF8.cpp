@@ -6,12 +6,18 @@
 
 // utiles
 #include <utiles/include/FuncionesString.h>
+#include <utiles/include/ImposibleAbrirArchivo.h>
 
 using namespace scraping::depuracion::mapeo;
 
 MapaUTF8::MapaUTF8(std::string path_archivo_mapa)
 {
     std::ifstream archivo_mapeo(path_archivo_mapa);
+
+    if (false == archivo_mapeo.good())
+    {
+        throw herramientas::utiles::excepciones::ImposibleAbrirArchivo(path_archivo_mapa);
+    }
 
     std::string linea_mapeo;
 

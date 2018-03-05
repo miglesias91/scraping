@@ -67,7 +67,7 @@ unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()
     return this->fuerza_por_palabra.size();
 }
 
-bool ResultadoFuerzaEnNoticia::sumarFuerza(std::pair<std::string, float> fuerza_a_sumar)
+float ResultadoFuerzaEnNoticia::sumarFuerza(std::pair<std::string, float> fuerza_a_sumar)
 {
     std::string palabra = fuerza_a_sumar.first;
     float fuerza_a_agregar = fuerza_a_sumar.second;
@@ -84,10 +84,10 @@ bool ResultadoFuerzaEnNoticia::sumarFuerza(std::pair<std::string, float> fuerza_
         this->fuerza_por_palabra[palabra] = fuerza_a_agregar;
     }
 
-    return true;
+    return this->fuerza_por_palabra[palabra];
 }
 
-bool ResultadoFuerzaEnNoticia::sumarFuerzas(ResultadoFuerzaEnNoticia * fuerza_a_sumar)
+unsigned int ResultadoFuerzaEnNoticia::sumarFuerzas(ResultadoFuerzaEnNoticia * fuerza_a_sumar)
 {
     std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = fuerza_a_sumar->getFuerzas();
 
@@ -96,7 +96,7 @@ bool ResultadoFuerzaEnNoticia::sumarFuerzas(ResultadoFuerzaEnNoticia * fuerza_a_
         this->sumarFuerza(*it);
     }
 
-    return true;
+    return vector_fuerza_por_palabra.size();
 }
 
 bool ResultadoFuerzaEnNoticia::compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b)

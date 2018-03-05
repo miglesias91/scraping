@@ -154,7 +154,7 @@ void GestorTareas::depurarYAnalizarTwitter()
 
             scraping::Logger::info("depurarYAnalizarTwitter: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
 
-            std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
+            // std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
             // guardo el analisis
             scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
@@ -174,6 +174,7 @@ void GestorTareas::depurarYAnalizarTwitter()
         {
             delete *it;
         }
+        contenidos_a_recuperar.clear();
     }
 
     for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
@@ -187,6 +188,8 @@ void GestorTareas::depurarYAnalizarTwitter()
 
 void GestorTareas::prepararYAlmacenarTwitter()
 {
+    scraping::Logger::marca("INICIO PREPARACION Y ALMACENAMIENTO TWITTER.");
+
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
@@ -226,7 +229,7 @@ void GestorTareas::prepararYAlmacenarTwitter()
             preparacion::ResultadoAnalisisMedio * resultado_combinado = new preparacion::ResultadoAnalisisMedio();
             resultado_combinado->setId(cuenta_a_preparar->getId()->copia());
 
-            preparador.combinar(resultados, resultado_combinado);
+            unsigned int cantidad_fuerzas_sumadas = preparador.combinar(resultados, resultado_combinado);
 
             scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
             resultado_diario_recuperado.setId(new herramientas::utiles::ID(std::stoul(string_fecha)));
@@ -238,6 +241,8 @@ void GestorTareas::prepararYAlmacenarTwitter()
             delete resultado_combinado;
 
             gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
+            
+            scraping::Logger::info("prepararYAlmacenarTwitter: { fecha = '" + string_fecha + "' - id_cuenta = " + cuenta_a_preparar->getId()->string() + " - cantidad de resultados combinados = '" + std::to_string(resultados.size()) + "' - cantidad fuerzas sumadas = '" + std::to_string(cantidad_fuerzas_sumadas) + "' }");
 
             // actualizo el los ids historicos del medio y elimino los resultados
             for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
@@ -255,6 +260,7 @@ void GestorTareas::prepararYAlmacenarTwitter()
 
                 delete contenido_historico;
             }
+            resultados.clear();
         }
     }
 
@@ -263,4 +269,6 @@ void GestorTareas::prepararYAlmacenarTwitter()
         delete *it;
     }
     cuentas_twitter_existentes.clear();
+
+    scraping::Logger::marca("FIN PREPARACION Y ALMACENAMIENTO TWITTER.");
 }

@@ -7,6 +7,7 @@ using namespace scraping;
 
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
+#include <scraping/include/Logger.h>
 
 // extraccion
 #include <extraccion/include/Medio.h>
@@ -55,12 +56,13 @@ bool AdministradorScrapingLocal::almacenar(scraping::IAlmacenable * entidad)
 
     if (retorno)
     {
-        log->debug("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
+        Logger::debug("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
     }
     else
     {
-        log->debug("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ALMACENO NINGUN VALOR }");
+        Logger::debug("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ALMACENO NINGUN VALOR }");
     }
+
 	delete entidad_a_almacenar;
 
 	return retorno;
@@ -83,13 +85,13 @@ bool AdministradorScrapingLocal::almacenar(std::vector<scraping::IAlmacenable*> 
         retorno = this->admin_almacenamiento->almacenar(entidad_a_almacenar);
         if (false == retorno)
         {
-            log->debug("almacenar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE PUDO ALMACENAR }");
+            Logger::debug("almacenar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE PUDO ALMACENAR }");
 
             delete entidad_a_almacenar;
             break;
         }
 
-        log->debug("almacenar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor: '" + valor + "' }");
+        Logger::debug("almacenar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor: '" + valor + "' }");
 
         delete entidad_a_almacenar;
     }
@@ -108,12 +110,12 @@ bool AdministradorScrapingLocal::recuperar(scraping::IAlmacenable * entidad)
 
     if (existe_valor)
     {
-        log->debug("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor recuperado: '" + clave_valor_a_recuperar->getValor() + "' }");
+        Logger::debug("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - valor recuperado: '" + clave_valor_a_recuperar->getValor() + "' }");
         entidad->parsearValorAlmacenable(clave_valor_a_recuperar->getValor());
     }
     else
     {
-        log->debug("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE RECUPERO NINGUN VALOR }");
+        Logger::debug("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE RECUPERO NINGUN VALOR }");
     }
 
 	delete clave_valor_a_recuperar;
@@ -132,11 +134,11 @@ bool AdministradorScrapingLocal::eliminar(scraping::IAlmacenable * entidad)
 
     if (retorno)
     {
-        log->debug("eliminar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
+        Logger::debug("eliminar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
     }
     else
     {
-        log->debug("eliminar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ELIMINO NINGUN VALOR }");
+        Logger::debug("eliminar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ELIMINO NINGUN VALOR }");
     }
 
     delete entidad_a_eliminar;
@@ -160,12 +162,12 @@ bool AdministradorScrapingLocal::eliminar(std::vector<scraping::IAlmacenable*> e
         retorno = this->admin_almacenamiento->eliminar(entidad_a_eliminar);
         if (false == retorno)
         {
-            log->debug("eliminar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ELIMINO NINGUN VALOR }");
+            Logger::debug("eliminar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ELIMINO NINGUN VALOR }");
             delete entidad_a_eliminar;
             break;
         }
 
-        log->debug("eliminar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
+        Logger::debug("eliminar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
 
         delete entidad_a_eliminar;
     }
@@ -185,11 +187,11 @@ bool AdministradorScrapingLocal::modificar(scraping::IAlmacenable * entidad)
 
     if (retorno)
     {
-        log->debug("modificar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
+        Logger::debug("modificar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
     }
     else
     {
-        log->debug("modificar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE MODIFICO NINGUN VALOR }");
+        Logger::debug("modificar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE MODIFICO NINGUN VALOR }");
     }
 
     delete entidad_a_modificar;
@@ -214,12 +216,12 @@ bool AdministradorScrapingLocal::modificar(std::vector<scraping::IAlmacenable*> 
         retorno = this->admin_almacenamiento->modificar(entidad_a_modificar);
         if (false == retorno)
         {
-            log->debug("modificar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE MODIFICO NINGUN VALOR }");
+            Logger::debug("modificar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE MODIFICO NINGUN VALOR }");
             delete entidad_a_modificar;
             break;
         }
 
-        log->debug("modificar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - nuevo valor: '" + valor + "' }");
+        Logger::debug("modificar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - nuevo valor: '" + valor + "' }");
 
         delete entidad_a_modificar;
     }

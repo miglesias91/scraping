@@ -138,7 +138,7 @@ unsigned long long int IAdministradorScraping::recuperarIDActual()
 
     std::string string_id_actual = clave_valor_a_recuperar->getValor();
 
-    log->debug("recuperarIDActual: { clave: " + clave + " - id_actual: " + string_id_actual + ".");
+    Logger::debug("recuperarIDActual: { clave: " + clave + " - id actual recuperado: " + string_id_actual + ".");
 
     unsigned long long int id_actual = 1;
     if (false == string_id_actual.empty())
@@ -161,6 +161,8 @@ bool IAdministradorScraping::almacenarIDActual()
     std::string valor = std::to_string(GRUPO::getGestorIDs()->getIdActual());
 
     almacenamiento::IAlmacenableClaveValor* clave_valor_a_recuperar = new almacenamiento::IAlmacenableClaveValor(clave, grupo, valor);
+
+    Logger::debug("almacenarIDActual: { clave: " + clave + " - id actual: " + valor + ".");
 
     bool retorno = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento)->modificar(clave_valor_a_recuperar);
 

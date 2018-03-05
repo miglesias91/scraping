@@ -18,12 +18,13 @@ Preparador::~Preparador()
 
 bool Preparador::combinar(std::vector<scraping::analisis::ResultadoAnalisis*> resultados_a_combinar, scraping::analisis::ResultadoAnalisis * resultado_combinacion)
 {
+    unsigned int cantidad_de_fuerzas_sumadas = 0;
     for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados_a_combinar.begin(); it != resultados_a_combinar.end(); it++)
     {
-        resultado_combinacion->combinarCon(*it);
+        cantidad_de_fuerzas_sumadas += resultado_combinacion->combinarCon(*it);
     }
 
-    return true;
+    return cantidad_de_fuerzas_sumadas;
 }
 
 // CONSULTAS

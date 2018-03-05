@@ -34,7 +34,7 @@ public:
 
     // METODOS
 
-    virtual bool combinarCon(ResultadoAnalisis * resultado_a_combinar);
+    virtual unsigned int combinarCon(ResultadoAnalisis * resultado_a_combinar);
 
     // metodos de IContieneJson
 

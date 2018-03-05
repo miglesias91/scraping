@@ -20,7 +20,6 @@ typedef scraping::IAdministradorScraping* (*admin)();
 
 IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
 IAdministradorScraping* IAdministradorScraping::administrador_resultados_analisis_diario = NULL;
-herramientas::log::Logger * IAdministradorScraping::log = NULL;
 
 IAdministradorScraping::IAdministradorScraping() : admin_almacenamiento(NULL), handler_almacenamiento(0)
 {
@@ -69,16 +68,18 @@ void IAdministradorScraping::liberar()
     {
         delete administrador_resultados_analisis_diario;
     }
+
+    herramientas::log::AdministradorLog::liberarTodo();
 }
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
-    log->info("iniciando admin info scraping.");
+    Logger::info("iniciando admin info scraping.");
 
     administrador_info = new AdministradorScrapingLocal();
     administrador_info->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
 
-    log->info("iniciando admin resultados scraping.");
+    Logger::info("iniciando admin resultados scraping.");
 
     administrador_resultados_analisis_diario = new AdministradorScrapingLocal();
     administrador_resultados_analisis_diario->iniciarDB(ConfiguracionScraping::archivoConfigDBResultadosDiarios());
@@ -138,7 +139,7 @@ void scraping::IAdministradorScraping::almacenarIDsActuales()
     this->almacenarIDActual<scraping::extraccion::Medio>();
     this->almacenarIDActual<scraping::extraccion::Contenido>();
 
-    log->debug("id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
+    Logger::debug("id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
 }
 
 void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)

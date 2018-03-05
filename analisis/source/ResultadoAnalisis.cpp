@@ -38,7 +38,7 @@ std::string ResultadoAnalisis::getValorAlmacenable()
 
 // METODOS
 
-bool ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)
+unsigned int ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)
 {
     return this->resultado_fuerza_en_noticia->sumarFuerzas(resultado_a_combinar->getResultadoFuerzaEnNoticia());
 }

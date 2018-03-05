@@ -41,11 +41,11 @@ bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
         scraping::Logger::info("cargarMapeoUTF8: cargando mapa '" + path_archivo_mapeo + "'.");
         mapa_utf8 = new mapeo::MapaUTF8(path_archivo_mapeo);
     }
-    catch (...)
+    catch (herramientas::utiles::excepciones::Excepcion & e)
     {
         mapa_utf8 = NULL;
-        scraping::Logger::error("cargarMapeoUTF8: mapa '" + path_archivo_mapeo + "' ERROR AL CARGAR.");
-        return false;
+        scraping::Logger::error("cargarMapeoUTF8: " + e.getMensaje().str());
+        throw;
     }
 
     scraping::Logger::info("cargarMapeoUTF8: mapa '" + path_archivo_mapeo + "' cargado OK.");
