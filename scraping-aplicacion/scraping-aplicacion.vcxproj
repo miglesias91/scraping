@@ -75,13 +75,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(repos)cpprestsdk\Binaries\Win32\Debug;$(repos-git)herramientas_desarrollo\Debug;$(repos-git)almacenamiento\Debug;$(repos)rocksdb\build_x86\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,11 +90,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)x64\Debug;$(repos)cpprestsdk\Binaries\x64\Debug;$(repos-git)herramientas_desarrollo\x64\Debug;$(repos-git)almacenamiento\x64\Debug;$(repos)rocksdb\build_x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -105,14 +105,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Release;$(repos)cpprestsdk\Binaries\Win32\Release;$(repos-git)herramientas_desarrollo\Release;$(repos-git)almacenamiento\Release;$(repos)rocksdb\build_x86\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,14 +122,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)x64\Release;$(repos)cpprestsdk\Binaries\x64\Release;$(repos-git)herramientas_desarrollo\x64\Release;$(repos-git)almacenamiento\x64\Release;$(repos)rocksdb\build_x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

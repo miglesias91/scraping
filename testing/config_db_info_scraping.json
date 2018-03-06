@@ -3,6 +3,7 @@
     {
         "path_db" : "C:/temp/db_info_scraping_debug-testing",
         "almacenamiento_local" : true,
-        "almacenamiento_distribuido" : false
+        "almacenamiento_distribuido" : false,
+        "log_db" : "log_db_info-scraping.json"
     }
 }

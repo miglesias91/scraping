@@ -4,7 +4,7 @@
 #include <vector>
 
 // log
-#include <log/include/AdministradorLog.h>
+#include <scraping/include/Logger.h>
 
 // almacenamiento
 #include <almacenamiento/include/IAdministradorAlmacenamiento.h>
@@ -105,7 +105,7 @@ bool IAdministradorScraping::recuperarGrupo(std::string prefijo_grupo, std::vect
 
     this->admin_almacenamiento->recuperarGrupo(prefijo_grupo, grupo);
 
-    log->debug("recuperarGrupo: " + std::to_string(grupo.size()) + " entidades recuperadas.");
+    Logger::debug("recuperarGrupo: " + std::to_string(grupo.size()) + " entidades recuperadas.");
 
     GRUPO* entidad = NULL;
     for (std::vector<almacenamiento::IAlmacenableClaveValor*>::iterator it = grupo.begin(); it != grupo.end(); it++)

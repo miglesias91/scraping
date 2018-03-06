@@ -5,6 +5,8 @@ using namespace scraping;
 // stl
 #include <iostream>
 
+herramientas::log::Logger * Logger::log = NULL;
+
 Logger::Logger()
 {
 }

@@ -17,9 +17,10 @@ int main(int argc, char **argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
 
-    scraping::ConfiguracionScraping::leerConfiguracion("config_scraping.json");
+    //scraping::ConfiguracionScraping::leerConfiguracion("config_scraping.json");
 
-    scraping::IAdministradorScraping::crearAdministradorScrapingLocal();
+    //scraping::IAdministradorScraping::crearAdministradorScrapingLocal();
+    scraping::IAdministradorScraping::iniciar("config_scraping.json");
 
     scraping::IAdministradorScraping::getInstanciaAdminInfo()->abrirBD();
 

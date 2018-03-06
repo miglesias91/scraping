@@ -65,6 +65,8 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
         archivo_config_db_info_scraping = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBInfoScraping());
         archivo_config_db_resultados_analisis_diario = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios());
 
+        archivo_config_log = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigLog());
+
         prefijo_configuracion = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoConfiguracion());
 
         prefijo_twitter = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoTwitter());

@@ -1,7 +1,6 @@
 #include <twitter/include/Aplicacion.h>
 
 // scraping
-#include <scraping/include/IAdministradorScraping.h>
 #include <scraping/include/Logger.h>
 
 // twitter

@@ -7,7 +7,6 @@ using namespace scraping;
 
 // aplicacion
 #include <scraping/include/AdministradorScrapingLocal.h>
-#include <scraping/include/Logger.h>
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/ScrapingIniciadoPreviamente.h>
 #include <scraping/include/ScrapingNoInicializado.h>
@@ -47,6 +46,8 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
 
     Logger::iniciar(ConfiguracionScraping::archivoConfigLog());
 
+    Logger::marca("INICIO SCRAPING");
+
     if (ConfiguracionScraping::scrapingLocal())
     {
         crearAdministradorScrapingLocal();
@@ -68,6 +69,8 @@ void IAdministradorScraping::liberar()
     {
         delete administrador_resultados_analisis_diario;
     }
+
+    Logger::marca("FIN SCRAPING");
 
     herramientas::log::AdministradorLog::liberarTodo();
 }
@@ -139,7 +142,7 @@ void scraping::IAdministradorScraping::almacenarIDsActuales()
     this->almacenarIDActual<scraping::extraccion::Medio>();
     this->almacenarIDActual<scraping::extraccion::Contenido>();
 
-    Logger::debug("id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
+    Logger::info("id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
 }
 
 void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)

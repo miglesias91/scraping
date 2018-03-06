@@ -1,7 +1,6 @@
 #include <twitter/include/ConsumidorAPI.h>
 
 // scraping
-#include <scraping/include/IAdministradorScraping.h>
 #include <scraping/include/Logger.h>
 
 // protocolos
