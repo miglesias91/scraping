@@ -1,0 +1,140 @@
+{
+   "data": [
+      {
+         "created_time": "2015-09-10T20:33:54+0000",
+         "message": "HIST\u00d3RICO: La ONU aprob\u00f3 la iniciativa argentina sobre el marco legal para la reestructuraci\u00f3n de deuda. #Soberan\u00edaEcon\u00f3mica.",
+         "id": "116053261893854_522759367889906"
+      },
+      {
+         "created_time": "2015-09-10T19:32:30+0000",
+         "message": "#Soberan\u00edaEcon\u00f3mica\n\nYa estamos presentes en la Asamblea General de Naciones Unidas esperando por la votaci\u00f3n de los principios para la reestructuraci\u00f3n de deuda.",
+         "id": "116053261893854_522738667891976"
+      },
+      {
+         "created_time": "2015-09-10T01:19:29+0000",
+         "message": "#UPA24HS\n\nAcompa\u00f1amos a Cristina Fernandez de Kirchner, junto al gobernador de la Prov. de Buenos Aires Daniel Scioli y a Lula, en la inauguraci\u00f3n de una nueva Unidad de Pronta Atenci\u00f3n en Jose C. Paz.",
+         "story": "Axel Kicillof added 4 new photos.",
+         "id": "116053261893854_522470741252102"
+      },
+      {
+         "created_time": "2015-09-09T21:17:13+0000",
+         "message": "Si te lo perdiste o quer\u00e9s de verlo de nuevo, reviv\u00ed esta noche la charla con Alejandro Dolina en Econom\u00eda sin corbata por la TV.Publica Argentina a las 22:30hs.",
+         "id": "116053261893854_522295107936332"
+      },
+      {
+         "created_time": "2015-09-09T15:08:51+0000",
+         "message": "\"En la ONU, hace exactamente un a\u00f1o, Argentina, con el apoyo de los 134 pa\u00edses del G77, propuso la creaci\u00f3n de un comit\u00e9 destinado a establecer un marco jur\u00eddico internacional para la reestructuraci\u00f3n de las deudas soberanas. Este comit\u00e9 hoy somete a votaci\u00f3n nueve principios que deben ser respetados para la reestructuraci\u00f3n: la soberan\u00eda, la buena fe, transparencia, imparcialidad, tratamiento equitativo, la inmunidad soberana, legitimidad, sostenibilidad y reestructuraci\u00f3n de la mayor\u00eda.\"",
+         "id": "116053261893854_522286204603889"
+      },
+      {
+         "created_time": "2015-09-08T18:59:56+0000",
+         "message": "#ProyectoSociales\n\nAcompa\u00f1amos a los candidatos del Proyecto Nacional y Popular en la Facultad de Ciencias Sociales - UBA. #UBAElige",
+         "story": "Axel Kicillof added 5 new photos.",
+         "id": "116053261893854_522019344630575"
+      },
+      {
+         "created_time": "2015-09-07T13:36:00+0000",
+         "message": "Si hoy vemos un proceso de reactivaci\u00f3n industrial, cuando el mundo est\u00e1 cayendo, es porque el Estado ha puesto todos sus instrumentos al servicio del sostenimiento del empleo y la producci\u00f3n, y particularmente de las PyMEs.",
+         "id": "116053261893854_521416824690827"
+      },
+      {
+         "created_time": "2015-09-04T23:51:45+0000",
+         "message": "#7a\u00f1osdeAerol\u00edneasEstatal",
+         "id": "116053261893854_520292478136595"
+      },
+      {
+         "created_time": "2015-09-04T13:56:13+0000",
+         "message": "Si queremos que contin\u00fae la reindustrializaci\u00f3n en el pa\u00eds, se necesita un liderazgo desde la pol\u00edtica. Aplicando un plan liberal de ajuste, restricci\u00f3n del cr\u00e9dito y de apertura del comercio, ninguna PYME lo va a poder sobrevivir.",
+         "id": "116053261893854_520146861484490"
+      },
+      {
+         "created_time": "2015-09-04T02:18:49+0000",
+         "message": "El \u00fanico camino que tiene la Argentina para seguir creciendo es continuar por la senda de la reindustrializaci\u00f3n.",
+         "story": "Axel Kicillof shared Cristina Fernandez de Kirchner's album.",
+         "id": "116053261893854_520010571498119"
+      },
+      {
+         "created_time": "2015-09-03T14:12:38+0000",
+         "message": "Exponemos junto a la Comisi\u00f3n Nacional de Valores sobre #Pymes en el Modelo de Crecimiento con Inclusi\u00f3n.",
+         "id": "116053261893854_519817791517397"
+      },
+      {
+         "created_time": "2015-09-03T02:12:14+0000",
+         "message": "#DiaDeLaIndustria\n\nAcompa\u00f1amos a Cristina Fernandez de Kirchner en la cena por el 74\u00b0 aniversario del D\u00eda de la Industria Argentina en Tecn\u00f3polis Argentina",
+         "id": "116053261893854_519646554867854"
+      },
+      {
+         "created_time": "2015-09-02T21:09:11+0000",
+         "message": "#D\u00edaDeLaIndustria | La UIA - Uni\u00f3n Industrial Argentina ha puesto n\u00fameros en la mesa que demuestran que los argentinos hemos podido recuperar la industria nacional y eso no es m\u00e1s ni menos que una plataforma para seguir creciendo. No existe un pa\u00eds desarrollado que no sea un pa\u00eds industrial.",
+         "id": "116053261893854_519593611539815"
+      },
+      {
+         "created_time": "2015-09-02T17:53:42+0000",
+         "message": "Participamos del brindis del #D\u00edaDeLaIndustria en la UIA - Uni\u00f3n Industrial Argentina, porque defender la industria nacional es defender el pa\u00eds.",
+         "id": "116053261893854_519539541545222"
+      },
+      {
+         "created_time": "2015-09-02T16:06:57+0000",
+         "message": "Seguimos celebrando el #D\u00edaDeLaIndustria en la Uni\u00f3n Industrial Argentina.",
+         "id": "116053261893854_519475628218280"
+      },
+      {
+         "created_time": "2015-09-02T00:13:29+0000",
+         "message": "Hoy podemos mostrar que las PyMEs han renacido despu\u00e9s de la bomba at\u00f3mica que fue el neoliberalismo. Nos podr\u00e1n abrumar con malas noticias y falsas denuncias pero no pueden negar la realidad: que las medianas empresas crecieron entre 2003 y 2013 un 62\u0025, alcanzando un total de 33.850 nuevas empresas.",
+         "id": "116053261893854_519199148245928"
+      },
+      {
+         "created_time": "2015-09-01T22:51:30+0000",
+         "message": "Estamos en el Instituto de Desarrollo Econ\u00f3mico y Social acompa\u00f1ando a Aldo Ferrer en la presentaci\u00f3n de su libro.",
+         "id": "116053261893854_519181888247654"
+      },
+      {
+         "created_time": "2015-09-01T16:35:06+0000",
+         "message": "Celebramos el #D\u00edaDeLaIndustria en la CAME - Confederaci\u00f3n Argentina de la Mediana Empresa porque estamos convencidos que la PyME es la fuente de trabajo m\u00e1s grande del pa\u00eds.",
+         "id": "116053261893854_519096601589516"
+      },
+      {
+         "created_time": "2015-08-31T17:00:29+0000",
+         "message": "La declaraci\u00f3n de emergencia posibilita que los productores que tengan m\u00e1s del 50\u0025 de su campo anegado soliciten y obtengan el certificado de emergencia.",
+         "id": "116053261893854_518647671634409"
+      },
+      {
+         "created_time": "2015-08-31T15:41:50+0000",
+         "message": "Estamos anunciando beneficios por aproximadamente 200 millones de pesos, a lo que se suman 400 millones de organismos internacionales para ayuda a los productores agropecuarios que han sido damnificados por las inundaciones.",
+         "id": "116053261893854_518614838304359"
+      },
+      {
+         "created_time": "2015-08-29T22:33:57+0000",
+         "message": "Cristina Fernandez de Kirchner \"Sigamos con la misma fuerza trabajando, que a los que agravien, a los que descalifiquen, a los que quieran instalar el des\u00e1nimo, a los que quieran poner en duda nuestro sistema democr\u00e1tico, dej\u00e9mosle esa tarea para ellos\"",
+         "id": "116053261893854_517727901726386"
+      },
+      {
+         "created_time": "2015-08-29T21:05:06+0000",
+         "message": "El Ministro de Econom\u00eda Axel Kicillof acompa\u00f1\u00f3 a la Presidenta de la Naci\u00f3n Cristina Fernandez de Kirchner en la inauguraci\u00f3n de la estaci\u00f3n Ciudad Universitaria. Se trata de la primera estaci\u00f3n de ferrocarril nueva en la traza del Belgrano Norte construida en 30 a\u00f1os en el \u00e1rea metropolitana, con una inversi\u00f3n de $55.129.674. Cuenta con la \u00faltima tecnolog\u00eda de accesibilidad, confort y seguridad y tiene, adem\u00e1s, una doble funci\u00f3n: es estaci\u00f3n ferroviaria y se puede utilizar como paso peatonal seguro para cruzar las avenidas Lugones y Cantilo, dando respuesta a los miles de estudiantes de la Universidad de Buenos Aires (UBA) que estudian all\u00ed .",
+         "story": "Axel Kicillof added 19 new photos.",
+         "id": "116053261893854_517699045062605"
+      },
+      {
+         "created_time": "2015-08-29T17:21:53+0000",
+         "message": "La presidenta sorprendi\u00f3 a los chicos en sus festejos del D\u00eda del Ni\u00f1o en el club de Ciudad Universitaria.",
+         "id": "116053261893854_517622058403637"
+      },
+      {
+         "created_time": "2015-08-29T16:25:21+0000",
+         "message": "AHORA | Junto a Cristina Fernandez de Kirchner, Daniel Scioli, An\u00edbal Fernandez y Florencio Randazzo. Https://m.youtube.com/watch?v=MD-sMq48I58",
+         "id": "116053261893854_517608091738367"
+      },
+      {
+         "created_time": "2015-08-29T16:02:39+0000",
+         "message": "Estamos junto a Cristina Fernandez de Kirchner en la inauguraci\u00f3n de la estaci\u00f3n de tren Ciudad Universitaria/Estadio Monumental.",
+         "id": "116053261893854_517602871738889"
+      }
+   ],
+   "paging": {
+      "cursors": {
+         "before": "Q2c4U1pXNTBYM0YxWlhKNVgzTjBiM0o1WDJsa0R5TXhNVFl3TlRNeU5qRTRPVE00TlRRNk1qWXpOakF4TnpRNE9ESTJPRGc0TURVME1ROE1ZAWEJwWDNOMGIzSjVYMmxrRHg4eE1UWXdOVE15TmpFNE9UTTROVFJmTlRJeU56VTVNelkzT0RnNU9UQTJEd1IwYVcxbEJsWHg2VElC",
+         "after": "Q2c4U1pXNTBYM0YxWlhKNVgzTjBiM0o1WDJsa0R5TXhNVFl3TlRNeU5qRTRPVE00TlRRNk5UazJNalUzT0RBMU9UQTJNRFEzTWpZAM013OE1ZAWEJwWDNOMGIzSjVYMmxrRHg4eE1UWXdOVE15TmpFNE9UTTROVFJmTlRFM05qQXlPRGN4TnpNNE9EZAzVEd1IwYVcxbEJsWGgxNThC"
+      },
+      "next": "https://graph.facebook.com/v2.12/116053261893854/feed?access_token=929798640478438\u00257Cf36e906bf6b8445ac3ee53e95ac303a7&pretty=1&since=2015-08-19&until=2015-09-10T21\u00253A00\u00253A00&limit=25&after=Q2c4U1pXNTBYM0YxWlhKNVgzTjBiM0o1WDJsa0R5TXhNVFl3TlRNeU5qRTRPVE00TlRRNk5UazJNalUzT0RBMU9UQTJNRFEzTWpZAM013OE1ZAWEJwWDNOMGIzSjVYMmxrRHg4eE1UWXdOVE15TmpFNE9UTTROVFJmTlRFM05qQXlPRGN4TnpNNE9EZAzVEd1IwYVcxbEJsWGgxNThC"
+   }
+}

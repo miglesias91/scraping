@@ -62,7 +62,7 @@ TEST(ScrapingTwitter, parsearTweetsCorrectamente)
 
     unsigned long long int id_correcto_tweet_1 = 708067963060916224;
     std::string texto_correcto_tweet_1 = "@jeremycloud Who would win in a battle between a Barred Owl and a Cooper's Hawk? https://t.co/FamikDro2h";
-    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(10, 1, 2016);
+    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(10, 1, 2016, 23, 12, 12);
     unsigned long long int id_usuario_correcto_tweet_1 = 4449621923;
     unsigned int tamanio_vector_hashtags_correcto_tweet_1 = 0;
 
@@ -108,7 +108,7 @@ TEST(ScrapingTwitter, parsearRetweetsCorrectamente)
 
     unsigned long long int id_correcto_tweet_1 = 958491763248893952;
     std::string texto_correcto_tweet_1 = "#YCRT Dirigentes sindicales y políticos santacruceños se reunieron con @CFKArgentina para \nanalizar el estado de situación que atraviesa el yacimiento, tras los más de 400 despidos dispuestos por la intervención del Gobierno Nacional  \nhttps://t.co/ptle5JWGte https://t.co/rM23gXjjqg";
-    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(31, 1, 2018);
+    herramientas::utiles::Fecha fecha_de_creacion_correcta_tweet_1(31, 1, 2018, 0, 6, 58);
     unsigned long long int id_usuario_correcto_tweet_1 = 138814032;
     unsigned int tamanio_vector_hashtags_correcto_tweet_1 = 1;
 
@@ -121,7 +121,7 @@ TEST(ScrapingTwitter, parsearRetweetsCorrectamente)
 
     unsigned long long int id_correcto_retweet_1 = 958483263634444292;
     std::string texto_correcto_retweet_1 = "#YCRT Dirigentes sindicales y políticos santacruceños se reunieron con @CFKArgentina para \nanalizar el estado de situación que atraviesa el yacimiento, tras los más de 400 despidos dispuestos por la intervención del Gobierno Nacional  \nhttps://t.co/ptle5JWGte https://t.co/rM23gXjjqg";
-    herramientas::utiles::Fecha fecha_de_creacion_correcta_retweet_1(30, 1, 2018);
+    herramientas::utiles::Fecha fecha_de_creacion_correcta_retweet_1(30, 1, 2018, 23, 33, 12);
     unsigned long long int id_usuario_correcto_retweet_1 = 884164880114343937;
     unsigned int tamanio_vector_hashtags_correcto_retweet_1 = 1;
 

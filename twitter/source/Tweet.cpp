@@ -237,6 +237,10 @@ herramientas::utiles::Fecha Tweet::parsearFechaEnFormatoTwitter(std::string fech
         fecha.setAnio(t.tm_year + 1900);
         fecha.setMes(t.tm_mon + 1);
         fecha.setDia(t.tm_mday);
+
+        fecha.setHoras(t.tm_hour);
+        fecha.setMinutos(t.tm_min);
+        fecha.setSegundos(t.tm_sec);
     }
 
     return fecha;
