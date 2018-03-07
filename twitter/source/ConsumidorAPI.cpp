@@ -21,7 +21,7 @@ ConsumidorAPI::~ConsumidorAPI()
 bool ConsumidorAPI::obtenerTokenDeAcceso()
 {
     scraping::Logger::debug("obtenerTokenDeAcceso: { clave publica: " + this->consumidor_oauth2.getClavePublica() +
-        " - clave privada: " + this->consumidor_oauth2.getClavePublica() + " - uri cliente:" + this->cliente_twitter.getURI() + "}");
+        " - clave privada: " + this->consumidor_oauth2.getClavePublica() + " - uri cliente twitter:" + this->cliente_twitter.getURI() + "}");
 
     bool exito = protocolos::OAuth2::solicitarTokenAcceso(&this->consumidor_oauth2, this->cliente_twitter.getURI());
 

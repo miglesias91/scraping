@@ -22,11 +22,27 @@ Aplicacion::~Aplicacion()
     }
 }
 
-std::vector<Publicacion*> Aplicacion::leerUltimasPublicaciones(Pagina * cuenta, unsigned int cantidad_de_publicaciones_maximo)
-{
-    scraping::Logger::info("leerUltimasPublicaciones:{ cuenta: " + cuenta->getNombre() + " cantidad de publicaciones: " + std::to_string(cantidad_de_publicaciones_maximo) + " }");
+// GETTERS
 
-    scraping::facebook::comunicacion::SolicitudUltimasPublicaciones solicitud_ultimas_publicaciones(cuenta, cantidad_de_publicaciones_maximo);
+std::string Aplicacion::getID()
+{
+    return this->consumidor_api->getConsumidorOAuth2().getClavePublica();
+}
+
+std::string Aplicacion::getClavePrivada()
+{
+    return this->consumidor_api->getConsumidorOAuth2().getClavePrivada();
+}
+
+// SETTERS
+
+// METODOS
+
+std::vector<Publicacion*> Aplicacion::leerUltimasPublicaciones(Pagina * pagina, unsigned int cantidad_de_publicaciones_maximo)
+{
+    scraping::Logger::info("leerUltimasPublicaciones:{ pagina: " + pagina->getNombre() + " cantidad de publicaciones: " + std::to_string(cantidad_de_publicaciones_maximo) + " }");
+
+    scraping::facebook::comunicacion::SolicitudUltimasPublicaciones solicitud_ultimas_publicaciones(pagina, this->getID(), this->getClavePrivada(), cantidad_de_publicaciones_maximo);
 
     herramientas::cpprest::HTTPRespuesta * respuetas_con_publicaciones = this->consumidor_api->realizarSolicitud(&solicitud_ultimas_publicaciones);
 
@@ -49,11 +65,11 @@ std::vector<Publicacion*> Aplicacion::leerUltimasPublicaciones(Pagina * cuenta, 
     return publicaciones;
 }
 
-std::vector<Publicacion*> Aplicacion::leerPublicaciones(Pagina * cuenta, herramientas::utiles::Fecha desde, herramientas::utiles::Fecha hasta, unsigned int cantidad_de_publicaciones_maximo)
+std::vector<Publicacion*> Aplicacion::leerPublicaciones(Pagina * pagina, herramientas::utiles::Fecha desde, herramientas::utiles::Fecha hasta, unsigned int cantidad_de_publicaciones_maximo)
 {
-    scraping::Logger::info("leerPublicaciones:{ cuenta: " + cuenta->getNombre() + " - desde: " + desde.getStringAAAAMMDDHHmmSS() + " - hasta : " + hasta.getStringAAAAMMDDHHmmSS()  + " cantidad de publicaciones: " + std::to_string(cantidad_de_publicaciones_maximo) + " }");
+    scraping::Logger::info("leerPublicaciones:{ pagina: " + pagina->getNombre() + " - desde: " + desde.getStringAAAAMMDDHHmmSS() + " - hasta : " + hasta.getStringAAAAMMDDHHmmSS()  + " cantidad de publicaciones: " + std::to_string(cantidad_de_publicaciones_maximo) + " }");
 
-    scraping::facebook::comunicacion::SolicitudPublicaciones solicitud_ultimas_publicaciones(cuenta, desde, hasta, cantidad_de_publicaciones_maximo);
+    scraping::facebook::comunicacion::SolicitudPublicaciones solicitud_ultimas_publicaciones(pagina, desde, hasta, this->getID(), this->getClavePrivada(), cantidad_de_publicaciones_maximo);
 
     herramientas::cpprest::HTTPRespuesta * respuetas_con_publicaciones = this->consumidor_api->realizarSolicitud(&solicitud_ultimas_publicaciones);
 

@@ -10,7 +10,7 @@ using namespace scraping::facebook;
 using namespace herramientas;
 
 ConsumidorAPI::ConsumidorAPI(std::string clave_publica, std::string clave_privada) :
-    cliente_twitter("https://api.twitter.com"), consumidor_oauth2(clave_publica, clave_privada)
+    cliente_facebook("https://graph.facebook.com"), consumidor_oauth2(clave_publica, clave_privada)
 {
 }
 
@@ -18,12 +18,17 @@ ConsumidorAPI::~ConsumidorAPI()
 {
 }
 
+herramientas::protocolos::OAuth2Consumidor ConsumidorAPI::getConsumidorOAuth2()
+{
+    return this->consumidor_oauth2;
+}
+
 bool ConsumidorAPI::obtenerTokenDeAcceso()
 {
     scraping::Logger::debug("obtenerTokenDeAcceso: { clave publica: " + this->consumidor_oauth2.getClavePublica() +
-        " - clave privada: " + this->consumidor_oauth2.getClavePublica() + " - uri cliente:" + this->cliente_twitter.getURI() + "}");
+        " - clave privada: " + this->consumidor_oauth2.getClavePublica() + " - uri cliente facebook:" + this->cliente_facebook.getURI() + "}");
 
-    bool exito = protocolos::OAuth2::solicitarTokenAcceso(&this->consumidor_oauth2, this->cliente_twitter.getURI());
+    bool exito = protocolos::OAuth2::solicitarTokenAcceso(&this->consumidor_oauth2, this->cliente_facebook.getURI());
 
     if (exito)
     {
@@ -39,9 +44,9 @@ bool ConsumidorAPI::obtenerTokenDeAcceso()
 
 herramientas::cpprest::HTTPRespuesta * ConsumidorAPI::realizarSolicitud(cpprest::HTTPSolicitud * solicitud)
 {
-    std::string header_token_acceso = "Bearer " + this->consumidor_oauth2.getTokenAcceso();
+    //std::string header_token_acceso = "Bearer " + this->consumidor_oauth2.getTokenAcceso();
 
-    solicitud->agregarEncabezado("Authorization", header_token_acceso);
+    //solicitud->agregarEncabezado("Authorization", header_token_acceso);
 
     std::string string_encabezados = "";
 
@@ -59,7 +64,7 @@ herramientas::cpprest::HTTPRespuesta * ConsumidorAPI::realizarSolicitud(cpprest:
 
     scraping::Logger::debug("realizarSolicitud: { " + log_solicitud + "}");
 
-    herramientas::cpprest::HTTPRespuesta * rta = this->cliente_twitter.solicitar(solicitud);
+    herramientas::cpprest::HTTPRespuesta * rta = this->cliente_facebook.solicitar(solicitud);
 
     scraping::Logger::debug("realizarSolicitud: { razon respuesta: " + rta->getRazon() + "}");
 

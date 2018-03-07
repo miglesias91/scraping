@@ -16,7 +16,7 @@ namespace comunicacion
 class SolicitudPublicaciones : public herramientas::cpprest::HTTPSolicitud
 {
 public:
-    SolicitudPublicaciones(scraping::facebook::modelo::Pagina * cuenta, herramientas::utiles::Fecha desde, herramientas::utiles::Fecha hasta, unsigned int cantidad_de_publicaciones_max = 100);
+    SolicitudPublicaciones(scraping::facebook::modelo::Pagina * cuenta, herramientas::utiles::Fecha desde, herramientas::utiles::Fecha hasta, std::string id_app, std::string clave_secreta_app,unsigned int cantidad_de_publicaciones_max = 100);
     virtual ~SolicitudPublicaciones();
 };
 

@@ -23,6 +23,12 @@ public:
 
     // GETTERS
 
+    // la clave publica del ConsumidorAPI hace las veces de id publico de la app.
+    std::string getID();
+
+    // la clave privada del ConsumidorAPI hace las veces de la clave privada de la app.
+    std::string getClavePrivada();
+
     // SETTERS
 
     // METODOS

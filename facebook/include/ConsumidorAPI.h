@@ -20,6 +20,8 @@ public:
 
     // GETTERS
 
+    herramientas::protocolos::OAuth2Consumidor getConsumidorOAuth2();
+
     // SETTERS
 
     // METODOS
@@ -36,7 +38,7 @@ private:
 
     herramientas::protocolos::OAuth2Consumidor consumidor_oauth2;
 
-    herramientas::cpprest::HTTPCliente cliente_twitter;
+    herramientas::cpprest::HTTPCliente cliente_facebook;
 };
 
 };
