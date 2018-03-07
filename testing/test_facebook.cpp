@@ -19,7 +19,7 @@
 
 using namespace scraping::facebook;
 
-TEST(ScrapingFacebook, obtenerUltimasPublicaciones)
+TEST(ScrapingFacebook, DISABLED_obtenerUltimasPublicaciones)
 {
     scraping::facebook::ConsumidorAPI * consumidor_api_facebook = new scraping::facebook::ConsumidorAPI("929798640478438", "f36e906bf6b8445ac3ee53e95ac303a7");
 

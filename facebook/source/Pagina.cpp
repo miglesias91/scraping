@@ -27,7 +27,7 @@ herramientas::utiles::Fecha Pagina::getFechaUltimaPublicacionAnalizada()
 
 std::string Pagina::getGrupoMedio()
 {
-    return scraping::ConfiguracionScraping::prefijoTwitter();
+    return scraping::ConfiguracionScraping::prefijoFacebook();
 }
 
 // SETTERS

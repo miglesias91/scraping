@@ -46,7 +46,7 @@ std::vector<Publicacion*> Aplicacion::leerUltimasPublicaciones(Pagina * pagina, 
 
     herramientas::cpprest::HTTPRespuesta * respuetas_con_publicaciones = this->consumidor_api->realizarSolicitud(&solicitud_ultimas_publicaciones);
 
-    std::vector<herramientas::utiles::Json*> publicaciones_json = respuetas_con_publicaciones->getJson()->getAtributoArrayJson();
+    std::vector<herramientas::utiles::Json*> publicaciones_json = respuetas_con_publicaciones->getJson()->getAtributoArrayJson("data");
 
     std::vector<Publicacion*> publicaciones;
     for (std::vector<herramientas::utiles::Json*>::iterator it = publicaciones_json.begin(); it != publicaciones_json.end(); it++)
@@ -73,7 +73,7 @@ std::vector<Publicacion*> Aplicacion::leerPublicaciones(Pagina * pagina, herrami
 
     herramientas::cpprest::HTTPRespuesta * respuetas_con_publicaciones = this->consumidor_api->realizarSolicitud(&solicitud_ultimas_publicaciones);
 
-    std::vector<herramientas::utiles::Json*> publicaciones_json = respuetas_con_publicaciones->getJson()->getAtributoArrayJson();
+    std::vector<herramientas::utiles::Json*> publicaciones_json = respuetas_con_publicaciones->getJson()->getAtributoArrayJson("data");
 
     std::vector<Publicacion*> publicaciones;
     for (std::vector<herramientas::utiles::Json*>::iterator it = publicaciones_json.begin(); it != publicaciones_json.end(); it++)

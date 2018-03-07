@@ -131,6 +131,7 @@
     <ClInclude Include="include\IAdministradorScraping.h" />
     <ClInclude Include="include\IAlmacenable.h" />
     <ClInclude Include="include\Logger.h" />
+    <ClInclude Include="include\PrefijoDeMedioNoSeteado.h" />
     <ClInclude Include="include\ScrapingIniciadoPreviamente.h" />
     <ClInclude Include="include\ScrapingNoInicializado.h" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClCompile Include="source\IAdministradorScraping.cpp" />
     <ClCompile Include="source\IAlmacenable.cpp" />
     <ClCompile Include="source\Logger.cpp" />
+    <ClCompile Include="source\PrefijoDeMedioNoSeteado.cpp" />
     <ClCompile Include="source\ScrapingIniciadoPreviamente.cpp" />
     <ClCompile Include="source\ScrapingNoInicializado.cpp" />
   </ItemGroup>

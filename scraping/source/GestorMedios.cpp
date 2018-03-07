@@ -174,32 +174,27 @@ scraping::extraccion::Medio * GestorMedios::encontrar(scraping::extraccion::Medi
 
 // METODOS VIEJOS
 
-//bool GestorMedios::recuperarTodos(std::vector<scraping::extraccion::Medio*>& medios)
-//{
-//    return false;
-//}
-
-bool GestorMedios::actualizarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * cuenta_a_actualizar)
+bool GestorMedios::actualizarMedio(scraping::extraccion::Medio * medio_a_actualizar)
 {
-    cuenta_a_actualizar->setGrupo(scraping::ConfiguracionScraping::prefijoTwitter());
+    medio_a_actualizar->setGrupo(medio_a_actualizar->getGrupoMedio());
 
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->modificar(cuenta_a_actualizar);
+    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->modificar(medio_a_actualizar);
 
     return false;
 }
 
-bool GestorMedios::recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter)
+//bool GestorMedios::recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter)
+//{
+//    scraping::Logger::info("recuperarCuentasDeTwitter: recuperando las cuentas de twitter existentes.");
+//
+//    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), &cuentas_de_twitter);
+//}
+
+bool GestorMedios::almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar)
 {
-    scraping::Logger::info("recuperarCuentasDeTwitter: recuperando las cuentas de twitter existentes.");
+    medio_a_almacenar->setGrupo(medio_a_almacenar->getGrupoMedio());
 
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), &cuentas_de_twitter);
-}
-
-bool GestorMedios::agregarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * medio_nuevo)
-{
-    medio_nuevo->setGrupo(scraping::ConfiguracionScraping::prefijoTwitter());
-
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(medio_nuevo);
+    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(medio_a_almacenar);
 }
 
 bool GestorMedios::almacenarIDActualMedio()

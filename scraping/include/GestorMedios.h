@@ -2,6 +2,7 @@
 
 // scraping
 #include <scraping/include/IAdministradorScraping.h>
+#include <scraping/include/PrefijoDeMedioNoSeteado.h>
 
 // extraccion
 #include <extraccion/include/Medio.h>
@@ -28,11 +29,11 @@ public:
 
     // bool recuperarTodos(std::vector<scraping::extraccion::Medio*> & medios);
 
-    bool actualizarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * cuenta_a_actualizar);
+    bool actualizarMedio(scraping::extraccion::Medio * medio_a_actualizrr);
 
-    bool recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter);
+    // bool recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter);
 
-    bool agregarCuentaDeTwitter(scraping::twitter::modelo::Cuenta * medio_nuevo);
+    bool almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar);
     
     bool almacenarIDActualMedio();
 
@@ -92,8 +93,11 @@ std::vector<MEDIO*> GestorMedios::gestionar(std::string prefijo_grupo)
     if (prefijo_grupo.empty())
     {
         // si el prefijo no fue seteado, entonces es IMPOSIBLE guardar los medios porque no se a que grupo pertenencen.
-        throw - 1;
+        scraping::Logger::critico("GestorMedios::gestionar: el prefijo NO FUE SETEADO, entonces es IMPOSIBLE guardar los medios porque no se a que grupo pertenencen.");
+        throw excepciones::PrefijoDeMedioNoSeteado();
     }
+
+    scraping::Logger::info("GestorMedios::gestionar: prefijo_grupo: " + prefijo_grupo);
 
     this->prefijo_grupo = prefijo_grupo;
 
@@ -114,9 +118,11 @@ bool GestorMedios::recuperar(std::string prefijo_grupo, std::vector<MEDIO*> & me
 {
     if (prefijo_grupo.empty())
     {
-        // si el prefijo no fue seteado, entonces es IMPOSIBLE guardar los medios porque no se a que grupo pertenencen.
-        throw - 1;
+        scraping::Logger::critico("GestorMedios::gestionar: el prefijo NO FUE SETEADO, entonces es IMPOSIBLE guardar los medios porque no se a que grupo pertenencen.");
+        throw excepciones::PrefijoDeMedioNoSeteado();
     }
+
+    scraping::Logger::info("GestorMedios::recuperar: prefijo_grupo: " + prefijo_grupo);
 
     return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_recuperar);
 };
@@ -124,6 +130,8 @@ bool GestorMedios::recuperar(std::string prefijo_grupo, std::vector<MEDIO*> & me
 template <class MEDIO>
 MEDIO* GestorMedios::clonar(scraping::extraccion::Medio* medio_a_clonar)
 {
+    scraping::Logger::info("GestorMedios::clonar: prefijo grupo: " + medio_a_clonar->getGrupoMedio());
+
     scraping::extraccion::Medio* medio_clonado = medio_a_clonar->clonar();
     return static_cast<MEDIO*>(medio_clonado);
 };

@@ -23,11 +23,19 @@ public:
 
     // METODOS
 
+    // twitter
     static void scrapearTwitter();
 
     static void depurarYAnalizarTwitter();
 
     static void prepararYAlmacenarTwitter();
+
+    // facebook
+    static void scrapearFacebook();
+
+    static void depurarYAnalizarFacebook();
+
+    static void prepararYAlmacenarFacebook();
 
     // CONSULTAS
 

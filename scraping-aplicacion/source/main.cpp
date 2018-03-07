@@ -26,7 +26,7 @@ void agregarNuevasCuentasDeTwitter()
     gestor_medios.recuperarIDActualMedio();
 
     std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
-    gestor_medios.recuperarCuentasDeTwitter(cuentas_twitter_existentes);
+    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
 
     std::ifstream archivo_cuentas_a_agregar("cuentas_twitter_a_agregar.txt");
     std::ofstream archivo_cuentas_existentes("cuentas_twitter_existentes.txt", std::fstream::app);
@@ -43,7 +43,8 @@ void agregarNuevasCuentasDeTwitter()
         }
         nueva_cuenta->asignarNuevoId();
 
-        gestor_medios.agregarCuentaDeTwitter(nueva_cuenta);
+        //gestor_medios.agregarCuentaDeTwitter(nueva_cuenta);
+        gestor_medios.almacenarMedio(nueva_cuenta);
         gestor_medios.almacenarIDActualMedio();
 
         cuentas_twitter_existentes.push_back(nueva_cuenta);

@@ -21,7 +21,13 @@ Publicacion::Publicacion(herramientas::utiles::Json * publicacion_json) : Conten
 
     std::string id_pagina_id_publicacion = this->getJson()->getAtributoValorString("id");
     std::string fecha_creacion_formato_facebook = this->getJson()->getAtributoValorString("created_time");
-    std::string texto = this->getJson()->getAtributoValorString("message");
+
+    std::string texto = "";
+
+    if (this->getJson()->contieneAtributo("message"))
+    {
+        texto = this->getJson()->getAtributoValorString("message");
+    }
 
     std::vector<std::string> ids = herramientas::utiles::FuncionesString::separar(id_pagina_id_publicacion, "_");
 
