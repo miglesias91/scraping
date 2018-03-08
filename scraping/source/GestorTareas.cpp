@@ -361,28 +361,28 @@ void GestorTareas::scrapearFacebook()
     scraping::Logger::marca("FIN SCRAPERO FACEBOOK.");
 }
 
-void GestorTareas::depurarYAnalizarTwitter()
+void GestorTareas::depurarYAnalizarFacebook()
 {
     scraping::Logger::marca("INICIO DEPURACION Y ANALISIS TWITTER.");
 
     depuracion::Depurador depurador;
     depurador.cargarMapeoUTF8("mapeo_utf8.json");
 
-    // recupero el contenido y medio que almacene en "scrapearTwitter".
+    // recupero el contenido y medio que almacene en "scrapearFacebook".
     scraping::aplicacion::GestorMedios gestor_medios;
 
-    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
-    gestor_medios.recuperarCuentasDeTwitter(cuentas_twitter_existentes);
+    std::vector<scraping::facebook::modelo::Pagina*> paginas_facebook_existentes;
+    gestor_medios.recuperar<scraping::facebook::modelo::Pagina>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
 
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
 
-    scraping::Logger::marca("DEPURANDO TWEETS DE CUENTAS.");
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    scraping::Logger::marca("DEPURANDO PUBLICACIONES DE PAGINAS.");
+    for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
     {
-        scraping::twitter::modelo::Cuenta * cuenta_a_analizar = *it;
+        scraping::facebook::modelo::Pagina * pagina_a_analizar = *it;
 
         // recupero todos los ids no analizados, sin importar la fecha.
-        std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta_a_analizar->getIDsContenidosNoAnalizados();
+        std::vector<unsigned long long int> ids_contenidos_a_analizar = pagina_a_analizar->getIDsContenidosNoAnalizados();
 
         std::vector<extraccion::Contenido*> contenidos_a_recuperar;
         for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
@@ -395,7 +395,7 @@ void GestorTareas::depurarYAnalizarTwitter()
             contenidos_a_recuperar.push_back(tweet);
         }
 
-        scraping::Logger::marca("DEPURANDO TWEETS DE '" + cuenta_a_analizar->getNombre() + "'.");
+        scraping::Logger::marca("DEPURANDO PUBLICACIONES DE '" + pagina_a_analizar->getNombre() + "'.");
         for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
         {
             depuracion::ContenidoDepurable depurable_tweet(*it);
@@ -412,7 +412,7 @@ void GestorTareas::depurarYAnalizarTwitter()
 
             double factor_tamanio_bolsa = fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
 
-            scraping::Logger::info("depurarYAnalizarTwitter: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
+            scraping::Logger::info("depurarYAnalizarFacebook: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
 
             // std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
@@ -423,10 +423,10 @@ void GestorTareas::depurarYAnalizarTwitter()
             gestor_analisis.almacenarResultadoAnalisis(&resultado_analisis);
 
             // seteo el contenido como analizado.
-            cuenta_a_analizar->setearContenidoComoAnalizado(*it);
+            pagina_a_analizar->setearContenidoComoAnalizado(*it);
 
             // almaceno las listas de ids analizados.
-            gestor_medios.actualizarCuentaDeTwitter(cuenta_a_analizar);
+            gestor_medios.actualizarMedio(pagina_a_analizar);
         }
 
         // elimino los contenidos xq ya no me sirven
@@ -437,31 +437,31 @@ void GestorTareas::depurarYAnalizarTwitter()
         contenidos_a_recuperar.clear();
     }
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
     {
         delete *it;
     }
-    cuentas_twitter_existentes.clear();
+    paginas_facebook_existentes.clear();
 
-    scraping::Logger::marca("FIN DEPURACION Y ANALISIS TWITTER.");
+    scraping::Logger::marca("FIN DEPURACION Y ANALISIS FACEBOOK.");
 }
 
-void GestorTareas::prepararYAlmacenarTwitter()
+void GestorTareas::prepararYAlmacenarFacebook()
 {
     scraping::Logger::marca("INICIO PREPARACION Y ALMACENAMIENTO TWITTER.");
 
     scraping::aplicacion::GestorMedios gestor_medios;
 
-    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
-    gestor_medios.recuperarCuentasDeTwitter(cuentas_twitter_existentes);
+    std::vector<scraping::facebook::modelo::Pagina*> paginas_facebook_existentes;
+    gestor_medios.recuperar<scraping::facebook::modelo::Pagina>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
 
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
     {
-        scraping::twitter::modelo::Cuenta * cuenta_a_preparar = *it;
+        scraping::facebook::modelo::Pagina * pagina_a_preparar = *it;
 
-        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = cuenta_a_preparar->getParesIDsContenidosAnalizados();
+        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = pagina_a_preparar->getParesIDsContenidosAnalizados();
 
         for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = mapa_ids_contenidos_analizados.begin(); it != mapa_ids_contenidos_analizados.end(); it++)
         {
@@ -487,7 +487,7 @@ void GestorTareas::prepararYAlmacenarTwitter()
             preparacion::Preparador preparador;
 
             preparacion::ResultadoAnalisisMedio * resultado_combinado = new preparacion::ResultadoAnalisisMedio();
-            resultado_combinado->setId(cuenta_a_preparar->getId()->copia());
+            resultado_combinado->setId(pagina_a_preparar->getId()->copia());
 
             unsigned int cantidad_fuerzas_sumadas = preparador.combinar(resultados, resultado_combinado);
 
@@ -502,7 +502,7 @@ void GestorTareas::prepararYAlmacenarTwitter()
 
             gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
 
-            scraping::Logger::info("prepararYAlmacenarTwitter: { fecha = '" + string_fecha + "' - id_cuenta = " + cuenta_a_preparar->getId()->string() + " - cantidad de resultados combinados = '" + std::to_string(resultados.size()) + "' - cantidad fuerzas sumadas = '" + std::to_string(cantidad_fuerzas_sumadas) + "' }");
+            scraping::Logger::info("prepararYAlmacenarFacebook: { fecha = '" + string_fecha + "' - id_pagina = " + pagina_a_preparar->getId()->string() + " - cantidad de resultados combinados = '" + std::to_string(resultados.size()) + "' - cantidad fuerzas sumadas = '" + std::to_string(cantidad_fuerzas_sumadas) + "' }");
 
             // actualizo el los ids historicos del medio y elimino los resultados
             for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
@@ -511,10 +511,10 @@ void GestorTareas::prepararYAlmacenarTwitter()
                 contenido_historico->setId((*it)->getId()->copia());
                 contenido_historico->setFecha(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(string_fecha));
 
-                cuenta_a_preparar->setearContenidoComoHistorico(contenido_historico);
+                pagina_a_preparar->setearContenidoComoHistorico(contenido_historico);
 
                 // almaceno las listas de ids historicos.
-                gestor_medios.actualizarCuentaDeTwitter(cuenta_a_preparar);
+                gestor_medios.actualizarMedio(pagina_a_preparar);
 
                 delete *it;
 
@@ -524,11 +524,11 @@ void GestorTareas::prepararYAlmacenarTwitter()
         }
     }
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
     {
         delete *it;
     }
-    cuentas_twitter_existentes.clear();
+    paginas_facebook_existentes.clear();
 
-    scraping::Logger::marca("FIN PREPARACION Y ALMACENAMIENTO TWITTER.");
+    scraping::Logger::marca("FIN PREPARACION Y ALMACENAMIENTO FACEBOOK.");
 }
