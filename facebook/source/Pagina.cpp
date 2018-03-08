@@ -69,7 +69,7 @@ bool Pagina::armarJson()
 
     this->getJson()->agregarAtributoValor("nombre_cuenta", this->getNombre());
 
-    this->getJson()->agregarAtributoValor("fecha_ultima_publicacion_analizada", this->getFechaUltimaPublicacionAnalizada().getStringAAAAMMDD());
+    this->getJson()->agregarAtributoValor("fecha_ultima_publicacion_analizada", this->getFechaUltimaPublicacionAnalizada().getStringAAAAMMDDHHmmSS());
 
     return true;
 }
@@ -82,7 +82,7 @@ bool Pagina::parsearJson()
 
     this->setNombre(nombre_cuenta);
 
-    this->setFechaUltimaPublicacionAnalizada(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(string_fecha_ultima_publicacion_analizada));
+    this->setFechaUltimaPublicacionAnalizada(herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(string_fecha_ultima_publicacion_analizada));
 
     return true;
 }

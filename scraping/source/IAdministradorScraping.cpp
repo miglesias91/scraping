@@ -72,7 +72,7 @@ void IAdministradorScraping::liberar()
 
     Logger::marca("FIN SCRAPING");
 
-    herramientas::log::AdministradorLog::liberarTodo();
+    //herramientas::log::AdministradorLog::liberarTodo();
 }
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()

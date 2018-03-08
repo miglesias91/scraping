@@ -196,12 +196,12 @@ std::string ConfiguracionScraping::tagScrapingDistribuido()
 
 std::string ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios()
 {
-    return "config_db_resultados_analisis_diario";
+    return "db_resultados_analisis_diario";
 }
 
 std::string ConfiguracionScraping::tagArchivoConfigDBInfoScraping()
 {
-    return "config_db_info_scraping";
+    return "db_info_scraping";
 }
 
 std::string ConfiguracionScraping::tagPrefijoConfiguracion()

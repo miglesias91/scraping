@@ -287,12 +287,12 @@ TEST(Scraping, gestionarCuentasDeTwitter)
     scraping::twitter::modelo::Cuenta cuenta_tres("cuenta_tres");
     cuenta_tres.asignarNuevoId();
 
-    gestor_medios.agregarCuentaDeTwitter(&cuenta_uno);
-    gestor_medios.agregarCuentaDeTwitter(&cuenta_dos);
-    gestor_medios.agregarCuentaDeTwitter(&cuenta_tres);
+    gestor_medios.almacenarMedio(&cuenta_uno);
+    gestor_medios.almacenarMedio(&cuenta_dos);
+    gestor_medios.almacenarMedio(&cuenta_tres);
 
     std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
-    gestor_medios.recuperarCuentasDeTwitter(cuentas_twitter_existentes);
+    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(cuenta_uno.getGrupoMedio(), cuentas_twitter_existentes);
 
     ASSERT_EQ("cuenta_uno", cuentas_twitter_existentes[0]->getNombre());
     ASSERT_EQ("cuenta_dos", cuentas_twitter_existentes[1]->getNombre());

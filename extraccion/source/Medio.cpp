@@ -241,6 +241,11 @@ bool Medio::setearContenidoComoAnalizado(Contenido * contenido)
 
     ids_contenidos_no_analizados->erase(it_a_mover);
 
+    if (0 == ids_contenidos_no_analizados->size())
+    {
+        this->mapa_ids_contenidos_no_analizados.erase(string_fecha);
+    }
+
     return true;
 }
 
@@ -261,6 +266,11 @@ bool Medio::setearContenidoComoHistorico(Contenido * contenido)
     ids_contenidos_historicos->push_back(*it_a_mover);
 
     ids_contenidos_analizados->erase(it_a_mover);
+
+    if (0 == ids_contenidos_analizados->size())
+    {
+        this->mapa_ids_contenidos_analizados.erase(string_fecha);
+    }
 
     return true;
 }
