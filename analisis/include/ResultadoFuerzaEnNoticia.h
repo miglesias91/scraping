@@ -25,6 +25,8 @@ public:
     virtual float getFuerza(std::string palabra);
 
     virtual std::vector<std::pair<std::string, float>> getFuerzas();
+    
+    virtual double getFuerzaTotal();
 
     virtual std::vector<std::pair<std::string, float>> getTop(unsigned int cantidad_de_valores_a_recuperar);
 

@@ -37,6 +37,19 @@ std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getFuerzas(
     return vector_fuerza_por_palabra;
 }
 
+double ResultadoFuerzaEnNoticia::getFuerzaTotal()
+{
+    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getFuerzas();
+
+    double fuerza_total = 0.0f;
+    for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
+    {
+        fuerza_total += it->second;
+    }
+
+    return fuerza_total;
+}
+
 std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(unsigned int cantidad_de_valores_a_recuperar)
 {
     std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getFuerzas();
