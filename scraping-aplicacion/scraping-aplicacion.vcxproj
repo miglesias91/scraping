@@ -94,7 +94,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)x64\Debug;$(repos)cpprestsdk\Binaries\x64\Debug;$(repos-git)herramientas_desarrollo\x64\Debug;$(repos-git)almacenamiento\x64\Debug;$(repos)rocksdb\build_x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -112,7 +112,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Release;$(repos)cpprestsdk\Binaries\Win32\Release;$(repos-git)herramientas_desarrollo\Release;$(repos-git)almacenamiento\Release;$(repos)rocksdb\build_x86\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,7 +129,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)x64\Release;$(repos)cpprestsdk\Binaries\x64\Release;$(repos-git)herramientas_desarrollo\x64\Release;$(repos-git)almacenamiento\x64\Release;$(repos)rocksdb\build_x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

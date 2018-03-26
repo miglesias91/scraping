@@ -27,7 +27,11 @@ public:
 
     virtual bool cargarMapeoUTF8(std::string path_archivo_mapeo);
 
+    virtual bool cargarMapeoUTF8ConTildes(std::string path_archivo_mapeo);
+
     virtual ContenidoDepurado depurar(IDepurable * depurable);
+
+    virtual ContenidoDepurado depurarConTildes(IDepurable * depurable);
 
     // 'texto_a_depurar' tiene que estar formateado como UTF8.
     virtual unsigned int reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar);
@@ -62,14 +66,26 @@ public:
     // eliminas los pronombres de la bolsa de palabras.
     virtual unsigned int eliminarPronombres(std::vector<std::string> & bolsa_de_palabras);
 
+    // eliminas las stopwords de la bolsa de palabras.
+    virtual unsigned int eliminarStopwords(std::vector<std::string> & bolsa_de_palabras);
+
+    static bool cargarStopwords(std::string path_archivo_stopwords);
+
     // CONSULTAS
 
 
 private:
 
     // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal.
+    static mapeo::MapaUTF8 * mapa_utf8_activo;
+
+    // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal.
     static mapeo::MapaUTF8 * mapa_utf8;
 
+    // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal, sin tener en cuenta las vocales con tilde.
+    static mapeo::MapaUTF8 * mapa_utf8_con_tildes;
+
+    static std::vector<std::string> stopwords_espaniol;
 };
 
 };

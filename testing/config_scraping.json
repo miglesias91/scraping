@@ -16,8 +16,8 @@
         "prefijo_resultado_contenido" : "004",
         "prefijo_resultado_diario" : "005",
 
-        "config_db_resultados_analisis_diario" : "config_db_resultados_analisis_diarios.json",
-        "config_db_info_scraping" : "config_db_info_scraping.json",
+        "db_resultados_analisis_diario" : "config_db_resultados_analisis_diarios.json",
+        "db_info_scraping" : "config_db_info_scraping.json",
 
         "log_scraping" : "log_scraping.json"
     }

@@ -38,6 +38,8 @@ int main(int argc, char **argv)
 
     scraping::IAdministradorScraping::liberar();
 
+    herramientas::log::AdministradorLog::liberarTodo();
+
 	std::getchar();
 
 	return result;

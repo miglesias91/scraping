@@ -15,6 +15,9 @@ using namespace scraping;
 #include <extraccion/include/Medio.h>
 #include <extraccion/include/Contenido.h>
 
+// depuracion
+#include <depuracion/include/Depurador.h>
+
 typedef scraping::IAdministradorScraping* (*admin)();
 
 IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
@@ -47,6 +50,8 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
     Logger::iniciar(ConfiguracionScraping::archivoConfigLog());
 
     Logger::marca("INICIO SCRAPING");
+
+    depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
 
     if (ConfiguracionScraping::scrapingLocal())
     {

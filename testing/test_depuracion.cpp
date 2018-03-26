@@ -71,6 +71,35 @@ TEST(Depuracion, depurarTexto)
     ASSERT_STREQ("gaza", bolsa_de_palabras[8].c_str());
 }
 
+TEST(Depuracion, depurarTextoConTildes)
+{
+    std::string texto = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
+
+    scraping::depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.cargarMapeoUTF8ConTildes("mapeo_utf8_con_tildes.json");
+
+    scraping::twitter::modelo::Tweet tweet;
+    tweet.setTexto(texto);
+
+    scraping::depuracion::ContenidoDepurable contenido_depurable(&tweet);
+
+    scraping::depuracion::ContenidoDepurado contenido_depurado = depurador.depurarConTildes(&contenido_depurable);
+
+    std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
+
+    ASSERT_EQ(9, bolsa_de_palabras.size());
+    ASSERT_STREQ("jerusalén", bolsa_de_palabras[0].c_str());
+    ASSERT_STREQ("suenan", bolsa_de_palabras[1].c_str());
+    ASSERT_STREQ("sirenas", bolsa_de_palabras[2].c_str());
+    ASSERT_STREQ("alarma", bolsa_de_palabras[3].c_str());
+    ASSERT_STREQ("sur", bolsa_de_palabras[4].c_str());
+    ASSERT_STREQ("israel", bolsa_de_palabras[5].c_str());
+    ASSERT_STREQ("disparo", bolsa_de_palabras[6].c_str());
+    ASSERT_STREQ("cohete", bolsa_de_palabras[7].c_str());
+    ASSERT_STREQ("gaza", bolsa_de_palabras[8].c_str());
+}
+
 TEST(Depuracion, reemplazarCaracteresEspeciales)
 {
     std::string caracteres_normales_especiales_a_reemplazar = "µ a ¶ · ¸ ¹ º b » ¼ c ½ ¾ ¿ d À Á Â 1 Ã Ä Å Æ 2 Ç È É Ê Ë Ì Í Î Ï 3 Ð Ñ Ò Ó Ô Õ Ö × Ø Ù Ú Û Ü Ý Þ 4 ß à á â ã ä å æ";
