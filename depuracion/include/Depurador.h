@@ -2,6 +2,8 @@
 
 // stl
 #include <unordered_map>
+#include <mutex>
+#include <thread>
 
 // depuracion
 #include <depuracion/include/ContenidoDepurado.h>
@@ -23,11 +25,13 @@ public:
 
     // SETTERS
 
+    static void setMapaUTF8(mapeo::MapaUTF8 * mapa_utf8);
+
+    static void setStopwords(std::vector<std::string> stopwords);
+
     // METODOS
 
     virtual bool cargarMapeoUTF8(std::string path_archivo_mapeo);
-
-    virtual bool cargarMapeoUTF8ConTildes(std::string path_archivo_mapeo);
 
     virtual ContenidoDepurado depurar(IDepurable * depurable);
 
@@ -35,6 +39,9 @@ public:
 
     // 'texto_a_depurar' tiene que estar formateado como UTF8.
     virtual unsigned int reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar);
+
+    // 'texto_a_depurar' tiene que estar formateado como UTF8.
+    virtual unsigned int reemplazarTodosLosCaracteresEspecialesExceptoTildes(std::string & texto_a_depurar);
 
     // 'texto_a_depurar' tiene que estar formateado como UTF8.
     virtual unsigned int eliminarTildes(std::string & texto_a_depurar);
@@ -76,16 +83,17 @@ public:
 
 private:
 
-    // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal.
-    static mapeo::MapaUTF8 * mapa_utf8_activo;
+    // METODOS PRIVADOS
+    virtual unsigned int hilo_eliminar_stopwords(std::vector<std::string> & bolsa_de_palabras, unsigned int desde, unsigned int hasta);
+
+    // ATRIBUTOS
 
     // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal.
     static mapeo::MapaUTF8 * mapa_utf8;
 
-    // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal, sin tener en cuenta las vocales con tilde.
-    static mapeo::MapaUTF8 * mapa_utf8_con_tildes;
-
     static std::vector<std::string> stopwords_espaniol;
+
+    std::mutex mutex;
 };
 
 };

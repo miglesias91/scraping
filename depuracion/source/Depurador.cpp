@@ -15,9 +15,7 @@
 
 using namespace scraping::depuracion;
 
-mapeo::MapaUTF8 * Depurador::mapa_utf8_activo = NULL;
 mapeo::MapaUTF8 * Depurador::mapa_utf8 = NULL;
-mapeo::MapaUTF8 * Depurador::mapa_utf8_con_tildes = NULL;
 std::vector<std::string> Depurador::stopwords_espaniol;
 
 Depurador::Depurador()
@@ -31,35 +29,29 @@ Depurador::~Depurador()
         delete mapa_utf8;
         mapa_utf8 = NULL;
     }
-
-    if (NULL != mapa_utf8_con_tildes)
-    {
-        delete mapa_utf8_con_tildes;
-        mapa_utf8_con_tildes = NULL;
-    }
 }
 
-unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras)
+// GETTERS
+
+// SETTERS
+
+void Depurador::setMapaUTF8(mapeo::MapaUTF8 * mapa)
 {
-    unsigned int cantidad_de_stopwords_eliminadas = 0;
-    for (std::vector<std::string>::iterator it_stopword = stopwords_espaniol.begin(); it_stopword != stopwords_espaniol.end(); it_stopword++)
+    if (NULL != mapa_utf8)
     {
-        for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-        {
-            if (0 == it_stopword->compare(*it_palabra))
-            {
-                it_palabra = bolsa_de_palabras.erase(it_palabra);
-                cantidad_de_stopwords_eliminadas++;
-            }
-            else
-            {
-                it_palabra++;
-            }
-        }
+        delete mapa_utf8;
+        mapa_utf8 = NULL;
     }
 
-    return cantidad_de_stopwords_eliminadas;
+    mapa_utf8 = mapa;
 }
+
+void Depurador::setStopwords(std::vector<std::string> stopwords)
+{
+    stopwords_espaniol = stopwords;
+}
+
+// METODOS
 
 bool Depurador::cargarStopwords(std::string path_archivo_stopwords)
 {
@@ -76,6 +68,8 @@ bool Depurador::cargarStopwords(std::string path_archivo_stopwords)
         std::getline(archivo_stopwords, stopword);
         stopwords_espaniol.push_back(stopword);
     }
+
+    scraping::Logger::info("cargarStopwords: '" + path_archivo_stopwords + "' cargado. " + std::to_string(stopwords_espaniol.size()) + " stopwords cargados.");
 
     return true;
 }
@@ -101,33 +95,6 @@ bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
     }
 
     scraping::Logger::info("cargarMapeoUTF8: mapa '" + path_archivo_mapeo + "' cargado OK.");
-
-    mapa_utf8_activo = mapa_utf8;
-
-    return true;
-}
-
-bool Depurador::cargarMapeoUTF8ConTildes(std::string path_archivo_mapeo)
-{
-    if (NULL != mapa_utf8_con_tildes)
-    {
-        scraping::Logger::info("cargarMapeoUTF8ConTildes: mapa_utf8 ya esta cargado.");
-        return true;
-    }
-
-    try
-    {
-        scraping::Logger::info("cargarMapeoUTF8ConTildes: cargando mapa '" + path_archivo_mapeo + "'.");
-        mapa_utf8_con_tildes = new mapeo::MapaUTF8(path_archivo_mapeo);
-    }
-    catch (herramientas::utiles::excepciones::Excepcion & e)
-    {
-        mapa_utf8_con_tildes = NULL;
-        scraping::Logger::error("cargarMapeoUTF8ConTildes: " + e.getMensaje().str());
-        throw;
-    }
-
-    scraping::Logger::info("cargarMapeoUTF8ConTildes: mapa '" + path_archivo_mapeo + "' cargado OK.");
 
     return true;
 }
@@ -162,14 +129,8 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
 
     unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
 
-    //// 9no: elimino las preposiciones.
-    //unsigned int cantidad_preposiciones_eliminadas = this->eliminarPreposiciones(bolsa_de_palabras);
-
-    //// 10mo: elimino pronombres.
-    //unsigned int cantidad_pronombres_eliminados = this->eliminarPronombres(bolsa_de_palabras);
-
-    scraping::Logger::debug("depurar: {\n"  
-        "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" + 
+    scraping::Logger::debug("depurar: {\n"
+        "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +
         "pasado a minuscula: " + std::to_string(pasado_a_minuscula) + ",\n" +
         "urls eliminadas: " + std::to_string(urls_eliminadas) + ",\n" +
         "signos y puntuacion eliminados: " + std::to_string(caracteres_signos_puntuacion_eliminados) + ",\n" +
@@ -187,10 +148,46 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
 
 ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable)
 {
-    mapa_utf8_activo = mapa_utf8_con_tildes;
-    ContenidoDepurado contenido_depurado = this->depurar(depurable);
-    mapa_utf8_activo = mapa_utf8;
+    std::string texto_a_depurar = depurable->getTextoDepurable();
 
+    // 1ero: reemplazo los caracteres especiales: vocales con tildes, letras extrañas, 
+    unsigned int caracteres_especiales_reemplazados = this->reemplazarTodosLosCaracteresEspecialesExceptoTildes(texto_a_depurar);
+
+    // 2do: reemplazo las mayusculas por minusculas.
+    bool pasado_a_minuscula = this->todoMinuscula(texto_a_depurar);
+
+    // 3ero: reemplazo las mayusculas por minusculas.
+    unsigned int urls_eliminadas = this->eliminarURLs(texto_a_depurar);
+
+    // 4to: elimino los simbolos que no forman palabras.
+    unsigned int caracteres_signos_puntuacion_eliminados = this->eliminarSignosYPuntuacion(texto_a_depurar);
+
+    // 5to: elimino los caracteres de control de texto.
+    unsigned int caracteres_de_control_eliminados = this->eliminarCaracteresDeControl(texto_a_depurar);
+
+    // 6to: paso de un texto con palabras a un vector con tokens.
+    std::vector<std::string> bolsa_de_palabras = this->tokenizarTexto(texto_a_depurar);
+
+    // 7mo: elimino las palabras con menos de 2 letras.
+    unsigned int cantidad_palabras_muy_cortas_eliminadas = this->eliminarPalabrasMuyCortas(bolsa_de_palabras);
+
+    // 8vo: elimino las palabras con mas de 15 letras.
+    unsigned int cantidad_palabras_muy_largas_eliminadas = this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
+
+    unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
+
+    scraping::Logger::debug("depurarConTildes: {\n"
+        "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +
+        "pasado a minuscula: " + std::to_string(pasado_a_minuscula) + ",\n" +
+        "urls eliminadas: " + std::to_string(urls_eliminadas) + ",\n" +
+        "signos y puntuacion eliminados: " + std::to_string(caracteres_signos_puntuacion_eliminados) + ",\n" +
+        "caracteres de control eliminados: " + std::to_string(caracteres_de_control_eliminados) + ",\n" +
+        "palabras muy cortas eliminadas: " + std::to_string(cantidad_palabras_muy_cortas_eliminadas) + ",\n" +
+        "palabras muy largas eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n" +
+        "stopwords eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n}"
+    );
+
+    ContenidoDepurado contenido_depurado(bolsa_de_palabras);
     return contenido_depurado;
 }
 
@@ -209,7 +206,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 240) * 262144 + (caracter_2 - 128) * 4096 + (caracter_3 - 128) * 64 + caracter_4 - 128;
 
-            std::string reemplazo = mapa_utf8_activo->getTraduccion(valor_decimal_codepoint);
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             it = texto_a_depurar.erase(it, it + 4);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
@@ -222,9 +219,9 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
             unsigned char caracter_3 = *(it + 2);
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 224) * 4096 + (caracter_2 - 128) * 64 + caracter_3 - 128;
-            
 
-            std::string reemplazo = mapa_utf8_activo->getTraduccion(valor_decimal_codepoint);
+
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             it = texto_a_depurar.erase(it, it + 3);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
@@ -237,7 +234,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 192) * 64 + caracter_2 - 128;
 
-            std::string reemplazo = mapa_utf8_activo->getTraduccion(valor_decimal_codepoint);
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
             it = texto_a_depurar.erase(it, it + 2);
             texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
@@ -253,6 +250,75 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
     }
 
     return cantidad_de_reemplazos;
+}
+
+unsigned int Depurador::reemplazarTodosLosCaracteresEspecialesExceptoTildes(std::string & texto_a_depurar)
+{
+    unsigned int cantidad_de_reemplazos = 0;
+    for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end(); it++)
+    {
+        unsigned char caracter_1 = *it;
+
+        if (241 <= caracter_1)
+        {// codepoint con 4 codeunits
+            unsigned char caracter_2 = *(it + 1);
+            unsigned char caracter_3 = *(it + 2);
+            unsigned char caracter_4 = *(it + 3);
+
+            unsigned int valor_decimal_codepoint = (caracter_1 - 240) * 262144 + (caracter_2 - 128) * 4096 + (caracter_3 - 128) * 64 + caracter_4 - 128;
+
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
+
+            it = texto_a_depurar.erase(it, it + 4);
+            texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
+
+            cantidad_de_reemplazos += 1;
+        }
+        else if (225 <= caracter_1)
+        {// codepoint con 3 codeunits
+            unsigned char caracter_2 = *(it + 1);
+            unsigned char caracter_3 = *(it + 2);
+
+            unsigned int valor_decimal_codepoint = (caracter_1 - 224) * 4096 + (caracter_2 - 128) * 64 + caracter_3 - 128;
+
+
+            std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
+
+            it = texto_a_depurar.erase(it, it + 3);
+            texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
+
+            cantidad_de_reemplazos += 1;
+        }
+        else if (193 <= caracter_1)
+        {// codepoint con 2 codeunits
+            unsigned char caracter_2 = *(it + 1);
+
+            if (!(caracter_2 == 129 || caracter_2 == 137 || caracter_2 == 141 || caracter_2 == 147 || caracter_2 == 154 ||
+                caracter_2 == 157 || caracter_2 == 161 || caracter_2 == 169 || caracter_2 == 173 || caracter_2 == 179 ||
+                caracter_2 == 186 || caracter_2 == 189))
+            {// los valores corresponden al segundo codepoint del vocales con tildes:
+             // 129: Á - 137: É - 141: Í - 147: Ó - 154: Ú - 157:Ý - 161: á - 169: é - 173: í - 179: ó - 186: ú - 189: ý
+                unsigned int valor_decimal_codepoint = (caracter_1 - 192) * 64 + caracter_2 - 128;
+
+                std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
+
+                it = texto_a_depurar.erase(it, it + 2);
+                texto_a_depurar.insert(it, reemplazo.begin(), reemplazo.end());
+
+                cantidad_de_reemplazos += 1;
+            }
+        }
+
+        if (it == texto_a_depurar.end())
+        {// el ultimo caracter es especial, entonces entra en este if.
+         // esto evita que pinche cuando entra de nuevo el 'for' e intenta incrementar el iterator.
+            break;
+        }
+    }
+
+    return cantidad_de_reemplazos;
+
+    return 0;
 }
 
 unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
@@ -446,10 +512,66 @@ unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_pa
 
     return cantidad_de_pronombres_eliminados;
 }
-// GETTERS
 
-// SETTERS
+unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras)
+{
+    unsigned int cantidad_de_stopwords_eliminadas = 0;
+    for (std::vector<std::string>::iterator it_stopword = stopwords_espaniol.begin(); it_stopword != stopwords_espaniol.end(); it_stopword++)
+    {
+        for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+        {
+            std::string palabra_sin_tilde = std::string(*it_palabra);
+            this->eliminarTildes(palabra_sin_tilde);
+            if (0 == it_stopword->compare(palabra_sin_tilde))
+            {
+                it_palabra = bolsa_de_palabras.erase(it_palabra);
+                cantidad_de_stopwords_eliminadas++;
+            }
+            else
+            {
+                it_palabra++;
+            }
+        }
+    }
 
-// METODOS
+    return cantidad_de_stopwords_eliminadas;
+
+    //unsigned int cantidad_de_hilos = 4;
+
+    //unsigned int cantidad_de_stopwords_por_hilo = stopwords_espaniol.size() / 4;
+
+    //for (unsigned int i = 0; i < cantidad_de_hilos; i++)
+    //{
+    //    std::thread hilo_eliminacion_stopwords(&hilo_eliminar_stopwords, bolsa_de_palabras, i * cantidad_de_stopwords_por_hilo, (i + 1) * cantidad_de_stopwords_por_hilo);
+    //}
+}
 
 // CONSULTAS
+
+// METODOS PRIVADOS
+
+
+unsigned int Depurador::hilo_eliminar_stopwords(std::vector<std::string>& bolsa_de_palabras, unsigned int desde, unsigned int hasta)
+{
+    std::unique_lock<std::mutex> lock(this->mutex);
+    unsigned int cantidad_de_stopwords_eliminadas = 0;
+    for (std::vector<std::string>::iterator it_stopword = stopwords_espaniol.begin() + desde; it_stopword != stopwords_espaniol.begin() + hasta; it_stopword++)
+    {
+        for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+        {
+            std::string palabra_sin_tilde = std::string(*it_palabra);
+            this->eliminarTildes(palabra_sin_tilde);
+            if (0 == it_stopword->compare(palabra_sin_tilde))
+            {
+                it_palabra = bolsa_de_palabras.erase(it_palabra);
+                cantidad_de_stopwords_eliminadas++;
+            }
+            else
+            {
+                it_palabra++;
+            }
+        }
+    }
+
+    return cantidad_de_stopwords_eliminadas;
+}

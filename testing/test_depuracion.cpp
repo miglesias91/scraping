@@ -77,7 +77,6 @@ TEST(Depuracion, depurarTextoConTildes)
 
     scraping::depuracion::Depurador depurador;
     depurador.cargarMapeoUTF8("mapeo_utf8.json");
-    depurador.cargarMapeoUTF8ConTildes("mapeo_utf8_con_tildes.json");
 
     scraping::twitter::modelo::Tweet tweet;
     tweet.setTexto(texto);
