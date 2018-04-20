@@ -76,8 +76,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(repos)cpprestsdk\Binaries\Win32\Debug;$(repos-git)herramientas_desarrollo\Debug;$(repos-git)almacenamiento\Debug;$(repos)rocksdb\build_x86\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -89,9 +91,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
       <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -107,6 +111,9 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -124,6 +131,9 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
