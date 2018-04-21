@@ -535,15 +535,6 @@ unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_pal
     }
 
     return cantidad_de_stopwords_eliminadas;
-
-    //unsigned int cantidad_de_hilos = 4;
-
-    //unsigned int cantidad_de_stopwords_por_hilo = stopwords_espaniol.size() / 4;
-
-    //for (unsigned int i = 0; i < cantidad_de_hilos; i++)
-    //{
-    //    std::thread hilo_eliminacion_stopwords(&hilo_eliminar_stopwords, bolsa_de_palabras, i * cantidad_de_stopwords_por_hilo, (i + 1) * cantidad_de_stopwords_por_hilo);
-    //}
 }
 
 // CONSULTAS

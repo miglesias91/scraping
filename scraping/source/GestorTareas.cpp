@@ -519,3 +519,145 @@ void GestorTareas::prepararYAlmacenarFacebook()
 
     scraping::Logger::marca("FIN PREPARACION Y ALMACENAMIENTO FACEBOOK.");
 }
+
+// general
+
+void GestorTareas::depurarYAnalizarContenidos()
+{
+    scraping::Logger::marca("INICIO DEPURACION Y ANALISIS DE CONTENIDO.");
+
+    depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+
+    // recupero el contenido y medio que almacene en "scrapearFacebook".
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::Contenido*> contenidos_a_analizar;
+    scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
+
+    // agrego los contenidos de facebook
+    std::vector<scraping::facebook::modelo::Pagina*> paginas_facebook_existentes;
+    gestor_medios.recuperar<scraping::facebook::modelo::Pagina>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
+
+    for (auto & pagina : paginas_facebook_existentes)
+    {
+        std::vector<unsigned long long int> ids_contenidos_a_analizar = pagina->getIDsContenidosNoAnalizados();
+        std::for_each(ids_contenidos_a_analizar.begin(), ids_contenidos_a_analizar.end(),
+            [&contenidos_a_analizar, &gestor_analisis](unsigned long long int id)
+        {
+            extraccion::Contenido * publicacion = new scraping::facebook::modelo::Publicacion();
+            publicacion->setId(new herramientas::utiles::ID(id));
+
+            gestor_analisis.recuperarContenido(publicacion);
+
+            contenidos_a_analizar.push_back(publicacion);
+        });
+    }
+
+    // agrego los contenidos de twitter
+    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
+    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
+
+    for (auto & cuenta : cuentas_twitter_existentes)
+    {
+        std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta->getIDsContenidosNoAnalizados();
+        std::for_each(ids_contenidos_a_analizar.begin(), ids_contenidos_a_analizar.end(),
+            [&contenidos_a_analizar, &gestor_analisis](unsigned long long int id)
+        {
+            extraccion::Contenido * publicacion = new scraping::twitter::modelo::Tweet();
+            publicacion->setId(new herramientas::utiles::ID(id));
+
+            gestor_analisis.recuperarContenido(publicacion);
+
+            contenidos_a_analizar.push_back(publicacion);
+        });
+    }
+
+    scraping::Logger::marca("ANALIZANDO CONTENIDOS.");
+
+    std::for_each(medios_a_analizar.begin(), medios_a_analizar.end(),
+        [](scraping::extraccion::Medio* medio)
+    {
+        std::vector<extraccion::Contenido*> contenidos_a_recuperar;
+
+        std::vector<unsigned long long int> ids_contenidos_a_analizar = medio->getIDsContenidosNoAnalizados();
+        std::for_each(ids_contenidos_a_analizar.begin(), ids_contenidos_a_analizar.end(),
+            [&contenidos_a_recuperar](unsigned long long int id)
+        {
+            extraccion::Contenido * publicacion = new scraping::facebook::modelo::Publicacion();
+            publicacion->setId(new herramientas::utiles::ID(*it));
+
+            gestor_analisis.recuperarContenido(publicacion);
+
+            contenidos_a_recuperar.push_back(publicacion);
+        }
+
+    });
+    for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
+    {
+        scraping::facebook::modelo::Pagina * pagina_a_analizar = *it;
+
+        // recupero todos los ids no analizados, sin importar la fecha.
+        std::vector<unsigned long long int> ids_contenidos_a_analizar = pagina_a_analizar->getIDsContenidosNoAnalizados();
+
+        std::vector<extraccion::Contenido*> contenidos_a_recuperar;
+        for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
+        {
+            extraccion::Contenido * publicacion = new scraping::facebook::modelo::Publicacion();
+            publicacion->setId(new herramientas::utiles::ID(*it));
+
+            gestor_analisis.recuperarContenido(publicacion);
+
+            contenidos_a_recuperar.push_back(publicacion);
+        }
+
+        scraping::Logger::marca("DEPURANDO PUBLICACIONES DE '" + pagina_a_analizar->getNombre() + "'.");
+        for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
+        {
+            depuracion::ContenidoDepurable depurable_publicacion(*it);
+
+            depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_publicacion);
+
+            std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
+
+            // ----- ANALISIS ----- //
+
+            analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
+
+            analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
+
+            double factor_tamanio_bolsa = fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+
+            scraping::Logger::info("depurarYAnalizarFacebook: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
+
+            // std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
+
+            // guardo el analisis
+            scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
+            resultado_analisis.setId((*it)->getId()->copia());
+
+            gestor_analisis.almacenarResultadoAnalisis(&resultado_analisis);
+
+            // seteo el contenido como analizado.
+            pagina_a_analizar->setearContenidoComoAnalizado(*it);
+
+            // almaceno las listas de ids analizados.
+            gestor_medios.actualizarMedio(pagina_a_analizar);
+        }
+
+        // elimino los contenidos xq ya no me sirven
+        for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
+        {
+            delete *it;
+        }
+        contenidos_a_recuperar.clear();
+    }
+
+    for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
+    {
+        delete *it;
+    }
+    paginas_facebook_existentes.clear();
+
+    scraping::Logger::marca("FIN DEPURACION Y ANALISIS FACEBOOK.");
+}

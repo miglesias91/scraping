@@ -37,6 +37,10 @@ public:
 
     static void prepararYAlmacenarFacebook();
 
+    // general
+
+    static void depurarYAnalizarContenidos();
+
     // CONSULTAS
 
 private:
