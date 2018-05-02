@@ -16,13 +16,13 @@ FuerzaEnNoticia::~FuerzaEnNoticia()
 {
 }
 
-double FuerzaEnNoticia::aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado)
+double FuerzaEnNoticia::aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica & resultado)
 {
     unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
     std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
 
     // 1ero: calculo la cantidad de caracteres en la bolsa de palabras + cuento cuantas veces aparece cada palabra en la bolsa.
-    for (std::vector<std::string>::iterator it_bolsa = bolsa_de_palabras.begin(); it_bolsa != bolsa_de_palabras.end(); it_bolsa++)
+    for (std::vector<std::string>::const_iterator it_bolsa = bolsa_de_palabras.cbegin(); it_bolsa != bolsa_de_palabras.cend(); it_bolsa++)
     {
         cantidad_de_caracteres_en_bolsa_de_palabras += it_bolsa->size();
 

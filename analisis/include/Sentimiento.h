@@ -1,5 +1,8 @@
 #pragma once
 
+// analisis
+#include <analisis/include/ITecnica.h>
+
 namespace scraping
 {
 namespace analisis
@@ -7,7 +10,7 @@ namespace analisis
 namespace tecnicas
 {
 
-class Sentimiento
+class Sentimiento : public ITecnica
 {
 public:
     Sentimiento();

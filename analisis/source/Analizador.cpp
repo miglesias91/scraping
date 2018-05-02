@@ -10,7 +10,7 @@
 
 using namespace scraping::analisis;
 
-Analizador::Analizador()
+Analizador::Analizador(std::vector<tecnicas::ITecnica*> tecnicas_a_aplicar) : tecnicas_a_aplicar(tecnicas_a_aplicar)
 {
 }
 

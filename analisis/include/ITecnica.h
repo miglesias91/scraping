@@ -26,7 +26,7 @@ public:
 
     // METODOS
 
-    virtual double aplicar(std::vector<std::string> bolsa_de_palabras, IResultadoTecnica & resultado) = 0;
+    virtual double aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica & resultado) = 0;
 
     // CONSULTAS
 };
