@@ -36,6 +36,11 @@ std::string ResultadoAnalisis::getValorAlmacenable()
 
 // SETTERS
 
+void ResultadoAnalisis::setResultadoFuerzaEnNoticia(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia)
+{
+    this->resultado_fuerza_en_noticia = resultado_fuerza_en_noticia;
+}
+
 // METODOS
 
 unsigned int ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)

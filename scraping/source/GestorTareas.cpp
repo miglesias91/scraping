@@ -590,7 +590,7 @@ void GestorTareas::depurarYAnalizarContenidos()
         depuracion::ContenidoDepurable depurable_publicacion(contenido);
         depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_publicacion);
 
-        analisis::IAnalizable * contenido_analizable = new analisis::ContenidoAnalizable(contenido_depurado.getBolsaDePalabras());
+        analisis::IAnalizable * contenido_analizable = new analisis::ContenidoAnalizable(contenido_depurado.getBolsaDePalabras(), contenido->getTexto().size());
 
         preparacion::ResultadoAnalisisContenido resultado_analisis_contenido;
         analizador.analizar(contenido_analizable, &resultado_analisis_contenido);
@@ -600,6 +600,7 @@ void GestorTareas::depurarYAnalizarContenidos()
         gestor_analisis.almacenarResultadoAnalisis(&resultado_analisis_contenido);
 
         extraccion::Medio * medio_a_actualizar = mapa_contenido_medio[contenido->getId()->numero()];
+
         // seteo el contenido como analizado.
         medio_a_actualizar->setearContenidoComoAnalizado(contenido);
 

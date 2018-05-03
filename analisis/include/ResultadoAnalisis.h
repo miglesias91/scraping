@@ -18,7 +18,7 @@ class ResultadoAnalisis : public scraping::IAlmacenable, public herramientas::ut
 {
 public:
 
-    ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia);
+    ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = nullptr);
 
     virtual ~ResultadoAnalisis();
 
@@ -31,6 +31,8 @@ public:
     virtual std::string getValorAlmacenable();
 
     // SETTERS
+
+    void setResultadoFuerzaEnNoticia(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia);
 
     // METODOS
 

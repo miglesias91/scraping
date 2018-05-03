@@ -10,7 +10,7 @@
 
 using namespace scraping::analisis;
 
-Analizador::Analizador(std::vector<tecnicas::ITecnica*> tecnicas_a_aplicar) : tecnicas_a_aplicar(tecnicas_a_aplicar)
+Analizador::Analizador()
 {
 }
 
@@ -18,16 +18,19 @@ Analizador::~Analizador()
 {
 }
 
-ResultadoAnalisis * Analizador::analizar(IAnalizable * contenido_a_analizar)
+void Analizador::analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis * resultado_analisis)
 {
+    // aplico 'fuerza en noticia'
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
+    tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia();
+    fuerza_en_noticia.aplicar(contenido_a_analizar, resultado_fuerza_en_noticia);
+    resultado_analisis->setResultadoFuerzaEnNoticia(resultado_fuerza_en_noticia);
 
-    std::vector<std::string> bolsa_de_palabras_a_analizar = contenido_a_analizar->getBolsaDePalabras();
-
-    tecnicas::ResultadoFuerzaEnNoticia resultado_fuerza_en_noticia;
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_a_analizar, resultado_fuerza_en_noticia);
-
-
+    // aplico 'sentimiento'
+    tecnicas::Sentimiento sentimiento;
+    tecnicas::ResultadoSentimiento resultado_sentimiento;
+    sentimiento.aplicar(contenido_a_analizar, resultado_sentimiento);
+    resultado_analisis->setResultadoFuerzaEnNoticia(resultado_fuerza_en_noticia);
 
     return new scraping::preparacion::ResultadoAnalisisContenido();
 }

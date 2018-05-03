@@ -140,6 +140,7 @@
     <ClInclude Include="include\ITecnica.h" />
     <ClInclude Include="include\ResultadoAnalisis.h" />
     <ClInclude Include="include\ResultadoFuerzaEnNoticia.h" />
+    <ClInclude Include="include\ResultadoSentimiento.h" />
     <ClInclude Include="include\Sentimiento.h" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,7 @@
     <ClCompile Include="source\ITecnica.cpp" />
     <ClCompile Include="source\ResultadoAnalisis.cpp" />
     <ClCompile Include="source\ResultadoFuerzaEnNoticia.cpp" />
+    <ClCompile Include="source\ResultadoSentimiento.cpp" />
     <ClCompile Include="source\Sentimiento.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

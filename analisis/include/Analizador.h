@@ -3,7 +3,8 @@
 // analisis
 #include <analisis/include/IAnalizable.h>
 #include <analisis/include/ResultadoAnalisis.h>
-#include <analisis/include/ITecnica.h>
+#include <analisis/include/FuerzaEnNoticia.h>
+#include <analisis/include/Sentimiento.h>
 
 namespace scraping
 {
@@ -13,7 +14,7 @@ namespace analisis
 class Analizador
 {
 public:
-    Analizador(std::vector<tecnicas::ITecnica*> tecnicas_a_aplicar);
+    Analizador();
     virtual ~Analizador();
 
     // GETTERS
@@ -22,13 +23,11 @@ public:
 
     // METODOS
 
-    virtual ResultadoAnalisis * analizar(IAnalizable * contenido_a_analizar);
+    virtual void analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis * resultado_analisis);
 
     // CONSULTAS
 
 private:
-
-    std::vector<tecnicas::ITecnica*> tecnicas_a_aplicar;
 };
 
 };

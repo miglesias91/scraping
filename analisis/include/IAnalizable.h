@@ -19,6 +19,8 @@ public:
 
     virtual std::vector<std::string> getBolsaDePalabras() = 0;
 
+    virtual double getTamanio() = 0;
+
     // SETTERS
 
     // METODOS

@@ -15,12 +15,14 @@ namespace analisis
 class ContenidoAnalizable : public scraping::analisis::IAnalizable
 {
 public:
-    ContenidoAnalizable(std::vector<std::string> bolsa_de_palabras_depurada);
+    ContenidoAnalizable(std::vector<std::string> bolsa_de_palabras_depurada, double tamanio);
     virtual ~ContenidoAnalizable();
 
     // GETTERS
 
-    std::vector<std::string> getBolsaDePalabras();
+    virtual std::vector<std::string> getBolsaDePalabras();
+
+    virtual double getTamanio();
 
     // SETTERS
 
@@ -31,6 +33,7 @@ public:
 private:
 
     std::vector<std::string> bolsa_de_palabras_depurada;
+    double tamanio;
 };
 
 };
