@@ -10,7 +10,7 @@
 
 using namespace scraping::analisis::tecnicas;
 
-ResultadoSentimiento::ResultadoSentimiento(unsigned int maximo_valores_a_almacenar) : IResultadoTecnica(), maximo_valores_a_almacenar(maximo_valores_a_almacenar)
+ResultadoSentimiento::ResultadoSentimiento(float positivo, float negativo) : positivo(positivo), negativo(negativo)
 {
 }
 

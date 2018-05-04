@@ -30,7 +30,7 @@ void Analizador::analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis 
     tecnicas::Sentimiento sentimiento;
     tecnicas::ResultadoSentimiento resultado_sentimiento;
     sentimiento.aplicar(contenido_a_analizar, resultado_sentimiento);
-    resultado_analisis->setResultadoFuerzaEnNoticia(resultado_fuerza_en_noticia);
+    resultado_analisis->setResultadoSentimiento(resultado_fuerza_en_noticia);
 
     return new scraping::preparacion::ResultadoAnalisisContenido();
 }

@@ -17,7 +17,7 @@ namespace tecnicas
 class ResultadoSentimiento : public IResultadoTecnica
 {
 public:
-    ResultadoSentimiento(unsigned int maximo_valores_a_almacenar = 100);
+    ResultadoSentimiento(float positivo = 0.0f, float negativo = 0.0f);
     virtual ~ResultadoSentimiento();
 
     // GETTERS
@@ -25,6 +25,10 @@ public:
     // SETTERS
 
     // METODOS
+
+    virtual void sumarPositivo();
+
+    virtual void sumarNegativo();
 
     // metodos de IResultadoTecnica
 
@@ -41,7 +45,8 @@ public:
 private:
 
     // valoracion
-    float valoracion;
+    float positivo;
+    float negativo;
 };
 
 };
