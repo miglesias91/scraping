@@ -160,9 +160,9 @@ void GestorTareas::depurarYAnalizarTwitter()
 
             analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
 
-            double factor_tamanio_bolsa = fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+            fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
 
-            scraping::Logger::info("depurarYAnalizarTwitter: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
+            scraping::Logger::info("depurarYAnalizarTwitter: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' }");
 
             // std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
@@ -399,9 +399,9 @@ void GestorTareas::depurarYAnalizarFacebook()
 
             analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
 
-            double factor_tamanio_bolsa = fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+            fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
 
-            scraping::Logger::info("depurarYAnalizarFacebook: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
+            scraping::Logger::info("depurarYAnalizarFacebook: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' }");
 
             // std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
@@ -606,6 +606,8 @@ void GestorTareas::depurarYAnalizarContenidos()
 
         // almaceno las listas de ids analizados.
         gestor_medios.actualizarMedio(medio_a_actualizar);
+
+        delete contenido_analizable;
     });
 
     // libero memoria
@@ -628,65 +630,136 @@ void GestorTareas::depurarYAnalizarContenidos()
     cuentas_twitter_existentes.clear();
     
     scraping::Logger::marca("FIN DEPURACION Y ANALISIS DE CONTENIDOS.");
+}
+
+void GestorTareas::prepararYAlmacenarContenidos()
+{
+    scraping::Logger::marca("INICIO PREPARACION Y ALMACENAMIENTO CONTENIDO.");
+
+    std::unordered_map<std::string, std::vector<resultados_agrupados_por_medio>> mapa_resultados_por_fecha;
+    agruparResultadosDeMediosPorFecha(&mapa_resultados_por_fecha);
+
+    scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
+    scraping::aplicacion::GestorMedios gestor_medios;
+    preparacion::Preparador preparador;
+
+    std::for_each(mapa_resultados_por_fecha.begin(), mapa_resultados_por_fecha.end(),
+        [&gestor_medios, &gestor_analisis, &preparador](std::pair<std::string, std::vector<resultados_agrupados_por_medio>> fecha_resultados)
+    {
+        std::string string_fecha = fecha_resultados.first;
+
+        std::vector<resultados_agrupados_por_medio> resultados = fecha_resultados.second;
+
+        scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
+        resultado_diario_recuperado.setId(new herramientas::utiles::ID(std::stoul(string_fecha)));
+        gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario_recuperado);
+
+        std::for_each(resultados.begin(), resultados.end(),
+            [string_fecha, &preparador, &resultado_diario_recuperado](resultados_agrupados_por_medio resultado)
+        {
+            preparacion::ResultadoAnalisisMedio resultado_combinado;
+            resultado_combinado.setId(resultado.medio->getId()->copia());
+
+            preparador.combinar(resultado.resultados, &resultado_combinado);
+
+            resultado_diario_recuperado.agregarResultadoDeMedio(&resultado_combinado);
+
+            scraping::Logger::info("prepararYAlmacenarContenido: { fecha = '" + string_fecha + "' - id_medio = " + resultado.medio->getId()->string() + " - cantidad de resultados combinados = '" + std::to_string(resultado.resultados.size()) + "' }");
+        });
+
+        gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
+
+        std::for_each(resultados.begin(), resultados.end(),
+            [string_fecha, &gestor_medios](resultados_agrupados_por_medio resultado_por_medio)
+        {
+            std::vector<analisis::ResultadoAnalisis*> resultados = resultado_por_medio.resultados;
+            extraccion::Medio * medio = resultado_por_medio.medio;
+
+            // actualizo el los ids historicos del medio y elimino los resultados
+            std::for_each(resultados.begin(), resultados.end(),
+                [&medio, string_fecha, &gestor_medios](analisis::ResultadoAnalisis * resultado)
+            {
+                facebook::modelo::Publicacion contenido_historico; // aca tmb podria ir una twitter::Cuenta, es lo mismo, solo me sirve para pasarle al 'setearContenidoComoHistorico'.
+                contenido_historico.setId(resultado->getId()->copia());
+                contenido_historico.setFecha(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(string_fecha));
+
+                medio->setearContenidoComoHistorico(&contenido_historico);
+
+                // almaceno las listas de ids historicos.
+                gestor_medios.actualizarMedio(medio);
+
+                delete resultado;
+            });
+
+            delete resultado_por_medio.medio;
+        });
+    });
 
     //for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
     //{
-    //    scraping::facebook::modelo::Pagina * pagina_a_analizar = *it;
+    //    scraping::facebook::modelo::Pagina * pagina_a_preparar = *it;
 
-    //    // recupero todos los ids no analizados, sin importar la fecha.
-    //    std::vector<unsigned long long int> ids_contenidos_a_analizar = pagina_a_analizar->getIDsContenidosNoAnalizados();
+    //    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = pagina_a_preparar->getParesIDsContenidosAnalizados();
 
-    //    std::vector<extraccion::Contenido*> contenidos_a_recuperar;
-    //    for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
+    //    for (std::vector<std::pair<std::string, std::vector<unsigned long long int>>>::iterator it = mapa_ids_contenidos_analizados.begin(); it != mapa_ids_contenidos_analizados.end(); it++)
     //    {
-    //        extraccion::Contenido * publicacion = new scraping::facebook::modelo::Publicacion();
-    //        publicacion->setId(new herramientas::utiles::ID(*it));
+    //        std::string string_fecha = it->first;
+    //        std::vector<unsigned long long int> ids_contenidos_analizados_por_fecha = it->second;
 
-    //        gestor_analisis.recuperarContenido(publicacion);
+    //        if (ids_contenidos_analizados_por_fecha.empty())
+    //        {// si no hay ids para analizar, entonces sigo con la siguiente lista de ids.
+    //            continue;
+    //        }
 
-    //        contenidos_a_recuperar.push_back(publicacion);
+    //        std::vector<analisis::ResultadoAnalisis*> resultados;
+    //        for (std::vector<unsigned long long int>::iterator it = ids_contenidos_analizados_por_fecha.begin(); it != ids_contenidos_analizados_por_fecha.end(); it++)
+    //        {
+    //            analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
+    //            resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
+
+    //            gestor_analisis.recuperarResultadoAnalisis(resultado_analisis_a_recuperar);
+
+    //            resultados.push_back(resultado_analisis_a_recuperar);
+    //        }
+
+    //        preparacion::Preparador preparador;
+
+    //        preparacion::ResultadoAnalisisMedio * resultado_combinado = new preparacion::ResultadoAnalisisMedio();
+    //        resultado_combinado->setId(pagina_a_preparar->getId()->copia());
+
+    //        unsigned int cantidad_fuerzas_sumadas = preparador.combinar(resultados, resultado_combinado);
+
+    //        scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
+    //        resultado_diario_recuperado.setId(new herramientas::utiles::ID(std::stoul(string_fecha)));
+
+    //        gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario_recuperado);
+
+    //        resultado_diario_recuperado.agregarResultadoDeMedio(resultado_combinado);
+
+    //        delete resultado_combinado;
+
+    //        gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario_recuperado);
+
+    //        scraping::Logger::info("prepararYAlmacenarFacebook: { fecha = '" + string_fecha + "' - id_pagina = " + pagina_a_preparar->getId()->string() + " - cantidad de resultados combinados = '" + std::to_string(resultados.size()) + "' - cantidad fuerzas sumadas = '" + std::to_string(cantidad_fuerzas_sumadas) + "' }");
+
+    //        // actualizo el los ids historicos del medio y elimino los resultados
+    //        for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
+    //        {
+    //            extraccion::Contenido * contenido_historico = new facebook::modelo::Publicacion();
+    //            contenido_historico->setId((*it)->getId()->copia());
+    //            contenido_historico->setFecha(herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(string_fecha));
+
+    //            pagina_a_preparar->setearContenidoComoHistorico(contenido_historico);
+
+    //            // almaceno las listas de ids historicos.
+    //            gestor_medios.actualizarMedio(pagina_a_preparar);
+
+    //            delete *it;
+
+    //            delete contenido_historico;
+    //        }
+    //        resultados.clear();
     //    }
-
-    //    scraping::Logger::marca("DEPURANDO PUBLICACIONES DE '" + pagina_a_analizar->getNombre() + "'.");
-    //    for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
-    //    {
-    //        depuracion::ContenidoDepurable depurable_publicacion(*it);
-
-    //        depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_publicacion);
-
-    //        std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
-
-    //        // ----- ANALISIS ----- //
-
-    //        analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
-
-    //        analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
-
-    //        double factor_tamanio_bolsa = fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
-
-    //        scraping::Logger::info("depurarYAnalizarFacebook: { id_contenido = " + (*it)->getId()->string() + " - tamanio bolsa de palabras = '" + std::to_string(bolsa_de_palabras.size()) + "' - factor tamanio bolsa = '" + std::to_string(factor_tamanio_bolsa) + "' }");
-
-    //        // std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
-
-    //        // guardo el analisis
-    //        scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
-    //        resultado_analisis.setId((*it)->getId()->copia());
-
-    //        gestor_analisis.almacenarResultadoAnalisis(&resultado_analisis);
-
-    //        // seteo el contenido como analizado.
-    //        pagina_a_analizar->setearContenidoComoAnalizado(*it);
-
-    //        // almaceno las listas de ids analizados.
-    //        gestor_medios.actualizarMedio(pagina_a_analizar);
-    //    }
-
-        // elimino los contenidos xq ya no me sirven
-    //    for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
-    //    {
-    //        delete *it;
-    //    }
-    //    contenidos_a_recuperar.clear();
     //}
 
     //for (std::vector<scraping::facebook::modelo::Pagina*>::iterator it = paginas_facebook_existentes.begin(); it != paginas_facebook_existentes.end(); it++)
@@ -695,5 +768,89 @@ void GestorTareas::depurarYAnalizarContenidos()
     //}
     //paginas_facebook_existentes.clear();
 
-    //scraping::Logger::marca("FIN DEPURACION Y ANALISIS FACEBOOK.");
+    scraping::Logger::marca("FIN PREPARACION Y ALMACENAMIENTO CONTENIDO.");
+}
+
+void GestorTareas::agruparResultadosDeMediosPorFecha(std::unordered_map<std::string, std::vector<resultados_agrupados_por_medio>> * mapa_resultados_por_fecha)
+{
+    scraping::aplicacion::GestorMedios gestor_medios;
+    scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
+
+    // agrego los contenidos de facebook
+    std::vector<scraping::facebook::modelo::Pagina*> paginas_facebook_existentes;
+    gestor_medios.recuperar<scraping::facebook::modelo::Pagina>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
+
+    for (auto & pagina : paginas_facebook_existentes)
+    {
+        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = pagina->getParesIDsContenidosAnalizados();
+        std::for_each(mapa_ids_contenidos_analizados.begin(), mapa_ids_contenidos_analizados.end(),
+            [&gestor_analisis, &mapa_resultados_por_fecha, &pagina](std::pair<std::string, std::vector<unsigned long long int>> fecha_ids_analizados)
+        {
+            std::vector<analisis::ResultadoAnalisis*> resultados_a_analizar;
+
+            std::string fecha = fecha_ids_analizados.first;
+            std::vector<unsigned long long int> ids_analizados = fecha_ids_analizados.second;
+
+            std::for_each(ids_analizados.begin(), ids_analizados.end(),
+                [&gestor_analisis, &resultados_a_analizar](unsigned long long int id)
+            {
+                analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
+                resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(id));
+
+                gestor_analisis.recuperarResultadoAnalisis(resultado_analisis_a_recuperar);
+
+                resultados_a_analizar.push_back(resultado_analisis_a_recuperar);
+            });
+
+            if (mapa_resultados_por_fecha->count(fecha))
+            {
+                std::vector<resultados_agrupados_por_medio> * resultados = &(*mapa_resultados_por_fecha)[fecha];
+                resultados->push_back(resultados_agrupados_por_medio{pagina, resultados_a_analizar});
+            }
+            else
+            {
+                std::vector<resultados_agrupados_por_medio> resultados = { resultados_agrupados_por_medio{ pagina, resultados_a_analizar } };
+                (*mapa_resultados_por_fecha)[fecha] = resultados;
+            }
+        });
+    }
+
+    // agrego los contenidos de twitter
+    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
+    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
+
+    for (auto & cuenta : cuentas_twitter_existentes)
+    {
+        std::vector<std::pair<std::string, std::vector<unsigned long long int>>> mapa_ids_contenidos_analizados = cuenta->getParesIDsContenidosAnalizados();
+        std::for_each(mapa_ids_contenidos_analizados.begin(), mapa_ids_contenidos_analizados.end(),
+            [&gestor_analisis, &mapa_resultados_por_fecha, &cuenta](std::pair<std::string, std::vector<unsigned long long int>> fecha_ids_analizados)
+        {
+            std::vector<analisis::ResultadoAnalisis*> resultados_a_analizar;
+
+            std::string fecha = fecha_ids_analizados.first;
+            std::vector<unsigned long long int> ids_analizados = fecha_ids_analizados.second;
+
+            std::for_each(ids_analizados.begin(), ids_analizados.end(),
+                [&gestor_analisis, &resultados_a_analizar](unsigned long long int id)
+            {
+                analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
+                resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(id));
+
+                gestor_analisis.recuperarResultadoAnalisis(resultado_analisis_a_recuperar);
+
+                resultados_a_analizar.push_back(resultado_analisis_a_recuperar);
+            });
+
+            if (mapa_resultados_por_fecha->count(fecha))
+            {
+                std::vector<resultados_agrupados_por_medio> * resultados = &(*mapa_resultados_por_fecha)[fecha];
+                resultados->push_back(resultados_agrupados_por_medio{ cuenta, resultados_a_analizar });
+            }
+            else
+            {
+                std::vector<resultados_agrupados_por_medio> resultados = { resultados_agrupados_por_medio{ cuenta, resultados_a_analizar } };
+                (*mapa_resultados_por_fecha)[fecha] = resultados;
+            }
+        });
+    }
 }

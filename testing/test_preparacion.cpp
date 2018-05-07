@@ -6,7 +6,9 @@
 
 // analisis
 #include <analisis/include/FuerzaEnNoticia.h>
+#include <analisis/include/Sentimiento.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
+#include <analisis/include/ResultadoSentimiento.h>
 
 // preparacion
 #include <preparacion/include/ResultadoAnalisisMedio.h>
@@ -18,22 +20,31 @@ using namespace scraping::preparacion;
 TEST(Preparacion, almacenarYRecuperarResultadoAnalisisMedioCorrectamente)
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
+    scraping::analisis::tecnicas::Sentimiento sentimiento;
 
     std::vector<std::string> bolsa_de_palabras_1 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
     std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_1 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, *resultado_1);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
+
+    scraping::analisis::tecnicas::ResultadoSentimiento * resultado_1_sentimiento = new scraping::analisis::tecnicas::ResultadoSentimiento();
+    sentimiento.aplicar(bolsa_de_palabras_1, resultado_1_sentimiento);
 
     scraping::preparacion::ResultadoAnalisisMedio resultado_analisis_1(resultado_1);
+    resultado_analisis_1.setResultadoSentimiento(resultado_1_sentimiento);
     resultado_analisis_1.setId(new herramientas::utiles::ID(1234));
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_1);
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, *resultado_2);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
+
+    scraping::analisis::tecnicas::ResultadoSentimiento * resultado_2_sentimiento = new scraping::analisis::tecnicas::ResultadoSentimiento();
+    sentimiento.aplicar(bolsa_de_palabras_2, resultado_2_sentimiento);
 
     scraping::preparacion::ResultadoAnalisisMedio resultado_analisis_2(resultado_2);
+    resultado_analisis_2.setResultadoSentimiento(resultado_2_sentimiento);
     resultado_analisis_2.setId(new herramientas::utiles::ID(4321));
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_2);
@@ -69,7 +80,7 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisContenidoCorrectamente)
     std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_1 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, *resultado_1);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
     
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_1(resultado_1);
     resultado_analisis_1.setId(new herramientas::utiles::ID(1234));
@@ -77,7 +88,7 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisContenidoCorrectamente)
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_1);
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, *resultado_2);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
     
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_2(resultado_2);
     resultado_analisis_2.setId(new herramientas::utiles::ID(4321));
@@ -119,7 +130,7 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisDiarioCorrectamente)
 
     // medio 1
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_1 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, *resultado_1);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
 
     scraping::preparacion::ResultadoAnalisisMedio * resultado_analisis_1 = new scraping::preparacion::ResultadoAnalisisMedio(resultado_1);
     resultado_analisis_1->setId(new herramientas::utiles::ID(1234));
@@ -128,7 +139,7 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisDiarioCorrectamente)
 
     // medio 2
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, *resultado_2);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
 
     scraping::preparacion::ResultadoAnalisisMedio * resultado_analisis_2 = new scraping::preparacion::ResultadoAnalisisMedio(resultado_2);
     resultado_analisis_2->setId(new herramientas::utiles::ID(4321));

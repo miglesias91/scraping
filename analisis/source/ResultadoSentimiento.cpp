@@ -10,7 +10,7 @@
 
 using namespace scraping::analisis::tecnicas;
 
-ResultadoSentimiento::ResultadoSentimiento(float positivo, float negativo) : positivo(positivo), negativo(negativo)
+ResultadoSentimiento::ResultadoSentimiento()
 {
 }
 
@@ -18,121 +18,96 @@ ResultadoSentimiento::~ResultadoSentimiento()
 {
 }
 
+ResultadoSentimiento::valoracion ResultadoSentimiento::positividad(const std::string & palabra)
+{
+    return this->sentimiento_por_palabra[palabra].positividad;
+}
+
+ResultadoSentimiento::valoracion ResultadoSentimiento::negatividad(const std::string & palabra)
+{
+    return this->sentimiento_por_palabra[palabra].negatividad;
+}
+
+ResultadoSentimiento::valoracion ResultadoSentimiento::neutralidad(const std::string & palabra)
+{
+    return this->sentimiento_por_palabra[palabra].neutralidad;
+}
+
 // GETTERS
-
-float ResultadoSentimiento::getFuerza(std::string palabra)
-{
-    if (false == this->existePalabra(palabra))
-    {
-        return 0.0f;
-    }
-
-    return this->fuerza_por_palabra[palabra];
-}
-
-std::vector<std::pair<std::string, float>> ResultadoSentimiento::getFuerzas()
-{
-    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra(this->fuerza_por_palabra.begin(), this->fuerza_por_palabra.end());
-
-    return vector_fuerza_por_palabra;
-}
-
-double ResultadoSentimiento::getFuerzaTotal()
-{
-    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getFuerzas();
-
-    double fuerza_total = 0.0f;
-    for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
-    {
-        fuerza_total += it->second;
-    }
-
-    return fuerza_total;
-}
-
-std::vector<std::pair<std::string, float>> ResultadoSentimiento::getTop(unsigned int cantidad_de_valores_a_recuperar)
-{
-    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getFuerzas();
-
-    std::sort(vector_fuerza_por_palabra.begin(), vector_fuerza_por_palabra.end(), compararFuerzasMayorAMenor);
-
-    if (vector_fuerza_por_palabra.size() > cantidad_de_valores_a_recuperar)
-    {
-        vector_fuerza_por_palabra.resize(cantidad_de_valores_a_recuperar);
-    }
-
-    return vector_fuerza_por_palabra;
-}
-
-// getters de IResultadoTecnica
-
-std::unordered_map<std::string, float> ResultadoSentimiento::getFuerzaPorPalabra()
-{
-    return this->fuerza_por_palabra;
-}
 
 // SETTERS
 
 // METODOS
 
-unsigned int ResultadoSentimiento::cantidadDePalabras()
+std::unordered_map<std::string, ResultadoSentimiento::sentimiento> scraping::analisis::tecnicas::ResultadoSentimiento::sentimientos()
 {
-    return this->fuerza_por_palabra.size();
+    return this->sentimiento_por_palabra;
 }
 
-float ResultadoSentimiento::sumarFuerza(std::pair<std::string, float> fuerza_a_sumar)
+void ResultadoSentimiento::sumar(const std::string & palabra, const sentimiento & sentimiento)
 {
-    std::string palabra = fuerza_a_sumar.first;
-    float fuerza_a_agregar = fuerza_a_sumar.second;
+    auto it_valoracion = this->sentimiento_por_palabra.find(palabra);
 
-    std::unordered_map<std::string, float>::iterator it_fuerza = this->fuerza_por_palabra.find(palabra);
-
-    if (this->fuerza_por_palabra.end() != it_fuerza)
+    if (this->sentimiento_por_palabra.count(palabra))
     {
-        float nuevo_valor = it_fuerza->second + fuerza_a_agregar;
-        this->fuerza_por_palabra[palabra] = nuevo_valor;
+        (&this->sentimiento_por_palabra[palabra])->positividad += sentimiento.positividad;
+        (&this->sentimiento_por_palabra[palabra])->negatividad += sentimiento.negatividad;
+        (&this->sentimiento_por_palabra[palabra])->neutralidad += sentimiento.neutralidad;
     }
     else
     {
-        this->fuerza_por_palabra[palabra] = fuerza_a_agregar;
+        this->sentimiento_por_palabra[palabra] = sentimiento;
     }
-
-    return this->fuerza_por_palabra[palabra];
 }
 
-unsigned int ResultadoSentimiento::sumarFuerzas(ResultadoSentimiento * fuerza_a_sumar)
+void ResultadoSentimiento::sumar(ResultadoSentimiento * resultado_a_sumar)
 {
-    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = fuerza_a_sumar->getFuerzas();
+    auto sentimientos = resultado_a_sumar->sentimientos();
 
-    for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
+    std::for_each(sentimientos.begin(), sentimientos.end(),
+        [this](std::pair<std::string, sentimiento> palabra_sentimiento)
     {
-        this->sumarFuerza(*it);
-    }
-
-    return vector_fuerza_por_palabra.size();
+        this->sumar(palabra_sentimiento.first, palabra_sentimiento.second);
+    });
 }
 
-bool ResultadoSentimiento::compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b)
+void ResultadoSentimiento::aumentarPositividad(const std::string & palabra, double positividad)
 {
-    return a.second > b.second;
-}
-
-bool ResultadoSentimiento::compararFuerzasMenosAMayor(std::pair<std::string, float> a, std::pair<std::string, float> b)
-{
-    return a.second < b.second;
-}
-
-// metodos de IResultadoTecnica
-
-bool ResultadoSentimiento::agregarResultado(std::string palabra, float fuerza_en_noticia)
-{
-    if (this->existePalabra(palabra))
+    if (this->sentimiento_por_palabra.count(palabra))
     {
-        return false;
+        (&this->sentimiento_por_palabra[palabra])->positividad.suma += positividad;
     }
+    else
+    {
+        sentimiento sentimiento_nuevo = { valoracion{ positividad, 1 } , valoracion{ 0, 0 } , valoracion{ 0, 0 } };
+        this->sentimiento_por_palabra[palabra] = sentimiento_nuevo;
+    }
+}
 
-    this->fuerza_por_palabra[palabra] = fuerza_en_noticia;
-    return true;
+void ResultadoSentimiento::aumentarNegatividad(const std::string & palabra, double negatividad)
+{
+    if (this->sentimiento_por_palabra.count(palabra))
+    {
+        (&this->sentimiento_por_palabra[palabra])->negatividad.suma += negatividad;
+    }
+    else
+    {
+        sentimiento sentimiento_nuevo = { valoracion{ 0, 0 }, valoracion{ negatividad, 1 } , valoracion{ 0, 0 } };
+        this->sentimiento_por_palabra[palabra] = sentimiento_nuevo;
+    }
+}
+
+void ResultadoSentimiento::aumentarNeutralidad(const std::string & palabra, double neutralidad)
+{
+    if (this->sentimiento_por_palabra.count(palabra))
+    {
+        (&this->sentimiento_por_palabra[palabra])->neutralidad.suma += neutralidad;
+    }
+    else
+    {
+        sentimiento sentimiento_nuevo = { valoracion{ 0, 0 }, valoracion{ 0, 0 }, valoracion{ neutralidad, 1 } };
+        this->sentimiento_por_palabra[palabra] = sentimiento_nuevo;
+    }
 }
 
 // metodos de IContieneJson
@@ -141,49 +116,37 @@ bool ResultadoSentimiento::armarJson()
 {
     this->getJson()->reset();
 
-    std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getTop(maximo_valores_a_almacenar);
-
-    std::vector<std::string> fuerzas_por_palabras;
-    for (std::vector<std::pair<std::string, float>>::iterator it = vector_fuerza_por_palabra.begin(); it != vector_fuerza_por_palabra.end(); it++)
+    std::vector<std::string> sentimiento_por_palabra;
+    std::for_each(this->sentimiento_por_palabra.begin(), this->sentimiento_por_palabra.end(),
+        [&sentimiento_por_palabra](std::pair<std::string, sentimiento> palabra_sentimiento)
     {
-        std::ostringstream string_stream;
-        string_stream << std::setprecision(5) << it->second;
+        std::string sentimiento_escrito = palabra_sentimiento.second.escribir();
 
-        std::string registro = it->first + "_" + string_stream.str();
-        fuerzas_por_palabras.push_back(registro);
-    }
+        sentimiento_por_palabra.push_back(palabra_sentimiento.first + "_" + sentimiento_escrito);
+    });
 
     herramientas::utiles::Json * json = this->getJson();
-    json->agregarAtributoArray("valores", fuerzas_por_palabras);
+    json->agregarAtributoArray("valores", sentimiento_por_palabra);
 
     return true;
 }
 
 bool ResultadoSentimiento::parsearJson()
 {
-    std::vector<std::string> json_fuerzas = this->getJson()->getAtributoArrayString("valores");
+    std::vector<std::string> json_sentimientos = this->getJson()->getAtributoArrayString("valores");
 
-    for (std::vector<std::string>::iterator it = json_fuerzas.begin(); it != json_fuerzas.end(); it++)
+    std::for_each(json_sentimientos.begin(), json_sentimientos.end(),
+        [this](std::string palabra_sentimiento_escritos)
     {
-        std::vector<std::string> campos = herramientas::utiles::FuncionesString::separar(*it, "_");
+        std::vector<std::string> palabra_sentimiento_escrito = herramientas::utiles::FuncionesString::separar(palabra_sentimiento_escritos, "_");
 
-        std::string termino = campos[0];
-        float fuerza = std::stof(campos[1]);
+        sentimiento sentimiento;
+        sentimiento.leer(palabra_sentimiento_escrito[1]);
 
-        this->agregarResultado(termino, fuerza);
-    }
+        this->sentimiento_por_palabra[palabra_sentimiento_escrito[0]] = sentimiento;
+    });
 
     return true;
 }
 
 // CONSULTAS
-
-bool ResultadoSentimiento::existePalabra(std::string palabra)
-{
-    if (this->fuerza_por_palabra.end() == this->fuerza_por_palabra.find(palabra))
-    {
-        return false;
-    }
-
-    return true;
-}

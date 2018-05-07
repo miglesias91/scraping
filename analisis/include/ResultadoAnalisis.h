@@ -8,6 +8,7 @@
 
 // analisis
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
+#include <analisis/include/ResultadoSentimiento.h>
 
 namespace scraping
 {
@@ -18,13 +19,15 @@ class ResultadoAnalisis : public scraping::IAlmacenable, public herramientas::ut
 {
 public:
 
-    ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = nullptr);
+    ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = nullptr, tecnicas::ResultadoSentimiento * resultado_sentimiento = nullptr);
 
     virtual ~ResultadoAnalisis();
 
     // GETTERS
 
     tecnicas::ResultadoFuerzaEnNoticia * getResultadoFuerzaEnNoticia();
+
+    tecnicas::ResultadoSentimiento * getResultadoSentimiento();
 
     // getters de IAlmacenable
 
@@ -34,9 +37,11 @@ public:
 
     void setResultadoFuerzaEnNoticia(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia);
 
+    void setResultadoSentimiento(tecnicas::ResultadoSentimiento * resultado_sentimiento);
+
     // METODOS
 
-    virtual unsigned int combinarCon(ResultadoAnalisis * resultado_a_combinar);
+    virtual void combinarCon(ResultadoAnalisis * resultado_a_combinar);
 
     // metodos de IContieneJson
 
@@ -55,6 +60,9 @@ public:
 private:
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia;
+
+    tecnicas::ResultadoSentimiento * resultado_sentimiento;
+
 };
 
 };

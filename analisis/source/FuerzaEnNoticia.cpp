@@ -16,8 +16,10 @@ FuerzaEnNoticia::~FuerzaEnNoticia()
 {
 }
 
-double FuerzaEnNoticia::aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado)
+void FuerzaEnNoticia::aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado)
 {
+    ResultadoFuerzaEnNoticia * resultado_fza_en_noticia = static_cast<ResultadoFuerzaEnNoticia*>(resultado);
+
     unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
     std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
 
@@ -52,15 +54,15 @@ double FuerzaEnNoticia::aplicar(const std::vector<std::string> & bolsa_de_palabr
 
         if (fuerza_palabra_en_bolsa > this->fuerza_minima)
         {
-            resultado->agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
+            resultado_fza_en_noticia->agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
         }
     }
-
-    return factor_tamanio_de_bolsa;
 }
 
-double FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_analizable, IResultadoTecnica * resultado)
+void FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_analizable, IResultadoTecnica * resultado)
 {
+    ResultadoFuerzaEnNoticia * resultado_fza_en_noticia = static_cast<ResultadoFuerzaEnNoticia*>(resultado);
+
     unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
     std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
 
@@ -95,11 +97,9 @@ double FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_anal
 
         if (fuerza_palabra_en_bolsa > this->fuerza_minima)
         {
-            resultado->agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
+            resultado_fza_en_noticia->agregarResultado(it_apariciones->first, fuerza_palabra_en_bolsa);
         }
     }
-
-    return factor_tamanio_de_bolsa;
 }
 
 // GETTERS

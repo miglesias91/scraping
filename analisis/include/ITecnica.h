@@ -27,9 +27,9 @@ public:
 
     // METODOS
 
-    virtual double aplicar(scraping::analisis::IAnalizable * contenido_analizable, IResultadoTecnica * resultado) = 0;
+    virtual void aplicar(scraping::analisis::IAnalizable * contenido_analizable, IResultadoTecnica * resultado) = 0;
     
-    virtual double aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado) = 0;
+    virtual void aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado) = 0;
 
     // CONSULTAS
 };

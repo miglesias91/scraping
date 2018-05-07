@@ -27,9 +27,9 @@ public:
 
     // recibe una bolsa de palabras y devuelve un vector con la fuerza de cada palabra en la bolsa de palabras.
     // El valor de retorno indica el "factor de tamanio de la bolsa (= log10(cantidad de caracteres en bolsa de palabras))".
-    virtual double aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado);
+    virtual void aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado);
 
-    virtual double aplicar(scraping::analisis::IAnalizable * contenido_analizable, IResultadoTecnica * resultado);
+    virtual void aplicar(scraping::analisis::IAnalizable * contenido_analizable, IResultadoTecnica * resultado);
 
     // CONSULTAS
 

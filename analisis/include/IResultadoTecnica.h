@@ -22,13 +22,13 @@ public:
 
     // GETTERS
 
-    virtual std::unordered_map<std::string, float> getFuerzaPorPalabra() = 0;
+    // virtual std::unordered_map<std::string, float> getFuerzaPorPalabra() = 0;
 
     // SETTERS
 
     // METODOS
 
-    virtual bool agregarResultado(std::string palabra, float fuerza_en_noticia) = 0;
+    // virtual bool agregarResultado(std::string palabra, float fuerza_en_noticia) = 0;
 
     // CONSULTAS
 

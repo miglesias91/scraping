@@ -35,6 +35,7 @@ std::string ConfiguracionScraping::clave_id_medio_actual;
 std::string ConfiguracionScraping::clave_id_contenido_actual;
 
 std::string ConfiguracionScraping::archivo_config_log;
+std::string ConfiguracionScraping::archivo_config_sentimiento;
 
 void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configuracion)
 {
@@ -66,6 +67,7 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
         archivo_config_db_resultados_analisis_diario = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios());
 
         archivo_config_log = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigLog());
+        archivo_config_sentimiento = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigSentimiento());
 
         prefijo_configuracion = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoConfiguracion());
 
@@ -174,6 +176,11 @@ std::string ConfiguracionScraping::archivoConfigLog()
     return archivo_config_log;
 }
 
+std::string ConfiguracionScraping::archivoConfigSentimiento()
+{
+    return archivo_config_sentimiento;
+}
+
 std::string ConfiguracionScraping::claveIDMedioActual()
 {
     return "id_medio_actual";
@@ -258,6 +265,11 @@ std::string ConfiguracionScraping::tagPrefijoResultadoDiario()
 std::string ConfiguracionScraping::tagArchivoConfigLog()
 {
     return "log_scraping";
+}
+
+std::string ConfiguracionScraping::tagArchivoConfigSentimiento()
+{
+    return "config_sentimiento";
 }
 
 ConfiguracionScraping::ConfiguracionScraping()

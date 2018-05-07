@@ -3,6 +3,9 @@
 // extraccion
 #include <extraccion/include/Medio.h>
 
+// analisis
+#include <analisis/include/ResultadoAnalisis.h>
+
 // twitter
 #include <twitter/include/Cuenta.h>
 
@@ -16,6 +19,12 @@ class GestorTareas
 public:
     GestorTareas();
     virtual ~GestorTareas();
+
+    struct resultados_agrupados_por_medio
+    {
+        extraccion::Medio * medio;
+        std::vector<analisis::ResultadoAnalisis*> resultados;
+    };
 
     // GETTES
 
@@ -40,10 +49,15 @@ public:
     // general
 
     static void depurarYAnalizarContenidos();
+    
+    static void prepararYAlmacenarContenidos();
 
     // CONSULTAS
 
 private:
+
+    static void agruparResultadosDeMediosPorFecha(std::unordered_map<std::string, std::vector<resultados_agrupados_por_medio>> * mapa_resultados_por_fecha);
+    
 
 };
 

@@ -5,7 +5,7 @@
 
 using namespace scraping::analisis;
 
-ResultadoAnalisis::ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia) : IAlmacenable(grupo), IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia)
+ResultadoAnalisis::ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia, tecnicas::ResultadoSentimiento * resultado_sentimiento) : IAlmacenable(grupo), IContieneJson(), resultado_fuerza_en_noticia(resultado_fuerza_en_noticia), resultado_sentimiento(resultado_sentimiento)
 {
 }
 
@@ -25,6 +25,11 @@ tecnicas::ResultadoFuerzaEnNoticia * ResultadoAnalisis::getResultadoFuerzaEnNoti
     return this->resultado_fuerza_en_noticia;
 }
 
+tecnicas::ResultadoSentimiento * ResultadoAnalisis::getResultadoSentimiento()
+{
+    return this->resultado_sentimiento;
+}
+
 // getters de IAlmacenable
 
 std::string ResultadoAnalisis::getValorAlmacenable()
@@ -41,11 +46,24 @@ void ResultadoAnalisis::setResultadoFuerzaEnNoticia(tecnicas::ResultadoFuerzaEnN
     this->resultado_fuerza_en_noticia = resultado_fuerza_en_noticia;
 }
 
+void ResultadoAnalisis::setResultadoSentimiento(tecnicas::ResultadoSentimiento * resultado_sentimiento)
+{
+    this->resultado_sentimiento = resultado_sentimiento;
+}
+
 // METODOS
 
-unsigned int ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)
+void ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)
 {
-    return this->resultado_fuerza_en_noticia->sumarFuerzas(resultado_a_combinar->getResultadoFuerzaEnNoticia());
+    if(nullptr != this->resultado_fuerza_en_noticia && nullptr != resultado_a_combinar->getResultadoFuerzaEnNoticia())
+    {
+        this->resultado_fuerza_en_noticia->sumarFuerzas(resultado_a_combinar->getResultadoFuerzaEnNoticia());
+    }
+
+    if( nullptr != this->resultado_sentimiento && nullptr != resultado_a_combinar->getResultadoSentimiento())
+    {
+        this->resultado_sentimiento->sumar(resultado_a_combinar->getResultadoSentimiento());
+    }
 }
 
 // metodos de IContieneJson
@@ -58,6 +76,8 @@ bool ResultadoAnalisis::armarJson()
 
     this->getJson()->agregarAtributoJson("fuerza_en_noticia", this->resultado_fuerza_en_noticia->getJson());
 
+    this->getJson()->agregarAtributoJson("sentimiento", this->resultado_sentimiento->getJson());
+
     return true;
 }
 
@@ -65,8 +85,13 @@ bool ResultadoAnalisis::parsearJson()
 {
     herramientas::utiles::Json * json_fuerza_en_noticia = this->getJson()->getAtributoValorJson("fuerza_en_noticia");
 
+    herramientas::utiles::Json * json_sentimiento = this->getJson()->getAtributoValorJson("sentimiento");
+
     this->resultado_fuerza_en_noticia->setJson(json_fuerza_en_noticia);
     this->resultado_fuerza_en_noticia->parsearJson();
+
+    this->resultado_sentimiento->setJson(json_sentimiento);
+    this->resultado_sentimiento->parsearJson();
 
     return true;
 }

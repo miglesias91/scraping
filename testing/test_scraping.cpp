@@ -113,7 +113,7 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
 
         analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
 
-        fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+        fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
 
         std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
@@ -221,14 +221,6 @@ TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
 
     std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_recuperadas;
     gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
-
-    //gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
-    //
-    //gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
-
-    //gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
-
-    //gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
 
     ASSERT_EQ("cuenta_uno", cuentas_twitter_recuperadas[0]->getNombre());
     ASSERT_EQ("cuenta_dos", cuentas_twitter_recuperadas[1]->getNombre());

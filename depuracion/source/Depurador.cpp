@@ -7,6 +7,7 @@
 #include <fstream>
 
 // utiles
+#include <utiles/include/Stemming.h>
 #include <utiles/include/FuncionesString.h>
 #include <utiles/include/ImposibleAbrirArchivo.h>
 
@@ -128,6 +129,8 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
     unsigned int cantidad_palabras_muy_largas_eliminadas = this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
     unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
+
+    herramientas::utiles::Stemming::stemUTF8(bolsa_de_palabras);
 
     scraping::Logger::debug("depurar: {\n"
         "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +

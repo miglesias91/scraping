@@ -28,11 +28,9 @@ void Analizador::analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis 
 
     // aplico 'sentimiento'
     tecnicas::Sentimiento sentimiento;
-    tecnicas::ResultadoSentimiento resultado_sentimiento;
+    tecnicas::ResultadoSentimiento * resultado_sentimiento = new tecnicas::ResultadoSentimiento();
     sentimiento.aplicar(contenido_a_analizar, resultado_sentimiento);
-    resultado_analisis->setResultadoSentimiento(resultado_fuerza_en_noticia);
-
-    return new scraping::preparacion::ResultadoAnalisisContenido();
+    resultado_analisis->setResultadoSentimiento(resultado_sentimiento);
 }
 
 // GETTERS

@@ -40,6 +40,7 @@ public:
     static std::string claveIDContenidoActual();
 
     static std::string archivoConfigLog();
+    static std::string archivoConfigSentimiento();
 
     // TAGS
 
@@ -64,6 +65,7 @@ public:
     static std::string tagPrefijoResultadoDiario();
 
     static std::string tagArchivoConfigLog();
+    static std::string tagArchivoConfigSentimiento();
 
 private:
 
@@ -94,6 +96,7 @@ private:
     static std::string clave_id_contenido_actual;
 
     static std::string archivo_config_log;
+    static std::string archivo_config_sentimiento;
 
 };
 

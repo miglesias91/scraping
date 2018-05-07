@@ -1,0 +1,15 @@
+{
+    "path_vocabulario" : "vocabulario_curado_3k.txt",
+
+    "clasificador_dos_clases" : 
+    {
+        "path_red" : "clasificador_vocab3k_2clases.net",
+        "path_mapa_clases" : "mapa_ids_2clases.csv"
+    },
+
+    "clasificador_tres_clases" : 
+    {
+        "path_red" : "clasificador_vocab3k_3clases.net",
+        "path_mapa_clases" : "mapa_ids_3clases.csv"
+    }
+}

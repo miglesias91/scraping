@@ -20,7 +20,7 @@ TEST(Analisis, fuerzaEnNoticiaAnalisisCorrecto)
     std::vector<std::string> bolsa_de_palabras_1 = { "jerusalen", "suenan", "sirenas", "alarma", "sur", "israel", "disparo", "cohete", "gaza" };
 
     tecnicas::ResultadoFuerzaEnNoticia resultado_1;
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, &resultado_1);
 
     ASSERT_EQ(9, resultado_1.cantidadDePalabras());
     ASSERT_EQ(std::round(1000. * 1.73239374), std::round(1000. * resultado_1.getFuerza("jerusalen")));
@@ -29,7 +29,7 @@ TEST(Analisis, fuerzaEnNoticiaAnalisisCorrecto)
     std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
 
     tecnicas::ResultadoFuerzaEnNoticia resultado_2;
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, &resultado_2);
     
     ASSERT_EQ(9, resultado_2.cantidadDePalabras());
     ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_2.getFuerza("jerusalen")));
@@ -46,7 +46,7 @@ TEST(Analisis, resultadoFuerzaEnNoticiaArmarJsonCorrectamente)
     std::vector<std::string> bolsa_de_palabras = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
 
     tecnicas::ResultadoFuerzaEnNoticia resultado;
-    fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras, &resultado);
 
     resultado.armarJson();
 
@@ -72,10 +72,10 @@ TEST(Analisis, resultadoFuerzaEnNoticiaSumarFuerzasCorrectamente)
     std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
 
     tecnicas::ResultadoFuerzaEnNoticia resultado_1;
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, &resultado_1);
 
     tecnicas::ResultadoFuerzaEnNoticia resultado_2;
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, &resultado_2);
 
     resultado_1.sumarFuerzas(&resultado_2);
 
@@ -94,11 +94,11 @@ TEST(Analisis, resultadoAnalisisCombinarCorrectamente)
     std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_1 = new tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, *resultado_1);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_1, resultado_1);
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_1(resultado_1);
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, *resultado_2);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_2(resultado_2);
 
     resultado_analisis_1.combinarCon(&resultado_analisis_2);
@@ -119,7 +119,7 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
     std::vector<std::string> bolsa_de_palabras = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
 
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
 
@@ -148,7 +148,7 @@ TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
     std::vector<std::string> bolsa_de_palabras = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new tecnicas::ResultadoFuerzaEnNoticia();
-    fuerza_en_noticia.aplicar(bolsa_de_palabras, *resultado_fuerza_en_noticia);
+    fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
 
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
     resultado_analisis.setId(new herramientas::utiles::ID(123));

@@ -18,6 +18,9 @@ using namespace scraping;
 // depuracion
 #include <depuracion/include/Depurador.h>
 
+// analisis
+#include <analisis/include/Sentimiento.h>
+
 typedef scraping::IAdministradorScraping* (*admin)();
 
 IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
@@ -52,6 +55,8 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
     Logger::marca("INICIO SCRAPING");
 
     depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
+
+    analisis::tecnicas::Sentimiento::cargar(ConfiguracionScraping::archivoConfigSentimiento());
 
     if (ConfiguracionScraping::scrapingLocal())
     {
