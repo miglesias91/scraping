@@ -74,18 +74,32 @@ bool ResultadoAnalisis::armarJson()
 
     this->resultado_fuerza_en_noticia->armarJson();
 
-    this->getJson()->agregarAtributoJson("fuerza_en_noticia", this->resultado_fuerza_en_noticia->getJson());
+    if(nullptr != this->resultado_fuerza_en_noticia)
+    {
+        this->getJson()->agregarAtributoJson("fuerza_en_noticia", this->resultado_fuerza_en_noticia->getJson());
+    }
 
-    this->getJson()->agregarAtributoJson("sentimiento", this->resultado_sentimiento->getJson());
+    if (nullptr != this->resultado_sentimiento)
+    {
+        this->getJson()->agregarAtributoJson("sentimiento", this->resultado_sentimiento->getJson());
+    }
 
     return true;
 }
 
 bool ResultadoAnalisis::parsearJson()
 {
-    herramientas::utiles::Json * json_fuerza_en_noticia = this->getJson()->getAtributoValorJson("fuerza_en_noticia");
+    herramientas::utiles::Json * json_fuerza_en_noticia = nullptr;
+    if(this->getJson()->contieneAtributo("fuerza_en_noticia"))
+    {
+        json_fuerza_en_noticia = this->getJson()->getAtributoValorJson("fuerza_en_noticia");
+    }
 
-    herramientas::utiles::Json * json_sentimiento = this->getJson()->getAtributoValorJson("sentimiento");
+    herramientas::utiles::Json * json_sentimiento = nullptr;
+    if (this->getJson()->contieneAtributo("sentimiento"))
+    {
+        json_sentimiento = this->getJson()->getAtributoValorJson("sentimiento");
+    }
 
     this->resultado_fuerza_en_noticia->setJson(json_fuerza_en_noticia);
     this->resultado_fuerza_en_noticia->parsearJson();

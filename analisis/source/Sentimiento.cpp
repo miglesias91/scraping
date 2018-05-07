@@ -2,7 +2,6 @@
 
 // stl
 #include <algorithm>
-#include <execution>
 
 // herramientas
 #include <utiles/include/Stemming.h>
@@ -101,39 +100,65 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
 
     if (prediccion_tres_clases == positivo && prediccion_tres_clases == positivo)
     {
-        resultado_sentimiento->aumentarPositividad(1.0f);
+        std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+            [&resultado_sentimiento](std::string palabra)
+        {
+            resultado_sentimiento->aumentarPositividad(palabra, 1.0f);
+        });
+
         return;
     }
 
     if (prediccion_tres_clases == negativo && prediccion_tres_clases == negativo)
     {
-        resultado_sentimiento->aumentarNegatividad(1.0f);
+        std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+            [&resultado_sentimiento](std::string palabra)
+        {
+            resultado_sentimiento->aumentarNegatividad(palabra, 1.0f);
+        });
         return;
     }
 
     if (prediccion_tres_clases == neutral && prediccion_dos_clases == positivo)
     {
-        resultado_sentimiento->aumentarPositividad(0.7f);
-        resultado_sentimiento->aumentarNeutralidad(0.3f);
+        std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+            [&resultado_sentimiento](std::string palabra)
+        {
+            resultado_sentimiento->aumentarPositividad(palabra, 0.7f);
+            resultado_sentimiento->aumentarNeutralidad(palabra, 0.3f);
+        });
+
         return;
     }
 
     if (prediccion_tres_clases == neutral && prediccion_dos_clases == negativo)
     {
-        resultado_sentimiento->aumentarNegatividad(0.7f);
-        resultado_sentimiento->aumentarNeutralidad(0.3f);
+        std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+            [&resultado_sentimiento](std::string palabra)
+        {
+            resultado_sentimiento->aumentarNegatividad(palabra, 0.7f);
+            resultado_sentimiento->aumentarNeutralidad(palabra, 0.3f);
+        });
         return;
     }
 
     if (prediccion_tres_clases == negativo && prediccion_dos_clases == positivo)
     {
-        resultado_sentimiento->aumentarNeutralidad(1.0f);
+        std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+            [&resultado_sentimiento](std::string palabra)
+        {
+            resultado_sentimiento->aumentarNegatividad(palabra, 1.0f);
+        });
         return;
     }
 
     if (prediccion_tres_clases == positivo && prediccion_dos_clases == negativo)
     {
-        resultado_sentimiento->aumentarNeutralidad(1.0f);
+        std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+            [&resultado_sentimiento](std::string palabra)
+        {
+            resultado_sentimiento->aumentarNegatividad(palabra, 1.0f);
+        });
         return;
     }
 }
