@@ -5,8 +5,11 @@
 
 using namespace scraping::preparacion;
 
-ResultadoAnalisisContenido::ResultadoAnalisisContenido(scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia)
-    : ResultadoAnalisis(ConfiguracionScraping::prefijoResultadoContenido(), resultado_fuerza_en_noticia)
+ResultadoAnalisisContenido::ResultadoAnalisisContenido(
+    scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia,
+    scraping::analisis::tecnicas::ResultadoSentimiento * resultado_sentimiento
+)
+    : ResultadoAnalisis(ConfiguracionScraping::prefijoResultadoContenido(), resultado_fuerza_en_noticia, resultado_sentimiento)
 {
 }
 

@@ -75,7 +75,7 @@ void ResultadoSentimiento::aumentarPositividad(const std::string & palabra, doub
 {
     if (this->sentimiento_por_palabra.count(palabra))
     {
-        (&this->sentimiento_por_palabra[palabra])->positividad.suma += positividad;
+        (&this->sentimiento_por_palabra[palabra])->positividad += positividad;
     }
     else
     {
@@ -88,7 +88,7 @@ void ResultadoSentimiento::aumentarNegatividad(const std::string & palabra, doub
 {
     if (this->sentimiento_por_palabra.count(palabra))
     {
-        (&this->sentimiento_por_palabra[palabra])->negatividad.suma += negatividad;
+        (&this->sentimiento_por_palabra[palabra])->negatividad += negatividad;
     }
     else
     {
@@ -101,7 +101,7 @@ void ResultadoSentimiento::aumentarNeutralidad(const std::string & palabra, doub
 {
     if (this->sentimiento_por_palabra.count(palabra))
     {
-        (&this->sentimiento_por_palabra[palabra])->neutralidad.suma += neutralidad;
+        (&this->sentimiento_por_palabra[palabra])->neutralidad += neutralidad;
     }
     else
     {

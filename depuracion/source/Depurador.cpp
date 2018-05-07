@@ -130,7 +130,7 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
 
     unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
 
-    herramientas::utiles::Stemming::stemUTF8(bolsa_de_palabras);
+    // herramientas::utiles::Stemming::stemUTF8(bolsa_de_palabras);
 
     scraping::Logger::debug("depurar: {\n"
         "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +

@@ -11,10 +11,16 @@ ResultadoAnalisis::ResultadoAnalisis(std::string grupo, tecnicas::ResultadoFuerz
 
 ResultadoAnalisis::~ResultadoAnalisis()
 {
-    if (NULL != this->resultado_fuerza_en_noticia)
+    if (nullptr != this->resultado_fuerza_en_noticia)
     {
         delete this->resultado_fuerza_en_noticia;
-        this->resultado_fuerza_en_noticia = NULL;
+        this->resultado_fuerza_en_noticia = nullptr;
+    }
+
+    if (nullptr != this->resultado_sentimiento)
+    {
+        delete this->resultado_sentimiento;
+        this->resultado_sentimiento = nullptr;
     }
 }
 
@@ -72,15 +78,15 @@ bool ResultadoAnalisis::armarJson()
 {
     this->getJson()->reset();
 
-    this->resultado_fuerza_en_noticia->armarJson();
-
     if(nullptr != this->resultado_fuerza_en_noticia)
     {
+        this->resultado_fuerza_en_noticia->armarJson();
         this->getJson()->agregarAtributoJson("fuerza_en_noticia", this->resultado_fuerza_en_noticia->getJson());
     }
 
     if (nullptr != this->resultado_sentimiento)
     {
+        this->resultado_sentimiento->armarJson();
         this->getJson()->agregarAtributoJson("sentimiento", this->resultado_sentimiento->getJson());
     }
 
@@ -93,19 +99,17 @@ bool ResultadoAnalisis::parsearJson()
     if(this->getJson()->contieneAtributo("fuerza_en_noticia"))
     {
         json_fuerza_en_noticia = this->getJson()->getAtributoValorJson("fuerza_en_noticia");
+        this->resultado_fuerza_en_noticia->setJson(json_fuerza_en_noticia);
+        this->resultado_fuerza_en_noticia->parsearJson();
     }
 
     herramientas::utiles::Json * json_sentimiento = nullptr;
     if (this->getJson()->contieneAtributo("sentimiento"))
     {
         json_sentimiento = this->getJson()->getAtributoValorJson("sentimiento");
+        this->resultado_sentimiento->setJson(json_sentimiento);
+        this->resultado_sentimiento->parsearJson();
     }
-
-    this->resultado_fuerza_en_noticia->setJson(json_fuerza_en_noticia);
-    this->resultado_fuerza_en_noticia->parsearJson();
-
-    this->resultado_sentimiento->setJson(json_sentimiento);
-    this->resultado_sentimiento->parsearJson();
 
     return true;
 }
