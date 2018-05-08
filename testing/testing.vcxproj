@@ -144,7 +144,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main_testing.cpp" />
-    <ClCompile Include="test_analisis.cpp" />
+    <ClCompile Include="test_analisis.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
     <ClCompile Include="test_depuracion.cpp" />
     <ClCompile Include="test_extraccion.cpp" />
     <ClCompile Include="test_facebook.cpp" />

@@ -124,8 +124,8 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
         std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
             [&resultado_sentimiento](std::string palabra)
         {
-            resultado_sentimiento->aumentarPositividad(palabra, 0.7f);
-            resultado_sentimiento->aumentarNeutralidad(palabra, 0.3f);
+            //resultado_sentimiento->aumentarPositividad(palabra, 0.7f);
+            resultado_sentimiento->aumentarNeutralidad(palabra, 1.0f);
         });
 
         return;
@@ -136,8 +136,8 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
         std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
             [&resultado_sentimiento](std::string palabra)
         {
-            resultado_sentimiento->aumentarNegatividad(palabra, 0.7f);
-            resultado_sentimiento->aumentarNeutralidad(palabra, 0.3f);
+            //resultado_sentimiento->aumentarNegatividad(palabra, 0.7f);
+            resultado_sentimiento->aumentarNeutralidad(palabra, 1.0f);
         });
         return;
     }
@@ -147,7 +147,7 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
         std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
             [&resultado_sentimiento](std::string palabra)
         {
-            resultado_sentimiento->aumentarNegatividad(palabra, 1.0f);
+            resultado_sentimiento->aumentarNeutralidad(palabra, 1.0f);
         });
         return;
     }
@@ -157,7 +157,7 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
         std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
             [&resultado_sentimiento](std::string palabra)
         {
-            resultado_sentimiento->aumentarNegatividad(palabra, 1.0f);
+            resultado_sentimiento->aumentarNeutralidad(palabra, 1.0f);
         });
         return;
     }

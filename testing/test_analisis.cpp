@@ -7,6 +7,8 @@
 // analisis
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
+#include <analisis/include/Sentimiento.h>
+#include <analisis/include/ResultadoSentimiento.h>
 
 // preparacion
 #include <preparacion/include/ResultadoAnalisisContenido.h>
@@ -166,4 +168,78 @@ TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
     ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
     ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
     ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
+}
+
+
+TEST(Analisis, sentimiento_analisis_correcto)
+{
+    tecnicas::Sentimiento sentimiento;
+
+    std::vector<std::string> bolsa_de_palabras_1 = { "jerusalen", "suenan", "sirenas", "alarma", "sur", "israel", "disparo", "cohete", "gaza" };
+
+    tecnicas::ResultadoSentimiento resultado_1;
+    sentimiento.aplicar(bolsa_de_palabras_1, &resultado_1);
+
+    //ASSERT_EQ(9, resultado_1.cantidadDePalabras());
+    //ASSERT_EQ(std::round(1000. * 1.73239374), std::round(1000. * resultado_1.getFuerza("jerusalen")));
+    //ASSERT_EQ(std::round(1000. * 1.73239374), std::round(1000. * resultado_1.getFuerza("gaza")));
+
+    //std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+
+    //tecnicas::ResultadoSentimiento resultado_2;
+    //sentimiento.aplicar(bolsa_de_palabras_2, &resultado_2);
+
+    //ASSERT_EQ(9, resultado_2.cantidadDePalabras());
+    //ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_2.getFuerza("jerusalen")));
+    //ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_2.getFuerza("israel")));
+    //ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_2.getFuerza("gaza")));
+
+    //std::vector<std::pair<std::string, float>> top_3 = resultado_2.getTop(3);
+}
+
+TEST(Analisis, resultado_sentimiento_armar_json_correctamente)
+{
+    tecnicas::Sentimiento sentimiento;
+
+    std::vector<std::string> bolsa_de_palabras = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+
+    tecnicas::ResultadoSentimiento resultado;
+    sentimiento.aplicar(bolsa_de_palabras, &resultado);
+
+    resultado.armarJson();
+
+    //std::string json_string = resultado.getJson()->jsonString();
+    //std::string json_string_correcto = "{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"gaza_1.8921\",\"suenan_1.8921\",\"sur_1.8921\",\"sirenas_1.8921\",\"alarma_1.8921\",\"disparo_1.8921\",\"cohete_1.8921\"]}";
+
+    //ASSERT_STREQ(json_string_correcto.c_str(), json_string.c_str());
+
+    //tecnicas::ResultadoFuerzaEnNoticia resultado_nuevo;
+    //resultado_nuevo.setJson(new herramientas::utiles::Json(json_string_correcto));
+    //resultado_nuevo.parsearJson();
+
+    //ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado.getFuerza("jerusalen")));
+    //ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado.getFuerza("israel")));
+    //ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado.getFuerza("gaza")));
+}
+
+TEST(Analisis, resultado_sentimiento_sumar_correctamente)
+{
+    tecnicas::Sentimiento sentimiento;
+
+    std::vector<std::string> bolsa_de_palabras_1 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
+    std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel", "holis", "chau" };
+
+    tecnicas::ResultadoSentimiento resultado_1;
+    sentimiento.aplicar(bolsa_de_palabras_1, &resultado_1);
+
+    tecnicas::ResultadoSentimiento resultado_2;
+    sentimiento.aplicar(bolsa_de_palabras_2, &resultado_2);
+
+    //resultado_1.sumarFuerzas(&resultado_2);
+
+    //ASSERT_EQ(std::round(1000. * 11.4948416), std::round(1000. * resultado_1.getFuerza("jerusalen")));
+    //ASSERT_EQ(std::round(1000. * 7.66322803), std::round(1000. * resultado_1.getFuerza("israel")));
+    //ASSERT_EQ(std::round(1000. * 3.83161402), std::round(1000. * resultado_1.getFuerza("gaza")));
+    //ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_1.getFuerza("holis")));
+    //ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_1.getFuerza("chau")));
 }
