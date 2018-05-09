@@ -84,7 +84,6 @@ public:
 private:
 
     // METODOS PRIVADOS
-    virtual unsigned int hilo_eliminar_stopwords(std::vector<std::string> & bolsa_de_palabras, unsigned int desde, unsigned int hasta);
 
     // ATRIBUTOS
 

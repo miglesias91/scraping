@@ -130,8 +130,6 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
 
     unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
 
-    // herramientas::utiles::Stemming::stemUTF8(bolsa_de_palabras);
-
     scraping::Logger::debug("depurar: {\n"
         "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +
         "pasado a minuscula: " + std::to_string(pasado_a_minuscula) + ",\n" +
@@ -141,8 +139,6 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
         "palabras muy cortas eliminadas: " + std::to_string(cantidad_palabras_muy_cortas_eliminadas) + ",\n" +
         "palabras muy largas eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n" +
         "stopwords eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n}"
-        //"preposiciones eliminadas: " + std::to_string(cantidad_preposiciones_eliminadas) + ",\n" +
-        //"pronombres eliminados: " + std::to_string(cantidad_pronombres_eliminados) + "\n}"
     );
 
     ContenidoDepurado contenido_depurado(bolsa_de_palabras);
@@ -398,40 +394,52 @@ std::vector<std::string> Depurador::tokenizarTexto(std::string texto_a_tokenizar
 
 unsigned int Depurador::eliminarPalabrasMuyCortas(std::vector<std::string> & bolsa_de_palabras)
 {
-    unsigned int cantidad_de_palabras_cortas_eliminadas = 0;
-    for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-    {
-        if (3 > it_palabra->size())
-        {
-            it_palabra = bolsa_de_palabras.erase(it_palabra);
-            cantidad_de_palabras_cortas_eliminadas++;
-        }
-        else
-        {
-            it_palabra++;
-        }
-    }
+    unsigned int cantidad_inicial = bolsa_de_palabras.size();
+    
+    bolsa_de_palabras.erase(std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [](std::string palabra) { return palabra.size() < 3; }), bolsa_de_palabras.end());
 
-    return cantidad_de_palabras_cortas_eliminadas;
+    //bolsa_de_palabras.erase(
+    //    std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [](std::string palabra) { palabra.size() < 3; }),
+    //    bolsa_de_palabras.end());
+
+    //for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+    //{
+    //    if (3 > it_palabra->size())
+    //    {
+    //        it_palabra = bolsa_de_palabras.erase(it_palabra);
+    //        cantidad_de_palabras_cortas_eliminadas++;
+    //    }
+    //    else
+    //    {
+    //        it_palabra++;
+    //    }
+    //}
+
+    return cantidad_inicial - bolsa_de_palabras.size();
 }
 
 unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string> & bolsa_de_palabras)
 {
-    unsigned int cantidad_de_palabras_largas_eliminadas = 0;
-    for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-    {
-        if (15 < it_palabra->size())
-        {
-            it_palabra = bolsa_de_palabras.erase(it_palabra);
-            cantidad_de_palabras_largas_eliminadas++;
-        }
-        else
-        {
-            it_palabra++;
-        }
-    }
+    unsigned int cantidad_inicial = bolsa_de_palabras.size();
 
-    return cantidad_de_palabras_largas_eliminadas;
+    bolsa_de_palabras.erase(
+        std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [](std::string palabra) { return palabra.size() > 15; }),
+        bolsa_de_palabras.end());
+
+    //for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
+    //{
+    //    if (15 < it_palabra->size())
+    //    {
+    //        it_palabra = bolsa_de_palabras.erase(it_palabra);
+    //        cantidad_de_palabras_largas_eliminadas++;
+    //    }
+    //    else
+    //    {
+    //        it_palabra++;
+    //    }
+    //}
+
+    return cantidad_inicial - bolsa_de_palabras.size();
 }
 
 unsigned int Depurador::eliminarPreposiciones(std::vector<std::string> & bolsa_de_palabras)
@@ -471,7 +479,7 @@ unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_pa
     std::vector<std::string> pronombres_personales_tonicos = { "conmigo", "contigo", "vos", "usted", "ella", "ello", "consigo", "nosotros", "nosotras", "vosotros", "vosotras",
         "ustedes", "ellos", "ellas" };
 
-    // los ultimosde los "personales atonos" no son pronombres, sino que son "articulos".
+    // los ultimos de los "personales atonos" no son pronombres, sino que son "articulos".
     std::vector<std::string> pronombres_personales_atonos = { "nos", "los", "las", "les", "del" };
 
     // los ultimos de los "posesivos" no son pronombres, sino que son "adjetivos posesivos".
@@ -518,37 +526,15 @@ unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_pa
 
 unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras)
 {
-    unsigned int cantidad_de_stopwords_eliminadas = 0;
+    std::sort(bolsa_de_palabras.begin(), bolsa_de_palabras.end());
 
-    std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
-        []()
-    {
-        // ver q onda: probar con 'std::includes' y con 'std::set_difference'.
-    });
+    std::vector<std::string> diff;
 
-    std::for_each(stopwords_espaniol.begin(), stopwords_espaniol.end(),
-        [&bolsa_de_palabras](std::string stopword)
-    {
+    std::set_difference(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), stopwords_espaniol.begin(), stopwords_espaniol.end(), std::inserter(diff, diff.begin()));
 
-    });
+    unsigned int cantidad_de_stopwords_eliminadas = bolsa_de_palabras.size() - diff.size();
 
-    for (std::vector<std::string>::iterator it_stopword = stopwords_espaniol.begin(); it_stopword != stopwords_espaniol.end(); it_stopword++)
-    {
-        for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-        {
-            std::string palabra_sin_tilde = std::string(*it_palabra);
-            this->eliminarTildes(palabra_sin_tilde);
-            if (0 == it_stopword->compare(palabra_sin_tilde))
-            {
-                it_palabra = bolsa_de_palabras.erase(it_palabra);
-                cantidad_de_stopwords_eliminadas++;
-            }
-            else
-            {
-                it_palabra++;
-            }
-        }
-    }
+    bolsa_de_palabras = diff;
 
     return cantidad_de_stopwords_eliminadas;
 }
@@ -556,29 +542,3 @@ unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_pal
 // CONSULTAS
 
 // METODOS PRIVADOS
-
-
-unsigned int Depurador::hilo_eliminar_stopwords(std::vector<std::string>& bolsa_de_palabras, unsigned int desde, unsigned int hasta)
-{
-    std::unique_lock<std::mutex> lock(this->mutex);
-    unsigned int cantidad_de_stopwords_eliminadas = 0;
-    for (std::vector<std::string>::iterator it_stopword = stopwords_espaniol.begin() + desde; it_stopword != stopwords_espaniol.begin() + hasta; it_stopword++)
-    {
-        for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-        {
-            std::string palabra_sin_tilde = std::string(*it_palabra);
-            this->eliminarTildes(palabra_sin_tilde);
-            if (0 == it_stopword->compare(palabra_sin_tilde))
-            {
-                it_palabra = bolsa_de_palabras.erase(it_palabra);
-                cantidad_de_stopwords_eliminadas++;
-            }
-            else
-            {
-                it_palabra++;
-            }
-        }
-    }
-
-    return cantidad_de_stopwords_eliminadas;
-}

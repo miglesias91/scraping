@@ -60,15 +60,15 @@ TEST(Depuracion, depurarTexto)
     std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
 
     ASSERT_EQ(9, bolsa_de_palabras.size());
-    ASSERT_STREQ("jerusalen", bolsa_de_palabras[0].c_str());
-    ASSERT_STREQ("suenan", bolsa_de_palabras[1].c_str());
-    ASSERT_STREQ("sirenas", bolsa_de_palabras[2].c_str());
-    ASSERT_STREQ("alarma", bolsa_de_palabras[3].c_str());
-    ASSERT_STREQ("sur", bolsa_de_palabras[4].c_str());
-    ASSERT_STREQ("israel", bolsa_de_palabras[5].c_str());
-    ASSERT_STREQ("disparo", bolsa_de_palabras[6].c_str());
-    ASSERT_STREQ("cohete", bolsa_de_palabras[7].c_str());
-    ASSERT_STREQ("gaza", bolsa_de_palabras[8].c_str());
+    ASSERT_STREQ("alarma", bolsa_de_palabras[0].c_str());
+    ASSERT_STREQ("cohete", bolsa_de_palabras[1].c_str());
+    ASSERT_STREQ("disparo", bolsa_de_palabras[2].c_str());
+    ASSERT_STREQ("gaza", bolsa_de_palabras[3].c_str());
+    ASSERT_STREQ("israel", bolsa_de_palabras[4].c_str());
+    ASSERT_STREQ("jerusalen", bolsa_de_palabras[5].c_str());
+    ASSERT_STREQ("sirenas", bolsa_de_palabras[6].c_str());
+    ASSERT_STREQ("suenan", bolsa_de_palabras[7].c_str());
+    ASSERT_STREQ("sur", bolsa_de_palabras[8].c_str());
 }
 
 TEST(Depuracion, depurarTextoConTildes)
@@ -88,15 +88,15 @@ TEST(Depuracion, depurarTextoConTildes)
     std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
 
     ASSERT_EQ(9, bolsa_de_palabras.size());
-    ASSERT_STREQ("jerusalén", bolsa_de_palabras[0].c_str());
-    ASSERT_STREQ("suenan", bolsa_de_palabras[1].c_str());
-    ASSERT_STREQ("sirenas", bolsa_de_palabras[2].c_str());
-    ASSERT_STREQ("alarma", bolsa_de_palabras[3].c_str());
-    ASSERT_STREQ("sur", bolsa_de_palabras[4].c_str());
-    ASSERT_STREQ("israel", bolsa_de_palabras[5].c_str());
-    ASSERT_STREQ("disparo", bolsa_de_palabras[6].c_str());
-    ASSERT_STREQ("cohete", bolsa_de_palabras[7].c_str());
-    ASSERT_STREQ("gaza", bolsa_de_palabras[8].c_str());
+    ASSERT_STREQ("alarma", bolsa_de_palabras[0].c_str());
+    ASSERT_STREQ("cohete", bolsa_de_palabras[1].c_str());
+    ASSERT_STREQ("disparo", bolsa_de_palabras[2].c_str());
+    ASSERT_STREQ("gaza", bolsa_de_palabras[3].c_str());
+    ASSERT_STREQ("israel", bolsa_de_palabras[4].c_str());
+    ASSERT_STREQ("jerusalén", bolsa_de_palabras[5].c_str());
+    ASSERT_STREQ("sirenas", bolsa_de_palabras[6].c_str());
+    ASSERT_STREQ("suenan", bolsa_de_palabras[7].c_str());
+    ASSERT_STREQ("sur", bolsa_de_palabras[8].c_str());
 }
 
 TEST(Depuracion, reemplazarCaracteresEspeciales)
@@ -110,6 +110,20 @@ TEST(Depuracion, reemplazarCaracteresEspeciales)
     depurador.reemplazarTodosLosCaracteresEspeciales(caracteres_normales_especiales_a_reemplazar);
 
     ASSERT_STREQ(caracteres_reemplazados.c_str(), caracteres_normales_especiales_a_reemplazar.c_str());
+}
+
+TEST(Depuracion, reemplazarCaracteresEspecialesDeTexto)
+{
+    //std::string texto = "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibiran una compensacion.\nâ€ªEs sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometiÃ³ que, con la nueva fÃ³rmula, las jubilaciones iban a aumentar mÃ¡s que la inflaciÃ³n.Falso.La inflaciÃ³n estÃ¡ descontrolada y las jubilaciones no paran de perder poder adquisitivo.â€¬\nPor eso, resulta necesario que el Congreso de la NaciÃ³n haga valer las facultades que le otorga la ConstituciÃ³n Nacional para reparar el daÃ±o que el Gobierno de Cambiemos ha causado a mÃ¡s de diez millones de argentinxs.\nConocÃ© el proyecto completoðŸ‘‡ðŸ¼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
+    //std::wstring texto_con_simbolos = L"Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibirán una compensación.\n‪Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometió que, con la nueva fórmula, las jubilaciones iban a aumentar más que la inflación.Falso.La inflación está descontrolada y las jubilaciones no paran de perder poder adquisitivo.‬\nPor eso, resulta necesario que el Congreso de la Nación haga valer las facultades que le otorga la Constitución Nacional para reparar el daño que el Gobierno de Cambiemos ha causado a más de diez millones de argentinxs.\nConocé el proyecto completo👇🏼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
+    std::string texto_con_simbolos = "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibirán una compensación.\n‪Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometió que, con la nueva fórmula, las jubilaciones iban a aumentar más que la inflación.Falso.La inflación está descontrolada y las jubilaciones no paran de perder poder adquisitivo.‬\nPor eso, resulta necesario que el Congreso de la Nación haga valer las facultades que le otorga la Constitución Nacional para reparar el daño que el Gobierno de Cambiemos ha causado a más de diez millones de argentinxs.\nConocé el proyecto completo👇🏼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
+
+    scraping::depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+
+    depurador.reemplazarTodosLosCaracteresEspeciales(texto_con_simbolos);
+
+    //ASSERT_STREQ(caracteres_reemplazados.c_str(), caracteres_normales_especiales_a_reemplazar.c_str());
 }
 
 TEST(Depuracion, eliminarTildes)
@@ -153,7 +167,7 @@ TEST(Depuracion, eliminarSignosYPuntuacion)
 
 TEST(Depuracion, eliminarURLs)
 {
-    std::string texto_con_urls = "Jerusalén: ftp:\/\/t.co\/asdijv1m2_1234.html#matorito suenan sirenas de alarma en el sur de Israel http:\/\/userid:password@example.com:8080\/ tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
+    std::string texto_con_urls = "Jerusalén: ftp:\/\/t.co\/asdijv1m2_1234.html#matorito suenan sirenas de alarma en el sur de Israel http:\/\/userid:password@example.com:8080\/tras el disparo de un cohete desde Gaza…https:\/\/t.co\/eqSJm9AkQB";
     std::string texto_sin_urls = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… ";
 
     scraping::depuracion::Depurador depurador;
@@ -214,4 +228,18 @@ TEST(Depuracion, eliminarPreposiciones)
     ASSERT_STREQ("mucho", palabras_a_depurar[3].c_str());
     ASSERT_STREQ("gusto", palabras_a_depurar[4].c_str());
     ASSERT_STREQ("usted", palabras_a_depurar[5].c_str());
+}
+
+TEST(Depuracion, eliminarStopwords)
+{
+    std::vector<std::string> palabras_a_depurar = { "hola", "que", "tal", "con", "mucho", "gusto", "hacia", "usted", "durante" };
+
+    scraping::depuracion::Depurador depurador;
+    //depurador.cargarStopwords("stopwords_espaniol.txt");
+
+    depurador.eliminarStopwords(palabras_a_depurar);
+
+    ASSERT_STREQ("gusto", palabras_a_depurar[0].c_str());
+    ASSERT_STREQ("hola", palabras_a_depurar[1].c_str());
+    ASSERT_STREQ("tal", palabras_a_depurar[2].c_str());
 }
