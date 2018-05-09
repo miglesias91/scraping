@@ -7,7 +7,7 @@
 #include <fstream>
 
 // utiles
-#include <utiles/include/Stemming.h>
+//#include <utiles/include/Stemming.h>
 #include <utiles/include/FuncionesString.h>
 #include <utiles/include/ImposibleAbrirArchivo.h>
 
@@ -519,6 +519,19 @@ unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_pa
 unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras)
 {
     unsigned int cantidad_de_stopwords_eliminadas = 0;
+
+    std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
+        []()
+    {
+        // ver q onda: probar con 'std::includes' y con 'std::set_difference'.
+    });
+
+    std::for_each(stopwords_espaniol.begin(), stopwords_espaniol.end(),
+        [&bolsa_de_palabras](std::string stopword)
+    {
+
+    });
+
     for (std::vector<std::string>::iterator it_stopword = stopwords_espaniol.begin(); it_stopword != stopwords_espaniol.end(); it_stopword++)
     {
         for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )

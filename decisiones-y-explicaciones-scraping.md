@@ -75,3 +75,10 @@ Este registro se guarda en la base de datos diaria.
 ### 3 - Preparacion
 Se recuperan los resultados de los analisis de cada medio, se los integran y se genera un unico registro (el detallado en la seccion ETAPAS).
 Primero se integran los resultados para cada medio, y luego se integran los resultados de cada medio en un unico registro agrupado por la fecha.
+
+### CUESTIONES APARTE
+
+Se saco el modulo de "json.hpp" de la libreria 'tiny-dnn' porque usaban una version de 'rapidjson' distinta a la utilizada en 'herramientas_desarrollo'. Es decir, elimino toda referencia a la version de 'rapidjson' ubicada en 'tiny-dnn/cereal/external/rapidjson' (se excluyo el archivo "cereal/json.hpp", y se modificaron "network.h" y "deserealiation_helper.h").
+DEBIDO A ESTOS CAMBIOS, quedan DESHABILITADAS las funciones que incluyan operar con formato json, basicamente no se pueden usar 'network::from_json()' ni 'network::to_json()'.
+
+

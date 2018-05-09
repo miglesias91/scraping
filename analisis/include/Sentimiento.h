@@ -44,6 +44,8 @@ public:
     static bool cargar(const configuracion & configuracion_sentimiento);
     static bool cargar(const std::string & path_configuracion_sentimiento);
 
+    static bool liberar();
+
     // metodos ITecnica
 
     virtual void aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado);

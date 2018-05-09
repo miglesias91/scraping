@@ -70,7 +70,7 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
 
 void IAdministradorScraping::liberar()
 {
-    if (true == administradorInfoIniciado())
+        if (true == administradorInfoIniciado())
     {
         delete administrador_info;
     }

@@ -76,6 +76,11 @@ bool Sentimiento::cargar(const std::string & path_configuracion_sentimiento)
     return true;
 }
 
+bool scraping::analisis::tecnicas::Sentimiento::liberar()
+{    
+    return true;
+}
+
 void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IResultadoTecnica * resultado)
 {
     ResultadoSentimiento * resultado_sentimiento = static_cast<ResultadoSentimiento*>(resultado);
@@ -98,7 +103,7 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
     std::string prediccion_dos_clases = "";
     clasificador_dos_clases.predecir(atributos_float_a_predecir, prediccion_dos_clases);
 
-    if (prediccion_tres_clases == positivo && prediccion_tres_clases == positivo)
+    if (prediccion_tres_clases == positivo && prediccion_dos_clases == positivo)
     {
         std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
             [&resultado_sentimiento](std::string palabra)
@@ -109,7 +114,7 @@ void Sentimiento::aplicar(const std::vector<std::string> & bolsa_de_palabras, IR
         return;
     }
 
-    if (prediccion_tres_clases == negativo && prediccion_tres_clases == negativo)
+    if (prediccion_tres_clases == negativo && prediccion_dos_clases == negativo)
     {
         std::for_each(bolsa_de_palabras.begin(), bolsa_de_palabras.end(),
             [&resultado_sentimiento](std::string palabra)

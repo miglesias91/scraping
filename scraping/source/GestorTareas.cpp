@@ -608,13 +608,14 @@ void GestorTareas::depurarYAnalizarContenidos()
         gestor_medios.actualizarMedio(medio_a_actualizar);
 
         delete contenido_analizable;
+        delete contenido;
     });
 
     // libero memoria
-    for (auto & contenido_a_borrar : contenidos_a_analizar)
-    {
-        delete contenido_a_borrar;
-    }
+    //for (auto & contenido_a_borrar : contenidos_a_analizar)
+    //{
+    //    delete contenido_a_borrar;
+    //}
     contenidos_a_analizar.clear();
 
     for (auto & cuenta : cuentas_twitter_existentes)
