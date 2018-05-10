@@ -124,7 +124,7 @@ TEST(Depuracion, reemplazarCaracteresEspecialesDeTexto)
     texto_sin_caracteres_especiales += "Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometio que, con la nueva formula, las jubilaciones iban a aumentar mas que la inflacion.Falso.La inflacion esta descontrolada y las jubilaciones no paran de perder poder adquisitivo.\n";
     texto_sin_caracteres_especiales += "Por eso, resulta necesario que el Congreso de la Nacion haga valer las facultades que le otorga la Constitucion Nacional para reparar el dano que el Gobierno de Cambiemos ha causado a mas de diez millones de argentinxs.\n";
     texto_sin_caracteres_especiales += "Conoce el proyecto completo\n";
-    texto_sin_caracteres_especiales += "http ://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
+    texto_sin_caracteres_especiales += "http://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
 
     scraping::depuracion::Depurador depurador;
     depurador.cargarMapeoUTF8("mapeo_utf8.json");
@@ -240,7 +240,7 @@ TEST(Depuracion, eliminarPreposiciones)
 
 TEST(Depuracion, eliminarStopwords)
 {
-    std::vector<std::string> palabras_a_depurar = { "hola", "que", "tal", "con", "mucho", "gusto", "hacia", "usted", "durante" };
+    std::vector<std::string> palabras_a_depurar = { "hola", "hola", "que", "tal", "con", "mucho", "mucho", "gusto", "hacia", "hacia", "usted", "durante" };
 
     scraping::depuracion::Depurador depurador;
     //depurador.cargarStopwords("stopwords_espaniol.txt");
@@ -249,5 +249,6 @@ TEST(Depuracion, eliminarStopwords)
 
     ASSERT_STREQ("gusto", palabras_a_depurar[0].c_str());
     ASSERT_STREQ("hola", palabras_a_depurar[1].c_str());
-    ASSERT_STREQ("tal", palabras_a_depurar[2].c_str());
+    ASSERT_STREQ("hola", palabras_a_depurar[2].c_str());
+    ASSERT_STREQ("tal", palabras_a_depurar[3].c_str());
 }

@@ -28,6 +28,8 @@ public:
 
     // CONSULTAS
 
+    bool vacio();
+
 private:
 
     std::vector<std::string> bolsa_de_palabras_depurada;

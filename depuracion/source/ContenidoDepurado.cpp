@@ -22,3 +22,8 @@ std::vector<std::string> ContenidoDepurado::getBolsaDePalabras()
 // METODOS
 
 // CONSULTAS
+
+bool ContenidoDepurado::vacio()
+{
+    return this->bolsa_de_palabras_depurada.empty();
+}

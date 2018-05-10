@@ -56,7 +56,7 @@ public:
 
 private:
 
-    static void agruparResultadosDeMediosPorFecha(std::unordered_map<std::string, std::vector<resultados_agrupados_por_medio>> * mapa_resultados_por_fecha);
+    static void agruparResultadosDeMediosPorFecha(std::unordered_map<std::string, std::vector<resultados_agrupados_por_medio>> * mapa_resultados_por_fecha, std::vector<extraccion::Medio*> & medios);
     
 
 };
