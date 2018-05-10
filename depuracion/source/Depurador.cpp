@@ -193,11 +193,11 @@ ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable)
 unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar)
 {
     unsigned int cantidad_de_reemplazos = 0;
-    for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end(); it++)
+    for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end();)
     {
         unsigned char caracter_1 = *it;
 
-        if (241 <= caracter_1)
+        if (240 <= caracter_1)
         {// codepoint con 4 codeunits
             unsigned char caracter_2 = *(it + 1);
             unsigned char caracter_3 = *(it + 2);
@@ -212,13 +212,12 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             cantidad_de_reemplazos += 1;
         }
-        else if (225 <= caracter_1)
+        else if (224 <= caracter_1)
         {// codepoint con 3 codeunits
             unsigned char caracter_2 = *(it + 1);
             unsigned char caracter_3 = *(it + 2);
 
             unsigned int valor_decimal_codepoint = (caracter_1 - 224) * 4096 + (caracter_2 - 128) * 64 + caracter_3 - 128;
-
 
             std::string reemplazo = mapa_utf8->getTraduccion(valor_decimal_codepoint);
 
@@ -227,7 +226,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             cantidad_de_reemplazos += 1;
         }
-        else if (193 <= caracter_1)
+        else if (192 <= caracter_1)
         {// codepoint con 2 codeunits
             unsigned char caracter_2 = *(it + 1);
 
@@ -240,6 +239,10 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
 
             cantidad_de_reemplazos += 1;
         }
+        else
+        {
+            it++;
+        }
 
         if (it == texto_a_depurar.end())
         {// el ultimo caracter es especial, entonces entra en este if.
@@ -247,6 +250,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
             break;
         }
     }
+    
 
     return cantidad_de_reemplazos;
 }

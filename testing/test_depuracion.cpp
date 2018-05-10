@@ -116,14 +116,22 @@ TEST(Depuracion, reemplazarCaracteresEspecialesDeTexto)
 {
     //std::string texto = "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibiran una compensacion.\nâ€ªEs sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometiÃ³ que, con la nueva fÃ³rmula, las jubilaciones iban a aumentar mÃ¡s que la inflaciÃ³n.Falso.La inflaciÃ³n estÃ¡ descontrolada y las jubilaciones no paran de perder poder adquisitivo.â€¬\nPor eso, resulta necesario que el Congreso de la NaciÃ³n haga valer las facultades que le otorga la ConstituciÃ³n Nacional para reparar el daÃ±o que el Gobierno de Cambiemos ha causado a mÃ¡s de diez millones de argentinxs.\nConocÃ© el proyecto completoðŸ‘‡ðŸ¼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
     //std::wstring texto_con_simbolos = L"Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibirán una compensación.\n‪Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometió que, con la nueva fórmula, las jubilaciones iban a aumentar más que la inflación.Falso.La inflación está descontrolada y las jubilaciones no paran de perder poder adquisitivo.‬\nPor eso, resulta necesario que el Congreso de la Nación haga valer las facultades que le otorga la Constitución Nacional para reparar el daño que el Gobierno de Cambiemos ha causado a más de diez millones de argentinxs.\nConocé el proyecto completo👇🏼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
-    std::string texto_con_simbolos = "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibirán una compensación.\n‪Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometió que, con la nueva fórmula, las jubilaciones iban a aumentar más que la inflación.Falso.La inflación está descontrolada y las jubilaciones no paran de perder poder adquisitivo.‬\nPor eso, resulta necesario que el Congreso de la Nación haga valer las facultades que le otorga la Constitución Nacional para reparar el daño que el Gobierno de Cambiemos ha causado a más de diez millones de argentinxs.\nConocé el proyecto completo👇🏼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
+    std::string texto_con_caracteres_especiales = "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibirán una compensación.\n‪Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometió que, con la nueva fórmula, las jubilaciones iban a aumentar más que la inflación.Falso.La inflación está descontrolada y las jubilaciones no paran de perder poder adquisitivo.‬\nPor eso, resulta necesario que el Congreso de la Nación haga valer las facultades que le otorga la Constitución Nacional para reparar el daño que el Gobierno de Cambiemos ha causado a más de diez millones de argentinxs.\nConocé el proyecto completo👇🏼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
+
+    std::string texto_sin_caracteres_especiales;
+    texto_sin_caracteres_especiales += "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\n";
+    texto_sin_caracteres_especiales += "Con este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibiran una compensacion.\n";
+    texto_sin_caracteres_especiales += "Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometio que, con la nueva formula, las jubilaciones iban a aumentar mas que la inflacion.Falso.La inflacion esta descontrolada y las jubilaciones no paran de perder poder adquisitivo.\n";
+    texto_sin_caracteres_especiales += "Por eso, resulta necesario que el Congreso de la Nacion haga valer las facultades que le otorga la Constitucion Nacional para reparar el dano que el Gobierno de Cambiemos ha causado a mas de diez millones de argentinxs.\n";
+    texto_sin_caracteres_especiales += "Conoce el proyecto completo\n";
+    texto_sin_caracteres_especiales += "http ://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
 
     scraping::depuracion::Depurador depurador;
     depurador.cargarMapeoUTF8("mapeo_utf8.json");
 
-    depurador.reemplazarTodosLosCaracteresEspeciales(texto_con_simbolos);
+    depurador.reemplazarTodosLosCaracteresEspeciales(texto_con_caracteres_especiales);
 
-    //ASSERT_STREQ(caracteres_reemplazados.c_str(), caracteres_normales_especiales_a_reemplazar.c_str());
+    ASSERT_EQ(texto_sin_caracteres_especiales, texto_con_caracteres_especiales);
 }
 
 TEST(Depuracion, eliminarTildes)
@@ -167,8 +175,8 @@ TEST(Depuracion, eliminarSignosYPuntuacion)
 
 TEST(Depuracion, eliminarURLs)
 {
-    std::string texto_con_urls = "Jerusalén: ftp:\/\/t.co\/asdijv1m2_1234.html#matorito suenan sirenas de alarma en el sur de Israel http:\/\/userid:password@example.com:8080\/tras el disparo de un cohete desde Gaza…https:\/\/t.co\/eqSJm9AkQB";
-    std::string texto_sin_urls = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… ";
+    std::string texto_con_urls = "Jerusalén: ftp:\/\/t.co\/asdijv1m2_1234.html#matorito suenan sirenas de alarma en el sur de Israel http:\/\/userid:password@example.com:8080\/ tras el disparo de un cohete desde Gaza…https:\/\/t.co\/eqSJm9AkQB";
+    std::string texto_sin_urls = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza…";
 
     scraping::depuracion::Depurador depurador;
 
