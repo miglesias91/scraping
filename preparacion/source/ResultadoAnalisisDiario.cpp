@@ -1,5 +1,8 @@
 #include <preparacion/include/ResultadoAnalisisDiario.h>
 
+// stl
+#include <algorithm>
+
 // herramientas
 #include <utiles/include/Fecha.h>
 
@@ -66,6 +69,22 @@ std::string ResultadoAnalisisDiario::getValorAlmacenable()
 // SETTERS
 
 // METODOS
+
+void ResultadoAnalisisDiario::filtrar(const std::vector<unsigned long long int> & ids_medios_a_filtrar, const std::vector<std::string> & terminos_a_filtrar)
+{
+    for (auto resultado_medio : this->resultados_medios)
+    {
+        if (std::count(ids_medios_a_filtrar.cbegin(), ids_medios_a_filtrar.cend(), resultado_medio.first))
+        {
+            resultado_medio.second->filtrar(terminos_a_filtrar);
+        }
+        else
+        {
+            delete resultado_medio.second;
+            resultado_medio = this->resultados_medios.erase(resultado_medio); // ERROR ACA
+        }
+    }
+}
 
 void ResultadoAnalisisDiario::agregarResultadoDeMedio(ResultadoAnalisisMedio * resultado_medio)
 {

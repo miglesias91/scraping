@@ -135,6 +135,23 @@ bool ResultadoFuerzaEnNoticia::agregarResultado(std::string palabra, float fuerz
     return true;
 }
 
+// metodos de IResultadoTecnica
+
+void ResultadoFuerzaEnNoticia::filtrar(const std::vector<std::string>& terminos_a_filtrar)
+{
+    //this->fuerza_por_palabra.erase(
+    //    std::remove_if(this->fuerza_por_palabra.begin(), this->fuerza_por_palabra.end(),
+    //        [&terminos_a_filtrar](std::pair<std::string, float> palabra_fuerza)
+    //{
+    //    if (std::count(terminos_a_filtrar.cbegin(), terminos_a_filtrar.cend(), palabra_fuerza.first))
+    //    {
+    //        return false;
+    //    }
+    //    return true;
+    //}),
+    //    this->fuerza_por_palabra.end());
+}
+
 // metodos de IContieneJson
 
 bool ResultadoFuerzaEnNoticia::armarJson()

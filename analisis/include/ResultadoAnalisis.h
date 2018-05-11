@@ -41,6 +41,10 @@ public:
 
     // METODOS
 
+    // filtra terminos por id. (es decir, elimina todos losterminos que no esten incluidos en los ids pasados parametro).
+    // los terminos a filtrar ACEPTAN COMODINES ('*' al final de la palabra).
+    virtual void filtrar(const std::vector<std::string> & terminos_a_filtrar);
+
     virtual void combinarCon(ResultadoAnalisis * resultado_a_combinar);
 
     // metodos de IContieneJson

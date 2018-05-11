@@ -53,9 +53,11 @@ public:
 
     static bool compararFuerzasMenosAMayor(std::pair<std::string, float> a, std::pair<std::string, float> b);
 
+    virtual bool agregarResultado(std::string palabra, float fuerza_en_noticia);
+
     // metodos de IResultadoTecnica
 
-    virtual bool agregarResultado(std::string palabra, float fuerza_en_noticia);
+    virtual void filtrar(const std::vector<std::string> & terminos_a_filtrar);
 
     // metodos de IContieneJson
 

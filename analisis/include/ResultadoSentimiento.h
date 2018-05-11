@@ -104,6 +104,10 @@ public:
 
     virtual void aumentarNeutralidad(const std::string & palabra, double neutralidad);
 
+    // metodos de IResultadoTecnica
+
+    virtual void filtrar(const std::vector<std::string> & terminos_a_filtrar);
+
     // metodos de IContieneJson
 
     virtual bool armarJson();

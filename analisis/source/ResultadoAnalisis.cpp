@@ -1,5 +1,8 @@
 #include <analisis/include/ResultadoAnalisis.h>
 
+// stl
+#include <algorithm>
+
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 
@@ -58,6 +61,12 @@ void ResultadoAnalisis::setResultadoSentimiento(tecnicas::ResultadoSentimiento *
 }
 
 // METODOS
+
+void ResultadoAnalisis::filtrar(const std::vector<std::string> & terminos_a_filtrar)
+{
+    this->resultado_fuerza_en_noticia->filtrar(terminos_a_filtrar);
+    this->resultado_sentimiento->filtrar(terminos_a_filtrar);
+}
 
 void ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)
 {

@@ -110,6 +110,23 @@ void ResultadoSentimiento::aumentarNeutralidad(const std::string & palabra, doub
     }
 }
 
+// metodos de IResultadoTecnica
+
+void ResultadoSentimiento::filtrar(const std::vector<std::string> & terminos_a_filtrar)
+{
+    //this->sentimiento_por_palabra.erase(
+    //    std::remove_if(this->sentimiento_por_palabra.begin(), this->sentimiento_por_palabra.end(),
+    //        [&terminos_a_filtrar](std::pair<std::string, sentimiento> palabra_sentimiento)
+    //{
+    //    if (std::count(terminos_a_filtrar.cbegin(), terminos_a_filtrar.cend(), palabra_sentimiento.first))
+    //    {
+    //        return false;
+    //    }
+    //    return true;
+    //}),
+    //    this->sentimiento_por_palabra.end());
+}
+
 // metodos de IContieneJson
 
 bool ResultadoSentimiento::armarJson()
