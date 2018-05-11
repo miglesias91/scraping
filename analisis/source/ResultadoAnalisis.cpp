@@ -52,11 +52,15 @@ std::string ResultadoAnalisis::getValorAlmacenable()
 
 void ResultadoAnalisis::setResultadoFuerzaEnNoticia(tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia)
 {
+    delete this->resultado_fuerza_en_noticia;
+
     this->resultado_fuerza_en_noticia = resultado_fuerza_en_noticia;
 }
 
 void ResultadoAnalisis::setResultadoSentimiento(tecnicas::ResultadoSentimiento * resultado_sentimiento)
 {
+    delete this->resultado_sentimiento;
+
     this->resultado_sentimiento = resultado_sentimiento;
 }
 
@@ -64,8 +68,15 @@ void ResultadoAnalisis::setResultadoSentimiento(tecnicas::ResultadoSentimiento *
 
 void ResultadoAnalisis::filtrar(const std::vector<std::string> & terminos_a_filtrar)
 {
-    this->resultado_fuerza_en_noticia->filtrar(terminos_a_filtrar);
-    this->resultado_sentimiento->filtrar(terminos_a_filtrar);
+    if (nullptr != this->resultado_fuerza_en_noticia)
+    {
+        this->resultado_fuerza_en_noticia->filtrar(terminos_a_filtrar);
+    }
+
+    if (nullptr != this->resultado_sentimiento)
+    {
+        this->resultado_sentimiento->filtrar(terminos_a_filtrar);
+    }
 }
 
 void ResultadoAnalisis::combinarCon(ResultadoAnalisis * resultado_a_combinar)

@@ -72,16 +72,17 @@ std::string ResultadoAnalisisDiario::getValorAlmacenable()
 
 void ResultadoAnalisisDiario::filtrar(const std::vector<unsigned long long int> & ids_medios_a_filtrar, const std::vector<std::string> & terminos_a_filtrar)
 {
-    for (auto resultado_medio : this->resultados_medios)
+    for (auto it = this->resultados_medios.begin(); it != this->resultados_medios.end(); )
     {
-        if (std::count(ids_medios_a_filtrar.cbegin(), ids_medios_a_filtrar.cend(), resultado_medio.first))
+        if (std::count(ids_medios_a_filtrar.cbegin(), ids_medios_a_filtrar.cend(), it->first))
         {
-            resultado_medio.second->filtrar(terminos_a_filtrar);
+            it->second->filtrar(terminos_a_filtrar);
+            it++;
         }
         else
         {
-            delete resultado_medio.second;
-            resultado_medio = this->resultados_medios.erase(resultado_medio); // ERROR ACA
+            delete it->second;
+            it = this->resultados_medios.erase(it);
         }
     }
 }

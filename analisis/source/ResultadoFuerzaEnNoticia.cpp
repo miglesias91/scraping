@@ -139,17 +139,21 @@ bool ResultadoFuerzaEnNoticia::agregarResultado(std::string palabra, float fuerz
 
 void ResultadoFuerzaEnNoticia::filtrar(const std::vector<std::string>& terminos_a_filtrar)
 {
-    //this->fuerza_por_palabra.erase(
-    //    std::remove_if(this->fuerza_por_palabra.begin(), this->fuerza_por_palabra.end(),
-    //        [&terminos_a_filtrar](std::pair<std::string, float> palabra_fuerza)
-    //{
-    //    if (std::count(terminos_a_filtrar.cbegin(), terminos_a_filtrar.cend(), palabra_fuerza.first))
-    //    {
-    //        return false;
-    //    }
-    //    return true;
-    //}),
-    //    this->fuerza_por_palabra.end());
+    for (auto it = this->fuerza_por_palabra.begin(); it != this->fuerza_por_palabra.end(); )
+    {
+        std::string palabra = it->first;
+        if (std::count_if(terminos_a_filtrar.cbegin(), terminos_a_filtrar.cend(), [this, &palabra](std::string termino_a_filtrar)
+        {
+            return this->match(palabra, termino_a_filtrar);
+        }))
+        {
+            it++;
+        }
+        else
+        {
+            it = this->fuerza_por_palabra.erase(it);
+        }
+    }
 }
 
 // metodos de IContieneJson
