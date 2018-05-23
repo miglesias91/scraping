@@ -40,6 +40,10 @@ public:
             return string_stream.str() + "/" + std::to_string(this->cantidad);
         }
 
+        double promedio() {
+            return suma / cantidad;
+        }
+
         void operator+= (const double & suma) {
             this->suma += suma;
             this->cantidad += 1;
@@ -70,6 +74,14 @@ public:
             return positividad.escribir() + "-" + negatividad.escribir() + "-" + neutralidad.escribir();
         }
 
+        std::string informar() {
+            std::stringstream informe;
+
+            informe << "+" << positividad.promedio() << " -" << negatividad.promedio() << " n" << neutralidad.promedio();
+
+            return informe.str();
+        }
+
         void operator+= (const sentimiento & sentimiento_a_sumar) {
             this->positividad += sentimiento_a_sumar.positividad;
             this->negatividad += sentimiento_a_sumar.negatividad;
@@ -93,6 +105,8 @@ public:
     // METODOS
 
     virtual std::unordered_map<std::string, sentimiento> sentimientos();
+
+    virtual sentimiento valores(const std::string palabra);
 
     virtual void sumar(const std::string & palabra, const sentimiento & valoracion);
 

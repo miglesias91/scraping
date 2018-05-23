@@ -44,6 +44,11 @@ std::unordered_map<std::string, ResultadoSentimiento::sentimiento> scraping::ana
     return this->sentimiento_por_palabra;
 }
 
+scraping::analisis::tecnicas::ResultadoSentimiento::sentimiento scraping::analisis::tecnicas::ResultadoSentimiento::valores(const std::string palabra)
+{
+    return this->sentimiento_por_palabra[palabra];
+}
+
 void ResultadoSentimiento::sumar(const std::string & palabra, const sentimiento & sentimiento)
 {
     auto it_valoracion = this->sentimiento_por_palabra.find(palabra);
