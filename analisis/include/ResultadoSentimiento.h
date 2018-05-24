@@ -41,7 +41,12 @@ public:
         }
 
         double promedio() {
-            return suma / cantidad;
+            if (cantidad) {
+                return suma / cantidad;
+            }
+            else {
+                return 0.0f;
+            }
         }
 
         void operator+= (const double & suma) {
