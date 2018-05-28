@@ -290,3 +290,8 @@ TEST(Analisis, resultado_sentimiento_sumar_correctamente)
     ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_1.neutralidad("chau").suma));
     ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_1.neutralidad("chau").cantidad));
 }
+
+TEST(Analisis, resultado_sentimiento_sumar_correctamente)
+{
+
+}

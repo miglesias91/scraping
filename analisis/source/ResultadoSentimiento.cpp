@@ -44,9 +44,19 @@ std::unordered_map<std::string, ResultadoSentimiento::sentimiento> scraping::ana
     return this->sentimiento_por_palabra;
 }
 
-scraping::analisis::tecnicas::ResultadoSentimiento::sentimiento scraping::analisis::tecnicas::ResultadoSentimiento::valores(const std::string palabra)
+ResultadoSentimiento::sentimiento scraping::analisis::tecnicas::ResultadoSentimiento::valores(const std::string expresion)
 {
-    return this->sentimiento_por_palabra[palabra];
+    if ('*' == *(expresion.end() - 1)) {
+        std::string comienzo_de_palabra(expresion.begin(), expresion.end() - 1);
+        return this->sentimiento_comodin(comienzo_de_palabra);
+    }
+
+    if (false == this->existePalabra(expresion))
+    {
+        return sentimiento();
+    }
+
+    return this->sentimiento_por_palabra[expresion];
 }
 
 void ResultadoSentimiento::sumar(const std::string & palabra, const sentimiento & sentimiento)
@@ -176,3 +186,27 @@ bool ResultadoSentimiento::parsearJson()
 }
 
 // CONSULTAS
+
+bool ResultadoSentimiento::existePalabra(std::string palabra)
+{
+    if (this->sentimiento_por_palabra.end() == this->sentimiento_por_palabra.find(palabra))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+ResultadoSentimiento::sentimiento ResultadoSentimiento::sentimiento_comodin(const std::string & comodin)
+{
+    sentimiento sentimiento_total;
+    std::for_each(this->sentimiento_por_palabra.begin(), this->sentimiento_por_palabra.end(),
+        [&comodin, &sentimiento_total](std::pair<std::string, sentimiento> sentimiento_palabra)
+    {
+        if (herramientas::utiles::FuncionesString::empiezaCon(sentimiento_palabra.first, comodin)) {
+            sentimiento_total += sentimiento_palabra.second;
+        }
+    });
+
+    return sentimiento_total;
+}

@@ -23,8 +23,8 @@ class ResultadoSentimiento : public IResultadoTecnica
 public:
     struct valoracion
     {
-        double suma;
-        unsigned long long int cantidad;
+        double suma = 0.0f;
+        unsigned long long int cantidad = 0;
         
         void leer(const std::string & valoracion_escrita) {
             std::vector<std::string> suma_cantidad = herramientas::utiles::FuncionesString::separar(valoracion_escrita, "/");
@@ -80,11 +80,23 @@ public:
         }
 
         std::string informar() {
-            std::stringstream informe;
 
-            informe << "+" << positividad.promedio() << " -" << negatividad.promedio() << " n" << neutralidad.promedio();
+            unsigned long long int cantidad_total = this->total();
 
-            return informe.str();
+            if (cantidad_total) {
+                std::string promedio_positividad = herramientas::utiles::FuncionesString::toString((positividad.suma / cantidad_total) * 100, 0);
+                std::string promedio_negatividad = herramientas::utiles::FuncionesString::toString((negatividad.suma / cantidad_total) * 100, 0);
+                std::string promedio_neutralidad = herramientas::utiles::FuncionesString::toString((neutralidad.suma / cantidad_total) * 100, 0);
+                return "+" + promedio_positividad + " -" + promedio_negatividad + " n" + promedio_neutralidad;
+            }
+
+            std::string string_cero = herramientas::utiles::FuncionesString::toString(0, 0);
+            return "+" + string_cero + " -" + string_cero + " n" + string_cero;
+        }
+
+        unsigned long long int total() {
+
+            return positividad.cantidad + negatividad.cantidad + neutralidad.cantidad;
         }
 
         void operator+= (const sentimiento & sentimiento_a_sumar) {
@@ -111,7 +123,10 @@ public:
 
     virtual std::unordered_map<std::string, sentimiento> sentimientos();
 
-    virtual sentimiento valores(const std::string palabra);
+    // se aceptan comodines.
+    // 'expresion' puede ser una palabra literal o un termino+comodin
+    // (por ahora solo reconoce el comodin '*' al final de la palabra)
+    virtual sentimiento valores(const std::string expresion);
 
     virtual void sumar(const std::string & palabra, const sentimiento & valoracion);
 
@@ -135,7 +150,12 @@ public:
 
     // CONSULTAS
 
+    virtual bool existePalabra(std::string palabra);
+
 private:
+
+    // metodos privados
+    sentimiento sentimiento_comodin(const std::string & comodin);
 
     // valoracion
     std::unordered_map<std::string, sentimiento> sentimiento_por_palabra;

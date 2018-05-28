@@ -22,7 +22,10 @@ public:
 
     // GETTERS
 
-    virtual float getFuerza(std::string palabra);
+    // se aceptan comodines.
+    // 'expresion' puede ser una palabra literal o un termino+comodin
+    // (por ahora solo reconoce el comodin '*' al final de la palabra)
+    virtual float getFuerza(std::string expresion);
 
     virtual std::vector<std::pair<std::string, float>> getFuerzas();
     
@@ -70,6 +73,12 @@ public:
     virtual bool existePalabra(std::string palabra);
 
 private:
+
+    // metodos privados
+
+    double fuerza_comodin(const std::string & comodin);
+
+    // atributos
 
     unsigned int maximo_valores_a_almacenar;
 

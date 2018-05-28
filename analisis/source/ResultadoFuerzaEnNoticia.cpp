@@ -20,14 +20,19 @@ ResultadoFuerzaEnNoticia::~ResultadoFuerzaEnNoticia()
 
 // GETTERS
 
-float ResultadoFuerzaEnNoticia::getFuerza(std::string palabra)
+float ResultadoFuerzaEnNoticia::getFuerza(std::string expresion)
 {
-    if (false == this->existePalabra(palabra))
+    if ('*' == *(expresion.end() - 1)) {
+        std::string comienzo_de_palabra(expresion.begin(), expresion.end() - 1);
+        return this->fuerza_comodin(comienzo_de_palabra);
+    }
+
+    if (false == this->existePalabra(expresion))
     {
         return 0.0f;
     }
 
-    return this->fuerza_por_palabra[palabra];
+    return this->fuerza_por_palabra[expresion];
 }
 
 std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getFuerzas()
@@ -207,4 +212,20 @@ bool ResultadoFuerzaEnNoticia::existePalabra(std::string palabra)
     }
 
     return true;
+}
+
+// METODOS INTERNOS
+
+double ResultadoFuerzaEnNoticia::fuerza_comodin(const std::string & comodin)
+{
+    double fuerza = 0.0f;
+    std::for_each(this->fuerza_por_palabra.begin(), this->fuerza_por_palabra.end(),
+        [&comodin, &fuerza](std::pair<std::string, float> fuerza_palabra)
+    {
+        if (herramientas::utiles::FuncionesString::empiezaCon(fuerza_palabra.first, comodin)) {
+            fuerza += fuerza_palabra.second;
+        }
+    });
+
+    return fuerza;
 }
