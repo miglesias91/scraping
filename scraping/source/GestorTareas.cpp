@@ -295,6 +295,10 @@ void GestorTareas::scrapearFacebook()
     std::vector<scraping::facebook::modelo::Pagina*> paginas_facebook_existentes;
     gestor_medios.recuperar<scraping::facebook::modelo::Pagina>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
 
+    // ACA DEBERIA CREAR UN METODO QUE SEA:
+    // std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas_facebook_existentes; // RECUPERO LOS ADAPTADORES DE FACEBOOK
+    // gestor_medios.recuperar(paginas_facebook_existentes);
+
     scraping::facebook::ConsumidorAPI * consumidor_api_facebook = new scraping::facebook::ConsumidorAPI("929798640478438", "f36e906bf6b8445ac3ee53e95ac303a7");
 
     scraping::facebook::modelo::Aplicacion app(consumidor_api_facebook);
@@ -309,6 +313,10 @@ void GestorTareas::scrapearFacebook()
 
         std::vector<scraping::facebook::modelo::Publicacion*> publicaciones = app.leerUltimasPublicaciones(pagina);
 
+        // std::vector<scraping::extraccion::interfaceo::ContenidoFacebook*> contenidos;
+        // std::vector<medios::facebook::publicacion*> publicaciones;
+        // app.leerUltimasPublicaciones(pagina, publicaciones);
+        
         for (std::vector<scraping::facebook::modelo::Publicacion*>::iterator it = publicaciones.begin(); it != publicaciones.end(); it++)
         {
             scraping::facebook::modelo::Publicacion* publicacion = *it;
