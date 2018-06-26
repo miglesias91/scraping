@@ -3,36 +3,37 @@
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 
-using namespace scraping::extraccion;
+namespace scraping::extraccion {
 
 herramientas::utiles::GestorIDs Contenido::gestor_ids_contenidos;
 
-Contenido::Contenido(herramientas::utiles::Json * json) : IAlmacenable(ConfiguracionScraping::prefijoContenido()), IContieneJson(json)
-{
-}
+Contenido::Contenido(const std::string & titulo, const std::string & texto, const std::string & categoria, const herramientas::utiles::Fecha & fecha)
+    : IAlmacenable(ConfiguracionScraping::prefijoContenido()), IContieneJson(nullptr),
+    titulo(titulo), texto(texto), categoria(categoria), fecha(fecha) {}
 
-Contenido::~Contenido()
-{
-}
+Contenido::Contenido(herramientas::utiles::Json * json) : IAlmacenable(ConfiguracionScraping::prefijoContenido()), IContieneJson(json) {}
+
+Contenido::~Contenido() {}
+
 // GETTERS
 
-herramientas::utiles::Fecha Contenido::getFecha()
-{
+herramientas::utiles::Fecha Contenido::getFecha() const {
     return this->fecha;
 }
 
-std::string Contenido::getTexto()
-{
+std::string Contenido::getTitulo() const {
+    return this->titulo;
+}
+
+std::string Contenido::getTexto() const {
     return this->texto;
 }
 
-std::string Contenido::getClaveIDActual()
-{
+std::string Contenido::getClaveIDActual() {
     return ConfiguracionScraping::claveIDContenidoActual();
 }
 
-herramientas::utiles::GestorIDs * Contenido::getGestorIDs()
-{
+herramientas::utiles::GestorIDs * Contenido::getGestorIDs() {
     return &gestor_ids_contenidos;
 }
 
@@ -57,16 +58,21 @@ std::string Contenido::getValorAlmacenable()
 
 // SETTERS
 
-void Contenido::setFecha(herramientas::utiles::Fecha fecha)
-{
-    this->fecha = fecha;
-}
-
-void Contenido::setTexto(std::string texto)
-{
+void Contenido::setTexto(const std::string & texto) {
     this->texto = texto;
 }
 
+void Contenido::setTitulo(const std::string & titulo) {
+    this->titulo = titulo;
+}
+
+void Contenido::setCategoria(const std::string & categoria) {
+    this->categoria = categoria;
+}
+
+void Contenido::setFecha(const herramientas::utiles::Fecha & fecha) {
+    this->fecha = fecha;
+}
 // METODOS
 
 // metodos de IAlmacenable
@@ -90,7 +96,36 @@ void Contenido::parsearValorAlmacenable(std::string valor_almacenable)
     this->parsearJson();
 }
 
-std::string Contenido::prefijoGrupo()
-{
+std::string Contenido::prefijoGrupo() {
     return ConfiguracionScraping::prefijoContenido();
+}
+
+// metodos de IContieneJson
+
+bool Contenido::armarJson() {
+
+    this->getJson()->reset();
+
+    this->getJson()->agregarAtributoValor("titulo", this->titulo);
+    this->getJson()->agregarAtributoValor("texto", this->texto);
+    this->getJson()->agregarAtributoValor("categoria", this->categoria);
+    this->getJson()->agregarAtributoValor("fecha", this->fecha.getStringAAAAMMDDHHmmSS());
+
+    return true;
+}
+
+bool Contenido::parsearJson() {
+    std::string titulo = this->getJson()->getAtributoValorString("titulo");
+    std::string texto = this->getJson()->getAtributoValorString("texto");
+    std::string categoria = this->getJson()->getAtributoValorString("categoria");
+    std::string string_fecha = this->getJson()->getAtributoValorString("fecha");
+
+    this->setTitulo(titulo);
+    this->setTexto(texto);
+    this->setCategoria(categoria);
+    this->setFecha(herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(string_fecha));
+
+    return true;
+}
+
 }

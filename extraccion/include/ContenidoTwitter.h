@@ -1,16 +1,13 @@
 #pragma once
 
 // medios digitales
-#include <twitter/include/tweet.h>
+#include <twitter/include/Tweet.h>
 
 // extraccion
 #include <extraccion/include/Contenido.h>
 
-namespace scraping::extraccion::interfaceo
-{
-
-class ContenidoTwitter : public Contenido, public medios::twitter::tweet
-{
+namespace scraping::extraccion::interfaceo {
+class ContenidoTwitter : public Contenido, public medios::twitter::Tweet {
 public:
     ContenidoTwitter(herramientas::utiles::Json * json = NULL);
     virtual ~ContenidoTwitter();

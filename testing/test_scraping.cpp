@@ -1,5 +1,5 @@
-// gtest
-#include <gtest/gtest.h>
+// catch2
+#include <catch.hpp>
 
 // stl
 #include <fstream>
@@ -22,35 +22,36 @@
 #include <preparacion/include/ResultadoAnalisisContenido.h>
 #include <preparacion/include/ResultadoAnalisisMedio.h>
 
-// twitter
-#include <twitter/include/Cuenta.h>
-#include <twitter/include/Tweet.h>
+// extraccion
+#include <extraccion/include/MedioTwitter.h>
 
 using namespace scraping;
 
-TEST(Scraping, levantarConfigCorrectamente)
+TEST_CASE("levantar_config_correctamente", "scraping")
 {
-    ASSERT_EQ(true, ConfiguracionScraping::scrapingLocal());
-    ASSERT_EQ(false, ConfiguracionScraping::scrapingDistribuido());
+    REQUIRE(true == ConfiguracionScraping::scrapingLocal());
+    REQUIRE(false == ConfiguracionScraping::scrapingDistribuido());
 
-    ASSERT_EQ("001", ConfiguracionScraping::prefijoMedio());
-    ASSERT_EQ("002", ConfiguracionScraping::prefijoContenido());
-    ASSERT_EQ("003", ConfiguracionScraping::prefijoResultadoMedio());
-    ASSERT_EQ("004", ConfiguracionScraping::prefijoResultadoContenido());
-    ASSERT_EQ("005", ConfiguracionScraping::prefijoResultadoDiario());
+    REQUIRE("001" == ConfiguracionScraping::prefijoMedio());
+    REQUIRE("002" == ConfiguracionScraping::prefijoContenido());
+    REQUIRE("003" == ConfiguracionScraping::prefijoResultadoMedio());
+    REQUIRE("004" == ConfiguracionScraping::prefijoResultadoContenido());
+    REQUIRE("005" == ConfiguracionScraping::prefijoResultadoDiario());
 }
 
-TEST(Scraping, DISABLED_depurarAnalizarPreparar)
+TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
 {
-    scraping::extraccion::Contenido::getGestorIDs()->setIdActual(50);
-    scraping::extraccion::Medio::getGestorIDs()->setIdActual(150);
+    extraccion::Contenido::getGestorIDs()->setIdActual(50);
+    extraccion::Medio::getGestorIDs()->setIdActual(150);
 
     // ----- EXTRACCION (simulada la parte de bajar el contenido de internet) ----- //
 
     std::vector<std::string> paths_textos_extraidos = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
         "le_doy_mi_palabra_20171225.txt", "le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
 
-    twitter::modelo::Cuenta cuenta("le doy mi palabra");
+    //twitter::modelo::Cuenta cuenta("le doy mi palabra");
+    //cuenta.asignarNuevoId();
+    extraccion::interfaceo::MedioTwitter cuenta;
     cuenta.asignarNuevoId();
 
     for (std::vector<std::string>::iterator it = paths_textos_extraidos.begin(); it != paths_textos_extraidos.end(); it++)
@@ -64,9 +65,9 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
 
         std::string texto_extraido(sstream.str());
 
-        twitter::modelo::Tweet tweet;
+        scraping::extraccion::Contenido tweet;
         tweet.asignarNuevoId();
-        tweet.setTextoTweet(texto_extraido);
+        tweet.setTexto(texto_extraido);
 
         cuenta.agregarContenidoParaAnalizar(&tweet);
 
@@ -81,7 +82,9 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
     depurador.cargarMapeoUTF8("mapeo_utf8.json");
 
     // recupero el contenido y medio que almacene de la etapa anterior.
-    twitter::modelo::Cuenta cuenta_a_analizar;
+    //twitter::modelo::Cuenta cuenta_a_analizar;
+    //cuenta_a_analizar.setId(cuenta.getId()->copia());
+    extraccion::interfaceo::MedioTwitter cuenta_a_analizar;
     cuenta_a_analizar.setId(cuenta.getId()->copia());
 
     IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_a_analizar);
@@ -91,7 +94,8 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
     std::vector<extraccion::Contenido*> contenidos_a_recuperar;
     for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
     {
-        extraccion::Contenido * tweet = new twitter::modelo::Tweet();
+        //extraccion::Contenido * tweet = new twitter::modelo::Tweet();
+        extraccion::Contenido * tweet = new extraccion::Contenido();
         tweet->setId(new herramientas::utiles::ID(*it));
 
         IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(tweet);
@@ -166,12 +170,12 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
         delete *it;
     }
 
-    // ResultadoAnalisisMedio resultado_por_medio;
-    // resultado_por_medio.setId(id_medio);
-    // 
-    // scraping::IAdministradorScraping::getInstancia()->recuperar(resultado_por_medio);
-    //
-    // resultado_por_medio.combinarResultados(resultados);
+     //ResultadoAnalisisMedio resultado_por_medio;
+     //resultado_por_medio.setId(id_medio);
+     //
+     //scraping::IAdministradorScraping::getInstancia()->recuperar(resultado_por_medio);
+    
+     //resultado_por_medio.combinarResultados(resultados);
 
     // TO DO:
     // aca viene la parte de la preparacion, ver q onda:
@@ -185,29 +189,29 @@ TEST(Scraping, DISABLED_depurarAnalizarPreparar)
 }
 
 
-TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
+TEST_CASE("gestor_medios_almacenar_y_eliminar_correctamente", "scraping")
 {
     // creo cuentas de prueba.
-    scraping::twitter::modelo::Cuenta * cuenta_uno = new scraping::twitter::modelo::Cuenta("cuenta_uno");
+    extraccion::interfaceo::MedioTwitter * cuenta_uno = new extraccion::interfaceo::MedioTwitter("cuenta_uno");
     cuenta_uno->asignarNuevoId();
 
-    scraping::twitter::modelo::Cuenta * cuenta_dos = new scraping::twitter::modelo::Cuenta("cuenta_dos");
+    extraccion::interfaceo::MedioTwitter * cuenta_dos = new extraccion::interfaceo::MedioTwitter("cuenta_dos");
     cuenta_dos->asignarNuevoId();
 
-    scraping::twitter::modelo::Cuenta * cuenta_tres = new scraping::twitter::modelo::Cuenta("cuenta_tres");
+    extraccion::interfaceo::MedioTwitter * cuenta_tres = new extraccion::interfaceo::MedioTwitter("cuenta_tres");
     cuenta_tres->asignarNuevoId();
 
-    scraping::twitter::modelo::Cuenta * cuenta_cuatro = new scraping::twitter::modelo::Cuenta("cuenta_cuatro");
+    extraccion::interfaceo::MedioTwitter * cuenta_cuatro = new extraccion::interfaceo::MedioTwitter("cuenta_cuatro");
     cuenta_cuatro->asignarNuevoId();
 
-    scraping::twitter::modelo::Cuenta * cuenta_cinco = new scraping::twitter::modelo::Cuenta("cuenta_cinco");
+    extraccion::interfaceo::MedioTwitter * cuenta_cinco = new extraccion::interfaceo::MedioTwitter("cuenta_cinco");
     cuenta_cinco->asignarNuevoId();
 
     // almaceno las cuentas.
 
     scraping::aplicacion::GestorMedios gestor_medios;
 
-    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes = gestor_medios.gestionar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter());
+    std::vector<extraccion::interfaceo::MedioTwitter*> cuentas_twitter_existentes = gestor_medios.gestionar<extraccion::interfaceo::MedioTwitter>(ConfiguracionScraping::prefijoTwitter());
 
     gestor_medios.almacenar(cuenta_uno);
     gestor_medios.almacenar(cuenta_dos);
@@ -219,14 +223,14 @@ TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
 
     // recupero las cuentas recien almacenadas.
 
-    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_recuperadas;
-    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+    std::vector<extraccion::interfaceo::MedioTwitter*> cuentas_twitter_recuperadas;
+    gestor_medios.recuperar<extraccion::interfaceo::MedioTwitter>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
 
-    ASSERT_EQ("cuenta_uno", cuentas_twitter_recuperadas[0]->getNombre());
-    ASSERT_EQ("cuenta_dos", cuentas_twitter_recuperadas[1]->getNombre());
-    ASSERT_EQ("cuenta_tres", cuentas_twitter_recuperadas[2]->getNombre());
+    REQUIRE("cuenta_uno" == cuentas_twitter_recuperadas[0]->cuenta()->getNombre());
+    REQUIRE("cuenta_dos" == cuentas_twitter_recuperadas[1]->cuenta()->getNombre());
+    REQUIRE("cuenta_tres" == cuentas_twitter_recuperadas[2]->cuenta()->getNombre());
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_recuperadas.begin(); it != cuentas_twitter_recuperadas.end(); it++)
+    for (std::vector<extraccion::interfaceo::MedioTwitter*>::iterator it = cuentas_twitter_recuperadas.begin(); it != cuentas_twitter_recuperadas.end(); it++)
     {
         delete *it;
     }
@@ -241,9 +245,9 @@ TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
 
     // recupero la cuenta que me quedo.
 
-    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
+    gestor_medios.recuperar<extraccion::interfaceo::MedioTwitter>(ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_recuperadas);
 
-    ASSERT_EQ("cuenta_dos", cuentas_twitter_recuperadas[0]->getNombre());
+    REQUIRE("cuenta_dos" == cuentas_twitter_recuperadas[0]->cuenta()->getNombre());
 
     // elimino la que quedo asi no queda ninguna cuenta almacenada.
 
@@ -253,7 +257,7 @@ TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
 
     gestor_medios.guardarCambios();
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_recuperadas.begin(); it != cuentas_twitter_recuperadas.end(); it++)
+    for (std::vector<extraccion::interfaceo::MedioTwitter*>::iterator it = cuentas_twitter_recuperadas.begin(); it != cuentas_twitter_recuperadas.end(); it++)
     {
         delete *it;
     }
@@ -266,31 +270,31 @@ TEST(Scraping, gestorMediosAlmacenarYEliminarCorrectamente)
     delete cuenta_cinco;
 }
 
-TEST(Scraping, gestionarCuentasDeTwitter)
+TEST_CASE("gestionar_cuentas_de_twitter", "scraping")
 {
     scraping::aplicacion::GestorMedios gestor_medios;
 
-    scraping::twitter::modelo::Cuenta cuenta_uno("cuenta_uno");
+    extraccion::interfaceo::MedioTwitter cuenta_uno("cuenta_uno");
     cuenta_uno.asignarNuevoId();
 
-    scraping::twitter::modelo::Cuenta cuenta_dos("cuenta_dos");
+    extraccion::interfaceo::MedioTwitter cuenta_dos("cuenta_dos");
     cuenta_dos.asignarNuevoId();
 
-    scraping::twitter::modelo::Cuenta cuenta_tres("cuenta_tres");
+    extraccion::interfaceo::MedioTwitter cuenta_tres("cuenta_tres");
     cuenta_tres.asignarNuevoId();
 
     gestor_medios.almacenarMedio(&cuenta_uno);
     gestor_medios.almacenarMedio(&cuenta_dos);
     gestor_medios.almacenarMedio(&cuenta_tres);
 
-    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
-    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(cuenta_uno.getGrupoMedio(), cuentas_twitter_existentes);
+    std::vector<extraccion::interfaceo::MedioTwitter*> cuentas_twitter_existentes;
+    gestor_medios.recuperar<extraccion::interfaceo::MedioTwitter>(cuenta_uno.getGrupoMedio(), cuentas_twitter_existentes);
 
-    ASSERT_EQ("cuenta_uno", cuentas_twitter_existentes[0]->getNombre());
-    ASSERT_EQ("cuenta_dos", cuentas_twitter_existentes[1]->getNombre());
-    ASSERT_EQ("cuenta_tres", cuentas_twitter_existentes[2]->getNombre());
+    REQUIRE("cuenta_uno" == cuentas_twitter_existentes[0]->cuenta()->getNombre());
+    REQUIRE("cuenta_dos" == cuentas_twitter_existentes[1]->cuenta()->getNombre());
+    REQUIRE("cuenta_tres" == cuentas_twitter_existentes[2]->cuenta()->getNombre());
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    for (std::vector<extraccion::interfaceo::MedioTwitter*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         delete *it;
     }

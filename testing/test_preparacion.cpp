@@ -1,5 +1,5 @@
-// gtest
-#include <gtest/gtest.h>
+// catch2
+#include <catch.hpp>
 
 // scraping
 #include <scraping/include/IAdministradorScraping.h>
@@ -17,7 +17,7 @@
 
 using namespace scraping::preparacion;
 
-TEST(Preparacion, almacenarYRecuperarResultadoAnalisisMedioCorrectamente)
+TEST_CASE("almacenar_y_recuperar_resultado_analisis_medio_correctamente", "preparacion")
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     scraping::analisis::tecnicas::Sentimiento sentimiento;
@@ -65,14 +65,14 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisMedioCorrectamente)
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_combinado = resultado_analisis_1_recuperado.getResultadoFuerzaEnNoticia();
 
-    ASSERT_EQ(std::round(100. * 11.4948416), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(100. * 7.66322803), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
-    ASSERT_EQ(std::round(100. * 3.83161402), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
-    ASSERT_EQ(std::round(100. * 1.93951929), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
-    ASSERT_EQ(std::round(100. * 1.93951929), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
+    REQUIRE(std::round(100. * 11.4948416) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
+    REQUIRE(std::round(100. * 7.66322803) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
+    REQUIRE(std::round(100. * 3.83161402) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
+    REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
+    REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
 }
 
-TEST(Preparacion, almacenarYRecuperarResultadoAnalisisContenidoCorrectamente)
+TEST_CASE("almacenar_y_recuperar_resultado_analisis_contenido_correctamente", "preparacion")
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -111,14 +111,14 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisContenidoCorrectamente)
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_combinado = resultado_analisis_1_recuperado.getResultadoFuerzaEnNoticia();
 
-    ASSERT_EQ(std::round(100. * 11.4948416), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(100. * 7.66322803), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
-    ASSERT_EQ(std::round(100. * 3.83161402), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
-    ASSERT_EQ(std::round(100. * 1.93951929), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
-    ASSERT_EQ(std::round(100. * 1.93951929), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
+    REQUIRE(std::round(100. * 11.4948416) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
+    REQUIRE(std::round(100. * 7.66322803) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
+    REQUIRE(std::round(100. * 3.83161402) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
+    REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
+    REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
 }
 
-TEST(Preparacion, almacenarYRecuperarResultadoAnalisisDiarioCorrectamente)
+TEST_CASE("almacenar_y_recuperar_resultado_analisis_diario_correctamente", "preparacion")
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -166,10 +166,10 @@ TEST(Preparacion, almacenarYRecuperarResultadoAnalisisDiarioCorrectamente)
     delete resultado_analisis_1;
     delete resultado_analisis_2;
 
-    ASSERT_EQ(std::round(100. * 11.4948416), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(100. * 7.66322803), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
-    ASSERT_EQ(std::round(100. * 3.83161402), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
-    ASSERT_EQ(std::round(100. * 1.93951929), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
-    ASSERT_EQ(std::round(100. * 1.93951929), std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
+    REQUIRE(std::round(100. * 11.4948416) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
+    REQUIRE(std::round(100. * 7.66322803) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
+    REQUIRE(std::round(100. * 3.83161402) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
+    REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
+    REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
 }
 

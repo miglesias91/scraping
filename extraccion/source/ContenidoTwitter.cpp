@@ -5,7 +5,7 @@
 
 using namespace scraping::extraccion::interfaceo;
 
-ContenidoTwitter::ContenidoTwitter(herramientas::utiles::Json * json) : Contenido(json), medios::twitter::tweet()
+ContenidoTwitter::ContenidoTwitter(herramientas::utiles::Json * json) : Contenido(json), medios::twitter::Tweet()
 {
 }
 

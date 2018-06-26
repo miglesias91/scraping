@@ -5,7 +5,7 @@
 
 using namespace scraping::extraccion::interfaceo;
 
-ContenidoPortalNoticias::ContenidoPortalNoticias(herramientas::utiles::Json * json) : Contenido(json), medios::html::noticia()
+ContenidoPortalNoticias::ContenidoPortalNoticias(herramientas::utiles::Json * json) : Contenido(json), medios::noticias::noticia()
 {
 }
 

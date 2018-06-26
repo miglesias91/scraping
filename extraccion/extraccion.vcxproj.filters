@@ -13,10 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Archivos de código fuente\interfaceo">
+    <Filter Include="Archivos de código fuente\interfaceo-medios-digitales">
       <UniqueIdentifier>{24153088-6908-497a-9526-da9826af360d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\interfaceo">
+    <Filter Include="Archivos de encabezado\interfaceo-medios-digitales">
       <UniqueIdentifier>{b13b6c6a-b422-4bf1-893a-f38da7e32c44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -28,22 +28,25 @@
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="source\ContenidoFacebook.cpp">
-      <Filter>Archivos de código fuente\interfaceo</Filter>
+      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
     </ClCompile>
     <ClCompile Include="source\ContenidoPortalNoticias.cpp">
-      <Filter>Archivos de código fuente\interfaceo</Filter>
+      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
     </ClCompile>
     <ClCompile Include="source\ContenidoTwitter.cpp">
-      <Filter>Archivos de código fuente\interfaceo</Filter>
+      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
     </ClCompile>
     <ClCompile Include="source\MedioFacebook.cpp">
-      <Filter>Archivos de código fuente\interfaceo</Filter>
+      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
     </ClCompile>
     <ClCompile Include="source\MedioPortalNoticias.cpp">
-      <Filter>Archivos de código fuente\interfaceo</Filter>
+      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
     </ClCompile>
     <ClCompile Include="source\MedioTwitter.cpp">
-      <Filter>Archivos de código fuente\interfaceo</Filter>
+      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
+    </ClCompile>
+    <ClCompile Include="source\extractor.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,22 +57,25 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\ContenidoFacebook.h">
-      <Filter>Archivos de encabezado\interfaceo</Filter>
+      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
     </ClInclude>
     <ClInclude Include="include\ContenidoPortalNoticias.h">
-      <Filter>Archivos de encabezado\interfaceo</Filter>
+      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
     </ClInclude>
     <ClInclude Include="include\ContenidoTwitter.h">
-      <Filter>Archivos de encabezado\interfaceo</Filter>
+      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
     </ClInclude>
     <ClInclude Include="include\MedioFacebook.h">
-      <Filter>Archivos de encabezado\interfaceo</Filter>
+      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
     </ClInclude>
     <ClInclude Include="include\MedioPortalNoticias.h">
-      <Filter>Archivos de encabezado\interfaceo</Filter>
+      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
     </ClInclude>
     <ClInclude Include="include\MedioTwitter.h">
-      <Filter>Archivos de encabezado\interfaceo</Filter>
+      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
+    </ClInclude>
+    <ClInclude Include="include\extractor.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B71AD9E3-B6B2-4506-8F1B-3043C1F310AA}</ProjectGuid>
     <RootNamespace>extraccion</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)almacenamiento;$(repos-git)herramientas_desarrollo;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)almacenamiento;$(repos-git)herramientas_desarrollo;$(repos-git)medios-digitales;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;$(repos)pugixml\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -101,7 +101,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)almacenamiento;$(repos-git)herramientas_desarrollo;$(repos)rapidjson\include;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)almacenamiento;$(repos-git)herramientas_desarrollo;$(repos-git)medios-digitales;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)spdlog\include;$(repos)pugixml\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -135,6 +135,7 @@
     <ClCompile Include="source\ContenidoFacebook.cpp" />
     <ClCompile Include="source\ContenidoPortalNoticias.cpp" />
     <ClCompile Include="source\ContenidoTwitter.cpp" />
+    <ClCompile Include="source\extractor.cpp" />
     <ClCompile Include="source\Medio.cpp" />
     <ClCompile Include="source\MedioFacebook.cpp" />
     <ClCompile Include="source\MedioPortalNoticias.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="include\ContenidoFacebook.h" />
     <ClInclude Include="include\ContenidoPortalNoticias.h" />
     <ClInclude Include="include\ContenidoTwitter.h" />
+    <ClInclude Include="include\extractor.h" />
     <ClInclude Include="include\Medio.h" />
     <ClInclude Include="include\MedioFacebook.h" />
     <ClInclude Include="include\MedioPortalNoticias.h" />

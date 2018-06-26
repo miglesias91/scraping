@@ -20,12 +20,12 @@ void Logger::iniciar(std::string config_log)
     log = herramientas::log::AdministradorLog::iniciarNuevo(config_log);
 }
 
-std::string Logger::getDebugLog(twitter::modelo::Tweet * tweet)
-{
-    tweet->armarJson();
- 
-    return tweet->getJson()->jsonString();
-}
+//std::string Logger::getDebugLog(twitter::modelo::Tweet * tweet)
+//{
+//    tweet->armarJson();
+// 
+//    return tweet->getJson()->jsonString();
+//}
 
 void Logger::marca(std::string mensaje)
 {

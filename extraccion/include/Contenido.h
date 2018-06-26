@@ -20,14 +20,16 @@ namespace extraccion
 class Contenido : public IAlmacenable, public herramientas::utiles::IContieneJson
 {
 public:
-    Contenido(herramientas::utiles::Json * json = NULL);
+    Contenido(const std::string & titulo, const std::string & texto, const std::string & categoria, const herramientas::utiles::Fecha & fecha);
+    Contenido(herramientas::utiles::Json * json = nullptr);
     virtual ~Contenido();
 
     // GETTERS
 
-    virtual herramientas::utiles::Fecha getFecha();
-
-    virtual std::string getTexto();
+    virtual std::string getTitulo() const;
+    virtual std::string getTexto() const;
+    virtual std::string getCategoria() const;
+    virtual herramientas::utiles::Fecha getFecha() const;
 
     static std::string getClaveIDActual();
 
@@ -39,9 +41,10 @@ public:
 
     // SETTERS
 
-    virtual void setFecha(herramientas::utiles::Fecha fecha);
-
-    virtual void setTexto(std::string texto);
+    virtual void setTitulo(const std::string & titulo);
+    virtual void setTexto(const std::string & texto);
+    virtual void setCategoria(const std::string & categoria);
+    virtual void setFecha(const herramientas::utiles::Fecha & fecha);
 
     // METODOS
 
@@ -53,6 +56,12 @@ public:
 
     virtual std::string prefijoGrupo();
 
+    // metodos de IContieneJson
+
+    virtual bool armarJson();
+
+    virtual bool parsearJson();
+
     // CONSULTAS
 
 private:
@@ -61,9 +70,8 @@ private:
 
     // ATRIBUTOS
 
+    std::string titulo, texto, categoria;
     herramientas::utiles::Fecha fecha;
-
-    std::string texto;
 };
 
 };

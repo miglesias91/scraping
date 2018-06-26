@@ -1,27 +1,34 @@
 #pragma once
 
 // medios digitales
-#include <html/include/portal_noticias.h>
+#include <noticias/include/portal.h>
+#include <noticias/include/lector.h>
 
 // extraccion
 #include <extraccion/include/Medio.h>
 
-namespace scraping::extraccion::interfaceo
-{
-
-class MedioPortalNoticias : public Medio, public medios::html::portal_noticias
-{
+namespace scraping::extraccion::interfaceo {
+class MedioPortalNoticias : public Medio {
 public:
-    MedioPortalNoticias(herramientas::utiles::Json * json = NULL);
+    explicit MedioPortalNoticias(medios::noticias::portal * portal_noticias);
+    explicit MedioPortalNoticias(herramientas::utiles::Json * json = nullptr);
     virtual ~MedioPortalNoticias();
 
     // GETTERS
 
     virtual std::string getGrupoMedio();
 
+    virtual medios::noticias::portal * portal() const;
+    virtual herramientas::utiles::Fecha fecha_ultima_noticia() const;
+
     // SETTERS
 
+    virtual void portal(medios::noticias::portal * portal_noticias);
+    virtual void fecha_ultima_noticia(const herramientas::utiles::Fecha & fecha);
+
     // METODOS
+
+    virtual bool descargar_noticias(const medios::noticias::lector & lector_portal);
 
     virtual Medio * clonar();
 
@@ -41,6 +48,9 @@ public:
 
 private:
 
+    std::shared_ptr<medios::noticias::portal*> portal_noticias;
+
+    herramientas::utiles::Fecha fecha_ultima_noticia_analizada;
 };
 
 };

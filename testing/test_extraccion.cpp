@@ -1,95 +1,149 @@
-// gtest
-#include <gtest/gtest.h>
+// catch2
+#include <catch.hpp>
+
+// medios
+//#include <twitter/include/Aplicacion.h>
+//#include <twitter/include/Cuenta.h>
+//#include <twitter/include/Tweet.h>
 
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/IAdministradorScraping.h>
 
-// twitter
-#include <twitter/include/Aplicacion.h>
-#include <twitter/include/Cuenta.h>
-#include <twitter/include/Tweet.h>
+// extraccion
+#include <extraccion/include/MedioTwitter.h>
+#include <extraccion/include/MedioFacebook.h>
+#include <extraccion/include/Contenido.h>
 
-using namespace scraping::twitter;
-
-TEST(Extraccion, almacenarYRecuperarCorrectamente)
+TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
 {
-    // probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
-    // agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
-    // y que despues se puedan acceder tanto el Medio como los Contenidos por separados.
-
-    scraping::ConfiguracionScraping::leerConfiguracion("config_scraping.json");
+    //// probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
+    //// agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
+    //// y que despues se puedan acceder tanto el Medio como los Contenidos por separados.
 
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(100);
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(200);
 
-    modelo::Cuenta cuenta("clarin");
+    scraping::extraccion::interfaceo::MedioTwitter cuenta("clarin");
     cuenta.asignarNuevoId();
 
-    std::ifstream archivo_tweets("tweets_de_prueba.txt");
+    scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
+    contenido1->asignarNuevoId();
 
-    std::stringstream sstream;
-    sstream << archivo_tweets.rdbuf();
+    cuenta.agregarContenidoParaAnalizar(contenido1);
 
-    std::string string_tweets(sstream.str());
+    scraping::extraccion::Contenido * contenido2 = new scraping::extraccion::Contenido("titulo2", "texto2", "categoria2", herramientas::utiles::Fecha::getFechaActual());
+    contenido2->asignarNuevoId();
 
-    herramientas::utiles::Json json_tweets(string_tweets);
-
-    std::vector<herramientas::utiles::Json*> tweets_json = json_tweets.getAtributoArrayJson();
-
-    std::vector<modelo::Tweet*> tweets;
-    modelo::Tweet* nuevo_tweet = NULL;
-    for (std::vector<herramientas::utiles::Json*>::iterator it = tweets_json.begin(); it != tweets_json.end(); it++)
-    {
-        nuevo_tweet = new modelo::Tweet(*it);
-        nuevo_tweet->asignarNuevoId();
-
-        tweets.push_back(nuevo_tweet);
-
-        cuenta.agregarContenidoParaAnalizar(nuevo_tweet);
-    }
+    cuenta.agregarContenidoParaAnalizar(contenido2);
 
     std::vector<unsigned long long int> ids_tweets = cuenta.getIDsContenidosNoAnalizados();
 
-    ASSERT_EQ(100, cuenta.getId()->numero());
+    REQUIRE(100 == cuenta.getId()->numero());
 
-    ASSERT_EQ(200, ids_tweets[0]);
-    ASSERT_EQ(201, ids_tweets[1]);
+    REQUIRE(200 == ids_tweets[0]);
+    REQUIRE(201 == ids_tweets[1]);
 
     // almaceno el medio (cuenta twitter).
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
 
-    // almaceno los contenidos del medio (tweets de la cuenta).
-    for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
-    {
-        scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(*it);
-    }
+    // almaceno contenidos
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido1);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido2);
 
     // recupero el medio.
-    modelo::Cuenta cuenta_recuperada;
+    scraping::extraccion::interfaceo::MedioTwitter cuenta_recuperada;
     cuenta_recuperada.setId(cuenta.getId()->copia());
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_recuperada);
 
     // recupero los contenidos del medio.
-    modelo::Tweet tweet_recuperado_1;
-    tweet_recuperado_1.setId(tweets[0]->getId()->copia());
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_1);
+    scraping::extraccion::Contenido contenido_recuperado1;
+    contenido_recuperado1.setId(contenido1->getId()->copia());
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&contenido_recuperado1);
 
-    modelo::Tweet tweet_recuperado_2;
-    tweet_recuperado_2.setId(tweets[1]->getId()->copia());
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&tweet_recuperado_2);
+    scraping::extraccion::Contenido contenido_recuperado2;
+    contenido_recuperado2.setId(contenido2->getId()->copia());
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&contenido_recuperado2);
 
-    ASSERT_EQ(cuenta.getNombre(), cuenta_recuperada.getNombre());
+    REQUIRE(cuenta.cuenta()->getNombre() == cuenta_recuperada.cuenta()->getNombre());
 
-    ASSERT_EQ(tweets[0]->getIdTweet(), tweet_recuperado_1.getIdTweet());
-    ASSERT_EQ(tweets[1]->getIdTweet(), tweet_recuperado_2.getIdTweet());
+    REQUIRE(contenido1->getTitulo() == contenido_recuperado1.getTitulo());
+    REQUIRE(contenido2->getTitulo() == contenido_recuperado2.getTitulo());
 
-    ASSERT_EQ(tweets[0]->getTexto(), tweet_recuperado_1.getTexto());
-    ASSERT_EQ(tweets[1]->getTexto(), tweet_recuperado_2.getTexto());
+    REQUIRE(contenido1->getTexto() == contenido_recuperado1.getTexto());
+    REQUIRE(contenido2->getTexto() == contenido_recuperado2.getTexto());
 
-    for (std::vector<modelo::Tweet*>::iterator it = tweets.begin(); it != tweets.end(); it++)
-    {
-        delete *it;
-    }
+    REQUIRE(true == (contenido1->getFecha() == contenido_recuperado1.getFecha()));
+    REQUIRE(true == (contenido2->getFecha() == contenido_recuperado2.getFecha()));
+
+    delete contenido1;
+    delete contenido2;
+}
+
+
+TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
+{
+    //// probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
+    //// agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
+    //// y que despues se puedan acceder tanto el Medio como los Contenidos por separados.
+
+    scraping::extraccion::Medio::getGestorIDs()->setIdActual(100);
+    scraping::extraccion::Contenido::getGestorIDs()->setIdActual(200);
+
+    scraping::extraccion::interfaceo::MedioFacebook pagina("clarin");
+    pagina.asignarNuevoId();
+
+    scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
+    contenido1->asignarNuevoId();
+
+    pagina.agregarContenidoParaAnalizar(contenido1);
+
+    scraping::extraccion::Contenido * contenido2 = new scraping::extraccion::Contenido("titulo2", "texto2", "categoria2", herramientas::utiles::Fecha::getFechaActual());
+    contenido2->asignarNuevoId();
+
+    pagina.agregarContenidoParaAnalizar(contenido2);
+
+    std::vector<unsigned long long int> ids_publicaciones = pagina.getIDsContenidosNoAnalizados();
+
+    REQUIRE(100 == pagina.getId()->numero());
+
+    REQUIRE(200 == ids_publicaciones[0]);
+    REQUIRE(201 == ids_publicaciones[1]);
+
+    // almaceno el medio (cuenta twitter).
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&pagina);
+
+    // almaceno contenidos
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido1);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido2);
+
+    // recupero el medio.
+    scraping::extraccion::interfaceo::MedioFacebook pagina_recuperada;
+    pagina_recuperada.setId(pagina.getId()->copia());
+
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&pagina_recuperada);
+
+    // recupero los contenidos del medio.
+    scraping::extraccion::Contenido contenido_recuperado1;
+    contenido_recuperado1.setId(contenido1->getId()->copia());
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&contenido_recuperado1);
+
+    scraping::extraccion::Contenido contenido_recuperado2;
+    contenido_recuperado2.setId(contenido2->getId()->copia());
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&contenido_recuperado2);
+
+    REQUIRE(pagina.pagina()->getNombre() == pagina_recuperada.pagina()->getNombre());
+
+    REQUIRE(contenido1->getTitulo() == contenido_recuperado1.getTitulo());
+    REQUIRE(contenido2->getTitulo() == contenido_recuperado2.getTitulo());
+
+    REQUIRE(contenido1->getTexto() == contenido_recuperado1.getTexto());
+    REQUIRE(contenido2->getTexto() == contenido_recuperado2.getTexto());
+
+    REQUIRE(true == (contenido1->getFecha() == contenido_recuperado1.getFecha()));
+    REQUIRE(true == (contenido2->getFecha() == contenido_recuperado2.getFecha()));
+
+    delete contenido1;
+    delete contenido2;
 }

@@ -1,15 +1,13 @@
 
-#define GTEST_LANG_CXX11 1
-
-// gtest
-#include <gtest/gtest.h>
-
-#ifdef DEBUG || _DEBUG
+#if defined(DEBUG) || defined(_DEBUG)
 
 // vld
 #include <vld.h>
 
 #endif // DEBUG || _DEBUG
+
+#define CATCH_CONFIG_RUNNER
+#include <catch.hpp>
 
 // scraping
 #include <scraping/include/IAdministradorScraping.h>
@@ -17,7 +15,6 @@
 
 int main(int argc, char **argv)
 {
-	::testing::InitGoogleTest(&argc, argv);
 
     //scraping::ConfiguracionScraping::leerConfiguracion("config_scraping.json");
 
@@ -28,7 +25,7 @@ int main(int argc, char **argv)
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->abrirBD();
 
-    int result = RUN_ALL_TESTS();
+    int result = Catch::Session().run(argc, argv);
 
     scraping::IAdministradorScraping::getInstanciaAdminInfo()->cerrarBD();
 

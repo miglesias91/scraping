@@ -7,9 +7,6 @@
 // extraccion
 #include <extraccion/include/Medio.h>
 
-// twitter
-#include <twitter/include/Cuenta.h>
-
 namespace scraping
 {
 namespace aplicacion

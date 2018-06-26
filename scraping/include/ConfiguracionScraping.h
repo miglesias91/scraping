@@ -25,7 +25,7 @@ public:
     static std::string prefijoConfiguracion();
 
     static std::string prefijoTwitter();
-    static std::string prefijoHTML();
+    static std::string prefijoPortalNoticias();
     static std::string prefijoFacebook();
     static std::string prefijoRSS();
 
@@ -53,7 +53,7 @@ public:
     static std::string tagPrefijoConfiguracion();
 
     static std::string tagPrefijoTwitter();
-    static std::string tagPrefijoHTML();
+    static std::string tagPrefijoPortalNoticias();
     static std::string tagPrefijoFacebook();
     static std::string tagPrefijoRSS();
 
@@ -82,7 +82,7 @@ private:
     static std::string prefijo_configuracion;
 
     static std::string prefijo_twitter;
-    static std::string prefijo_html;
+    static std::string prefijo_portal_noticias;
     static std::string prefijo_facebook;
     static std::string prefijo_rss;
 

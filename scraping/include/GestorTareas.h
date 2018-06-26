@@ -7,7 +7,7 @@
 #include <analisis/include/ResultadoAnalisis.h>
 
 // twitter
-#include <twitter/include/Cuenta.h>
+//#include <twitter/include/Cuenta.h>
 
 namespace scraping
 {

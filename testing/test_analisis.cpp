@@ -1,5 +1,6 @@
-// gtest
-#include <gtest/gtest.h>
+
+// catch2
+#include <catch.hpp>
 
 // scraping
 #include <scraping/include/IAdministradorScraping.h>
@@ -15,7 +16,7 @@
 
 using namespace scraping::analisis;
 
-TEST(Analisis, fuerzaEnNoticiaAnalisisCorrecto)
+TEST_CASE("fuerza_en_noticia_analizar", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -24,24 +25,24 @@ TEST(Analisis, fuerzaEnNoticiaAnalisisCorrecto)
     tecnicas::ResultadoFuerzaEnNoticia resultado_1;
     fuerza_en_noticia.aplicar(bolsa_de_palabras_1, &resultado_1);
 
-    ASSERT_EQ(9, resultado_1.cantidadDePalabras());
-    ASSERT_EQ(std::round(1000. * 1.73239374), std::round(1000. * resultado_1.getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 1.73239374), std::round(1000. * resultado_1.getFuerza("gaza")));
+    REQUIRE(9 == resultado_1.cantidadDePalabras());
+    REQUIRE(std::round(1000. * 1.73239374) == std::round(1000. * resultado_1.getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 1.73239374) == std::round(1000. * resultado_1.getFuerza("gaza")));
     
     std::vector<std::string> bolsa_de_palabras_2 = { "jerusalen", "suenan", "sirenas", "alarma", "jerusalen", "sur", "israel", "disparo", "jerusalen", "cohete", "gaza", "israel" };
 
     tecnicas::ResultadoFuerzaEnNoticia resultado_2;
     fuerza_en_noticia.aplicar(bolsa_de_palabras_2, &resultado_2);
     
-    ASSERT_EQ(9, resultado_2.cantidadDePalabras());
-    ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_2.getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_2.getFuerza("israel")));
-    ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_2.getFuerza("gaza")));
+    REQUIRE(9 == resultado_2.cantidadDePalabras());
+    REQUIRE(std::round(1000. * 5.67628384) == std::round(1000. * resultado_2.getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 3.78418922) == std::round(1000. * resultado_2.getFuerza("israel")));
+    REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado_2.getFuerza("gaza")));
 
     std::vector<std::pair<std::string, float>> top_3 = resultado_2.getTop(3);
 }
 
-TEST(Analisis, resultadoFuerzaEnNoticiaArmarJsonCorrectamente)
+TEST_CASE("fuerza_en_noticia_armar_json", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -55,18 +56,18 @@ TEST(Analisis, resultadoFuerzaEnNoticiaArmarJsonCorrectamente)
     std::string json_string = resultado.getJson()->jsonString();
     std::string json_string_correcto = "{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"gaza_1.8921\",\"suenan_1.8921\",\"sur_1.8921\",\"sirenas_1.8921\",\"alarma_1.8921\",\"disparo_1.8921\",\"cohete_1.8921\"]}";
 
-    ASSERT_STREQ(json_string_correcto.c_str(), json_string.c_str());
+    REQUIRE(json_string_correcto == json_string);
 
     tecnicas::ResultadoFuerzaEnNoticia resultado_nuevo;
     resultado_nuevo.setJson(new herramientas::utiles::Json(json_string_correcto));
     resultado_nuevo.parsearJson();
 
-    ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado.getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado.getFuerza("israel")));
-    ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado.getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 5.67628384) == std::round(1000. * resultado.getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 3.78418922) == std::round(1000. * resultado.getFuerza("israel")));
+    REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado.getFuerza("gaza")));
 }
 
-TEST(Analisis, resultadoFuerzaEnNoticiaSumarFuerzasCorrectamente)
+TEST_CASE("fuerza_en_noticia_sumar", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -81,14 +82,14 @@ TEST(Analisis, resultadoFuerzaEnNoticiaSumarFuerzasCorrectamente)
 
     resultado_1.sumarFuerzas(&resultado_2);
 
-    ASSERT_EQ(std::round(1000. * 11.4948416), std::round(1000. * resultado_1.getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 7.66322803), std::round(1000. * resultado_1.getFuerza("israel")));
-    ASSERT_EQ(std::round(1000. * 3.83161402), std::round(1000. * resultado_1.getFuerza("gaza")));
-    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_1.getFuerza("holis")));
-    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_1.getFuerza("chau")));
+    REQUIRE(std::round(1000. * 11.4948416) == std::round(1000. * resultado_1.getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 7.66322803) == std::round(1000. * resultado_1.getFuerza("israel")));
+    REQUIRE(std::round(1000. * 3.83161402) == std::round(1000. * resultado_1.getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 1.93951929) == std::round(1000. * resultado_1.getFuerza("holis")));
+    REQUIRE(std::round(1000. * 1.93951929) == std::round(1000. * resultado_1.getFuerza("chau")));
 }
 
-TEST(Analisis, resultadoAnalisisCombinarCorrectamente)
+TEST_CASE("combinar_resultados", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     tecnicas::Sentimiento sentimiento;
@@ -116,27 +117,27 @@ TEST(Analisis, resultadoAnalisisCombinarCorrectamente)
     
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_combinado = resultado_analisis_1.getResultadoFuerzaEnNoticia();
 
-    ASSERT_EQ(std::round(1000. * 11.4948416), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 7.66322803), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
-    ASSERT_EQ(std::round(1000. * 3.83161402), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
-    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
-    ASSERT_EQ(std::round(1000. * 1.93951929), std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
+    REQUIRE(std::round(1000. * 11.4948416) == std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 7.66322803) == std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("israel")));
+    REQUIRE(std::round(1000. * 3.83161402) == std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 1.93951929) == std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("holis")));
+    REQUIRE(std::round(1000. * 1.93951929) == std::round(1000. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
 
     tecnicas::ResultadoSentimiento * resultado_sentimiento_combinado = resultado_analisis_1.getResultadoSentimiento();
 
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
-    ASSERT_EQ(std::round(1000. * 2), std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
-    ASSERT_EQ(std::round(1000. * 2), std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("holis").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("holis").cantidad));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_sentimiento_combinado->neutralidad("chau").suma));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_sentimiento_combinado->neutralidad("chau").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
+    REQUIRE(std::round(1000. * 2) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
+    REQUIRE(std::round(1000. * 2) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("holis").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("holis").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("chau").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("chau").cantidad));
 }
 
-TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
+TEST_CASE("armar_json_resultados", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     tecnicas::Sentimiento sentimiento;
@@ -156,7 +157,7 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
     std::string json_string = resultado_analisis.getJson()->jsonString();
     std::string json_string_correcto = "{\"fuerza_en_noticia\":{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"gaza_1.8921\",\"suenan_1.8921\",\"sur_1.8921\",\"sirenas_1.8921\",\"alarma_1.8921\",\"disparo_1.8921\",\"cohete_1.8921\"]},\"sentimiento\":{\"valores\":[\"gaza_0/0-0/0-1/1\",\"jerusalen_0/0-0/0-3/3\",\"sur_0/0-0/0-1/1\",\"israel_0/0-0/0-2/2\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]}}";
 
-    ASSERT_STREQ(json_string_correcto.c_str(), json_string.c_str());
+    REQUIRE(json_string_correcto == json_string);
 
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_nuevo;
     resultado_analisis_nuevo.setJson(new herramientas::utiles::Json(json_string_correcto));
@@ -164,21 +165,21 @@ TEST(Analisis, resultadoAnalisisArmarJsonCorrectamente)
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_nuevo = resultado_analisis_nuevo.getResultadoFuerzaEnNoticia();
 
-    ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
-    ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 5.67628384) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 3.78418922) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
+    REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
 
     tecnicas::ResultadoSentimiento * resultado_sentimiento_combinado = resultado_analisis_nuevo.getResultadoSentimiento();
 
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
 }
 
-TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
+TEST_CASE("almacenar_y_recuperar_resultados", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     tecnicas::Sentimiento sentimiento;
@@ -204,22 +205,22 @@ TEST(Analisis, resultadoAnalisisAlmacenarYRecuperarCorrectamente)
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_nuevo = resultado_analisis_a_recuperar.getResultadoFuerzaEnNoticia();
 
-    ASSERT_EQ(std::round(1000. * 5.67628384), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
-    ASSERT_EQ(std::round(1000. * 3.78418922), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
-    ASSERT_EQ(std::round(1000. * 1.89209461), std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 5.67628384) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
+    REQUIRE(std::round(1000. * 3.78418922) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
+    REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
 
     tecnicas::ResultadoSentimiento * resultado_sentimiento_combinado = resultado_analisis_a_recuperar.getResultadoSentimiento();
 
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->positividad("jerusalen").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
 }
 
 
-TEST(Analisis, sentimiento_analisis_correcto)
+TEST_CASE("sentimiento_analisis_correcto", "analisis")
 {
     tecnicas::Sentimiento sentimiento;
 
@@ -228,15 +229,15 @@ TEST(Analisis, sentimiento_analisis_correcto)
     tecnicas::ResultadoSentimiento resultado_1;
     sentimiento.aplicar(bolsa_de_palabras_1, &resultado_1);
 
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.positividad("jerusalen").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.positividad("jerusalen").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.negatividad("israel").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.negatividad("israel").cantidad));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_1.neutralidad("gaza").suma));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_1.neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.positividad("jerusalen").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.positividad("jerusalen").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.negatividad("israel").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.negatividad("israel").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("gaza").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("gaza").cantidad));
 }
 
-TEST(Analisis, resultado_sentimiento_armar_json_correctamente)
+TEST_CASE("resultado_sentimiento_armar_json_correctamente", "analisis")
 {
     tecnicas::Sentimiento sentimiento;
 
@@ -250,21 +251,21 @@ TEST(Analisis, resultado_sentimiento_armar_json_correctamente)
     std::string json_string = resultado.getJson()->jsonString();
     std::string json_string_correcto = "{\"valores\":[\"gaza_0/0-0/0-1/1\",\"jerusalen_0/0-0/0-3/3\",\"sur_0/0-0/0-1/1\",\"israel_0/0-0/0-2/2\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]}";
 
-    ASSERT_STREQ(json_string_correcto.c_str(), json_string.c_str());
+    REQUIRE(json_string_correcto == json_string);
 
     tecnicas::ResultadoSentimiento resultado_nuevo;
     resultado_nuevo.setJson(new herramientas::utiles::Json(json_string_correcto));
     resultado_nuevo.parsearJson();
 
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_nuevo.positividad("jerusalen").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_nuevo.positividad("jerusalen").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_nuevo.negatividad("israel").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_nuevo.negatividad("israel").cantidad));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_nuevo.neutralidad("gaza").suma));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_nuevo.neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_nuevo.positividad("jerusalen").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_nuevo.positividad("jerusalen").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_nuevo.negatividad("israel").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_nuevo.negatividad("israel").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_nuevo.neutralidad("gaza").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_nuevo.neutralidad("gaza").cantidad));
 }
 
-TEST(Analisis, resultado_sentimiento_sumar_correctamente)
+TEST_CASE("resultado_sentimiento_sumar_correctamente", "analisis")
 {
     tecnicas::Sentimiento sentimiento;
 
@@ -279,14 +280,14 @@ TEST(Analisis, resultado_sentimiento_sumar_correctamente)
 
     resultado_1.sumar(&resultado_2);
 
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.positividad("jerusalen").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.positividad("jerusalen").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.negatividad("israel").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.negatividad("israel").cantidad));
-    ASSERT_EQ(std::round(1000. * 2), std::round(1000. * resultado_1.neutralidad("gaza").suma));
-    ASSERT_EQ(std::round(1000. * 2), std::round(1000. * resultado_1.neutralidad("gaza").cantidad));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.positividad("holis").suma));
-    ASSERT_EQ(std::round(1000. * 0), std::round(1000. * resultado_1.positividad("holis").cantidad));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_1.neutralidad("chau").suma));
-    ASSERT_EQ(std::round(1000. * 1), std::round(1000. * resultado_1.neutralidad("chau").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.positividad("jerusalen").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.positividad("jerusalen").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.negatividad("israel").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.negatividad("israel").cantidad));
+    REQUIRE(std::round(1000. * 2) == std::round(1000. * resultado_1.neutralidad("gaza").suma));
+    REQUIRE(std::round(1000. * 2) == std::round(1000. * resultado_1.neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.positividad("holis").suma));
+    REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.positividad("holis").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("chau").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("chau").cantidad));
 }

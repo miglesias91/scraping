@@ -75,15 +75,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos-git)ia;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)tiny-dnn;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos-git)ia;$(repos-git)medios-digitales;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)tiny-dnn;$(repos)spdlog\include;$(repos)Catch2\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;DEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <EnableModules>false</EnableModules>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(repos-git)herramientas_desarrollo\Debug;$(repos-git)almacenamiento\Debug;$(repos)cpprestsdk\Binaries\Win32\Debug;$(repos)rocksdb\build_x86\Debug;$(repos)googletest\googletest\build_x86\Debug;$(repos-git)ia\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;gtest.lib;gtest_main.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(repos-git)herramientas_desarrollo\Debug;$(repos-git)almacenamiento\Debug;$(repos-git)ia\Debug;$(repos-git)medios-digitales\Debug;$(repos)rocksdb\build_x86\Debug;$(repos)cpprestsdk\Binaries\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;noticias.lib;feed.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;cpprest141d_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -109,17 +109,17 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos-git)ia;$(repos)googletest\googletest\include;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)tiny-dnn;$(repos)spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(repos-git)herramientas_desarrollo;$(repos-git)almacenamiento;$(repos-git)ia;$(repos-git)medios-digitales;$(repos)cpprestsdk\Release\include;$(repos)rapidjson\include;$(repos)tiny-dnn;$(repos)spdlog\include;$(repos)Catch2\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <EnableModules>false</EnableModules>
-      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)Release;$(repos-git)herramientas_desarrollo\Release;$(repos-git)almacenamiento\Release;$(repos)rocksdb\build_x86\Release;$(repos)cpprestsdk\Binaries\Win32\Release;$(repos)googletest\googletest\build_x86\Release;$(repos-git)ia\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;gtest.lib;gtest_main.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Release;$(repos-git)herramientas_desarrollo\Release;$(repos-git)almacenamiento\Release;$(repos-git)ia\Release;$(repos-git)medios-digitales\Release;$(repos)rocksdb\build_x86\Release;$(repos)cpprestsdk\Binaries\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;noticias.lib;feed.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;cpprest141_2_10.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,13 +150,11 @@
     </ClCompile>
     <ClCompile Include="test_depuracion.cpp" />
     <ClCompile Include="test_extraccion.cpp" />
-    <ClCompile Include="test_facebook.cpp" />
     <ClCompile Include="test_preparacion.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="test_scraping.cpp" />
-    <ClCompile Include="test_twitter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

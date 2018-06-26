@@ -1,16 +1,13 @@
 #pragma once
 
 // medios digitales
-#include <facebook/include/publicacion.h>
+#include <facebook/include/Publicacion.h>
 
 // extraccion
 #include <extraccion/include/Contenido.h>
 
-namespace scraping::extraccion::interfaceo
-{
-
-class ContenidoFacebook : public Contenido, public medios::facebook::publicacion
-{
+namespace scraping::extraccion::interfaceo {
+class ContenidoFacebook : public Contenido, public medios::facebook::Publicacion {
 public:
     ContenidoFacebook(herramientas::utiles::Json * json = NULL);
     virtual ~ContenidoFacebook();

@@ -4,16 +4,13 @@
 #include <string>
 
 // medios digitales
-#include <html/include/noticia.h>
+#include <noticias/include/noticia.h>
 
 // extraccion
 #include <extraccion/include/Contenido.h>
 
-namespace scraping::extraccion::interfaceo
-{
-
-class ContenidoPortalNoticias : public Contenido, public medios::html::noticia
-{
+namespace scraping::extraccion::interfaceo {
+class ContenidoPortalNoticias : public Contenido, public medios::noticias::noticia {
 public:
     ContenidoPortalNoticias(herramientas::utiles::Json * json = NULL);
     virtual ~ContenidoPortalNoticias();

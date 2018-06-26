@@ -5,7 +5,7 @@
 #include <log/include/AdministradorLog.h>
 
 // twitter
-#include <twitter/include/Tweet.h>
+//#include <twitter/include/Tweet.h>
 
 namespace scraping
 {
@@ -18,7 +18,7 @@ public:
 
     // GETTERS
 
-    static std::string getDebugLog(twitter::modelo::Tweet * tweet);
+    //static std::string getDebugLog(twitter::modelo::Tweet * tweet);
 
     // SETTERS
 

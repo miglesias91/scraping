@@ -5,7 +5,7 @@
 
 using namespace scraping::extraccion::interfaceo;
 
-ContenidoFacebook::ContenidoFacebook(herramientas::utiles::Json * json) : Contenido(json), medios::facebook::publicacion()
+ContenidoFacebook::ContenidoFacebook(herramientas::utiles::Json * json) : Contenido(json), medios::facebook::Publicacion()
 {
 }
 

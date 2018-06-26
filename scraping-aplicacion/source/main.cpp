@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-#ifdef DEBUG || _DEBUG
+#if  defined(DEBUG) || defined(_DEBUG)
 
 // vld
 #include <vld.h>
@@ -19,14 +19,17 @@
 #include <scraping/include/GestorMedios.h>
 #include <scraping/include/GestorTareas.h>
 
+// extraccion
+#include <extraccion/include/MedioTwitter.h>
+
 void agregarNuevasCuentasDeTwitter()
 {
     // recupero las cuentas de twitter.
     scraping::aplicacion::GestorMedios gestor_medios;
     gestor_medios.recuperarIDActualMedio();
 
-    std::vector<scraping::twitter::modelo::Cuenta*> cuentas_twitter_existentes;
-    gestor_medios.recuperar<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
+    std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas_twitter_existentes;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioTwitter>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
 
     std::ifstream archivo_cuentas_a_agregar("cuentas_twitter_a_agregar.txt");
     std::ofstream archivo_cuentas_existentes("cuentas_twitter_existentes.txt", std::fstream::app);
@@ -35,9 +38,9 @@ void agregarNuevasCuentasDeTwitter()
 
     while (std::getline(archivo_cuentas_a_agregar, linea))
     {
-        scraping::twitter::modelo::Cuenta * nueva_cuenta = new scraping::twitter::modelo::Cuenta(linea);
+        scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter(linea);
 
-        if (gestor_medios.existeMedio<scraping::twitter::modelo::Cuenta>(cuentas_twitter_existentes, nueva_cuenta))
+        if (gestor_medios.existeMedio<scraping::extraccion::interfaceo::MedioTwitter>(cuentas_twitter_existentes, nueva_cuenta))
         {
             continue;
         }
@@ -56,7 +59,7 @@ void agregarNuevasCuentasDeTwitter()
     archivo_cuentas_existentes.close();
     herramientas::utiles::FuncionesSistemaArchivos::eliminar("cuentas_twitter_a_agregar.txt");
 
-    for (std::vector<scraping::twitter::modelo::Cuenta*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
+    for (std::vector<scraping::extraccion::interfaceo::MedioTwitter*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         delete *it;
     }

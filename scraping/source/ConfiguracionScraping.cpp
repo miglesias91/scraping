@@ -21,7 +21,7 @@ std::string ConfiguracionScraping::archivo_config_db_resultados_analisis_diario;
 std::string ConfiguracionScraping::prefijo_configuracion;
 
 std::string ConfiguracionScraping::prefijo_twitter;
-std::string ConfiguracionScraping::prefijo_html;
+std::string ConfiguracionScraping::prefijo_portal_noticias;
 std::string ConfiguracionScraping::prefijo_facebook;
 std::string ConfiguracionScraping::prefijo_rss;
 
@@ -72,7 +72,7 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
         prefijo_configuracion = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoConfiguracion());
 
         prefijo_twitter = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoTwitter());
-        prefijo_html = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoHTML());
+        prefijo_portal_noticias = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoPortalNoticias());
         prefijo_facebook = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoFacebook());
         prefijo_rss = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoRSS());
 
@@ -130,9 +130,9 @@ std::string ConfiguracionScraping::prefijoTwitter()
     return prefijo_twitter;
 }
 
-std::string ConfiguracionScraping::prefijoHTML()
+std::string ConfiguracionScraping::prefijoPortalNoticias()
 {
-    return prefijo_html;
+    return prefijo_portal_noticias;
 }
 
 std::string ConfiguracionScraping::prefijoFacebook()
@@ -221,9 +221,9 @@ std::string ConfiguracionScraping::tagPrefijoTwitter()
     return "prefijo_twitter";
 }
 
-std::string ConfiguracionScraping::tagPrefijoHTML()
+std::string ConfiguracionScraping::tagPrefijoPortalNoticias()
 {
-    return "prefijo_html";
+    return "prefijo_portal_noticias";
 }
 
 std::string ConfiguracionScraping::tagPrefijoFacebook()
