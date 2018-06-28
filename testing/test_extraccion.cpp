@@ -2,18 +2,21 @@
 #include <catch.hpp>
 
 // medios
-//#include <twitter/include/Aplicacion.h>
-//#include <twitter/include/Cuenta.h>
-//#include <twitter/include/Tweet.h>
+#include <noticias/include/clarin.h>
+#include <noticias/include/infobae.h>
+#include <noticias/include/la_nacion.h>
 
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/IAdministradorScraping.h>
+#include <scraping/include/GestorMedios.h>
 
 // extraccion
 #include <extraccion/include/MedioTwitter.h>
 #include <extraccion/include/MedioFacebook.h>
+#include <extraccion/include/MedioPortalNoticias.h>
 #include <extraccion/include/Contenido.h>
+#include <extraccion/include/extractor.h>
 
 TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
 {
@@ -24,7 +27,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(100);
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(200);
 
-    scraping::extraccion::interfaceo::MedioTwitter cuenta("clarin");
+    scraping::extraccion::interfaceo::MedioTwitter cuenta("clarincom");
     cuenta.asignarNuevoId();
 
     scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
@@ -45,7 +48,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
     REQUIRE(201 == ids_tweets[1]);
 
     // almaceno el medio (cuenta twitter).
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(&cuenta);
 
     // almaceno contenidos
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido1);
@@ -55,7 +58,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
     scraping::extraccion::interfaceo::MedioTwitter cuenta_recuperada;
     cuenta_recuperada.setId(cuenta.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_recuperada);
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperar(&cuenta_recuperada);
 
     // recupero los contenidos del medio.
     scraping::extraccion::Contenido contenido_recuperado1;
@@ -77,6 +80,8 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
     REQUIRE(true == (contenido1->getFecha() == contenido_recuperado1.getFecha()));
     REQUIRE(true == (contenido2->getFecha() == contenido_recuperado2.getFecha()));
 
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&cuenta_recuperada);
+
     delete contenido1;
     delete contenido2;
 }
@@ -91,7 +96,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(100);
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(200);
 
-    scraping::extraccion::interfaceo::MedioFacebook pagina("clarin");
+    scraping::extraccion::interfaceo::MedioFacebook pagina("clarincom");
     pagina.asignarNuevoId();
 
     scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
@@ -112,7 +117,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
     REQUIRE(201 == ids_publicaciones[1]);
 
     // almaceno el medio (cuenta twitter).
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&pagina);
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(&pagina);
 
     // almaceno contenidos
     scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido1);
@@ -122,7 +127,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
     scraping::extraccion::interfaceo::MedioFacebook pagina_recuperada;
     pagina_recuperada.setId(pagina.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&pagina_recuperada);
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperar(&pagina_recuperada);
 
     // recupero los contenidos del medio.
     scraping::extraccion::Contenido contenido_recuperado1;
@@ -144,6 +149,113 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
     REQUIRE(true == (contenido1->getFecha() == contenido_recuperado1.getFecha()));
     REQUIRE(true == (contenido2->getFecha() == contenido_recuperado2.getFecha()));
 
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&pagina_recuperada);
+
     delete contenido1;
     delete contenido2;
+}
+
+TEST_CASE("almacenar_y_recuperar_correctamente_medio_portal_noticias", "extraccion")
+{
+    //// probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
+    //// agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
+    //// y que despues se puedan acceder tanto el Medio como los Contenidos por separados.
+
+    scraping::extraccion::Medio::getGestorIDs()->setIdActual(100);
+    scraping::extraccion::Contenido::getGestorIDs()->setIdActual(200);
+
+    scraping::extraccion::interfaceo::MedioPortalNoticias portal(std::make_shared<medios::noticias::clarin>());
+    portal.asignarNuevoId();
+
+    scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
+    contenido1->asignarNuevoId();
+
+    portal.agregarContenidoParaAnalizar(contenido1);
+
+    scraping::extraccion::Contenido * contenido2 = new scraping::extraccion::Contenido("titulo2", "texto2", "categoria2", herramientas::utiles::Fecha::getFechaActual());
+    contenido2->asignarNuevoId();
+
+    portal.agregarContenidoParaAnalizar(contenido2);
+
+    std::vector<unsigned long long int> ids_publicaciones = portal.getIDsContenidosNoAnalizados();
+
+    REQUIRE(100 == portal.getId()->numero());
+
+    REQUIRE(200 == ids_publicaciones[0]);
+    REQUIRE(201 == ids_publicaciones[1]);
+
+    // almaceno el medio (cuenta twitter).
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(&portal);
+
+    // almaceno contenidos
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido1);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(contenido2);
+
+    // recupero el medio.
+    scraping::extraccion::interfaceo::MedioPortalNoticias portal_recuperada;
+    portal_recuperada.setId(portal.getId()->copia());
+
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperar(&portal_recuperada);
+
+    // recupero los contenidos del medio.
+    scraping::extraccion::Contenido contenido_recuperado1;
+    contenido_recuperado1.setId(contenido1->getId()->copia());
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&contenido_recuperado1);
+
+    scraping::extraccion::Contenido contenido_recuperado2;
+    contenido_recuperado2.setId(contenido2->getId()->copia());
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&contenido_recuperado2);
+
+    REQUIRE(portal.portal()->web() == portal_recuperada.portal()->web());
+
+    REQUIRE(contenido1->getTitulo() == contenido_recuperado1.getTitulo());
+    REQUIRE(contenido2->getTitulo() == contenido_recuperado2.getTitulo());
+
+    REQUIRE(contenido1->getTexto() == contenido_recuperado1.getTexto());
+    REQUIRE(contenido2->getTexto() == contenido_recuperado2.getTexto());
+
+    REQUIRE(true == (contenido1->getFecha() == contenido_recuperado1.getFecha()));
+    REQUIRE(true == (contenido2->getFecha() == contenido_recuperado2.getFecha()));
+
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&portal_recuperada);
+
+    delete contenido1;
+    delete contenido2;
+}
+
+TEST_CASE("extraer_twitter", "extraccion[.]") {
+
+    scraping::extraccion::interfaceo::MedioTwitter cuenta("clarincom");
+    cuenta.asignarNuevoId();
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(&cuenta);
+
+    scraping::extraccion::extractor ex;
+    ex.extraer_twitter();
+
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&cuenta);
+}
+
+TEST_CASE("extraer_facebook", "extraccion[.]") {
+
+    scraping::extraccion::interfaceo::MedioFacebook pagina("clarincom");
+    pagina.asignarNuevoId();
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(&pagina);
+
+    scraping::extraccion::extractor ex;
+    ex.extraer_facebook();
+
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&pagina);
+}
+
+TEST_CASE("extraer_portal", "extraccion") {
+
+    scraping::extraccion::interfaceo::MedioPortalNoticias portal(std::make_shared<medios::noticias::clarin>());
+    portal.asignarNuevoId();
+
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(&portal);
+
+    scraping::extraccion::extractor ex;
+    ex.extraer_portales();
+
+    scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&portal);
 }

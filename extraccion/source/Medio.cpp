@@ -10,13 +10,10 @@ using namespace scraping::extraccion;
 
 herramientas::utiles::GestorIDs Medio::gestor_ids_medios;
 
-Medio::Medio(herramientas::utiles::Json * json) : IAlmacenable(ConfiguracionScraping::prefijoMedio()), IContieneJson(json), IHashable()
-{
-}
+Medio::Medio(const std::string & prefijo_grupo, herramientas::utiles::Json * json)
+    : prefijo_grupo(prefijo_grupo), IAlmacenable(prefijo_grupo), IContieneJson(json), IHashable() {}
 
-Medio::~Medio()
-{
-}
+Medio::~Medio() {}
 
 std::unordered_map<std::string, std::vector<unsigned long long int>> Medio::getMapaIDsContenidosAnalizados()
 {
@@ -347,7 +344,7 @@ void Medio::parsearValorAlmacenable(std::string valor_almacenable)
     }
 }
 
-std::string Medio::prefijoGrupo()
-{
-    return ConfiguracionScraping::prefijoMedio();
+std::string Medio::prefijoGrupo() {
+    return this->prefijo_grupo;
+    //return ConfiguracionScraping::prefijoMedio();
 }

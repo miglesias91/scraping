@@ -11,8 +11,11 @@
 
 namespace scraping::extraccion::interfaceo {
 
-MedioFacebook::MedioFacebook(const std::string & nombre_pagina) : Medio(nullptr), pagina_facebook(new medios::facebook::Pagina(nombre_pagina)) {}
-MedioFacebook::MedioFacebook(herramientas::utiles::Json * json) : Medio(json), pagina_facebook(new medios::facebook::Pagina()) {}
+MedioFacebook::MedioFacebook(const std::string & nombre_pagina)
+    : Medio(scraping::ConfiguracionScraping::prefijoFacebook(), nullptr), pagina_facebook(new medios::facebook::Pagina(nombre_pagina)) {}
+
+MedioFacebook::MedioFacebook(herramientas::utiles::Json * json)
+    : Medio(scraping::ConfiguracionScraping::prefijoFacebook(), json), pagina_facebook(new medios::facebook::Pagina()) {}
 
 MedioFacebook::~MedioFacebook() {
     delete this->pagina_facebook;
@@ -42,6 +45,12 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
 
     std::vector<medios::facebook::Publicacion*> publicaciones = app.leer(this->pagina_facebook, this->fecha_ultima_publicacion_analizada);
 
+    if (0 == publicaciones.size()) {  // si no descargo nada, entonces devuelvo false.
+        return false;
+    }
+
+    std::reverse(publicaciones.begin(), publicaciones.end());
+
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
     std::for_each(publicaciones.begin(), publicaciones.end(),
         [=](medios::facebook::Publicacion * publicacion) {
@@ -54,24 +63,21 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
 
+        this->fecha_ultima_publicacion_analizada = publicacion->getFechaCreacion();
+
         delete publicacion;
     });
 
+    scraping::Logger::info("descargar_publicacion: { pagina = '" + this->pagina_facebook->getNombre() + "' - fecha_ultima_publicacion_analizada = '" + this->fecha_ultima_publicacion_analizada.getStringAAAAMMDDHHmmSS() + "' }");
+
+    // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
+    gestor_analisis_diario.almacenarMedio(this);
+
     scraping::aplicacion::GestorMedios gestor_medios;
-    if (0 < publicaciones.size())
-    {// trajo por lo menos un publicacion nuevo, entonces actualizo sus datos.
-        this->fecha_ultima_publicacion_analizada = publicaciones[0]->getFechaCreacion();
+    // almaceno el id del ultimo publicacion analizado.
+    gestor_medios.actualizarMedio(this);
 
-        scraping::Logger::info("descargar_publicacion: { pagina = '" + this->pagina_facebook->getNombre() + "' - fecha_ultima_publicacion_analizada = '" + this->fecha_ultima_publicacion_analizada.getStringAAAAMMDDHHmmSS() + "' }");
-
-        // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
-        gestor_analisis_diario.almacenarMedio(this);
-
-        // almaceno el id del ultimo publicacion analizado.
-        gestor_medios.actualizarMedio(this);
-    }
-
-    return false;
+    return true;
 }
 
 Medio * MedioFacebook::clonar() {

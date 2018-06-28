@@ -29,6 +29,11 @@ std::string Contenido::getTexto() const {
     return this->texto;
 }
 
+std::string Contenido::getCategoria() const {
+    return this->categoria;
+}
+
+
 std::string Contenido::getClaveIDActual() {
     return ConfiguracionScraping::claveIDContenidoActual();
 }

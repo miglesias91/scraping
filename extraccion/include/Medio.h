@@ -26,7 +26,7 @@ namespace extraccion
 class Medio : public IAlmacenable, public herramientas::utiles::IContieneJson, public herramientas::utiles::IHashable
 {
 public:
-    Medio(herramientas::utiles::Json * json = NULL);
+    Medio(const std::string & prefijo_grupo = "", herramientas::utiles::Json * json = NULL);
     virtual ~Medio();
 
     // GETTERS
@@ -101,6 +101,7 @@ private:
 
     std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_historicos;
 
+    std::string prefijo_grupo;
 };
 
 };

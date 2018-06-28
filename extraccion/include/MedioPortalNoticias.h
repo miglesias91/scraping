@@ -1,5 +1,8 @@
 #pragma once
 
+// stl
+#include <memory>
+
 // medios digitales
 #include <noticias/include/portal.h>
 #include <noticias/include/lector.h>
@@ -10,7 +13,7 @@
 namespace scraping::extraccion::interfaceo {
 class MedioPortalNoticias : public Medio {
 public:
-    explicit MedioPortalNoticias(medios::noticias::portal * portal_noticias);
+    explicit MedioPortalNoticias(std::shared_ptr<medios::noticias::portal> portal_noticias);
     explicit MedioPortalNoticias(herramientas::utiles::Json * json = nullptr);
     virtual ~MedioPortalNoticias();
 
@@ -23,7 +26,7 @@ public:
 
     // SETTERS
 
-    virtual void portal(medios::noticias::portal * portal_noticias);
+    virtual void portal(std::shared_ptr<medios::noticias::portal> portal_noticias);
     virtual void fecha_ultima_noticia(const herramientas::utiles::Fecha & fecha);
 
     // METODOS
@@ -48,7 +51,8 @@ public:
 
 private:
 
-    std::shared_ptr<medios::noticias::portal*> portal_noticias;
+    //medios::noticias::portal * portal_noticias;
+    std::shared_ptr<medios::noticias::portal> portal_noticias;
 
     herramientas::utiles::Fecha fecha_ultima_noticia_analizada;
 };

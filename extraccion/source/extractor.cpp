@@ -5,6 +5,7 @@
 
 // medios
 #include <twitter/include/Aplicacion.h>
+#include <facebook/include/Aplicacion.h>
 
 // scraping
 #include <scraping/include/GestorMedios.h>
@@ -13,6 +14,8 @@
 
 // extraccion
 #include <extraccion/include/MedioTwitter.h>
+#include <extraccion/include/MedioFacebook.h>
+#include <extraccion/include/MedioPortalNoticias.h>
 
 namespace scraping::extraccion {
 
@@ -21,11 +24,29 @@ extractor::extractor() {}
 extractor::~extractor() {}
 
 bool extractor::extraer_facebook() {
-    return false;
+    scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
+    gestor_analisis_diario.recuperarIDActualContenido();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas_facebook_existentes;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
+
+    medios::facebook::consumidor_api * consumidor_api_twitter = new medios::facebook::consumidor_api("929798640478438", "f36e906bf6b8445ac3ee53e95ac303a7");
+
+    medios::facebook::aplicacion app(consumidor_api_twitter);
+
+    std::for_each(paginas_facebook_existentes.begin(), paginas_facebook_existentes.end(),
+        [&app](scraping::extraccion::interfaceo::MedioFacebook* pagina) {
+        pagina->descargar_publicaciones(app);
+
+        delete pagina;
+    });
+
+    return true;
 }
 
 bool extractor::extraer_twitter() {
-    // recupero las cuentas de twitter.
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
     gestor_analisis_diario.recuperarIDActualContenido();
 
@@ -46,11 +67,28 @@ bool extractor::extraer_twitter() {
         delete cuenta;
     });
 
-    return false;
+    return true;
 }
 
 bool extractor::extraer_portales() {
-    return false;
+    scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
+    gestor_analisis_diario.recuperarIDActualContenido();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales_existentes;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales_existentes);
+
+    medios::noticias::lector lector;
+
+    std::for_each(portales_existentes.begin(), portales_existentes.end(),
+        [&lector](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
+        portal->descargar_noticias(lector);
+
+        delete portal;
+    });
+
+    return true;
 }
 
 }

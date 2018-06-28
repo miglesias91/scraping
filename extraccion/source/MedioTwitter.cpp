@@ -15,9 +15,10 @@
 namespace scraping::extraccion::interfaceo {
 
 MedioTwitter::MedioTwitter(const std::string & nombre_cuenta)
-    : Medio(nullptr), cuenta_twitter(new medios::twitter::Cuenta(nombre_cuenta)), id_ultimo_tweet_analizado(0) {}
+    : Medio(scraping::ConfiguracionScraping::prefijoTwitter(), nullptr), cuenta_twitter(new medios::twitter::Cuenta(nombre_cuenta)), id_ultimo_tweet_analizado(0) {}
+
 MedioTwitter::MedioTwitter(herramientas::utiles::Json * json)
-    : Medio(json), cuenta_twitter(new medios::twitter::Cuenta()), id_ultimo_tweet_analizado(0) {}
+    : Medio(scraping::ConfiguracionScraping::prefijoTwitter(), json), cuenta_twitter(new medios::twitter::Cuenta()), id_ultimo_tweet_analizado(0) {}
 
 MedioTwitter::~MedioTwitter() {
     delete this->cuenta_twitter;
@@ -47,6 +48,13 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
 
     std::vector<medios::twitter::Tweet*> tweets = app.leerUltimosTweets(this->cuenta_twitter, this->id_ultimo_tweet_analizado);
 
+    if (0 == tweets.size()) {  // si no descargo nada, entonces devuelvo false.
+        return false;
+    }
+
+    // lo doy vuelta recorrerlos de mas antiguo a mas reciente: ahora me qeda 
+    std::reverse(tweets.begin(), tweets.end());
+
     scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
     std::for_each(tweets.begin(), tweets.end(),
         [=](medios::twitter::Tweet * tweet) {
@@ -59,24 +67,21 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
 
+        this->id_ultimo_tweet_analizado = tweet->getIdTweet();
+
         delete tweet;
     });
 
+    scraping::Logger::info("descargar_tweets: { cuenta = '" + this->cuenta_twitter->getNombre() + "' - id_ultimo_tweet_analizado = '" + std::to_string(this->id_ultimo_tweet_analizado) + "' }");
+
+    // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
+    gestor_analisis_diario.almacenarMedio(this);
+
     scraping::aplicacion::GestorMedios gestor_medios;
-    if (0 < tweets.size())
-    {// trajo por lo menos un tweet nuevo, entonces actualizo sus datos.
-        this->id_ultimo_tweet_analizado = tweets[0]->getIdTweet();
+    // almaceno el id del ultimo tweet analizado.
+    gestor_medios.actualizarMedio(this);
 
-        scraping::Logger::info("descargar_tweets: { cuenta = '" + this->cuenta_twitter->getNombre() + "' - id_ultimo_tweet_analizado = '" + std::to_string(this->id_ultimo_tweet_analizado) + "' }");
-
-        // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
-        gestor_analisis_diario.almacenarMedio(this);
-
-        // almaceno el id del ultimo tweet analizado.
-        gestor_medios.actualizarMedio(this);
-    }
-
-    return false;
+    return true;
 }
 
 Medio * MedioTwitter::clonar() {
