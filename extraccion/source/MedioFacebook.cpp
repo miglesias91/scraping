@@ -9,7 +9,7 @@
 #include <scraping/include/GestorMedios.h>
 #include <scraping/include/Logger.h>
 
-namespace scraping::extraccion::interfaceo {
+namespace scraping { namespace extraccion { namespace interfaceo {
 
 MedioFacebook::MedioFacebook(const std::string & nombre_pagina)
     : Medio(scraping::ConfiguracionScraping::prefijoFacebook(), nullptr), pagina_facebook(new medios::facebook::Pagina(nombre_pagina)) {}
@@ -58,7 +58,8 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
         Contenido contenido_nuevo("", publicacion->getTextoPublicacion(), "", publicacion->getFechaCreacion());
         contenido_nuevo.asignarNuevoId();
 
-        this->agregarContenidoParaAnalizar(&contenido_nuevo);
+        //this->agregarContenidoParaAnalizar(&contenido_nuevo);
+        this->nuevo_contenido(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
@@ -87,9 +88,23 @@ Medio * MedioFacebook::clonar() {
     clon->pagina(new medios::facebook::Pagina(this->pagina_facebook->getNombre()));
     clon->fecha_ultima_publicacion(this->fecha_ultima_publicacion_analizada);
 
-    clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
-    clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
-    clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+    //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
+    //clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
+    //clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+    
+    std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
+
+    this->ids_para_depurar(&mapa);
+    clon->set_ids_para_depurar(mapa);
+
+    this->ids_para_analizar(&mapa);
+    clon->set_ids_para_analizar(mapa);
+
+    this->ids_para_preparar(&mapa);
+    clon->set_ids_para_preparar(mapa);
+
+    this->ids_historicos(&mapa);
+    clon->set_ids_historicos(mapa);
 
     return clon;
 }
@@ -121,4 +136,4 @@ uintmax_t MedioFacebook::hashcode() {
     return herramientas::utiles::IHashable::hashear(this->pagina_facebook->getNombre());
 }
 
-}
+}}}

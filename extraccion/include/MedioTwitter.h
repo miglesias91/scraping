@@ -7,8 +7,7 @@
 // extraccion
 #include <extraccion/include/Medio.h>
 
-namespace scraping::extraccion::interfaceo {
-
+namespace scraping { namespace extraccion { namespace interfaceo {
 class MedioTwitter : public Medio {
 public:
     explicit MedioTwitter(const std::string & nombre_cuenta);
@@ -53,6 +52,8 @@ private:
     medios::twitter::Cuenta * cuenta_twitter;
 
     uintmax_t id_ultimo_tweet_analizado;
+};
+};
 };
 
 };

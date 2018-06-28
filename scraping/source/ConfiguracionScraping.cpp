@@ -27,6 +27,7 @@ std::string ConfiguracionScraping::prefijo_rss;
 
 std::string ConfiguracionScraping::prefijo_medio;
 std::string ConfiguracionScraping::prefijo_contenido;
+std::string ConfiguracionScraping::prefijo_contenido_depurado;
 std::string ConfiguracionScraping::prefijo_resultado_medio;
 std::string ConfiguracionScraping::prefijo_resultado_contenido;
 std::string ConfiguracionScraping::prefijo_resultado_diario;
@@ -43,8 +44,7 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
 
     path_config = path_archivo_configuracion;
 
-    if (false == archivo.good())
-    {
+    if (false == archivo.good()) {
 	    throw herramientas::utiles::excepciones::ImposibleAbrirArchivo(path_archivo_configuracion);
     }
 
@@ -55,8 +55,7 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
     herramientas::utiles::Json * config_json = NULL;
     herramientas::utiles::Json * config_scraping_json = NULL;
 
-    try
-    {
+    try {
         config_json = new herramientas::utiles::Json(string_config);
         config_scraping_json = config_json->getAtributoValorJson("scraping");
 
@@ -78,13 +77,13 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
 
         prefijo_medio = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoMedio());
         prefijo_contenido = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoContenido());
+        prefijo_contenido_depurado = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoContenidoDepurado());
 
         prefijo_resultado_medio = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoResultadoMedio());
         prefijo_resultado_contenido = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoResultadoContenido());
         prefijo_resultado_diario = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPrefijoResultadoDiario());
     }
-    catch (herramientas::utiles::excepciones::Excepcion & e)
-    {
+    catch (herramientas::utiles::excepciones::Excepcion & e) {
         delete config_scraping_json;
         delete config_json;
 
@@ -154,6 +153,11 @@ std::string ConfiguracionScraping::prefijoMedio()
 std::string ConfiguracionScraping::prefijoContenido()
 {
     return prefijo_contenido;
+}
+
+std::string ConfiguracionScraping::prefijoContenidoDepurado()
+{
+    return prefijo_contenido_depurado;
 }
 
 std::string ConfiguracionScraping::prefijoResultadoMedio()
@@ -245,6 +249,11 @@ std::string ConfiguracionScraping::tagPrefijoMedio()
 std::string ConfiguracionScraping::tagPrefijoContenido()
 {
     return "prefijo_contenido";
+}
+
+std::string ConfiguracionScraping::tagPrefijoContenidoDepurado()
+{
+    return "prefijo_contenido_depurado";
 }
 
 std::string ConfiguracionScraping::tagPrefijoResultadoMedio()

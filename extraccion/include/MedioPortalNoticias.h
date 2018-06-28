@@ -10,7 +10,7 @@
 // extraccion
 #include <extraccion/include/Medio.h>
 
-namespace scraping::extraccion::interfaceo {
+namespace scraping { namespace extraccion { namespace interfaceo {
 class MedioPortalNoticias : public Medio {
 public:
     explicit MedioPortalNoticias(std::shared_ptr<medios::noticias::portal> portal_noticias);
@@ -55,6 +55,8 @@ private:
     std::shared_ptr<medios::noticias::portal> portal_noticias;
 
     herramientas::utiles::Fecha fecha_ultima_noticia_analizada;
+};
+};
 };
 
 };

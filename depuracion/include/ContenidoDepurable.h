@@ -32,7 +32,7 @@ public:
 
 private:
 
-    scraping::extraccion::Contenido * contenido_a_depura;
+    scraping::extraccion::Contenido * contenido_a_depurar;
 };
 
 };

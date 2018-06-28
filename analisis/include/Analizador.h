@@ -3,8 +3,6 @@
 // analisis
 #include <analisis/include/IAnalizable.h>
 #include <analisis/include/ResultadoAnalisis.h>
-#include <analisis/include/FuerzaEnNoticia.h>
-#include <analisis/include/Sentimiento.h>
 
 namespace scraping
 {
@@ -23,7 +21,13 @@ public:
 
     // METODOS
 
-    virtual void analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis * resultado_analisis);
+    virtual bool analizar_twitter() const;
+    virtual bool analizar_facebook() const;
+    virtual bool analizar_portales() const;
+
+    virtual bool analizar(scraping::extraccion::Medio * medio) const;
+
+    virtual void analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis * resultado_analisis) const;
 
     // CONSULTAS
 

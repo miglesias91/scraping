@@ -31,6 +31,7 @@ public:
 
     static std::string prefijoMedio();
     static std::string prefijoContenido();
+    static std::string prefijoContenidoDepurado();
 
     static std::string prefijoResultadoMedio();
     static std::string prefijoResultadoContenido();
@@ -59,6 +60,7 @@ public:
 
     static std::string tagPrefijoMedio();
     static std::string tagPrefijoContenido();
+    static std::string tagPrefijoContenidoDepurado();
 
     static std::string tagPrefijoResultadoMedio();
     static std::string tagPrefijoResultadoContenido();
@@ -88,6 +90,7 @@ private:
 
     static std::string prefijo_medio;
     static std::string prefijo_contenido;
+    static std::string prefijo_contenido_depurado;
     static std::string prefijo_resultado_medio;
     static std::string prefijo_resultado_contenido;
     static std::string prefijo_resultado_diario;

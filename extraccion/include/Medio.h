@@ -30,26 +30,47 @@ public:
     virtual ~Medio();
 
     // GETTERS
+    virtual bool ids_para_depurar(std::unordered_map<std::string, std::vector<uintmax_t>> * mapa);
+    virtual bool ids_para_depurar(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
+    virtual bool ids_para_depurar(std::vector<uintmax_t> * vector);
 
-    std::unordered_map<std::string, std::vector<unsigned long long int>> getMapaIDsContenidosAnalizados();
+    virtual bool ids_para_analizar(std::unordered_map<std::string, std::vector<uintmax_t>> * mapa);
+    virtual bool ids_para_analizar(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
+    virtual bool ids_para_analizar(std::vector<uintmax_t> * vector);
 
-    std::unordered_map<std::string, std::vector<unsigned long long int>> getMapaIDsContenidosNoAnalizados();
+    virtual bool ids_para_preparar(std::unordered_map<std::string, std::vector<uintmax_t>> * mapa);
+    virtual bool ids_para_preparar(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
+    virtual bool ids_para_preparar(std::vector<uintmax_t> * vector);
 
-    std::unordered_map<std::string, std::vector<unsigned long long int>> getMapaIDsContenidosHistoricos();
+    virtual bool ids_historicos(std::unordered_map<std::string, std::vector<uintmax_t>> * mapa);
+    virtual bool ids_historicos(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
+    virtual bool ids_historicos(std::vector<uintmax_t> * vector);
 
-    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getParesIDsContenidosAnalizados();
+    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_para_depurar();
 
-    std::vector<std::pair<std::string, std::vector<unsigned long long int>>> getParesIDsContenidosNoAnalizados();
+    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_para_analizar();
 
-    std::vector<unsigned long long int> getIDsContenidosAnalizados();
+    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_para_preparar();
 
-    std::vector<unsigned long long int> getIDsContenidosNoAnalizados();
+    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_historias();
+
+    //std::vector<std::pair<std::string, std::vector<uintmax_t>>> pares_ids_para_depurar();
+
+    //std::vector<std::pair<std::string, std::vector<uintmax_t>>> pares_ids_para_analizar();
+
+    //std::vector<std::pair<std::string, std::vector<uintmax_t>>> pares_ids_para_preparar();
+
+    //std::vector<uintmax_t> ids_para_depurar();
+
+    //std::vector<uintmax_t> ids_para_analizar();
+
+    //std::vector<uintmax_t> ids_para_preparar();
 
     herramientas::utiles::Fecha getFechaContenidoHistoricoMasReciente();
 
     herramientas::utiles::Fecha getFechaContenidoHistoricoMasAntiguo();
 
-    unsigned long long int getCantidadDeContenidosHistoricos();
+    uintmax_t getCantidadDeContenidosHistoricos();
 
     static std::string getClaveIDActual();
 
@@ -63,19 +84,32 @@ public:
 
     // SETTERS
 
-    void setMapaIDsContenidosAnalizados(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa);
+    virtual void set_ids_para_depurar(const std::unordered_map<std::string, std::vector<uintmax_t>> & mapa);
+    virtual void set_ids_para_analizar(const std::unordered_map<std::string, std::vector<uintmax_t>> & mapa);
+    virtual void set_ids_para_preparar(const std::unordered_map<std::string, std::vector<uintmax_t>> & mapa);
+    virtual void set_ids_historicos(const std::unordered_map<std::string, std::vector<uintmax_t>> & mapa);
 
-    void setMapaIDsContenidosNoAnalizados(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa);
+    virtual bool contenido_depurado(Contenido* contenido);
+    virtual bool contenido_analizado(Contenido* contenido);
+    virtual bool contenido_preparado(Contenido* contenido);
 
-    void setMapaIDsContenidosHistoricos(std::unordered_map<std::string, std::vector<unsigned long long int>> mapa);
+    //void setMapaIDsContenidosParaDepurar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
 
-    virtual bool setearContenidoComoAnalizado(Contenido* contenido);
+    //void setMapaIDsContenidosParaAnalizar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
 
-    virtual bool setearContenidoComoHistorico(Contenido* contenido);
+    //void setMapaIDsContenidosParaPreparar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
+
+    //void setMapaIDsContenidosHistoricos(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
+
+    //virtual bool setearContenidoComoDepurado(Contenido* contenido);
+
+    //virtual bool setearContenidoComoAnalizado(Contenido* contenido);
+
+    //virtual bool setearContenidoComoHistorico(Contenido* contenido);
 
     // METODOS
 
-    virtual void agregarContenidoParaAnalizar(Contenido* contenido);
+    virtual void nuevo_contenido(Contenido* contenido);
 
     virtual Medio * clonar() = 0;
 
@@ -95,11 +129,13 @@ private:
 
     // ATRIBUTOS
 
-    std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_no_analizados;
-    
-    std::unordered_map<std::string,std::vector<unsigned long long int>> mapa_ids_contenidos_analizados;
+    std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_contenidos_para_depurar;
 
-    std::unordered_map<std::string, std::vector<unsigned long long int>> mapa_ids_contenidos_historicos;
+    std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_contenidos_para_analizar;
+    
+    std::unordered_map<std::string,std::vector<uintmax_t>> mapa_ids_contenidos_para_preparar;
+
+    std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_contenidos_historicos;
 
     std::string prefijo_grupo;
 };

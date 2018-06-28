@@ -65,7 +65,7 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         Contenido contenido_nuevo(noticia->titulo(), noticia->contenido(), noticia->seccion(), noticia->fecha());
         contenido_nuevo.asignarNuevoId();
 
-        this->agregarContenidoParaAnalizar(&contenido_nuevo);
+        this->nuevo_contenido(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
@@ -94,9 +94,22 @@ Medio * MedioPortalNoticias::clonar() {
     //clon->portal(this->portal_noticias->clon());
     clon->portal(this->portal_noticias);
 
-    clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
-    clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
-    clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+    //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
+    //clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
+    //clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+    std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
+
+    this->ids_para_depurar(&mapa);
+    clon->set_ids_para_depurar(mapa);
+
+    this->ids_para_analizar(&mapa);
+    clon->set_ids_para_analizar(mapa);
+
+    this->ids_para_preparar(&mapa);
+    clon->set_ids_para_preparar(mapa);
+
+    this->ids_historicos(&mapa);
+    clon->set_ids_historicos(mapa);
 
     return clon;
 }

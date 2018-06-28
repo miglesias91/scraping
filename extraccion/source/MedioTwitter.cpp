@@ -62,7 +62,7 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         Contenido contenido_nuevo("", tweet->getTextoTweet(), "",tweet->getFechaCreacion());
         contenido_nuevo.asignarNuevoId();
 
-        this->agregarContenidoParaAnalizar(&contenido_nuevo);
+        this->nuevo_contenido(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
@@ -91,9 +91,22 @@ Medio * MedioTwitter::clonar() {
     clon->cuenta(new medios::twitter::Cuenta(this->cuenta_twitter->getNombre()));
     clon->id_ultima_publicacion(this->id_ultimo_tweet_analizado);
 
-    clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
-    clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
-    clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+    //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
+    //clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
+    //clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
+    std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
+
+    this->ids_para_depurar(&mapa);
+    clon->set_ids_para_depurar(mapa);
+
+    this->ids_para_analizar(&mapa);
+    clon->set_ids_para_analizar(mapa);
+
+    this->ids_para_preparar(&mapa);
+    clon->set_ids_para_preparar(mapa);
+
+    this->ids_historicos(&mapa);
+    clon->set_ids_historicos(mapa);
 
     return clon;
 }

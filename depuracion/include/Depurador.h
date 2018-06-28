@@ -31,9 +31,15 @@ public:
 
     // METODOS
 
+    virtual bool depurar_twitter();
+    virtual bool depurar_facebook();
+    virtual bool depurar_portales();
+
+    virtual bool depurar(scraping::extraccion::Medio * medio);
+
     virtual bool cargarMapeoUTF8(std::string path_archivo_mapeo);
 
-    virtual ContenidoDepurado depurar(IDepurable * depurable);
+    virtual bool depurar(IDepurable * depurable, ContenidoDepurado * depurado);
 
     virtual ContenidoDepurado depurarConTildes(IDepurable * depurable);
 

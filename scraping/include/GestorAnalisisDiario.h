@@ -27,17 +27,20 @@ public:
 
     // METODOS
 
+    bool recuperar(scraping::IAlmacenable * contenido_a_recuperar) const;
+    bool almacenar(scraping::IAlmacenable * contenido_a_almacenar) const;
+
     bool almacenarContenido(scraping::extraccion::Contenido * contenido_a_almacenar) const;
 
-    bool almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar);
-    bool almacenarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_almacenar);
-    bool almacenarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_almacenar);
+    bool almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar) const;
+    bool almacenarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_almacenar) const;
+    bool almacenarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_almacenar) const;
     bool almacenarIDActualContenido() const;
 
-    bool recuperarContenido(scraping::extraccion::Contenido * contenido_a_recuperar);
-    bool recuperarMedio(scraping::extraccion::Medio * medio_a_recuperar);
-    bool recuperarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_recuperar);
-    bool recuperarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_recuperar);
+    bool recuperarContenido(scraping::extraccion::Contenido * contenido_a_recuperar) const;
+    bool recuperarMedio(scraping::extraccion::Medio * medio_a_recuperar) const;
+    bool recuperarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_recuperar) const;
+    bool recuperarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_recuperar) const;
 
     void recuperarIDActualContenido() const;
 

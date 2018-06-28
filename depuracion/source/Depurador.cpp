@@ -7,14 +7,23 @@
 #include <fstream>
 
 // utiles
-//#include <utiles/include/Stemming.h>
 #include <utiles/include/FuncionesString.h>
 #include <utiles/include/ImposibleAbrirArchivo.h>
 
 // scraping
-#include <scraping/include/Logger.h>
+#include <scraping/include/GestorMedios.h>
+#include <scraping/include/GestorAnalisisDiario.h>
+#include <scraping/include/ConfiguracionScraping.h>
 
-using namespace scraping::depuracion;
+// extraccion
+#include <extraccion/include/MedioTwitter.h>
+#include <extraccion/include/MedioFacebook.h>
+#include <extraccion/include/MedioPortalNoticias.h>
+
+// depuracion
+#include <depuracion/include/ContenidoDepurable.h>
+
+namespace scraping::depuracion {
 
 mapeo::MapaUTF8 * Depurador::mapa_utf8 = NULL;
 std::vector<std::string> Depurador::stopwords_espaniol;
@@ -50,6 +59,84 @@ void Depurador::setMapaUTF8(mapeo::MapaUTF8 * mapa)
 void Depurador::setStopwords(std::vector<std::string> stopwords)
 {
     stopwords_espaniol = stopwords;
+}
+
+bool Depurador::depurar_twitter() {
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioTwitter>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas);
+    
+    std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
+        this->depurar(cuenta);
+    });
+    return true;
+}
+
+bool Depurador::depurar_facebook() {
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas);
+
+    std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
+        this->depurar(pagina);
+    });
+    return true;
+}
+
+bool Depurador::depurar_portales() {
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales);
+
+    std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
+        this->depurar(portal);
+    });
+    return true;
+}
+
+bool Depurador::depurar(extraccion::Medio * medio) {
+
+    std::vector<uintmax_t> ids_para_depurar;
+    medio->ids_para_depurar(&ids_para_depurar);
+
+    scraping::aplicacion::GestorAnalisisDiario gestor_analisis;
+    std::vector<scraping::extraccion::Contenido*> contenidos_a_depurar;
+    std::for_each(ids_para_depurar.begin(), ids_para_depurar.end(), [=, &contenidos_a_depurar](uintmax_t id) {
+        extraccion::Contenido * contenido = new extraccion::Contenido();
+        contenido->setId(new herramientas::utiles::ID(id));
+
+        gestor_analisis.recuperarContenido(contenido);
+
+        contenidos_a_depurar.push_back(contenido);
+    });
+
+    std::vector<preparacion::ResultadoAnalisisContenido*> resultados;
+    std::for_each(contenidos_a_depurar.begin(), contenidos_a_depurar.end(), [=, &contenidos_depurados](extraccion::Contenido * contenido) {
+        ContenidoDepurable depurable(contenido);
+        ContenidoDepurado * depurado = new ContenidoDepurado();
+        depurado->setId(contenido->getId()->copia());
+
+        this->depurar(&depurable, depurado);
+        contenidos_depurados.push_back(depurado);
+
+        medio->contenido_depurado(contenido);
+
+        delete contenido;
+    });
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+    std::for_each(contenidos_depurados.begin(), contenidos_depurados.end(), [=](ContenidoDepurado * contenido_depurado) {
+        gestor_analisis.almacenar(contenido_depurado);
+
+        gestor_medios.actualizarMedio(medio);
+
+        delete contenido_depurado;
+    });
+
+    return true;
 }
 
 // METODOS
@@ -100,8 +187,7 @@ bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
     return true;
 }
 
-ContenidoDepurado Depurador::depurar(IDepurable * depurable)
-{
+bool Depurador::depurar(IDepurable * depurable, ContenidoDepurado * depurado) {
     std::string texto_a_depurar = depurable->getTextoDepurable();
 
     // 1ero: reemplazo los caracteres especiales: vocales con tildes, letras extrañas, 
@@ -141,8 +227,12 @@ ContenidoDepurado Depurador::depurar(IDepurable * depurable)
         "stopwords eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n}"
     );
 
-    ContenidoDepurado contenido_depurado(bolsa_de_palabras);
-    return contenido_depurado;
+    if (0 == bolsa_de_palabras.size()) {
+        return false;
+    }
+
+    depurado->bolsa_de_palabras(bolsa_de_palabras);
+    return true;
 }
 
 ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable)
@@ -557,3 +647,4 @@ unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_pal
 // CONSULTAS
 
 // METODOS PRIVADOS
+};

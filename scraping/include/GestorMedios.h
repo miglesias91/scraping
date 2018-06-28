@@ -26,15 +26,15 @@ public:
 
     // bool recuperarTodos(std::vector<scraping::extraccion::Medio*> & medios);
 
-    bool actualizarMedio(scraping::extraccion::Medio * medio_a_actualizrr);
+    bool actualizarMedio(scraping::extraccion::Medio * medio_a_actualizrr) const;
 
     // bool recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter);
 
-    bool almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar);
+    bool almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar) const;
     
-    bool almacenarIDActualMedio();
+    bool almacenarIDActualMedio() const;
 
-    void recuperarIDActualMedio();
+    void recuperarIDActualMedio() const;
 
     template <class MEDIO>
     std::vector<MEDIO*> gestionar(std::string prefijo_grupo);

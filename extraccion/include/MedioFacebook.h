@@ -7,7 +7,7 @@
 // extraccion
 #include <extraccion/include/Medio.h>
 
-namespace scraping::extraccion::interfaceo {
+namespace scraping{ namespace extraccion { namespace interfaceo {
 class MedioFacebook : public Medio {
 public:
     explicit MedioFacebook(const std::string & nombre_pagina);
@@ -51,6 +51,8 @@ private:
     medios::facebook::Pagina * pagina_facebook;
 
     herramientas::utiles::Fecha fecha_ultima_publicacion_analizada;
+};
+};
 };
 
 };
