@@ -4,6 +4,9 @@
 // stl
 #include <fstream>
 
+// medios
+#include <noticias/include/clarin.h>
+
 // scraping
 #include <scraping/include/GestorMedios.h>
 #include <scraping/include/ConfiguracionScraping.h>
@@ -14,6 +17,7 @@
 #include <depuracion/include/ContenidoDepurable.h>
 
 // analisis
+#include <analisis/include/Analizador.h>
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
 
@@ -24,6 +28,9 @@
 
 // extraccion
 #include <extraccion/include/MedioTwitter.h>
+#include <extraccion/include/MedioFacebook.h>
+#include <extraccion/include/MedioPortalNoticias.h>
+#include <extraccion/include/extractor.h>
 
 using namespace scraping;
 
@@ -34,141 +41,142 @@ TEST_CASE("levantar_config_correctamente", "scraping")
 
     REQUIRE("001" == ConfiguracionScraping::prefijoMedio());
     REQUIRE("002" == ConfiguracionScraping::prefijoContenido());
-    REQUIRE("003" == ConfiguracionScraping::prefijoResultadoMedio());
-    REQUIRE("004" == ConfiguracionScraping::prefijoResultadoContenido());
-    REQUIRE("005" == ConfiguracionScraping::prefijoResultadoDiario());
+    REQUIRE("003" == ConfiguracionScraping::prefijoContenidoDepurado());
+    REQUIRE("004" == ConfiguracionScraping::prefijoResultadoMedio());
+    REQUIRE("005" == ConfiguracionScraping::prefijoResultadoContenido());
+    REQUIRE("006" == ConfiguracionScraping::prefijoResultadoDiario());
 }
 
 TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
 {
-    extraccion::Contenido::getGestorIDs()->setIdActual(50);
-    extraccion::Medio::getGestorIDs()->setIdActual(150);
+    //extraccion::Contenido::getGestorIDs()->setIdActual(50);
+    //extraccion::Medio::getGestorIDs()->setIdActual(150);
 
-    // ----- EXTRACCION (simulada la parte de bajar el contenido de internet) ----- //
+    //// ----- EXTRACCION (simulada la parte de bajar el contenido de internet) ----- //
 
-    std::vector<std::string> paths_textos_extraidos = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
-        "le_doy_mi_palabra_20171225.txt", "le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
+    //std::vector<std::string> paths_textos_extraidos = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
+    //    "le_doy_mi_palabra_20171225.txt", "le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
 
-    //twitter::modelo::Cuenta cuenta("le doy mi palabra");
+    ////twitter::modelo::Cuenta cuenta("le doy mi palabra");
+    ////cuenta.asignarNuevoId();
+    //extraccion::interfaceo::MedioTwitter cuenta;
     //cuenta.asignarNuevoId();
-    extraccion::interfaceo::MedioTwitter cuenta;
-    cuenta.asignarNuevoId();
 
-    for (std::vector<std::string>::iterator it = paths_textos_extraidos.begin(); it != paths_textos_extraidos.end(); it++)
-    {
-        std::string path_texto_extraido = *it;
+    //for (std::vector<std::string>::iterator it = paths_textos_extraidos.begin(); it != paths_textos_extraidos.end(); it++)
+    //{
+    //    std::string path_texto_extraido = *it;
 
-        std::ifstream archivo_texto(path_texto_extraido);
+    //    std::ifstream archivo_texto(path_texto_extraido);
 
-        std::stringstream sstream;
-        sstream << archivo_texto.rdbuf();
+    //    std::stringstream sstream;
+    //    sstream << archivo_texto.rdbuf();
 
-        std::string texto_extraido(sstream.str());
+    //    std::string texto_extraido(sstream.str());
 
-        scraping::extraccion::Contenido tweet;
-        tweet.asignarNuevoId();
-        tweet.setTexto(texto_extraido);
+    //    scraping::extraccion::Contenido tweet;
+    //    tweet.asignarNuevoId();
+    //    tweet.setTexto(texto_extraido);
 
-        cuenta.agregarContenidoParaAnalizar(&tweet);
+    //    cuenta.agregarContenidoParaAnalizar(&tweet);
 
-        IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&tweet);
-    }
+    //    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&tweet);
+    //}
 
-    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
+    //IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
 
-    // ----- DEPURACION ----- //
+    //// ----- DEPURACION ----- //
 
-    depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depuracion::Depurador depurador;
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
 
-    // recupero el contenido y medio que almacene de la etapa anterior.
-    //twitter::modelo::Cuenta cuenta_a_analizar;
+    //// recupero el contenido y medio que almacene de la etapa anterior.
+    ////twitter::modelo::Cuenta cuenta_a_analizar;
+    ////cuenta_a_analizar.setId(cuenta.getId()->copia());
+    //extraccion::interfaceo::MedioTwitter cuenta_a_analizar;
     //cuenta_a_analizar.setId(cuenta.getId()->copia());
-    extraccion::interfaceo::MedioTwitter cuenta_a_analizar;
-    cuenta_a_analizar.setId(cuenta.getId()->copia());
 
-    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_a_analizar);
+    //IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_a_analizar);
 
-    std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta_a_analizar.getIDsContenidosNoAnalizados();
+    //std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta_a_analizar.getIDsContenidosNoAnalizados();
 
-    std::vector<extraccion::Contenido*> contenidos_a_recuperar;
-    for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
-    {
-        //extraccion::Contenido * tweet = new twitter::modelo::Tweet();
-        extraccion::Contenido * tweet = new extraccion::Contenido();
-        tweet->setId(new herramientas::utiles::ID(*it));
+    //std::vector<extraccion::Contenido*> contenidos_a_recuperar;
+    //for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
+    //{
+    //    //extraccion::Contenido * tweet = new twitter::modelo::Tweet();
+    //    extraccion::Contenido * tweet = new extraccion::Contenido();
+    //    tweet->setId(new herramientas::utiles::ID(*it));
 
-        IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(tweet);
+    //    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(tweet);
 
-        contenidos_a_recuperar.push_back(tweet);
-    }
+    //    contenidos_a_recuperar.push_back(tweet);
+    //}
 
-    for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
-    {
-        depuracion::ContenidoDepurable depurable_tweet(*it);
+    //for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
+    //{
+    //    depuracion::ContenidoDepurable depurable_tweet(*it);
 
-        depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_tweet);
+    //    depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&depurable_tweet);
 
-        std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
+    //    std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
 
-        // ----- ANALISIS ----- //
+    //    // ----- ANALISIS ----- //
 
-        analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia(10);
+    //    analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia(10);
 
-        analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
+    //    analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia = new analisis::tecnicas::ResultadoFuerzaEnNoticia();
 
-        fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
+    //    fuerza_en_noticia.aplicar(bolsa_de_palabras, resultado_fuerza_en_noticia);
 
-        std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
+    //    std::vector<std::pair<std::string, float>> top_20 = resultado_fuerza_en_noticia->getTop(20);
 
-        // guardo el analisis
-        scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
-        resultado_analisis.setId((*it)->getId()->copia());
+    //    // guardo el analisis
+    //    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
+    //    resultado_analisis.setId((*it)->getId()->copia());
 
-        scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
+    //    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
 
-        cuenta_a_analizar.setearContenidoComoAnalizado(*it);
-    }
+    //    cuenta_a_analizar.setearContenidoComoAnalizado(*it);
+    //}
 
-    // elimino los contenidos xq ya no me sirven
-    for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
-    {
-        delete *it;
-    }
+    //// elimino los contenidos xq ya no me sirven
+    //for (std::vector<extraccion::Contenido*>::iterator it = contenidos_a_recuperar.begin(); it != contenidos_a_recuperar.end(); it++)
+    //{
+    //    delete *it;
+    //}
 
-    // ----- PREPARACION ----- //
+    //// ----- PREPARACION ----- //
 
-    // recupero todos los analisis guardados del medio.
-    std::vector<analisis::ResultadoAnalisis*> resultados;
-    for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
-    {
-        analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
-        resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
+    //// recupero todos los analisis guardados del medio.
+    //std::vector<analisis::ResultadoAnalisis*> resultados;
+    //for (std::vector<unsigned long long int>::iterator it = ids_contenidos_a_analizar.begin(); it != ids_contenidos_a_analizar.end(); it++)
+    //{
+    //    analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
+    //    resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
 
-        scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(resultado_analisis_a_recuperar);
+    //    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(resultado_analisis_a_recuperar);
 
-        resultados.push_back(resultado_analisis_a_recuperar);
-    }
+    //    resultados.push_back(resultado_analisis_a_recuperar);
+    //}
 
-    preparacion::Preparador preparador;
+    //preparacion::Preparador preparador;
 
-    analisis::ResultadoAnalisis * resultado_combinado = new preparacion::ResultadoAnalisisContenido();
-    preparador.combinar(resultados, resultado_combinado);
+    //analisis::ResultadoAnalisis * resultado_combinado = new preparacion::ResultadoAnalisisContenido();
+    //preparador.combinar(resultados, resultado_combinado);
 
-    preparacion::ResultadoAnalisisMedio resultados_medio;
-    resultados_medio.setId(cuenta.getId()->copia());
+    //preparacion::ResultadoAnalisisMedio resultados_medio;
+    //resultados_medio.setId(cuenta.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultados_medio);
+    //scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultados_medio);
 
-    resultados_medio.combinarCon(resultado_combinado);
+    //resultados_medio.combinarCon(resultado_combinado);
 
-    delete resultado_combinado;
+    //delete resultado_combinado;
 
-    // elimino los resultados
-    for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
-    {
-        delete *it;
-    }
+    //// elimino los resultados
+    //for (std::vector<analisis::ResultadoAnalisis*>::iterator it = resultados.begin(); it != resultados.end(); it++)
+    //{
+    //    delete *it;
+    //}
 
      //ResultadoAnalisisMedio resultado_por_medio;
      //resultado_por_medio.setId(id_medio);
@@ -283,9 +291,10 @@ TEST_CASE("gestionar_cuentas_de_twitter", "scraping")
     extraccion::interfaceo::MedioTwitter cuenta_tres("cuenta_tres");
     cuenta_tres.asignarNuevoId();
 
-    gestor_medios.almacenarMedio(&cuenta_uno);
-    gestor_medios.almacenarMedio(&cuenta_dos);
-    gestor_medios.almacenarMedio(&cuenta_tres);
+    gestor_medios.almacenar(&cuenta_uno);
+    gestor_medios.almacenar(&cuenta_dos);
+    gestor_medios.almacenar(&cuenta_tres);
+    gestor_medios.guardarCambios();
 
     std::vector<extraccion::interfaceo::MedioTwitter*> cuentas_twitter_existentes;
     gestor_medios.recuperar<extraccion::interfaceo::MedioTwitter>(cuenta_uno.getGrupoMedio(), cuentas_twitter_existentes);
@@ -294,9 +303,92 @@ TEST_CASE("gestionar_cuentas_de_twitter", "scraping")
     REQUIRE("cuenta_dos" == cuentas_twitter_existentes[1]->cuenta()->getNombre());
     REQUIRE("cuenta_tres" == cuentas_twitter_existentes[2]->cuenta()->getNombre());
 
+    gestor_medios.eliminar(&cuenta_uno);
+    gestor_medios.eliminar(&cuenta_dos);
+    gestor_medios.eliminar(&cuenta_tres);
+    gestor_medios.guardarCambios();
+
     for (std::vector<extraccion::interfaceo::MedioTwitter*>::iterator it = cuentas_twitter_existentes.begin(); it != cuentas_twitter_existentes.end(); it++)
     {
         delete *it;
     }
     cuentas_twitter_existentes.clear();
+}
+
+TEST_CASE("scrapear_twitter", "scraping[.]") {
+
+    extraccion::interfaceo::MedioTwitter clarin("clarincom");
+    clarin.asignarNuevoId();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+    gestor_medios.almacenar(&clarin);
+    gestor_medios.guardarCambios();
+
+    extraccion::extractor extractor;
+    extractor.extraer_twitter();
+
+    depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.depurar_twitter();
+
+    analisis::Analizador analizador;
+    analizador.analizar_twitter();
+
+    preparacion::Preparador preparador;
+    preparador.preparar_twitter();
+
+    gestor_medios.eliminar(&clarin);
+    gestor_medios.guardarCambios();
+}
+
+TEST_CASE("scrapear_facebook", "scraping[.]") {
+
+    extraccion::interfaceo::MedioFacebook clarin("clarincom");
+    clarin.asignarNuevoId();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+    gestor_medios.almacenar(&clarin);
+    gestor_medios.guardarCambios();
+
+    extraccion::extractor extractor;
+    extractor.extraer_facebook();
+
+    depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.depurar_facebook();
+
+    analisis::Analizador analizador;
+    analizador.analizar_facebook();
+
+    preparacion::Preparador preparador;
+    preparador.preparar_facebook();
+
+    gestor_medios.eliminar(&clarin);
+    gestor_medios.guardarCambios();
+}
+
+TEST_CASE("scrapear_portal", "scraping") {
+
+    extraccion::interfaceo::MedioPortalNoticias clarin(std::make_shared<medios::noticias::clarin>());
+    clarin.asignarNuevoId();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+    gestor_medios.almacenar(&clarin);
+    gestor_medios.guardarCambios();
+
+    extraccion::extractor extractor;
+    extractor.extraer_portales();
+
+    depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.depurar_portales();
+
+    analisis::Analizador analizador;
+    analizador.analizar_portales();
+
+    preparacion::Preparador preparador;
+    preparador.preparar_portales();
+
+    gestor_medios.eliminar(&clarin);
+    gestor_medios.guardarCambios();
 }

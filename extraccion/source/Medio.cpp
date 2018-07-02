@@ -400,6 +400,37 @@ bool Medio::contenido_preparado(Contenido * contenido) {
     return true;
 }
 
+bool Medio::contenido_depurado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido) {
+    Contenido contenido("", "", "", herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(fecha_aaaammdd));
+    contenido.setId(new herramientas::utiles::ID(id_contenido));
+
+    return this->contenido_depurado(&contenido);
+}
+
+bool Medio::contenido_analizado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido) {
+    Contenido contenido("", "", "", herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(fecha_aaaammdd));
+    contenido.setId(new herramientas::utiles::ID(id_contenido));
+
+    return this->contenido_analizado(&contenido);
+}
+
+bool Medio::contenido_preparado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido) {
+    Contenido contenido("", "", "", herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(fecha_aaaammdd));
+    contenido.setId(new herramientas::utiles::ID(id_contenido));
+
+    return this->contenido_preparado(&contenido);
+}
+
+bool Medio::contenidos_preparados(const std::string & fecha_aaaammdd, const std::vector<uintmax_t> & ids_contenidos) {
+
+    std::for_each(ids_contenidos.begin(), ids_contenidos.end(), [=](uintmax_t id) {
+        if (false == this->contenido_preparado(fecha_aaaammdd, id)) {
+            return false;
+        }
+    });
+    return true;
+}
+
 std::string Medio::getClaveIDActual() {
     return ConfiguracionScraping::claveIDMedioActual();
 }
@@ -479,7 +510,7 @@ herramientas::utiles::GestorIDs * Medio::getGestorIDs() {
 
 // METODOS
 
-void Medio::nuevo_contenido(Contenido * contenido) {
+void Medio::nuevo(Contenido * contenido) {
     std::string string_fecha = contenido->getFecha().getStringAAAAMMDD();
 
     std::vector<uintmax_t> * ids_contenidos_no_analizados = &this->mapa_ids_contenidos_para_depurar[string_fecha];

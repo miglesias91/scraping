@@ -3,7 +3,8 @@
 // analisis
 #include <analisis/include/ResultadoAnalisis.h>
 
-// preparacion
+// extraccion
+#include <extraccion/include/Medio.h>
 
 namespace scraping
 {
@@ -22,7 +23,13 @@ public:
 
     // METODOS
 
-    virtual bool combinar(std::vector<scraping::analisis::ResultadoAnalisis*> resultados_a_combinar, scraping::analisis::ResultadoAnalisis * resultado_combinacion);
+    virtual bool preparar_twitter() const;
+    virtual bool preparar_facebook() const;
+    virtual bool preparar_portales() const;
+
+    virtual bool preparar(scraping::extraccion::Medio * medio) const;
+
+    virtual bool combinar(std::vector<scraping::analisis::ResultadoAnalisis*> resultados_a_combinar, scraping::analisis::ResultadoAnalisis * resultado_combinacion) const;
 
     // CONSULTAS
 };

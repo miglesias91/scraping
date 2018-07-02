@@ -59,7 +59,7 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
         contenido_nuevo.asignarNuevoId();
 
         //this->agregarContenidoParaAnalizar(&contenido_nuevo);
-        this->nuevo_contenido(&contenido_nuevo);
+        this->nuevo(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
@@ -82,10 +82,9 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
 }
 
 Medio * MedioFacebook::clonar() {
-    MedioFacebook * clon = new MedioFacebook();
+    MedioFacebook * clon = new MedioFacebook(this->pagina_facebook->getNombre());
     clon->setId(this->getId()->copia());
     clon->setJson(this->getJson()->clonar());
-    clon->pagina(new medios::facebook::Pagina(this->pagina_facebook->getNombre()));
     clon->fecha_ultima_publicacion(this->fecha_ultima_publicacion_analizada);
 
     //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());

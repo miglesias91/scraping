@@ -6,6 +6,7 @@
 #include <scraping/include/ConfiguracionScraping.h>
 
 // analisis
+#include <analisis/include/ContenidoAnalizable.h>
 #include <analisis/include/CantidadDeApariciones.h>
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/Sentimiento.h>
@@ -39,16 +40,35 @@ bool Analizador::analizar_twitter() const {
 
     std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
         this->analizar(cuenta);
+        delete cuenta;
     });
     return true;
 }
 
 bool Analizador::analizar_facebook() const {
-    return false;
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas);
+
+    std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
+        this->analizar(pagina);
+        delete pagina;
+    });
+    return true;
 }
 
 bool Analizador::analizar_portales() const {
-    return false;
+    scraping::aplicacion::GestorMedios gestor_medios;
+
+    std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
+    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales);
+
+    std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
+        this->analizar(portal);
+        delete portal;
+    });
+    return true;
 }
 
 bool Analizador::analizar(scraping::extraccion::Medio * medio) const {
@@ -68,12 +88,32 @@ bool Analizador::analizar(scraping::extraccion::Medio * medio) const {
 
     std::vector<preparacion::ResultadoAnalisisContenido*> resultados;
     std::for_each(contenidos_a_analizar.begin(), contenidos_a_analizar.end(), [=, &resultados](depuracion::ContenidoDepurado * contenido) {
+        analisis::IAnalizable * contenido_analizable = new analisis::ContenidoAnalizable(contenido->getBolsaDePalabras(), contenido->tamanio());
 
+        preparacion::ResultadoAnalisisContenido * resultado_analisis_contenido = new preparacion::ResultadoAnalisisContenido();
+        resultado_analisis_contenido->setId(contenido->getId()->copia());
+        resultado_analisis_contenido->fecha(contenido->fecha());
+        resultado_analisis_contenido->categoria(contenido->categoria());
+
+        this->analizar(contenido_analizable, resultado_analisis_contenido);
+
+        resultados.push_back(resultado_analisis_contenido);
+
+        delete contenido_analizable;
+        delete contenido;
     });
 
+    scraping::aplicacion::GestorMedios gestor_medios;
+    std::for_each(resultados.begin(), resultados.end(), [=](preparacion::ResultadoAnalisisContenido * resultado) {
+        gestor_analisis.almacenarResultadoAnalisis(resultado);
 
+        medio->contenido_analizado(resultado->fecha().getStringAAAAMMDD(), resultado->getId()->numero());
+        gestor_medios.actualizarMedio(medio);
 
-    return false;
+        delete resultado;
+    });
+
+    return true;
 }
 
 void Analizador::analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis * resultado_analisis) const {

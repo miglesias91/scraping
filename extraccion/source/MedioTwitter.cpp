@@ -62,7 +62,7 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         Contenido contenido_nuevo("", tweet->getTextoTweet(), "",tweet->getFechaCreacion());
         contenido_nuevo.asignarNuevoId();
 
-        this->nuevo_contenido(&contenido_nuevo);
+        this->nuevo(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();
@@ -85,10 +85,9 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
 }
 
 Medio * MedioTwitter::clonar() {
-    MedioTwitter * clon = new MedioTwitter();
+    MedioTwitter * clon = new MedioTwitter(this->cuenta_twitter->getNombre());
     clon->setId(this->getId()->copia());
     clon->setJson(this->getJson()->clonar());
-    clon->cuenta(new medios::twitter::Cuenta(this->cuenta_twitter->getNombre()));
     clon->id_ultima_publicacion(this->id_ultimo_tweet_analizado);
 
     //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());

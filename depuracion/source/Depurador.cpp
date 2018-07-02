@@ -69,6 +69,7 @@ bool Depurador::depurar_twitter() {
     
     std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
         this->depurar(cuenta);
+        delete cuenta;
     });
     return true;
 }
@@ -81,6 +82,7 @@ bool Depurador::depurar_facebook() {
 
     std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
         this->depurar(pagina);
+        delete pagina;
     });
     return true;
 }
@@ -93,6 +95,7 @@ bool Depurador::depurar_portales() {
 
     std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
         this->depurar(portal);
+        delete portal;
     });
     return true;
 }
@@ -113,16 +116,16 @@ bool Depurador::depurar(extraccion::Medio * medio) {
         contenidos_a_depurar.push_back(contenido);
     });
 
-    std::vector<preparacion::ResultadoAnalisisContenido*> resultados;
+    std::vector<ContenidoDepurado*> contenidos_depurados;
     std::for_each(contenidos_a_depurar.begin(), contenidos_a_depurar.end(), [=, &contenidos_depurados](extraccion::Contenido * contenido) {
         ContenidoDepurable depurable(contenido);
         ContenidoDepurado * depurado = new ContenidoDepurado();
         depurado->setId(contenido->getId()->copia());
+        depurado->fecha(contenido->getFecha());
+        depurado->categoria(contenido->getCategoria());
 
         this->depurar(&depurable, depurado);
         contenidos_depurados.push_back(depurado);
-
-        medio->contenido_depurado(contenido);
 
         delete contenido;
     });
@@ -131,6 +134,7 @@ bool Depurador::depurar(extraccion::Medio * medio) {
     std::for_each(contenidos_depurados.begin(), contenidos_depurados.end(), [=](ContenidoDepurado * contenido_depurado) {
         gestor_analisis.almacenar(contenido_depurado);
 
+        medio->contenido_depurado(contenido_depurado->fecha().getStringAAAAMMDD(), contenido_depurado->getId()->numero());
         gestor_medios.actualizarMedio(medio);
 
         delete contenido_depurado;
@@ -232,6 +236,7 @@ bool Depurador::depurar(IDepurable * depurable, ContenidoDepurado * depurado) {
     }
 
     depurado->bolsa_de_palabras(bolsa_de_palabras);
+    depurado->tamanio(texto_a_depurar.size());
     return true;
 }
 
@@ -276,7 +281,7 @@ ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable)
         "stopwords eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n}"
     );
 
-    ContenidoDepurado contenido_depurado(bolsa_de_palabras);
+    ContenidoDepurado contenido_depurado(bolsa_de_palabras, texto_a_depurar.size());
     return contenido_depurado;
 }
 

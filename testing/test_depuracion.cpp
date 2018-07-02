@@ -57,7 +57,8 @@ TEST_CASE("depurar_texto", "depuracion")
 
     scraping::depuracion::ContenidoDepurable contenido_depurable(&c);
 
-    scraping::depuracion::ContenidoDepurado contenido_depurado = depurador.depurar(&contenido_depurable);
+    scraping::depuracion::ContenidoDepurado contenido_depurado;
+    depurador.depurar(&contenido_depurable, &contenido_depurado);
 
     std::vector<std::string> bolsa_de_palabras = contenido_depurado.getBolsaDePalabras();
 

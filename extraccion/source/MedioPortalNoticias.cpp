@@ -65,7 +65,7 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         Contenido contenido_nuevo(noticia->titulo(), noticia->contenido(), noticia->seccion(), noticia->fecha());
         contenido_nuevo.asignarNuevoId();
 
-        this->nuevo_contenido(&contenido_nuevo);
+        this->nuevo(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
         gestor_analisis_diario.almacenarIDActualContenido();

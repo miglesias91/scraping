@@ -10,7 +10,7 @@
 
 using namespace scraping::analisis::tecnicas;
 
-ResultadoSentimiento::ResultadoSentimiento()
+ResultadoSentimiento::ResultadoSentimiento(const uint32_t & maximo_valores_a_almacenar) : maximo_valores_a_almacenar(maximo_valores_a_almacenar)
 {
 }
 
@@ -44,7 +44,7 @@ std::unordered_map<std::string, ResultadoSentimiento::sentimiento> scraping::ana
     return this->sentimiento_por_palabra;
 }
 
-ResultadoSentimiento::sentimiento scraping::analisis::tecnicas::ResultadoSentimiento::valores(const std::string expresion)
+ResultadoSentimiento::sentimiento ResultadoSentimiento::valores(const std::string expresion)
 {
     if ('*' == *(expresion.end() - 1)) {
         std::string comienzo_de_palabra(expresion.begin(), expresion.end() - 1);
@@ -125,6 +125,21 @@ void ResultadoSentimiento::aumentarNeutralidad(const std::string & palabra, doub
     }
 }
 
+bool ResultadoSentimiento::top(std::vector<std::pair<std::string, sentimiento>>* sentimientos_top, const uint32_t & top_max) {
+    *sentimientos_top = std::vector<std::pair<std::string, sentimiento>>(this->sentimiento_por_palabra.begin(), this->sentimiento_por_palabra.end());
+
+    std::sort(sentimientos_top->begin(), sentimientos_top->end(),
+        [](std::pair<std::string, sentimiento> a, std::pair<std::string, sentimiento> b) {
+        return a.second.total() > b.second.total();
+    });
+
+    if (sentimientos_top->size() > top_max) {
+        sentimientos_top->resize(top_max);
+    }
+
+    return true;
+}
+
 // metodos de IResultadoTecnica
 
 void ResultadoSentimiento::filtrar(const std::vector<std::string> & terminos_a_filtrar)
@@ -152,8 +167,11 @@ bool ResultadoSentimiento::armarJson()
 {
     this->getJson()->reset();
 
+    std::vector<std::pair<std::string, sentimiento>> sentimientos_top;
+    this->top(&sentimientos_top, this->maximo_valores_a_almacenar);
+
     std::vector<std::string> sentimiento_por_palabra;
-    std::for_each(this->sentimiento_por_palabra.begin(), this->sentimiento_por_palabra.end(),
+    std::for_each(sentimientos_top.begin(), sentimientos_top.end(),
         [&sentimiento_por_palabra](std::pair<std::string, sentimiento> palabra_sentimiento)
     {
         std::string sentimiento_escrito = palabra_sentimiento.second.escribir();

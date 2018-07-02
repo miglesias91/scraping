@@ -106,6 +106,15 @@ bool ResultadoAnalisis::armarJson()
 
     if (nullptr != this->resultado_sentimiento)
     {
+        std::vector<std::pair<std::string, float>> fuerzas = this->resultado_fuerza_en_noticia->getTop(100);
+
+        std::vector<std::string> terminos_a_filtrar;
+        std::for_each(fuerzas.begin(), fuerzas.end(), [&terminos_a_filtrar](std::pair<std::string, float> termino_fuerza) {
+            terminos_a_filtrar.push_back(termino_fuerza.first);
+        });
+
+        this->resultado_sentimiento->filtrar(terminos_a_filtrar);
+
         this->resultado_sentimiento->armarJson();
         this->getJson()->agregarAtributoJson("sentimiento", this->resultado_sentimiento->getJson());
     }

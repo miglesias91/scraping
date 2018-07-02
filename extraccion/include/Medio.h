@@ -19,7 +19,6 @@
 
 namespace scraping
 {
-
 namespace extraccion
 {
 
@@ -93,6 +92,10 @@ public:
     virtual bool contenido_analizado(Contenido* contenido);
     virtual bool contenido_preparado(Contenido* contenido);
 
+    virtual bool contenido_depurado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido);
+    virtual bool contenido_analizado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido);
+    virtual bool contenido_preparado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido);
+    virtual bool contenidos_preparados(const std::string & fecha_aaaammdd, const std::vector<uintmax_t> & ids_contenidos);
     //void setMapaIDsContenidosParaDepurar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
 
     //void setMapaIDsContenidosParaAnalizar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
@@ -109,7 +112,7 @@ public:
 
     // METODOS
 
-    virtual void nuevo_contenido(Contenido* contenido);
+    virtual void nuevo(Contenido* contenido);
 
     virtual Medio * clonar() = 0;
 

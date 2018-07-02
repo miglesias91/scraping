@@ -106,7 +106,7 @@ public:
         }
     };
 
-    ResultadoSentimiento();
+    explicit ResultadoSentimiento(const uint32_t & maximo_valores_a_almacenar = 100);
     virtual ~ResultadoSentimiento();
 
     // GETTERS
@@ -138,6 +138,8 @@ public:
 
     virtual void aumentarNeutralidad(const std::string & palabra, double neutralidad);
 
+    virtual bool top(std::vector<std::pair<std::string, sentimiento>> * sentimientos_top, const uint32_t & top_max);
+
     // metodos de IResultadoTecnica
 
     virtual void filtrar(const std::vector<std::string> & terminos_a_filtrar);
@@ -159,6 +161,8 @@ private:
 
     // valoracion
     std::unordered_map<std::string, sentimiento> sentimiento_por_palabra;
+
+    uint32_t maximo_valores_a_almacenar;
 };
 
 };

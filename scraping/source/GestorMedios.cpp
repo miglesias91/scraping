@@ -35,16 +35,16 @@ GestorMedios::~GestorMedios()
 
 bool GestorMedios::guardarCambios()
 {
-    if (this->prefijo_grupo.empty())
-    {
-        // si el prefijo no fue seteado, entonces es IMPOSIBLE guardar los medios porque no se a que grupo pertenencen.
-        throw - 1;
-    }
+    //if (this->prefijo_grupo.empty())
+    //{
+    //    // si el prefijo no fue seteado, entonces es IMPOSIBLE guardar los medios porque no se a que grupo pertenencen.
+    //    throw - 1;
+    //}
 
     for (this->medios_it = this->medios_a_almacenar.begin(); this->medios_it != this->medios_a_almacenar.end(); this->medios_it++)
     {
         scraping::extraccion::Medio * medio_a_almacenar = *this->medios_it;
-        medio_a_almacenar->setGrupo(this->prefijo_grupo);
+        //medio_a_almacenar->setGrupo(this->prefijo_grupo);
         this->admin_info_scraping->almacenar(medio_a_almacenar);
 
         this->medios_existentes.push_back(*this->medios_it);
@@ -54,7 +54,7 @@ bool GestorMedios::guardarCambios()
     for (this->medios_it = this->medios_a_eliminar.begin(); this->medios_it != this->medios_a_eliminar.end(); this->medios_it++)
     {
         scraping::extraccion::Medio * medio_a_eliminar = *this->medios_it;
-        medio_a_eliminar->setGrupo(this->prefijo_grupo);
+        //medio_a_eliminar->setGrupo(this->prefijo_grupo);
         this->admin_info_scraping->eliminar(medio_a_eliminar);
         delete (*this->medios_it);
     }

@@ -1,5 +1,8 @@
 #pragma once
 
+// extraccion
+#include <extraccion/include/Medio.h>
+
 // analisis
 #include <analisis/include/IAnalizable.h>
 #include <analisis/include/ResultadoAnalisis.h>
@@ -25,7 +28,7 @@ public:
     virtual bool analizar_facebook() const;
     virtual bool analizar_portales() const;
 
-    virtual bool analizar(scraping::extraccion::Medio * medio) const;
+    virtual bool analizar(extraccion::Medio * medio) const;
 
     virtual void analizar(IAnalizable * contenido_a_analizar, ResultadoAnalisis * resultado_analisis) const;
 

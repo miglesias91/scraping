@@ -33,14 +33,15 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
     scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
     contenido1->asignarNuevoId();
 
-    cuenta.agregarContenidoParaAnalizar(contenido1);
+    cuenta.nuevo(contenido1);
 
     scraping::extraccion::Contenido * contenido2 = new scraping::extraccion::Contenido("titulo2", "texto2", "categoria2", herramientas::utiles::Fecha::getFechaActual());
     contenido2->asignarNuevoId();
 
-    cuenta.agregarContenidoParaAnalizar(contenido2);
+    cuenta.nuevo(contenido2);
 
-    std::vector<unsigned long long int> ids_tweets = cuenta.getIDsContenidosNoAnalizados();
+    std::vector<unsigned long long int> ids_tweets;
+    cuenta.ids_para_depurar(&ids_tweets);
 
     REQUIRE(100 == cuenta.getId()->numero());
 
@@ -102,14 +103,15 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
     scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
     contenido1->asignarNuevoId();
 
-    pagina.agregarContenidoParaAnalizar(contenido1);
+    pagina.nuevo(contenido1);
 
     scraping::extraccion::Contenido * contenido2 = new scraping::extraccion::Contenido("titulo2", "texto2", "categoria2", herramientas::utiles::Fecha::getFechaActual());
     contenido2->asignarNuevoId();
 
-    pagina.agregarContenidoParaAnalizar(contenido2);
+    pagina.nuevo(contenido2);
 
-    std::vector<unsigned long long int> ids_publicaciones = pagina.getIDsContenidosNoAnalizados();
+    std::vector<unsigned long long int> ids_publicaciones;
+    pagina.ids_para_depurar(&ids_publicaciones);
 
     REQUIRE(100 == pagina.getId()->numero());
 
@@ -170,14 +172,15 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_portal_noticias", "extracci
     scraping::extraccion::Contenido * contenido1 = new scraping::extraccion::Contenido("titulo1", "texto1", "categoria1", herramientas::utiles::Fecha::getFechaActual());
     contenido1->asignarNuevoId();
 
-    portal.agregarContenidoParaAnalizar(contenido1);
+    portal.nuevo(contenido1);
 
     scraping::extraccion::Contenido * contenido2 = new scraping::extraccion::Contenido("titulo2", "texto2", "categoria2", herramientas::utiles::Fecha::getFechaActual());
     contenido2->asignarNuevoId();
 
-    portal.agregarContenidoParaAnalizar(contenido2);
+    portal.nuevo(contenido2);
 
-    std::vector<unsigned long long int> ids_publicaciones = portal.getIDsContenidosNoAnalizados();
+    std::vector<unsigned long long int> ids_publicaciones;
+    portal.ids_para_depurar(&ids_publicaciones);
 
     REQUIRE(100 == portal.getId()->numero());
 
@@ -247,7 +250,7 @@ TEST_CASE("extraer_facebook", "extraccion[.]") {
     scraping::IAdministradorScraping::getInstanciaAdminInfo()->eliminar(&pagina);
 }
 
-TEST_CASE("extraer_portal", "extraccion") {
+TEST_CASE("extraer_portal", "extraccion[.]") {
 
     scraping::extraccion::interfaceo::MedioPortalNoticias portal(std::make_shared<medios::noticias::clarin>());
     portal.asignarNuevoId();
