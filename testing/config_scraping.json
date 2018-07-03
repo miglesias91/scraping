@@ -23,6 +23,7 @@
         "db_info_scraping" : "config_db_info_scraping.json",
 
         "log_scraping" : "log_scraping.json",
-        "config_sentimiento" : "config_sentimiento.json"
+        "config_sentimiento" : "config_sentimiento.json",
+        "config_noticias" : "config_noticias.json"
     }
 }

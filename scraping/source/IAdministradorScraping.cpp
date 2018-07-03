@@ -5,6 +5,9 @@ using namespace scraping;
 // stl
 #include <iostream>
 
+// medios
+#include <noticias/include/config.h>
+
 // aplicacion
 #include <scraping/include/AdministradorScrapingLocal.h>
 #include <scraping/include/ConfiguracionScraping.h>
@@ -57,6 +60,8 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
     depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
 
     analisis::tecnicas::Sentimiento::cargar(ConfiguracionScraping::archivoConfigSentimiento());
+
+    medios::noticias::config::levantar(ConfiguracionScraping::archivoConfigNoticias());
 
     if (ConfiguracionScraping::scrapingLocal())
     {

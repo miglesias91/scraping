@@ -42,6 +42,7 @@ public:
 
     static std::string archivoConfigLog();
     static std::string archivoConfigSentimiento();
+    static std::string archivoConfigNoticias();
 
     // TAGS
 
@@ -68,6 +69,7 @@ public:
 
     static std::string tagArchivoConfigLog();
     static std::string tagArchivoConfigSentimiento();
+    static std::string tagArchivoConfigNoticias();
 
 private:
 
@@ -100,6 +102,7 @@ private:
 
     static std::string archivo_config_log;
     static std::string archivo_config_sentimiento;
+    static std::string archivo_config_noticias;
 
 };
 
