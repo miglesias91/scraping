@@ -27,11 +27,16 @@ public:
 
     // GETTERS
 
+    void resultados_por_categoria(std::unordered_map<std::string, ResultadoAnalisisContenido*> * resultados);
+
     // SETTERS
 
-    void resultado_de_categoria(const std::string & categoria, ResultadoAnalisisContenido * resultado);
+    void set_resultado_de_categoria(const std::string & categoria, ResultadoAnalisisContenido * resultado);
 
     // METODOS
+
+    // metodos de ResultadoAnalisis
+    virtual void combinarCon(ResultadoAnalisisMedio * resultado_a_combinar);
 
     // metodos de IAlmacenable
 

@@ -6,6 +6,7 @@
 
 // medios
 #include <noticias/include/clarin.h>
+#include <noticias/include/la_nacion.h>
 
 // scraping
 #include <scraping/include/GestorMedios.h>
@@ -367,7 +368,7 @@ TEST_CASE("scrapear_facebook", "scraping[.]") {
     gestor_medios.guardarCambios();
 }
 
-TEST_CASE("scrapear_portal", "scraping") {
+TEST_CASE("scrapear_portal_clarin", "scraping[.]") {
 
     extraccion::interfaceo::MedioPortalNoticias clarin(std::make_shared<medios::noticias::clarin>());
     clarin.asignarNuevoId();
@@ -390,5 +391,30 @@ TEST_CASE("scrapear_portal", "scraping") {
     preparador.preparar_portales();
 
     gestor_medios.eliminar(&clarin);
+    gestor_medios.guardarCambios();
+}
+
+TEST_CASE("scrapear_portal_la_nacion", "scraping") {
+    extraccion::interfaceo::MedioPortalNoticias la_nacion(std::make_shared<medios::noticias::la_nacion>());
+    la_nacion.asignarNuevoId();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+    gestor_medios.almacenar(&la_nacion);
+    gestor_medios.guardarCambios();
+
+    extraccion::extractor extractor;
+    extractor.extraer_portales();
+
+    depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.depurar_portales();
+
+    analisis::Analizador analizador;
+    analizador.analizar_portales();
+
+    preparacion::Preparador preparador;
+    preparador.preparar_portales();
+
+    gestor_medios.eliminar(&la_nacion);
     gestor_medios.guardarCambios();
 }

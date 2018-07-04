@@ -95,7 +95,7 @@ bool Preparador::preparar(scraping::extraccion::Medio * medio) const {
 
             preparacion::ResultadoAnalisisContenido * resultado_categoria = new preparacion::ResultadoAnalisisContenido();
             this->combinar(categoria_resultados.second, resultado_categoria);
-            resultado_por_fecha->resultado_de_categoria(categoria_resultados.first, resultado_categoria);
+            resultado_por_fecha->set_resultado_de_categoria(categoria_resultados.first, resultado_categoria);
 
             std::for_each(categoria_resultados.second.begin(), categoria_resultados.second.end(), [=](analisis::ResultadoAnalisis * resultado) { delete resultado; });
         });

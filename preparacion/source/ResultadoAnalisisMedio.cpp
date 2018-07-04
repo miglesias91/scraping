@@ -27,17 +27,37 @@ ResultadoAnalisisMedio::~ResultadoAnalisisMedio() {
     });
 }
 
+void ResultadoAnalisisMedio::resultados_por_categoria(std::unordered_map<std::string, ResultadoAnalisisContenido*>* resultados) {
+    *resultados = this->resultados;
+}
+
 // GETTERS
 
 // SETTERS
 
-void ResultadoAnalisisMedio::resultado_de_categoria(const std::string & categoria, ResultadoAnalisisContenido * resultado) {
+void ResultadoAnalisisMedio::set_resultado_de_categoria(const std::string & categoria, ResultadoAnalisisContenido * resultado) {
     this->resultados[categoria] = resultado;
 }
 
 // METODOS
 
 // metodos de IAlmacenable
+
+// metodos de ResultadoAnalisis
+void ResultadoAnalisisMedio::combinarCon(ResultadoAnalisisMedio * resultado_a_combinar) {
+    std::unordered_map<std::string, ResultadoAnalisisContenido*> resultados_por_categ;
+    resultado_a_combinar->resultados_por_categoria(&resultados_por_categ);
+
+    std::for_each(resultados_por_categ.begin(), resultados_por_categ.end(),
+        [=](std::pair<std::string, ResultadoAnalisisContenido*> categoria_resultado) {
+        if (0 == this->resultados.count(categoria_resultado.first)) {
+            this->resultados[categoria_resultado.first] = new ResultadoAnalisisContenido();
+        }
+        this->resultados[categoria_resultado.first]->combinarCon(categoria_resultado.second);
+    });
+
+    this->ResultadoAnalisis::combinarCon(resultado_a_combinar);
+}
 
 std::string ResultadoAnalisisMedio::prefijoGrupo()
 {
