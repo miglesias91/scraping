@@ -1,0 +1,474 @@
+Ã¯Â»Â¿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>http://contenidos.lanacion.com.ar/herramientas/rss/categoria/30</id>
+  <title>PolÃƒÂ­tica - lanacion.com</title>
+  <logo>http://www.lanacion.com.ar/imgs/layout/logos/ln_112x16.gif</logo>
+  <link rel="self" type="application/atom+xml" href="http://www.lanacion.com.ar/herramientas/rss/index.aspx?categoria_id=30" />
+  <updated>2018-07-04T16:41:00-03:00</updated>
+  <rights>
+        Copyright (c) 2018, SA LA NACION
+      </rights>
+  <icon>http://www.lanacion.com.ar/favicon.ico</icon>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150184-el-senado-le-dio-acuerdo-al-embajador-en-washington</id>
+    <title>El Senado le dio acuerdo al embajador en Washington</title>
+    <link href="http://www.lanacion.com.ar/2150184-el-senado-le-dio-acuerdo-al-embajador-en-washington" />
+    <updated>2018-07-04T16:41:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Casi sin debate y con un solo voto en contra, el Senado le dio acuerdo hoy al empresario Fernando Oris de Roa como embajador argentino en Washington, cargo que ocupa desde enero de este aÃƒÂ±o cuando fue designado por el presidente Mauricio Macri.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/03/2721203w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150194-un-blooper-de-carrio-desato-una-ola-de-abucheos-en-diputados</id>
+    <title>Un "blooper" de CarriÃƒÂ³ desatÃƒÂ³ una ola de abucheos en Diputados</title>
+    <link href="http://www.lanacion.com.ar/2150194-un-blooper-de-carrio-desato-una-ola-de-abucheos-en-diputados" />
+    <updated>2018-07-04T16:34:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Un blooper que protagonizÃƒÂ³ la diputada Elisa CarriÃƒÂ³ (Cambiemos ) desatÃƒÂ³ esta tarde, en el recinto de la CÃƒÂ¡mara de Diputados , una ola de abucheos y de crÃƒÂ­ticas a viva voz desde la oposiciÃƒÂ³n. El incidente ocurriÃƒÂ³ luego que el diputado Daniel Arroyo (Frente Renovador ) reclamara el tratamiento de un proyecto para ampliar el programa de micro crÃƒÂ©ditos con el propÃƒÂ³sito de facilitar el financiamiento para la compra de mÃƒÂ¡quinas y de herramientas.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/89/2721189w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150189-ara-san-juan-dan-de-baja-la-preadjudicacion-a-la-empresa-espanola-y-contrarian-en-forma-directa-a-otra-empresa</id>
+    <title>ARA San Juan: dan de baja la preadjudicaciÃƒÂ³n a la empresa espaÃƒÂ±ola y contratarÃƒÂ­an en forma directa a otra compaÃƒÂ±ÃƒÂ­a</title>
+    <link href="http://www.lanacion.com.ar/2150189-ara-san-juan-dan-de-baja-la-preadjudicacion-a-la-empresa-espanola-y-contrarian-en-forma-directa-a-otra-empresa" />
+    <updated>2018-07-04T15:52:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Otra vez volviÃƒÂ³ a foja cero el proceso de contrataciÃƒÂ³n de la empresa que se encargarÃƒÂ¡ de buscar al submarino ARA San Juan , que desapareciÃƒÂ³ el 15 de noviembre pasado. El Gobierno dio de baja la preadjudicaciÃƒÂ³n de la empresa espaÃƒÂ±ola Igeotest Geociencias y Exploraciones S.L., que habÃƒÂ­a sido la elegida para la tarea. En su reemplazo, una de las empresas que habÃƒÂ­a sido descartada de la compulsa, serÃƒÂ­a contratada en forma directa para llevar adelante la bÃƒÂºsqueda.<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150168-el-foro-del-bicentenario-pide-acuerdos-politicos-para-que-el-pais-vuelva-a-crecer</id>
+    <title>El Foro del Bicentenario pide acuerdos polÃƒÂ­ticos para que el paÃƒÂ­s vuelva a crecer</title>
+    <link href="http://www.lanacion.com.ar/2150168-el-foro-del-bicentenario-pide-acuerdos-politicos-para-que-el-pais-vuelva-a-crecer" />
+    <updated>2018-07-04T14:53:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">El grupo de intelectuales de diferentes disciplinas que conforman el Foro del Bicentenario y que busca renovar las metas de 1810, emitiÃƒÂ³ una declaraciÃƒÂ³n para lograr acuerdos polÃƒÂ­ticos que permitan superar la crisis econÃƒÂ³mica del paÃƒÂ­s y avanzar hacia el crecimiento sostenido.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/45/2721145w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150119-elisa-carrio-y-la-propina-una-anecdota-viral-termino-con-una-aclaracion-y-una-promesa-de-la-diputada</id>
+    <title>Elisa CarriÃƒÂ³ y la propina: una anÃƒÂ©cdota viral terminÃƒÂ³ con una aclaraciÃƒÂ³n y una promesa de la diputada</title>
+    <link href="http://www.lanacion.com.ar/2150119-elisa-carrio-y-la-propina-una-anecdota-viral-termino-con-una-aclaracion-y-una-promesa-de-la-diputada" />
+    <updated>2018-07-04T14:41:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">DespuÃƒÂ©s de los dichos de Elisa CarriÃƒÂ³ sobre la despenalizaciÃƒÂ³n del aborto, la lÃƒÂ­der de la CC volviÃƒÂ³ a generar polÃƒÂ©mica, pero esta vez fue otra de sus declaraciones, que derivÃƒÂ³ en una anÃƒÂ©cdota que se hizo viral y terminÃƒÂ³ con una aclaraciÃƒÂ³n de la diputada a travÃƒÂ©s de Twitter.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/91/2706991w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149904-la-oficina-anticorrupcion-le-pidio-explicaciones-al-funcionario-de-modernizacion-que-controlo-una-offshore</id>
+    <title>La Oficina AnticorrupciÃƒÂ³n le pidiÃƒÂ³ explicaciones al funcionario que controlÃƒÂ³ una offshore</title>
+    <link href="http://www.lanacion.com.ar/2149904-la-oficina-anticorrupcion-le-pidio-explicaciones-al-funcionario-de-modernizacion-que-controlo-una-offshore" />
+    <updated>2018-07-04T13:02:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Eduardo Martelli, nÃƒÂºmero dos del ministro AndrÃƒÂ©s Ibarra , fue intimado por la Oficina AnticorrupciÃƒÂ³n (OA) para que brinde aclaraciones sobre sus declaraciones juradas. El organismo de control tomÃƒÂ³ esa medida despuÃƒÂ©s de que el equipo argentino de Panama Papers revelara que el funcionario fue dueÃƒÂ±o y administrador de una sociedad panameÃƒÂ±a titular de una casa en Punta del Este que en 2005 habÃƒÂ­a vendido lotes en ese balneario uruguayo por millones de dÃƒÂ³lares.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/03/2713403w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150129-el-gobierno-les-ofrecio-500-adicionales-a-los-piqueteros-pero-no-hubo-acuerdo</id>
+    <title>El Gobierno les ofreciÃƒÂ³ $500 adicionales a los piqueteros, pero no hubo acuerdo</title>
+    <link href="http://www.lanacion.com.ar/2150129-el-gobierno-les-ofrecio-500-adicionales-a-los-piqueteros-pero-no-hubo-acuerdo" />
+    <updated>2018-07-04T12:35:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Las expectativas de ambos sectores eran mÃƒÂ¡s bien modestas antes del cÃƒÂ³nclave. Pero luego de la reuniÃƒÂ³n que sostuvieron en la sede de la avenida 9 de julio, la ministra de Desarrollo Social, Carolina Stanley , y los referentes de los movimientos sociales reafirmaron su "vocaciÃƒÂ³n por el diÃƒÂ¡logo" ante la crisis econÃƒÂ³mica y sus efectos, aunque los invitados salieron con un gusto amargo y la amenaza de nuevas protestas si las buenas intenciones no se transforman en "hechos concretos" en las prÃƒÂ³ximas semanas.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/12/2721012w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150126-sobreseyeron-a-anibal-fernandez-en-un-desprendimiento-del-plan-qunita</id>
+    <title>Sobreseyeron a AnÃƒÂ­bal FernÃƒÂ¡ndez en una causa vinculada al Plan Qunita</title>
+    <link href="http://www.lanacion.com.ar/2150126-sobreseyeron-a-anibal-fernandez-en-un-desprendimiento-del-plan-qunita" />
+    <updated>2018-07-04T12:17:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">El exjefe de Gabinete AnÃƒÂ­bal FernÃƒÂ¡ndez fue sobreseÃƒÂ­do en una causa vinculada al Plan Qunita en la que estaba acusado de haber vendido bienes que la Justicia habÃƒÂ­a ordenado embargarle.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/04/2661104w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150113-diputados-avanza-con-la-ley-para-urbanizar-las-villas</id>
+    <title>Avanza en Diputados la ley para urbanizar las villas</title>
+    <link href="http://www.lanacion.com.ar/2150113-diputados-avanza-con-la-ley-para-urbanizar-las-villas" />
+    <updated>2018-07-04T11:56:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">La CÃƒÂ¡mara de Diputados darÃƒÂ¡ hoy media sanciÃƒÂ³n a un proyecto de ley impulsado por el Gobierno destinado a la urbanizaciÃƒÂ³n de villas, asentamientos y barrios populares. La iniciativa cuenta con amplio respaldo de la oposiciÃƒÂ³n.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/78/2721178w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150115-macri-apunto-contra-los-dirigentes-que-piden-soluciones-magicas-frente-a-la-adversidad-digan-que-van-a-hacer</id>
+    <title>Macri apuntÃƒÂ³ contra los dirigentes que Ã¢Â€Âœpiden soluciones mÃƒÂ¡gicas frente a la adversidadÃ¢Â€Â: "Digan quÃƒÂ© van a hacer"</title>
+    <link href="http://www.lanacion.com.ar/2150115-macri-apunto-contra-los-dirigentes-que-piden-soluciones-magicas-frente-a-la-adversidad-digan-que-van-a-hacer" />
+    <updated>2018-07-04T11:55:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Ante la tensiÃƒÂ³n por la crisis cambiaria, Mauricio Macri pidiÃƒÂ³ "poner el hombro" para superar los "obstÃƒÂ¡culos" y les enviÃƒÂ³ un mensaje a los dirigentes polÃƒÂ­ticos, sindicales y empresariales que le reclaman "soluciones mÃƒÂ¡gicas frente a la adversidad".<br /><img src="http://bucket1.glanacion.com/anexos/fotos/25/2720925w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150093-mauricio-macri-visito-una-pizzeria-atendida-por-chicos-con-sindrome-de-down-en-la-plata</id>
+    <title>Mauricio Macri visitÃƒÂ³ una pizzerÃƒÂ­a platense para promover la inclusiÃƒÂ³n social</title>
+    <link href="http://www.lanacion.com.ar/2150093-mauricio-macri-visito-una-pizzeria-atendida-por-chicos-con-sindrome-de-down-en-la-plata" />
+    <updated>2018-07-04T11:54:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Tras unas semanas tumultuosas en la que su imagen se vio afectada por la subida del dÃƒÂ³lar y el cumplimiento de las metas fiscales, Mauricio Macri decidiÃƒÂ³ retomar sus visitas a comerciantes y ciudadanos que le envÃƒÂ­an mensajes. Esta vez fue el turno de "Un lugar especial", un emprendimiento gastronÃƒÂ³mico en La Plata atendido por dos adolescentes con SÃƒÂ­ndrome de Down.<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150096-los-diez-mandamientos-de-macri-para-recortar-gastos-en-el-estado</id>
+    <title>Los diez mandamientos de Macri para recortar gastos en el Estado</title>
+    <link href="http://www.lanacion.com.ar/2150096-los-diez-mandamientos-de-macri-para-recortar-gastos-en-el-estado" />
+    <updated>2018-07-04T11:19:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">El Gobierno terminÃƒÂ³ de delinear la letra chica del decreto de "control de gastos" en los ministerios que se publicarÃƒÂ¡ en las prÃƒÂ³ximas horas. Se trata de una normativa que tendrÃƒÂ¡ una funciÃƒÂ³n simbÃƒÂ³lica, mientras que el equipo del presidente Mauricio Macri dirime medidas de mayor impacto econÃƒÂ³mico para paliar el dÃƒÂ©ficit .<br /><img src="http://bucket1.glanacion.com/anexos/fotos/05/2666105w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150076-chicanas-bromas-y-arenga-en-una-entrevista-inusual-de-carrio-a-larreta</id>
+    <title>Chicanas, bromas y arenga en una entrevista inusual de CarriÃƒÂ³ a Larreta</title>
+    <link href="http://www.lanacion.com.ar/2150076-chicanas-bromas-y-arenga-en-una-entrevista-inusual-de-carrio-a-larreta" />
+    <updated>2018-07-04T09:51:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">La diputada nacional Elisa CarriÃƒÂ³ (Cambiemos) y el jefe de gobierno porteÃƒÂ±o, Horacio RodrÃƒÂ­guez Larreta , participaron ayer de una charla en el Instituto Hannah Arendt, que dirige la lÃƒÂ­der de la CoaliciÃƒÂ³n CÃƒÂ­vica.<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2150014-una-mesa-de-negociacion-que-debate-un-tardio-federalismo</id>
+    <title>Una mesa de negociaciÃƒÂ³n que debate un tardÃƒÂ­o federalismo</title>
+    <link href="http://www.lanacion.com.ar/2150014-una-mesa-de-negociacion-que-debate-un-tardio-federalismo" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">No hay un cuaderno ÃƒÂºnico donde se consoliden las cuentas de la NaciÃƒÂ³n y las provincias y tampoco una sola postura entre los gobernadores. A esto se suma una lista de incumplimientos mutuos que, en algunos casos, llevan dÃƒÂ©cadas de sedimentaciÃƒÂ³n. Por si esto fuera poco, estÃƒÂ¡n la polÃƒÂ­tica y las mezquindades de unos y otros. Aun si llega el consenso en estos temas, hay que tamizar todo por la necesidad de compatibilizar cuentas en momentos en que el dinero no alcanza para pagar los pedidos que cruzan la mesa de negociaciÃƒÂ³n.<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149999-los-limites-de-un-acuerdo-con-el-peronismo</id>
+    <title>Los lÃƒÂ­mites de un acuerdo con el peronismo</title>
+    <link href="http://www.lanacion.com.ar/2149999-los-limites-de-un-acuerdo-con-el-peronismo" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">La volatilidad del mundo no cambiÃƒÂ³, pero la Argentina comenzÃƒÂ³ a dar los primeros sÃƒÂ­ntomas de que podrÃƒÂ­a estabilizarse a pesar del contexto internacional. Nadie asegura que las cosas seguirÃƒÂ¡n definitivamente ese curso, aunque muchos funcionarios oficiales estÃƒÂ¡n convencidos de que tenedores de bonos argentinos valoraron una conducciÃƒÂ³n del Banco CentraltÃƒÂ©cnicamente mÃƒÂ¡s eficiente. El precio de dÃƒÂ³larfrenÃƒÂ³ su escalada. Luis Caputo fue el dueÃƒÂ±o de la idea de ofrecer bonos del Tesoro en dÃƒÂ³lares para moderar la desesperaciÃƒÂ³n de los tenedores de pesos. Fuentes inmejorables dieron cuenta de la muy buena evaluaciÃƒÂ³n que Mauricio Macri hace de la gestiÃƒÂ³n del presidente del Banco Central. Economistas mÃƒÂ¡s serenos, como Juan Carlos de Pablo, tambiÃƒÂ©n valoran las primeras decisiones de Caputo y aconsejan esperar un tiempo para construir una opiniÃƒÂ³n sobre lo que estÃƒÂ¡ haciendo.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/92/2713092w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149998-malestar-en-las-fuerzas-armadas-por-un-magro-aumento</id>
+    <title>Malestar en las Fuerzas Armadas por un magro aumento</title>
+    <link href="http://www.lanacion.com.ar/2149998-malestar-en-las-fuerzas-armadas-por-un-magro-aumento" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Un fuerte malestar generÃƒÂ³ en las Fuerzas Armadas la magra recomposiciÃƒÂ³n salarial dispuesta por el Gobierno para el sector militar, que implica una mejora del 8% para los cuadros inferiores (de voluntario a mayor) y una suma fija de $2000 a partir del 1Ã‚Âº de julio, que se extenderÃƒÂ¡ a $4500 en agosto, para los oficiales superiores (de teniente coronel a teniente general en el EjÃƒÂ©rcito y sus equivalentes en las otras fuerzas).<br /><img src="http://bucket1.glanacion.com/anexos/fotos/34/2720734w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149995-una-decision-que-se-analizo-para-reducir-la-fuga-de-dolares-y-bajar-el-rojo-de-us15000-millones-en-el-turismo</id>
+    <title>Una decisiÃƒÂ³n que se analizÃƒÂ³ para reducir la fuga de dÃƒÂ³lares y bajar el rojo de US$15.000 millones en el turismo</title>
+    <link href="http://www.lanacion.com.ar/2149995-una-decision-que-se-analizo-para-reducir-la-fuga-de-dolares-y-bajar-el-rojo-de-us15000-millones-en-el-turismo" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">El impuesto a los pasajes tiene poca incidencia en la recaudaciÃƒÂ³n; se busca desalentar la salida de divisas<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149987-eeuu-transmitio-un-fuerte-respaldo-de-trump-a-macri</id>
+    <title>EE.UU. transmitiÃƒÂ³ un fuerte respaldo de Trump a Macri</title>
+    <link href="http://www.lanacion.com.ar/2149987-eeuu-transmitio-un-fuerte-respaldo-de-trump-a-macri" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Lo dijo el embajador, al advertir sobre "momentos difÃƒÂ­ciles"<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149986-un-tribunal-fallo-a-favor-de-romero-feris</id>
+    <title>Un tribunal fallÃƒÂ³ a favor de Romero Feris</title>
+    <link href="http://www.lanacion.com.ar/2149986-un-tribunal-fallo-a-favor-de-romero-feris" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">La ComisiÃƒÂ³n Interamericana dijo que su arresto es arbitrario; intervendrÃƒÂ¡ la Corte<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149985-las-medidas-para-reducir-el-deficit-exponen-al-gobierno-a-diferencias-internas</id>
+    <title>Las medidas para reducir el dÃƒÂ©ficit exponen al Gobierno a diferencias internas</title>
+    <link href="http://www.lanacion.com.ar/2149985-las-medidas-para-reducir-el-deficit-exponen-al-gobierno-a-diferencias-internas" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">DespuÃƒÂ©s de las oscilaciones con la obra pÃƒÂºblica, las tarifas y los combustibles, PeÃƒÂ±a y Dujovne mostraron disidencias sobre un posible aumento en el impuesto de los pasajes al exterior<br /><img src="http://bucket1.glanacion.com/anexos/fotos/20/2720720w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149974-reclaman-en-el-senado-debatir-en-el-interior-el-proyecto-sobre-el-aborto</id>
+    <title>Reclaman en el Senado debatir en el interior el proyecto sobre el aborto</title>
+    <link href="http://www.lanacion.com.ar/2149974-reclaman-en-el-senado-debatir-en-el-interior-el-proyecto-sobre-el-aborto" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Lo propuso sin ÃƒÂ©xito el sector contrario a la despenalizaciÃƒÂ³n, en el plenario de comisiones que abriÃƒÂ³ el debate<br /><img src="http://bucket1.glanacion.com/anexos/fotos/24/2720724w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149964-demoras-en-el-caso-de-los-jueces-obligados-a-firmar-sus-renuncias</id>
+    <title>Demoras en el caso de los jueces obligados a firmar sus renuncias</title>
+    <link href="http://www.lanacion.com.ar/2149964-demoras-en-el-caso-de-los-jueces-obligados-a-firmar-sus-renuncias" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Para condicionarlos, les hacÃƒÂ­an rubricar su dimisiÃƒÂ³n antes de asumir; se postergÃƒÂ³ el juicio<br /><img src="http://bucket1.glanacion.com/anexos/fotos/27/2720727w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149933-sintesis</id>
+    <title>SÃƒÂ­ntesis</title>
+    <link href="http://www.lanacion.com.ar/2149933-sintesis" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">PanamÃƒÂ¡ Papers: la OA le pidiÃƒÂ³ aclaraciones a un funcionario<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149932-la-sentencia-en-el-juicio-por-el-caso-ciccone-se-conocera-el-12-de-julio</id>
+    <title>La sentencia en el juicio por el caso Ciccone se conocerÃƒÂ¡ el 12 de julio</title>
+    <link href="http://www.lanacion.com.ar/2149932-la-sentencia-en-el-juicio-por-el-caso-ciccone-se-conocera-el-12-de-julio" />
+    <updated>2018-07-04T00:00:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">El tribunal oral definirÃƒÂ¡ la situaciÃƒÂ³n de Boudou y otros cinco acusados<br /><img src="http://bucket1.glanacion.com/anexos/fotos/30/2720730w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149983-dujovne-reconocio-que-se-estudia-transferir-subsidios-a-la-ciudad-y-a-la-provincia</id>
+    <title>Dujovne reconociÃƒÂ³ que se estudia transferir subsidios a la Ciudad y a la Provincia</title>
+    <link href="http://www.lanacion.com.ar/2149983-dujovne-reconocio-que-se-estudia-transferir-subsidios-a-la-ciudad-y-a-la-provincia" />
+    <updated>2018-07-03T21:57:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">En una audiencia con clima de interpelaciÃƒÂ³n, el ministro de Hacienda, NicolÃƒÂ¡s Dujovne , defendiÃƒÂ³ este martes en el Congreso el acuerdo con el FMI y dejÃƒÂ³ fuertes definiciones: asegurÃƒÂ³ que el Gobierno no evalÃƒÂºa subir ningÃƒÂºn impuesto, negÃƒÂ³ que la Casa Rosada estudie usar los fondos de la Anses para cuestiones ajenas al sistema previsional y abonÃƒÂ³ la posibilidad de trasladar costos de los subsidios a la Capital y a la provincia de Buenos Aires.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/29/2720629w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149973-la-falta-de-una-hoja-de-ruta-explica-las-idas-y-vueltas-del-gobierno</id>
+    <title>La falta de una hoja de ruta explica las idas y vueltas del Gobierno</title>
+    <link href="http://www.lanacion.com.ar/2149973-la-falta-de-una-hoja-de-ruta-explica-las-idas-y-vueltas-del-gobierno" />
+    <updated>2018-07-03T21:22:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">A continuaciÃƒÂ³n, los principales conceptos:<br /><img src="http://bucket1.glanacion.com/anexos/fotos/43/2720643w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149948-tras-sufrir-un-acv-murio-la-madre-de-emilio-monzo</id>
+    <title>Tras sufrir un ACV, muriÃƒÂ³ la madre de Emilio MonzÃƒÂ³</title>
+    <link href="http://www.lanacion.com.ar/2149948-tras-sufrir-un-acv-murio-la-madre-de-emilio-monzo" />
+    <updated>2018-07-03T21:02:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Este martes a los 75 aÃƒÂ±os muriÃƒÂ³ Gema Gardiner McDermott, la madre del presidente de la CÃƒÂ¡mara de Diputados, Emilio MonzÃƒÂ³ , tras sufrir un accidente cerebrovascular (ACV).<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+    <category term="GDA" />
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149942-avellaneda-victoria-onetto-asumio-como-secretaria-de-cultura</id>
+    <title>Avellaneda: Victoria Onetto asumiÃƒÂ³ como secretaria de Cultura</title>
+    <link href="http://www.lanacion.com.ar/2149942-avellaneda-victoria-onetto-asumio-como-secretaria-de-cultura" />
+    <updated>2018-07-03T20:38:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">La actriz Victoria Onetto asumiÃƒÂ³ ayer como secretaria de Cultura, Arte y EspectÃƒÂ¡culos de la municipalidad de Avellaneda. "Gracias por esta gran oportunidad que voy a honrar con mi compromiso, pasiÃƒÂ³n, vocaciÃƒÂ³n y voluntad de trabajo", dijo Onetto luego de la ceremonia.<br /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149924-festejos-en-la-embajada-de-eeuu-por-el-4-de-julio</id>
+    <title>Festejos en la Embajada de EE.UU. por el 4 de Julio</title>
+    <link href="http://www.lanacion.com.ar/2149924-festejos-en-la-embajada-de-eeuu-por-el-4-de-julio" />
+    <updated>2018-07-03T20:02:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">La Embajada de Estados Unidos en la Argentina celebrÃƒÂ³ el 4 de Julio, dÃƒÂ­a de la Independencia norteamericana, en el Palacio Bosch, con una reuniÃƒÂ³n a la que asistieron el Embajador Edward C. Prado junto a su mujer, funcionarios del gobierno de Cambiemos y empresarios.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/24/2720624w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+  <entry>
+    <id>http://www.lanacion.com.ar/2149916-tras-la-reapertura-de-paritarias-los-mercantiles-acordaron-un-aumento-del-25</id>
+    <title>Tras la reapertura de paritarias, los mercantiles acordaron un aumento del 25%</title>
+    <link href="http://www.lanacion.com.ar/2149916-tras-la-reapertura-de-paritarias-los-mercantiles-acordaron-un-aumento-del-25" />
+    <updated>2018-07-03T19:18:00-03:00</updated>
+    <summary>Ã‚Â </summary>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">Luego del pedido de reapertura de paritarias , el sector mercantil cerrÃƒÂ³ en un aumento del 25%. El porcentaje resulta al sumar el acuerdo de hoy con los incrementos que se hicieron desde comienzo de aÃƒÂ±o.<br /><img src="http://bucket1.glanacion.com/anexos/fotos/41/2720541w346.jpg" /></div>
+    </content>
+    <author>
+      <name>lanacion.com</name>
+      <uri>http://www.lanacion.com.ar</uri>
+      <email>noreply@lanacionline.com.ar</email>
+    </author>
+  </entry>
+</feed>

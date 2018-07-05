@@ -7,6 +7,7 @@
 // medios
 #include <noticias/include/clarin.h>
 #include <noticias/include/la_nacion.h>
+#include <noticias/include/infobae.h>
 
 // scraping
 #include <scraping/include/GestorMedios.h>
@@ -394,7 +395,7 @@ TEST_CASE("scrapear_portal_clarin", "scraping[.]") {
     gestor_medios.guardarCambios();
 }
 
-TEST_CASE("scrapear_portal_la_nacion", "scraping") {
+TEST_CASE("scrapear_portal_la_nacion", "scraping[.]") {
     extraccion::interfaceo::MedioPortalNoticias la_nacion(std::make_shared<medios::noticias::la_nacion>());
     la_nacion.asignarNuevoId();
 
@@ -416,5 +417,30 @@ TEST_CASE("scrapear_portal_la_nacion", "scraping") {
     preparador.preparar_portales();
 
     gestor_medios.eliminar(&la_nacion);
+    gestor_medios.guardarCambios();
+}
+
+TEST_CASE("scrapear_portal_infobae", "scraping") {
+    extraccion::interfaceo::MedioPortalNoticias infobae(std::make_shared<medios::noticias::infobae>());
+    infobae.asignarNuevoId();
+
+    scraping::aplicacion::GestorMedios gestor_medios;
+    gestor_medios.almacenar(&infobae);
+    gestor_medios.guardarCambios();
+
+    extraccion::extractor extractor;
+    extractor.extraer_portales();
+
+    depuracion::Depurador depurador;
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.depurar_portales();
+
+    analisis::Analizador analizador;
+    analizador.analizar_portales();
+
+    preparacion::Preparador preparador;
+    preparador.preparar_portales();
+
+    gestor_medios.eliminar(&infobae);
     gestor_medios.guardarCambios();
 }
