@@ -17,7 +17,7 @@
 
 using namespace scraping::preparacion;
 
-TEST_CASE("almacenar_y_recuperar_resultado_analisis_medio_correctamente", "preparacion")
+TEST_CASE("almacenar_y_recuperar_resultado_analisis_medio_correctamente", "preparacion[.]")
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     scraping::analisis::tecnicas::Sentimiento sentimiento;
@@ -35,7 +35,7 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_medio_correctamente", "prepa
     resultado_analisis_1.setResultadoSentimiento(resultado_1_sentimiento);
     resultado_analisis_1.setId(new herramientas::utiles::ID(1234));
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_1);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_analisis_1);
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
     fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
@@ -47,19 +47,19 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_medio_correctamente", "prepa
     resultado_analisis_2.setResultadoSentimiento(resultado_2_sentimiento);
     resultado_analisis_2.setId(new herramientas::utiles::ID(4321));
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_2);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_analisis_2);
 
     // recupero los resultados de medios almacenados y los combino.
 
     scraping::preparacion::ResultadoAnalisisMedio resultado_analisis_1_recuperado;
     resultado_analisis_1_recuperado.setId(resultado_analisis_1.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_analisis_1_recuperado);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultado_analisis_1_recuperado);
 
     scraping::preparacion::ResultadoAnalisisMedio resultado_analisis_2_recuperado;
     resultado_analisis_2_recuperado.setId(resultado_analisis_2.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_analisis_2_recuperado);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultado_analisis_2_recuperado);
 
     resultado_analisis_1_recuperado.combinarCon(&resultado_analisis_2_recuperado);
 
@@ -85,7 +85,7 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_contenido_correctamente", "p
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_1(resultado_1);
     resultado_analisis_1.setId(new herramientas::utiles::ID(1234));
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_1);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_analisis_1);
 
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_2 = new scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia();
     fuerza_en_noticia.aplicar(bolsa_de_palabras_2, resultado_2);
@@ -93,19 +93,19 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_contenido_correctamente", "p
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_2(resultado_2);
     resultado_analisis_2.setId(new herramientas::utiles::ID(4321));
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis_2);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_analisis_2);
 
     // recupero los resultados de contenidos almacenados y los combino.
 
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_1_recuperado;
     resultado_analisis_1_recuperado.setId(resultado_analisis_1.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_analisis_1_recuperado);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultado_analisis_1_recuperado);
 
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_2_recuperado;
     resultado_analisis_2_recuperado.setId(resultado_analisis_2.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_analisis_2_recuperado);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultado_analisis_2_recuperado);
 
     resultado_analisis_1_recuperado.combinarCon(&resultado_analisis_2_recuperado);
 
@@ -118,7 +118,7 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_contenido_correctamente", "p
     REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
 }
 
-TEST_CASE("almacenar_y_recuperar_resultado_analisis_diario_correctamente", "preparacion")
+TEST_CASE("almacenar_y_recuperar_resultado_analisis_diario_correctamente", "preparacion[.]")
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -147,13 +147,13 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_diario_correctamente", "prep
     resultado_diario.agregarResultadoDeMedio(resultado_analisis_2);
 
     // almacena el resultado diario
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_diario);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_diario);
 
     // lo recupero en otro resultado creado
     scraping::preparacion::ResultadoAnalisisDiario resultado_diario_recuperado;
     resultado_diario_recuperado.setId(resultado_diario.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_diario_recuperado);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultado_diario_recuperado);
 
     scraping::preparacion::ResultadoAnalisisMedio * resultado_analisis_recuperado_1 = resultado_diario_recuperado.getResultadoMedio(resultado_analisis_1->getId()->numero());
 

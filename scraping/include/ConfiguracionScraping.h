@@ -19,7 +19,7 @@ public:
     static bool scrapingLocal();
     static bool scrapingDistribuido();
 
-    static std::string archivoConfigDBInfoScraping();
+    static std::string archivoConfigDBInfoTemporal();
     static std::string archivoConfigDBResultadosDiarios();
 
     static std::string prefijoConfiguracion();
@@ -39,18 +39,23 @@ public:
 
     static std::string claveIDMedioActual();
     static std::string claveIDContenidoActual();
+    static uintmax_t claveIDCheckpointActual();
 
     static std::string archivoConfigLog();
     static std::string archivoConfigSentimiento();
     static std::string archivoConfigNoticias();
+
+    static std::string dirCheckpointResultadosDiarios();
 
     // TAGS
 
     static std::string tagScrapingLocal();
     static std::string tagScrapingDistribuido();
 
-    static std::string tagArchivoConfigDBInfoScraping();
+    static std::string tagArchivoConfigDBInfoTemporal();
     static std::string tagArchivoConfigDBResultadosDiarios();
+
+    static std::string tagDirCheckpointsResultadosDiarios();
 
     static std::string tagPrefijoConfiguracion();
 
@@ -78,8 +83,8 @@ private:
 
     static std::string path_config;
 
-    static std::string archivo_config_db_resultados_analisis_diario;
-    static std::string archivo_config_db_info_scraping;
+    static std::string archivo_config_db_resultados_diarios;
+    static std::string archivo_config_db_info_temporal;
 
     static bool scraping_local;
     static bool scraping_distribuido;
@@ -99,10 +104,13 @@ private:
 
     static std::string clave_id_medio_actual;
     static std::string clave_id_contenido_actual;
+    static std::string clave_id_checkpoint_actual;
 
     static std::string archivo_config_log;
     static std::string archivo_config_sentimiento;
     static std::string archivo_config_noticias;
+
+    static std::string dir_checkpoint_resultados_diarios;
 
 };
 

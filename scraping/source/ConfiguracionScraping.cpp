@@ -15,8 +15,8 @@ std::string ConfiguracionScraping::path_config;
 bool ConfiguracionScraping::scraping_local;
 bool ConfiguracionScraping::scraping_distribuido;
 
-std::string ConfiguracionScraping::archivo_config_db_info_scraping;
-std::string ConfiguracionScraping::archivo_config_db_resultados_analisis_diario;
+std::string ConfiguracionScraping::archivo_config_db_info_temporal;
+std::string ConfiguracionScraping::archivo_config_db_resultados_diarios;
 
 std::string ConfiguracionScraping::prefijo_configuracion;
 
@@ -34,10 +34,12 @@ std::string ConfiguracionScraping::prefijo_resultado_diario;
 
 std::string ConfiguracionScraping::clave_id_medio_actual;
 std::string ConfiguracionScraping::clave_id_contenido_actual;
+std::string ConfiguracionScraping::clave_id_checkpoint_actual;
 
 std::string ConfiguracionScraping::archivo_config_log;
 std::string ConfiguracionScraping::archivo_config_sentimiento;
 std::string ConfiguracionScraping::archivo_config_noticias;
+std::string ConfiguracionScraping::dir_checkpoint_resultados_diarios;
 
 void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configuracion)
 {
@@ -53,8 +55,8 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
     sstream << archivo.rdbuf();
     const std::string string_config(sstream.str());
 
-    herramientas::utiles::Json * config_json = NULL;
-    herramientas::utiles::Json * config_scraping_json = NULL;
+    herramientas::utiles::Json * config_json = nullptr;
+    herramientas::utiles::Json * config_scraping_json = nullptr;
 
     try {
         config_json = new herramientas::utiles::Json(string_config);
@@ -63,8 +65,9 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
         scraping_local = config_scraping_json->getAtributoValorBool(ConfiguracionScraping::tagScrapingLocal());
         scraping_distribuido = config_scraping_json->getAtributoValorBool(ConfiguracionScraping::tagScrapingDistribuido());
 
-        archivo_config_db_info_scraping = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBInfoScraping());
-        archivo_config_db_resultados_analisis_diario = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios());
+        archivo_config_db_info_temporal = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBInfoTemporal());
+        archivo_config_db_resultados_diarios = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios());
+        dir_checkpoint_resultados_diarios = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagDirCheckpointsResultadosDiarios());
 
         archivo_config_log = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigLog());
         archivo_config_sentimiento = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigSentimiento());
@@ -111,14 +114,14 @@ bool ConfiguracionScraping::scrapingDistribuido()
     return scraping_distribuido;
 }
 
-std::string ConfiguracionScraping::archivoConfigDBInfoScraping()
+std::string ConfiguracionScraping::archivoConfigDBInfoTemporal()
 {
-    return archivo_config_db_info_scraping;
+    return archivo_config_db_info_temporal;
 }
 
 std::string ConfiguracionScraping::archivoConfigDBResultadosDiarios()
 {
-    return archivo_config_db_resultados_analisis_diario;
+    return archivo_config_db_resultados_diarios;
 }
 
 std::string ConfiguracionScraping::prefijoConfiguracion()
@@ -192,6 +195,10 @@ std::string ConfiguracionScraping::archivoConfigNoticias()
     return archivo_config_noticias;
 }
 
+std::string scraping::ConfiguracionScraping::dirCheckpointResultadosDiarios() {
+    return dir_checkpoint_resultados_diarios;
+}
+
 std::string ConfiguracionScraping::claveIDMedioActual()
 {
     return "id_medio_actual";
@@ -200,6 +207,11 @@ std::string ConfiguracionScraping::claveIDMedioActual()
 std::string ConfiguracionScraping::claveIDContenidoActual()
 {
     return "id_contenido_actual";
+}
+
+uintmax_t ConfiguracionScraping::claveIDCheckpointActual()
+{
+    return 1234;
 }
 
 std::string ConfiguracionScraping::tagScrapingLocal()
@@ -214,12 +226,16 @@ std::string ConfiguracionScraping::tagScrapingDistribuido()
 
 std::string ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios()
 {
-    return "db_resultados_analisis_diario";
+    return "db_resultados_diarios";
 }
 
-std::string ConfiguracionScraping::tagArchivoConfigDBInfoScraping()
+std::string ConfiguracionScraping::tagDirCheckpointsResultadosDiarios() {
+    return "dir_checkpoints_resultados_diarios";
+}
+
+std::string ConfiguracionScraping::tagArchivoConfigDBInfoTemporal()
 {
-    return "db_info_scraping";
+    return "db_info_temporal";
 }
 
 std::string ConfiguracionScraping::tagPrefijoConfiguracion()

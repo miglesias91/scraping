@@ -9,7 +9,7 @@
 namespace scraping::extraccion::interfaceo {
 class ContenidoFacebook : public Contenido, public medios::facebook::Publicacion {
 public:
-    ContenidoFacebook(herramientas::utiles::Json * json = NULL);
+    ContenidoFacebook(herramientas::utiles::Json * json = nullptr);
     virtual ~ContenidoFacebook();
 
     // GETTERS

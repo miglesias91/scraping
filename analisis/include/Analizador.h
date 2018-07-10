@@ -24,9 +24,9 @@ public:
 
     // METODOS
 
-    virtual bool analizar_twitter() const;
-    virtual bool analizar_facebook() const;
-    virtual bool analizar_portales() const;
+    //virtual bool analizar_twitter() const;
+    //virtual bool analizar_facebook() const;
+    //virtual bool analizar_portales() const;
 
     virtual bool analizar(extraccion::Medio * medio) const;
 

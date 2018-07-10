@@ -11,7 +11,7 @@ namespace scraping{ namespace extraccion { namespace interfaceo {
 class MedioFacebook : public Medio {
 public:
     explicit MedioFacebook(const std::string & nombre_pagina);
-    explicit MedioFacebook(herramientas::utiles::Json * json = NULL);
+    explicit MedioFacebook(herramientas::utiles::Json * json = nullptr);
     virtual ~MedioFacebook();
 
     // GETTERS

@@ -70,7 +70,7 @@ bool AdministradorScrapingLocal::almacenar(scraping::IAlmacenable * entidad)
 
 bool AdministradorScrapingLocal::almacenar(std::vector<scraping::IAlmacenable*> entidades)
 {
-    scraping::IAlmacenable* entidad = NULL;
+    scraping::IAlmacenable* entidad = nullptr;
     bool retorno = true;
 
     for (std::vector<scraping::IAlmacenable*>::iterator it = entidades.begin(); it != entidades.end(); it++)
@@ -148,7 +148,7 @@ bool AdministradorScrapingLocal::eliminar(scraping::IAlmacenable * entidad)
 
 bool AdministradorScrapingLocal::eliminar(std::vector<scraping::IAlmacenable*> entidades)
 {
-    scraping::IAlmacenable* entidad = NULL;
+    scraping::IAlmacenable* entidad = nullptr;
     bool retorno = true;
 
     for (std::vector<scraping::IAlmacenable*>::iterator it = entidades.begin(); it != entidades.end(); it++)
@@ -201,7 +201,7 @@ bool AdministradorScrapingLocal::modificar(scraping::IAlmacenable * entidad)
 
 bool AdministradorScrapingLocal::modificar(std::vector<scraping::IAlmacenable*> entidades)
 {
-    scraping::IAlmacenable* entidad = NULL;
+    scraping::IAlmacenable* entidad = nullptr;
     bool retorno = true;
 
     for (std::vector<scraping::IAlmacenable*>::iterator it = entidades.begin(); it != entidades.end(); it++)

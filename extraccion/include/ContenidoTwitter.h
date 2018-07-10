@@ -9,7 +9,7 @@
 namespace scraping::extraccion::interfaceo {
 class ContenidoTwitter : public Contenido, public medios::twitter::Tweet {
 public:
-    ContenidoTwitter(herramientas::utiles::Json * json = NULL);
+    ContenidoTwitter(herramientas::utiles::Json * json = nullptr);
     virtual ~ContenidoTwitter();
 
     // GETTERS

@@ -11,7 +11,7 @@ namespace scraping { namespace extraccion { namespace interfaceo {
 class MedioTwitter : public Medio {
 public:
     explicit MedioTwitter(const std::string & nombre_cuenta);
-    explicit MedioTwitter(herramientas::utiles::Json * json = NULL);
+    explicit MedioTwitter(herramientas::utiles::Json * json = nullptr);
     virtual ~MedioTwitter();
 
     // GETTERS

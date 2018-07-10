@@ -3,7 +3,7 @@
 using namespace scraping::depuracion::mapeo;
 
 Registro::Registro(unsigned int valor_hexa, unsigned char * utf8_codeunits_en_decimal, unsigned int cantidad_de_codeunits, std::string descripcion, std::string traduccion) :
-    valor_hexa(valor_hexa), utf8_codeunits_en_decimal(NULL), cantidad_de_codeunits(cantidad_de_codeunits), descripcion(descripcion), traduccion(traduccion)
+    valor_hexa(valor_hexa), utf8_codeunits_en_decimal(nullptr), cantidad_de_codeunits(cantidad_de_codeunits), descripcion(descripcion), traduccion(traduccion)
 {
     this->utf8_codeunits_en_decimal = new unsigned char[cantidad_de_codeunits];
 

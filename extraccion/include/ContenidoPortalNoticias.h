@@ -12,7 +12,7 @@
 namespace scraping::extraccion::interfaceo {
 class ContenidoPortalNoticias : public Contenido, public medios::noticias::noticia {
 public:
-    ContenidoPortalNoticias(herramientas::utiles::Json * json = NULL);
+    ContenidoPortalNoticias(herramientas::utiles::Json * json = nullptr);
     virtual ~ContenidoPortalNoticias();
 
     // GETTERS

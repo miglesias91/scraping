@@ -11,15 +11,21 @@
         "prefijo_rss" : "104",
 
         "prefijo_medio" : "001",
+        
         "prefijo_contenido" : "002",
-        "prefijo_resultado_medio" : "003",
-        "prefijo_resultado_contenido" : "004",
-        "prefijo_resultado_diario" : "005",
+        "prefijo_contenido_depurado" : "003",
 
-        "db_resultados_analisis_diario" : "config_db_resultados_analisis_diarios.json",
-        "db_info_scraping" : "config_db_info_scraping.json",
+        "prefijo_resultado_medio" : "004",
+        "prefijo_resultado_contenido" : "005",
+        "prefijo_resultado_diario" : "006",
+
+        "db_resultados_diarios" : "config_db_resultados_diarios.json",
+        "db_info_temporal" : "config_db_info_temporal.json",
+
+        "dir_checkpoints_resultados_diarios" : "C:/temp/checkpoints",
 
         "log_scraping" : "log_scraping.json",
-        "config_sentimiento" : "config_sentimiento.json"
+        "config_sentimiento" : "config_sentimiento.json",
+        "config_noticias" : "config_noticias.json"
     }
 }

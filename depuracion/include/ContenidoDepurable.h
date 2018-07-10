@@ -17,7 +17,7 @@ namespace depuracion
 class ContenidoDepurable : public IDepurable
 {
 public:
-    ContenidoDepurable(scraping::extraccion::Contenido * contenido_a_depurar = NULL);
+    ContenidoDepurable(scraping::extraccion::Contenido * contenido_a_depurar = nullptr);
     virtual ~ContenidoDepurable();
 
     // GETTERS

@@ -33,7 +33,7 @@ MapaUTF8::MapaUTF8(std::string path_archivo_mapa)
             std::vector<std::string> campos = herramientas::utiles::FuncionesString::separar(linea_mapeo, ",");
 
             // parseo los campos
-            hexa = std::stoul(campos[0], NULL, 16);
+            hexa = std::stoul(campos[0], nullptr, 16);
 
             std::vector<std::string> valores_utf8 = herramientas::utiles::FuncionesString::separar(campos[2]);
 
@@ -71,7 +71,7 @@ MapaUTF8::~MapaUTF8()
     for (std::unordered_map<unsigned int, Registro*>::iterator it = this->mapa_valores_hexa.begin(); it != this->mapa_valores_hexa.end(); it++)
     {
         delete it->second;
-        it->second = NULL;
+        it->second = nullptr;
     }
 }
 

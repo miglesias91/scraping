@@ -1,5 +1,8 @@
 #include <scraping/include/GestorMedios.h>
 
+// stl
+#include <algorithm>
+
 // scraping
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/IAdministradorScraping.h>
@@ -7,9 +10,9 @@
 
 using namespace scraping::aplicacion;
 
-GestorMedios::GestorMedios() : admin_info_scraping(NULL), prefijo_grupo(prefijo_grupo)
+GestorMedios::GestorMedios() : admin_info_scraping(nullptr), prefijo_grupo(prefijo_grupo)
 {
-    this->admin_info_scraping = scraping::IAdministradorScraping::getInstanciaAdminInfo();
+    this->admin_info_scraping = scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios();
 }
 
 GestorMedios::~GestorMedios()
@@ -110,7 +113,7 @@ bool GestorMedios::almacenar(scraping::extraccion::Medio * medio_nuevo)
     }
 
     // si no estaba en la lista de eliminados, entonces lo agregar a la lista de 'a almacenar'.
-    if (NULL == medio_nuevo->getId())
+    if (nullptr == medio_nuevo->getId())
     {
         medio_nuevo->asignarNuevoId();
     }
@@ -169,40 +172,42 @@ scraping::extraccion::Medio * GestorMedios::encontrar(scraping::extraccion::Medi
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 // METODOS VIEJOS
+
+bool GestorMedios::almacenar(const std::vector<scraping::extraccion::Medio*>& medios_a_almacenar) const {
+
+    std::for_each(medios_a_almacenar.begin(), medios_a_almacenar.end(),
+        [=](scraping::extraccion::Medio * medio_a_almacenar) {
+        this->almacenarMedio(medio_a_almacenar);
+    });
+    return true;
+}
 
 bool GestorMedios::actualizarMedio(scraping::extraccion::Medio * medio_a_actualizar) const
 {
     medio_a_actualizar->setGrupo(medio_a_actualizar->getGrupoMedio());
 
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->modificar(medio_a_actualizar);
+    return scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->modificar(medio_a_actualizar);
 }
-
-//bool GestorMedios::recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter)
-//{
-//    scraping::Logger::info("recuperarCuentasDeTwitter: recuperando las cuentas de twitter existentes.");
-//
-//    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<scraping::twitter::modelo::Cuenta>(scraping::ConfiguracionScraping::prefijoTwitter(), &cuentas_de_twitter);
-//}
 
 bool GestorMedios::almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar) const
 {
     medio_a_almacenar->setGrupo(medio_a_almacenar->getGrupoMedio());
 
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenar(medio_a_almacenar);
+    return scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(medio_a_almacenar);
 }
 
 bool GestorMedios::almacenarIDActualMedio() const
 {
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->almacenarIDActual<scraping::extraccion::Medio>();
+    return scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenarIDActual<scraping::extraccion::Medio>();
 }
 
 void GestorMedios::recuperarIDActualMedio() const
 {
-    unsigned long long int id_actual_medio = IAdministradorScraping::getInstanciaAdminInfo()->recuperarIDActual<scraping::extraccion::Medio>();
+    unsigned long long int id_actual_medio = IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperarIDActual<scraping::extraccion::Medio>();
 
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(id_actual_medio);
 }

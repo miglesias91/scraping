@@ -83,7 +83,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(repos-git)herramientas_desarrollo\Debug;$(repos-git)almacenamiento\Debug;$(repos-git)ia\Debug;$(repos-git)medios-digitales\Debug;$(repos)cpprestsdk\Binaries\Win32\Debug;$(repos)rocksdb\build_x86\Debug;$(repos)pugixml\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;noticias.lib;feed.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;cpprest141d_2_10.lib;pugixml.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;noticias.lib;feed.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;cpprest141d_2_10.lib;pugixml.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,7 +119,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Release;$(repos-git)herramientas_desarrollo\Release;$(repos-git)almacenamiento\Release;$(repos-git)ia\Release;$(repos-git)medios-digitales\Release;$(repos)cpprestsdk\Binaries\Win32\Release;$(repos)rocksdb\build_x86\Release;$(repos)pugixml\build\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;noticias.lib;feed.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;cpprest141_2_10.lib;pugixml.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>scraping.lib;extraccion.lib;analisis.lib;depuracion.lib;preparacion.lib;twitter.lib;facebook.lib;noticias.lib;feed.lib;protocolos.lib;log.lib;casablanca_wrapper.lib;utiles.lib;clasificacion-de-texto.lib;cpprest141_2_10.lib;pugixml.lib;almacenamiento.lib;WrapperRocksDB.lib;rocksdb.lib;Shlwapi.lib;Rpcrt4.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

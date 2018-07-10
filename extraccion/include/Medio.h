@@ -25,7 +25,7 @@ namespace extraccion
 class Medio : public IAlmacenable, public herramientas::utiles::IContieneJson, public herramientas::utiles::IHashable
 {
 public:
-    Medio(const std::string & prefijo_grupo = "", herramientas::utiles::Json * json = NULL);
+    Medio(const std::string & prefijo_grupo = "", herramientas::utiles::Json * json = nullptr);
     virtual ~Medio();
 
     // GETTERS

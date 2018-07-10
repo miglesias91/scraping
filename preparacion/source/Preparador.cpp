@@ -9,9 +9,9 @@
 #include <analisis/include/ResultadoAnalisis.h>
 
 // extraccion
-#include <extraccion/include/MedioFacebook.h>
-#include <extraccion/include/MedioTwitter.h>
-#include <extraccion/include/MedioPortalNoticias.h>
+//#include <extraccion/include/MedioFacebook.h>
+//#include <extraccion/include/MedioTwitter.h>
+//#include <extraccion/include/MedioPortalNoticias.h>
 
 // preparacion
 #include <preparacion/include/ResultadoAnalisisContenido.h>
@@ -19,6 +19,8 @@
 #include <preparacion/include/ResultadoAnalisisDiario.h>
 
 using namespace scraping::preparacion;
+
+std::mutex Preparador::mutex_modificacion_resultado_diario;
 
 Preparador::Preparador() {}
 
@@ -29,45 +31,6 @@ Preparador::~Preparador() {}
 // SETTERS
 
 // METODOS
-
-bool Preparador::preparar_twitter() const {
-    scraping::aplicacion::GestorMedios gestor_medios;
-
-    std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
-    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioTwitter>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas);
-
-    std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
-        this->preparar(cuenta);
-        delete cuenta;
-    });
-    return true;
-}
-
-bool Preparador::preparar_facebook() const {
-    scraping::aplicacion::GestorMedios gestor_medios;
-
-    std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
-    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas);
-
-    std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
-        this->preparar(pagina);
-        delete pagina;
-    });
-    return true;
-}
-
-bool Preparador::preparar_portales() const {
-    scraping::aplicacion::GestorMedios gestor_medios;
-
-    std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
-    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales);
-
-    std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
-        this->preparar(portal);
-        delete portal;
-    });
-    return true;
-}
 
 bool Preparador::preparar(scraping::extraccion::Medio * medio) const {
     std::vector<std::pair<std::string, std::vector<uintmax_t>>> ids_para_preparar;
@@ -100,16 +63,14 @@ bool Preparador::preparar(scraping::extraccion::Medio * medio) const {
             std::for_each(categoria_resultados.second.begin(), categoria_resultados.second.end(), [=](analisis::ResultadoAnalisis * resultado) { delete resultado; });
         });
 
-        // this->combinar(resultados_por_fecha, resultado_por_fecha);
-
-        //std::for_each(resultados_por_fecha.begin(), resultados_por_fecha.end(), [=](analisis::ResultadoAnalisis * resultado) { delete resultado; });
-
         preparacion::ResultadoAnalisisDiario resultado_diario;
         resultado_diario.setId(new herramientas::utiles::ID(std::stoul(fecha_ids.first)));
 
+        mutex_modificacion_resultado_diario.lock();
         gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario);  // recupero resultado diario para la fecha en cuestion,
         resultado_diario.agregarResultadoDeMedio(resultado_por_fecha);  // agrego los resultados del medio y
         gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario);  // almaceno el resultado diario actualizado con la info del medio.
+        mutex_modificacion_resultado_diario.unlock();
 
         medio->contenidos_preparados(fecha_ids.first, fecha_ids.second);
         gestor_medios.actualizarMedio(medio);

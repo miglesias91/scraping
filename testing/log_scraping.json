@@ -1,6 +1,7 @@
 {
     "log" :
     {
+        "activado" : false,
     	"nombre" : "scraping",
     	"tamanio_cola_async" : 0,
     	"agrupar_por_fecha" : true,

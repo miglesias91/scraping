@@ -24,9 +24,6 @@ extractor::extractor() {}
 extractor::~extractor() {}
 
 bool extractor::extraer_facebook() {
-    scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
-    gestor_analisis_diario.recuperarIDActualContenido();
-
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas_facebook_existentes;
@@ -47,9 +44,6 @@ bool extractor::extraer_facebook() {
 }
 
 bool extractor::extraer_twitter() {
-    scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
-    gestor_analisis_diario.recuperarIDActualContenido();
-
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas_twitter_existentes;
@@ -71,9 +65,6 @@ bool extractor::extraer_twitter() {
 }
 
 bool extractor::extraer_portales() {
-    scraping::aplicacion::GestorAnalisisDiario gestor_analisis_diario;
-    gestor_analisis_diario.recuperarIDActualContenido();
-
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales_existentes;

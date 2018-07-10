@@ -20,45 +20,33 @@ public:
     GestorTareas();
     virtual ~GestorTareas();
 
-    struct resultados_agrupados_por_medio
-    {
-        extraccion::Medio * medio;
-        std::vector<analisis::ResultadoAnalisis*> resultados;
-    };
-
     // GETTES
 
     // SETTER
 
     // METODOS
 
-    // twitter
-    static void scrapearTwitter();
+    static bool extraer_facebook();
+    static bool extraer_twitter();
+    static bool extraer_portales();
 
-    static void depurarYAnalizarTwitter();
+    static bool depurar_facebook();
+    static bool depurar_twitter();
+    static bool depurar_portales();
 
-    static void prepararYAlmacenarTwitter();
+    static bool analizar_facebook();
+    static bool analizar_twitter();
+    static bool analizar_portales();
 
-    // facebook
-    static void scrapearFacebook();
+    static bool preparar_facebook();
+    static bool preparar_twitter();
+    static bool preparar_portales();
 
-    static void depurarYAnalizarFacebook();
-
-    static void prepararYAlmacenarFacebook();
-
-    // general
-
-    static void depurarYAnalizarContenidos();
-    
-    static void prepararYAlmacenarContenidos();
-
-    // CONSULTAS
+    static void scrapear_facebook();
+    static void scrapear_twitter();
+    static void scrapear_portales();
 
 private:
-
-    static void agruparResultadosDeMediosPorFecha(std::unordered_map<std::string, std::vector<resultados_agrupados_por_medio>> * mapa_resultados_por_fecha, std::vector<extraccion::Medio*> & medios);
-    
-
 };
 
 };

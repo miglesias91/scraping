@@ -22,10 +22,10 @@ ResultadoAnalisisDiario::~ResultadoAnalisisDiario()
 
     for (std::vector<std::pair<unsigned long long int, ResultadoAnalisisMedio*>>::iterator it = vector_resultados_medios.begin(); it != vector_resultados_medios.end(); it++)
     {
-        if (NULL != it->second)
+        if (nullptr != it->second)
         {
             delete it->second;
-            it->second = NULL;
+            it->second = nullptr;
         }
     }
     this->resultados_medios.clear();
@@ -42,7 +42,7 @@ ResultadoAnalisisMedio * ResultadoAnalisisDiario::getResultadoMedio(unsigned lon
 {
     if (false == this->existeResultadoDeMedio(id_medio))
     {
-        return NULL;
+        return nullptr;
     }
 
     return this->resultados_medios[id_medio];

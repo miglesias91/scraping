@@ -16,30 +16,21 @@
 #include <scraping/include/ConfiguracionScraping.h>
 
 // extraccion
-#include <extraccion/include/MedioTwitter.h>
-#include <extraccion/include/MedioFacebook.h>
-#include <extraccion/include/MedioPortalNoticias.h>
+//#include <extraccion/include/MedioTwitter.h>
+//#include <extraccion/include/MedioFacebook.h>
+//#include <extraccion/include/MedioPortalNoticias.h>
 
 // depuracion
 #include <depuracion/include/ContenidoDepurable.h>
 
 namespace scraping::depuracion {
 
-mapeo::MapaUTF8 * Depurador::mapa_utf8 = NULL;
+mapeo::MapaUTF8 * Depurador::mapa_utf8 = nullptr;
 std::vector<std::string> Depurador::stopwords_espaniol;
 
-Depurador::Depurador()
-{
-}
+Depurador::Depurador() {}
 
-Depurador::~Depurador()
-{
-    if (NULL != mapa_utf8)
-    {
-        delete mapa_utf8;
-        mapa_utf8 = NULL;
-    }
-}
+Depurador::~Depurador() {}
 
 // GETTERS
 
@@ -47,10 +38,10 @@ Depurador::~Depurador()
 
 void Depurador::setMapaUTF8(mapeo::MapaUTF8 * mapa)
 {
-    if (NULL != mapa_utf8)
+    if (nullptr != mapa_utf8)
     {
         delete mapa_utf8;
-        mapa_utf8 = NULL;
+        mapa_utf8 = nullptr;
     }
 
     mapa_utf8 = mapa;
@@ -61,46 +52,7 @@ void Depurador::setStopwords(std::vector<std::string> stopwords)
     stopwords_espaniol = stopwords;
 }
 
-bool Depurador::depurar_twitter() {
-    scraping::aplicacion::GestorMedios gestor_medios;
-
-    std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
-    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioTwitter>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas);
-    
-    std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
-        this->depurar(cuenta);
-        delete cuenta;
-    });
-    return true;
-}
-
-bool Depurador::depurar_facebook() {
-    scraping::aplicacion::GestorMedios gestor_medios;
-
-    std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
-    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas);
-
-    std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
-        this->depurar(pagina);
-        delete pagina;
-    });
-    return true;
-}
-
-bool Depurador::depurar_portales() {
-    scraping::aplicacion::GestorMedios gestor_medios;
-
-    std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
-    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales);
-
-    std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
-        this->depurar(portal);
-        delete portal;
-    });
-    return true;
-}
-
-bool Depurador::depurar(extraccion::Medio * medio) {
+bool Depurador::depurar(extraccion::Medio * medio) const {
 
     std::vector<uintmax_t> ids_para_depurar;
     medio->ids_para_depurar(&ids_para_depurar);
@@ -166,9 +118,17 @@ bool Depurador::cargarStopwords(std::string path_archivo_stopwords)
     return true;
 }
 
+void Depurador::liberarMapeoUTF8() {
+    if (nullptr != mapa_utf8)
+    {
+        delete mapa_utf8;
+        mapa_utf8 = nullptr;
+    }
+}
+
 bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
 {
-    if (NULL != mapa_utf8)
+    if (nullptr != mapa_utf8)
     {
         scraping::Logger::info("cargarMapeoUTF8: mapa_utf8 ya esta cargado.");
         return true;
@@ -181,7 +141,7 @@ bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
     }
     catch (herramientas::utiles::excepciones::Excepcion & e)
     {
-        mapa_utf8 = NULL;
+        mapa_utf8 = nullptr;
         scraping::Logger::error("cargarMapeoUTF8: " + e.getMensaje().str());
         throw;
     }
@@ -191,7 +151,7 @@ bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
     return true;
 }
 
-bool Depurador::depurar(IDepurable * depurable, ContenidoDepurado * depurado) {
+bool Depurador::depurar(IDepurable * depurable, ContenidoDepurado * depurado) const {
     std::string texto_a_depurar = depurable->getTextoDepurable();
 
     // 1ero: reemplazo los caracteres especiales: vocales con tildes, letras extrañas, 
@@ -240,7 +200,7 @@ bool Depurador::depurar(IDepurable * depurable, ContenidoDepurado * depurado) {
     return true;
 }
 
-ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable)
+ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable) const
 {
     std::string texto_a_depurar = depurable->getTextoDepurable();
 
@@ -285,7 +245,7 @@ ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable)
     return contenido_depurado;
 }
 
-unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar)
+unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & texto_a_depurar) const
 {
     unsigned int cantidad_de_reemplazos = 0;
     for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end();)
@@ -350,7 +310,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspeciales(std::string & tex
     return cantidad_de_reemplazos;
 }
 
-unsigned int Depurador::reemplazarTodosLosCaracteresEspecialesExceptoTildes(std::string & texto_a_depurar)
+unsigned int Depurador::reemplazarTodosLosCaracteresEspecialesExceptoTildes(std::string & texto_a_depurar) const
 {
     unsigned int cantidad_de_reemplazos = 0;
     for (std::string::iterator it = texto_a_depurar.begin(); it != texto_a_depurar.end(); it++)
@@ -419,7 +379,7 @@ unsigned int Depurador::reemplazarTodosLosCaracteresEspecialesExceptoTildes(std:
     return 0;
 }
 
-unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
+unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar) const
 {
     std::vector<std::string> vocales_con_tilde = { u8"á", u8"é", u8"í", u8"ó", u8"ú" };
 
@@ -432,22 +392,22 @@ unsigned int Depurador::eliminarTildes(std::string & texto_a_depurar)
     return cantidad_de_tildes_reemplazadas;
 }
 
-bool Depurador::todoMinuscula(std::string & texto_a_depurar)
+bool Depurador::todoMinuscula(std::string & texto_a_depurar) const
 {
     return herramientas::utiles::FuncionesString::todoMinuscula(texto_a_depurar);
 }
 
-unsigned int Depurador::eliminarSignosYPuntuacion(std::string & texto_a_depurar)
+unsigned int Depurador::eliminarSignosYPuntuacion(std::string & texto_a_depurar) const
 {
     return herramientas::utiles::FuncionesString::eliminarSignosYPuntuacion(texto_a_depurar);
 }
 
-unsigned int Depurador::eliminarCaracteresDeControl(std::string & texto_a_depurar)
+unsigned int Depurador::eliminarCaracteresDeControl(std::string & texto_a_depurar) const
 {
     return herramientas::utiles::FuncionesString::eliminarCaracteresDeControl(texto_a_depurar);
 }
 
-unsigned int Depurador::eliminarURLs(std::string & texto_a_depurar)
+unsigned int Depurador::eliminarURLs(std::string & texto_a_depurar) const
 {
     std::vector<std::string> comienzo_de_urls = { "ftp", "http" };
 
@@ -486,38 +446,21 @@ unsigned int Depurador::eliminarURLs(std::string & texto_a_depurar)
     return cantidad_de_urls_reemplazadas;
 }
 
-std::vector<std::string> Depurador::tokenizarTexto(std::string texto_a_tokenizar)
+std::vector<std::string> Depurador::tokenizarTexto(std::string texto_a_tokenizar) const
 {
     return herramientas::utiles::FuncionesString::separar(texto_a_tokenizar);
 }
 
-unsigned int Depurador::eliminarPalabrasMuyCortas(std::vector<std::string> & bolsa_de_palabras)
+unsigned int Depurador::eliminarPalabrasMuyCortas(std::vector<std::string> & bolsa_de_palabras) const
 {
     unsigned int cantidad_inicial = bolsa_de_palabras.size();
     
     bolsa_de_palabras.erase(std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [](std::string palabra) { return palabra.size() < 3; }), bolsa_de_palabras.end());
 
-    //bolsa_de_palabras.erase(
-    //    std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [](std::string palabra) { palabra.size() < 3; }),
-    //    bolsa_de_palabras.end());
-
-    //for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-    //{
-    //    if (3 > it_palabra->size())
-    //    {
-    //        it_palabra = bolsa_de_palabras.erase(it_palabra);
-    //        cantidad_de_palabras_cortas_eliminadas++;
-    //    }
-    //    else
-    //    {
-    //        it_palabra++;
-    //    }
-    //}
-
     return cantidad_inicial - bolsa_de_palabras.size();
 }
 
-unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string> & bolsa_de_palabras)
+unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string> & bolsa_de_palabras) const
 {
     unsigned int cantidad_inicial = bolsa_de_palabras.size();
 
@@ -525,23 +468,10 @@ unsigned int Depurador::eliminarPalabrasMuyLargas(std::vector<std::string> & bol
         std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [](std::string palabra) { return palabra.size() > 15; }),
         bolsa_de_palabras.end());
 
-    //for (std::vector<std::string>::iterator it_palabra = bolsa_de_palabras.begin(); it_palabra != bolsa_de_palabras.end(); )
-    //{
-    //    if (15 < it_palabra->size())
-    //    {
-    //        it_palabra = bolsa_de_palabras.erase(it_palabra);
-    //        cantidad_de_palabras_largas_eliminadas++;
-    //    }
-    //    else
-    //    {
-    //        it_palabra++;
-    //    }
-    //}
-
     return cantidad_inicial - bolsa_de_palabras.size();
 }
 
-unsigned int Depurador::eliminarPreposiciones(std::vector<std::string> & bolsa_de_palabras)
+unsigned int Depurador::eliminarPreposiciones(std::vector<std::string> & bolsa_de_palabras) const
 {
     std::vector<std::string> preposiciones = { "a", "ante", "bajo", "cabe", "con", "contra", "cuando", "de", "desde", "donde", "durante", "en", "entre", "excepto", "hacia", "hasta", "mediante", "menos", "para", "por", "segun", "salvo", "sin", "so", "sobre", "tras", "versus", "via" };
 
@@ -570,7 +500,7 @@ unsigned int Depurador::eliminarPreposiciones(std::vector<std::string> & bolsa_d
     return cantidad_de_preposiciones_eliminadas;
 }
 
-unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_palabras)
+unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_palabras) const
 {
     // lista de pronombres obtenida de la fuente de toda sabiduria: https://es.wikipedia.org/wiki/Pronombres_en_espa%C3%B1ol
     // solo se incluyen lo que tienen mas de 2 letras. ("yo", "tu", "el", etc etc..., no se incluyen).
@@ -623,7 +553,7 @@ unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_pa
     return cantidad_de_pronombres_eliminados;
 }
 
-unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras)
+unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras) const
 {
     std::sort(bolsa_de_palabras.begin(), bolsa_de_palabras.end());
 

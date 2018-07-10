@@ -19,8 +19,10 @@
         "prefijo_resultado_contenido" : "005",
         "prefijo_resultado_diario" : "006",
 
-        "db_resultados_analisis_diario" : "config_db_resultados_analisis_diarios.json",
-        "db_info_scraping" : "config_db_info_scraping.json",
+        "db_resultados_diarios" : "config_db_resultados_diarios.json",
+        "db_info_temporal" : "config_db_info_temporal.json",
+
+        "dir_checkpoints_resultados_diarios" : "C:/temp/checkpoints",
 
         "log_scraping" : "log_scraping.json",
         "config_sentimiento" : "config_sentimiento.json",

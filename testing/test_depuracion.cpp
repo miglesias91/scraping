@@ -17,7 +17,7 @@
 
 TEST_CASE("cargar_mapeo", "depuracion")
 {
-    scraping::depuracion::mapeo::MapaUTF8 mapa_utf8("mapeo_utf8.json");
+    scraping::depuracion::mapeo::MapaUTF8 mapa_utf8("mapeo_utf8.csv");
     
     REQUIRE("A" == mapa_utf8.getTraduccion(192));
     REQUIRE("A" == mapa_utf8.getTraduccion(193));
@@ -51,7 +51,7 @@ TEST_CASE("depurar_texto", "depuracion")
     std::string texto = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
 
     scraping::depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.cargarMapeoUTF8("mapeo_utf8.csv");
 
     //scraping::twitter::modelo::Tweet tweet;
     //tweet.setTexto(texto);
@@ -82,7 +82,7 @@ TEST_CASE("depurar_texto_con_tildes", "depuracion")
     std::string texto = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
 
     scraping::depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.cargarMapeoUTF8("mapeo_utf8.csv");
 
     //scraping::twitter::modelo::Tweet tweet;
     //tweet.setTexto(texto);
@@ -113,7 +113,7 @@ TEST_CASE("reemplazar_caracteres_especiales", "depuracion")
     std::string caracteres_reemplazados = "u a p . . ^1 o b >> 1/4 c 1/2 3/4 ? d A A A 1 A A A AE 2 C E E E E I I I I 3 D N O O O O O x O U U U U Y P 4 B a a a a a a ae";
 
     scraping::depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.cargarMapeoUTF8("mapeo_utf8.csv");
 
     depurador.reemplazarTodosLosCaracteresEspeciales(caracteres_normales_especiales_a_reemplazar);
 
@@ -150,7 +150,7 @@ TEST_CASE("eliminar_tildes", "depuracion")
     std::string palabra_transformada = oracion_con_tildes;
 
     scraping::depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
 
     depurador.eliminarTildes(palabra_transformada);
 

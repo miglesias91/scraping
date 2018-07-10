@@ -21,23 +21,23 @@ int main(int argc, char **argv)
     //scraping::IAdministradorScraping::crearAdministradorScrapingLocal();
     scraping::IAdministradorScraping::iniciar("config_scraping.json");
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfo()->abrirBD();
+    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->abrirBD();
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->abrirBD();
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->abrirBD();
 
     int result = Catch::Session().run(argc, argv);
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfo()->cerrarBD();
+    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->cerrarBD();
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfo()->borrarBD();
+    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->borrarBD();
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->cerrarBD();
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->cerrarBD();
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->borrarBD();
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->borrarBD();
 
     scraping::IAdministradorScraping::liberar();
 
-    herramientas::log::AdministradorLog::liberarTodo();
+    //herramientas::log::AdministradorLog::liberarTodo();
 
 	std::getchar();
 

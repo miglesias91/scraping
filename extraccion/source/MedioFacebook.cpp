@@ -86,10 +86,6 @@ Medio * MedioFacebook::clonar() {
     clon->setId(this->getId()->copia());
     clon->setJson(this->getJson()->clonar());
     clon->fecha_ultima_publicacion(this->fecha_ultima_publicacion_analizada);
-
-    //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
-    //clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
-    //clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
     
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
 

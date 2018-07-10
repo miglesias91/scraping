@@ -137,7 +137,7 @@ TEST_CASE("combinar_resultados", "analisis")
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("chau").cantidad));
 }
 
-TEST_CASE("armar_json_resultados", "analisis")
+TEST_CASE("armar_json_resultados", "analisis[.]")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     tecnicas::Sentimiento sentimiento;
@@ -155,7 +155,7 @@ TEST_CASE("armar_json_resultados", "analisis")
     resultado_analisis.armarJson();
 
     std::string json_string = resultado_analisis.getJson()->jsonString();
-    std::string json_string_correcto = "{\"fuerza_en_noticia\":{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"gaza_1.8921\",\"suenan_1.8921\",\"sur_1.8921\",\"sirenas_1.8921\",\"alarma_1.8921\",\"disparo_1.8921\",\"cohete_1.8921\"]},\"sentimiento\":{\"valores\":[\"gaza_0/0-0/0-1/1\",\"jerusalen_0/0-0/0-3/3\",\"sur_0/0-0/0-1/1\",\"israel_0/0-0/0-2/2\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]}}";
+    std::string json_string_correcto = "{\"fuerza_en_noticia\":{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"gaza_1.8921\",\"suenan_1.8921\",\"sur_1.8921\",\"sirenas_1.8921\",\"alarma_1.8921\",\"disparo_1.8921\",\"cohete_1.8921\"]},\"sentimiento\":{\"valores\":[\"jerusalen_0/0-0/0-3/3\",\"israel_0/0-0/0-2/2\",\"gaza_0/0-0/0-1/1\",\"sur_0/0-0/0-1/1\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]},\"fecha\":\"00000000000000\",\"categoria\":\"\"}";
 
     REQUIRE(json_string_correcto == json_string);
 
@@ -195,13 +195,13 @@ TEST_CASE("almacenar_y_recuperar_resultados", "analisis")
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia, resultado_sentimiento_1);
     resultado_analisis.setId(new herramientas::utiles::ID(123));
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_analisis);
 
     // recupero lo que acabo de almacenar.
     scraping::preparacion::ResultadoAnalisisContenido resultado_analisis_a_recuperar;
     resultado_analisis_a_recuperar.setId(resultado_analisis.getId()->copia());
 
-    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultado_analisis_a_recuperar);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultado_analisis_a_recuperar);
 
     tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia_nuevo = resultado_analisis_a_recuperar.getResultadoFuerzaEnNoticia();
 
@@ -249,7 +249,7 @@ TEST_CASE("resultado_sentimiento_armar_json_correctamente", "analisis")
     resultado.armarJson();
 
     std::string json_string = resultado.getJson()->jsonString();
-    std::string json_string_correcto = "{\"valores\":[\"gaza_0/0-0/0-1/1\",\"jerusalen_0/0-0/0-3/3\",\"sur_0/0-0/0-1/1\",\"israel_0/0-0/0-2/2\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]}";
+    std::string json_string_correcto = "{\"valores\":[\"jerusalen_0/0-0/0-3/3\",\"israel_0/0-0/0-2/2\",\"gaza_0/0-0/0-1/1\",\"sur_0/0-0/0-1/1\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]}";
 
     REQUIRE(json_string_correcto == json_string);
 

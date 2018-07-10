@@ -9,7 +9,7 @@
 // almacenamiento
 #include <almacenamiento/include/IAdministradorAlmacenamiento.h>
 
-// modelo
+// scraping
 #include <scraping/include/IAlmacenable.h>
 
 namespace scraping
@@ -29,15 +29,15 @@ public:
 
     static void crearAdministradorScrapingDistribuido();
 
-    static bool administradorInfoIniciado();
+    static bool administradorInfoTemporalIniciado();
 
-    static bool administradorResultadosAnalisisDiarioIniciado();
+    static bool administradorResultadosDiariosIniciado();
 
     // GETTERS
 
-    static IAdministradorScraping* getInstanciaAdminInfo();
+    static IAdministradorScraping* getInstanciaAdminInfoTemporal();
 
-    static IAdministradorScraping* getInstanciaAdminResultadosAnalisisDiario();
+    static IAdministradorScraping* getInstanciaAdminResultadosDiarios();
 
     // SETTERS
 
@@ -62,6 +62,8 @@ public:
     virtual bool modificar(scraping::IAlmacenable * almacenable) = 0;
 
     virtual bool modificar(std::vector<scraping::IAlmacenable*> almacenables) = 0;
+
+    virtual bool guardar_checkpoint();
 
     template <typename ENTIDAD>
     bool recuperarGrupo(std::string prefijo_grupo, std::vector<ENTIDAD*>* entidades_recuperadas);
@@ -91,11 +93,11 @@ protected:
 private:
 	// ATRIBUTOS
 
-    static IAdministradorScraping * administrador_info;
+    static IAdministradorScraping * administrador_info_temporal;
 
-    static IAdministradorScraping * administrador_resultados_analisis_diario;
+    static IAdministradorScraping * administrador_resultados_diarios;
 
-    
+    static bool chequear_conexiones();
 };
 
 template<typename GRUPO>
@@ -107,7 +109,7 @@ bool IAdministradorScraping::recuperarGrupo(std::string prefijo_grupo, std::vect
 
     Logger::debug("recuperarGrupo: " + std::to_string(grupo.size()) + " entidades recuperadas.");
 
-    GRUPO* entidad = NULL;
+    GRUPO* entidad = nullptr;
     for (std::vector<almacenamiento::IAlmacenableClaveValor*>::iterator it = grupo.begin(); it != grupo.end(); it++)
     {
         entidad = new GRUPO();

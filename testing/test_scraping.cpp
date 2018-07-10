@@ -11,6 +11,7 @@
 
 // scraping
 #include <scraping/include/GestorMedios.h>
+#include <scraping/include/GestorTareas.h>
 #include <scraping/include/ConfiguracionScraping.h>
 #include <scraping/include/IAdministradorScraping.h>
 
@@ -81,10 +82,10 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
 
     //    cuenta.agregarContenidoParaAnalizar(&tweet);
 
-    //    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&tweet);
+    //    IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&tweet);
     //}
 
-    //IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&cuenta);
+    //IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&cuenta);
 
     //// ----- DEPURACION ----- //
 
@@ -97,7 +98,7 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
     //extraccion::interfaceo::MedioTwitter cuenta_a_analizar;
     //cuenta_a_analizar.setId(cuenta.getId()->copia());
 
-    //IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&cuenta_a_analizar);
+    //IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&cuenta_a_analizar);
 
     //std::vector<unsigned long long int> ids_contenidos_a_analizar = cuenta_a_analizar.getIDsContenidosNoAnalizados();
 
@@ -108,7 +109,7 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
     //    extraccion::Contenido * tweet = new extraccion::Contenido();
     //    tweet->setId(new herramientas::utiles::ID(*it));
 
-    //    IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(tweet);
+    //    IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(tweet);
 
     //    contenidos_a_recuperar.push_back(tweet);
     //}
@@ -135,7 +136,7 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
     //    scraping::preparacion::ResultadoAnalisisContenido resultado_analisis(resultado_fuerza_en_noticia);
     //    resultado_analisis.setId((*it)->getId()->copia());
 
-    //    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->almacenar(&resultado_analisis);
+    //    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&resultado_analisis);
 
     //    cuenta_a_analizar.setearContenidoComoAnalizado(*it);
     //}
@@ -155,7 +156,7 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
     //    analisis::ResultadoAnalisis * resultado_analisis_a_recuperar = new preparacion::ResultadoAnalisisContenido();
     //    resultado_analisis_a_recuperar->setId(new herramientas::utiles::ID(*it));
 
-    //    scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(resultado_analisis_a_recuperar);
+    //    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(resultado_analisis_a_recuperar);
 
     //    resultados.push_back(resultado_analisis_a_recuperar);
     //}
@@ -168,7 +169,7 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
     //preparacion::ResultadoAnalisisMedio resultados_medio;
     //resultados_medio.setId(cuenta.getId()->copia());
 
-    //scraping::IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()->recuperar(&resultados_medio);
+    //scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(&resultados_medio);
 
     //resultados_medio.combinarCon(resultado_combinado);
 
@@ -317,7 +318,7 @@ TEST_CASE("gestionar_cuentas_de_twitter", "scraping")
     cuentas_twitter_existentes.clear();
 }
 
-TEST_CASE("scrapear_twitter", "scraping[.]") {
+TEST_CASE("scrapear_twitter", "scraping") {
 
     extraccion::interfaceo::MedioTwitter clarin("clarincom");
     clarin.asignarNuevoId();
@@ -326,18 +327,20 @@ TEST_CASE("scrapear_twitter", "scraping[.]") {
     gestor_medios.almacenar(&clarin);
     gestor_medios.guardarCambios();
 
-    extraccion::extractor extractor;
-    extractor.extraer_twitter();
 
-    depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
-    depurador.depurar_twitter();
+    scraping::aplicacion::GestorTareas::scrapear_twitter();
+    //extraccion::extractor extractor;
+    //extractor.extraer_twitter();
 
-    analisis::Analizador analizador;
-    analizador.analizar_twitter();
+    //depuracion::Depurador depurador;
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.depurar_twitter();
 
-    preparacion::Preparador preparador;
-    preparador.preparar_twitter();
+    //analisis::Analizador analizador;
+    //analizador.analizar_twitter();
+
+    //preparacion::Preparador preparador;
+    //preparador.preparar_twitter();
 
     gestor_medios.eliminar(&clarin);
     gestor_medios.guardarCambios();
@@ -352,18 +355,19 @@ TEST_CASE("scrapear_facebook", "scraping[.]") {
     gestor_medios.almacenar(&clarin);
     gestor_medios.guardarCambios();
 
-    extraccion::extractor extractor;
-    extractor.extraer_facebook();
+    scraping::aplicacion::GestorTareas::scrapear_facebook();
+    //extraccion::extractor extractor;
+    //extractor.extraer_facebook();
 
-    depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
-    depurador.depurar_facebook();
+    //depuracion::Depurador depurador;
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.depurar_facebook();
 
-    analisis::Analizador analizador;
-    analizador.analizar_facebook();
+    //analisis::Analizador analizador;
+    //analizador.analizar_facebook();
 
-    preparacion::Preparador preparador;
-    preparador.preparar_facebook();
+    //preparacion::Preparador preparador;
+    //preparador.preparar_facebook();
 
     gestor_medios.eliminar(&clarin);
     gestor_medios.guardarCambios();
@@ -378,18 +382,20 @@ TEST_CASE("scrapear_portal_clarin", "scraping[.]") {
     gestor_medios.almacenar(&clarin);
     gestor_medios.guardarCambios();
 
-    extraccion::extractor extractor;
-    extractor.extraer_portales();
+    scraping::aplicacion::GestorTareas::scrapear_portales();
 
-    depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
-    depurador.depurar_portales();
+    //extraccion::extractor extractor;
+    //extractor.extraer_portales();
 
-    analisis::Analizador analizador;
-    analizador.analizar_portales();
+    //depuracion::Depurador depurador;
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.depurar_portales();
 
-    preparacion::Preparador preparador;
-    preparador.preparar_portales();
+    //analisis::Analizador analizador;
+    //analizador.analizar_portales();
+
+    //preparacion::Preparador preparador;
+    //preparador.preparar_portales();
 
     gestor_medios.eliminar(&clarin);
     gestor_medios.guardarCambios();
@@ -403,24 +409,26 @@ TEST_CASE("scrapear_portal_la_nacion", "scraping[.]") {
     gestor_medios.almacenar(&la_nacion);
     gestor_medios.guardarCambios();
 
-    extraccion::extractor extractor;
-    extractor.extraer_portales();
+    scraping::aplicacion::GestorTareas::scrapear_portales();
 
-    depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
-    depurador.depurar_portales();
+    //extraccion::extractor extractor;
+    //extractor.extraer_portales();
 
-    analisis::Analizador analizador;
-    analizador.analizar_portales();
+    //depuracion::Depurador depurador;
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.depurar_portales();
 
-    preparacion::Preparador preparador;
-    preparador.preparar_portales();
+    //analisis::Analizador analizador;
+    //analizador.analizar_portales();
+
+    //preparacion::Preparador preparador;
+    //preparador.preparar_portales();
 
     gestor_medios.eliminar(&la_nacion);
     gestor_medios.guardarCambios();
 }
 
-TEST_CASE("scrapear_portal_infobae", "scraping") {
+TEST_CASE("scrapear_portal_infobae", "scraping[.]") {
     extraccion::interfaceo::MedioPortalNoticias infobae(std::make_shared<medios::noticias::infobae>());
     infobae.asignarNuevoId();
 
@@ -428,18 +436,20 @@ TEST_CASE("scrapear_portal_infobae", "scraping") {
     gestor_medios.almacenar(&infobae);
     gestor_medios.guardarCambios();
 
-    extraccion::extractor extractor;
-    extractor.extraer_portales();
+    scraping::aplicacion::GestorTareas::scrapear_portales();
 
-    depuracion::Depurador depurador;
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
-    depurador.depurar_portales();
+    //extraccion::extractor extractor;
+    //extractor.extraer_portales();
 
-    analisis::Analizador analizador;
-    analizador.analizar_portales();
+    //depuracion::Depurador depurador;
+    //depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    //depurador.depurar_portales();
 
-    preparacion::Preparador preparador;
-    preparador.preparar_portales();
+    //analisis::Analizador analizador;
+    //analizador.analizar_portales();
+
+    //preparacion::Preparador preparador;
+    //preparador.preparar_portales();
 
     gestor_medios.eliminar(&infobae);
     gestor_medios.guardarCambios();

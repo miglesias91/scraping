@@ -24,9 +24,11 @@ public:
 
     // METODOS
 
+    bool almacenar(const std::vector<scraping::extraccion::Medio*> & medios_a_almacenar) const;
+
     // bool recuperarTodos(std::vector<scraping::extraccion::Medio*> & medios);
 
-    bool actualizarMedio(scraping::extraccion::Medio * medio_a_actualizrr) const;
+    bool actualizarMedio(scraping::extraccion::Medio * medio_a_actualizar) const;
 
     // bool recuperarCuentasDeTwitter(std::vector<scraping::twitter::modelo::Cuenta*> & cuentas_de_twitter);
 
@@ -100,7 +102,7 @@ std::vector<MEDIO*> GestorMedios::gestionar(std::string prefijo_grupo)
 
     std::vector<MEDIO*> medios_a_recuperar;
 
-    bool valor_retorno = scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_recuperar);
+    bool valor_retorno = scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_recuperar);
 
     for (std::vector<MEDIO*>::iterator it = medios_a_recuperar.begin(); it != medios_a_recuperar.end(); it++)
     {
@@ -121,7 +123,7 @@ bool GestorMedios::recuperar(std::string prefijo_grupo, std::vector<MEDIO*> & me
 
     scraping::Logger::info("GestorMedios::recuperar: prefijo_grupo: " + prefijo_grupo);
 
-    return scraping::IAdministradorScraping::getInstanciaAdminInfo()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_recuperar);
+    return scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperarGrupo<MEDIO>(prefijo_grupo, &medios_a_recuperar);
 };
 
 template <class MEDIO>

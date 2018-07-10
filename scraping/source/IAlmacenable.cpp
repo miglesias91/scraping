@@ -5,14 +5,14 @@
 
 using namespace scraping;
 
-IAlmacenable::IAlmacenable(std::string grupo) : id(NULL), grupo(grupo)
+IAlmacenable::IAlmacenable(std::string grupo) : id(nullptr), grupo(grupo)
 {
 }
 
 IAlmacenable::~IAlmacenable()
 {
     delete this->id;
-    this->id = NULL;
+    this->id = nullptr;
 }
 
 // GETTERS
@@ -31,7 +31,7 @@ std::string IAlmacenable::getGrupo()
 
 void IAlmacenable::setId(herramientas::utiles::ID * id)
 {
-    if (NULL != this->id)
+    if (nullptr != this->id)
     {
         delete this->id;
     }

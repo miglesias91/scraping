@@ -2,6 +2,10 @@
 
 using namespace scraping;
 
+// windows
+//#include <winhttp.h>
+#include <WinInet.h>
+
 // stl
 #include <iostream>
 
@@ -26,20 +30,21 @@ using namespace scraping;
 
 typedef scraping::IAdministradorScraping* (*admin)();
 
-IAdministradorScraping* IAdministradorScraping::administrador_info = NULL;
-IAdministradorScraping* IAdministradorScraping::administrador_resultados_analisis_diario = NULL;
+IAdministradorScraping* IAdministradorScraping::administrador_info_temporal = nullptr;
+IAdministradorScraping* IAdministradorScraping::administrador_resultados_diarios = nullptr;
 
-IAdministradorScraping::IAdministradorScraping() : admin_almacenamiento(NULL), handler_almacenamiento(0)
-{
-}
+IAdministradorScraping::IAdministradorScraping() : admin_almacenamiento(nullptr), handler_almacenamiento(0) {}
 
-IAdministradorScraping::~IAdministradorScraping()
-{
-}
+IAdministradorScraping::~IAdministradorScraping() {}
 
 void IAdministradorScraping::iniciar(std::string path_configuracion)
 {
-    if (administradorInfoIniciado() || administradorResultadosAnalisisDiarioIniciado())
+    if (false == chequear_conexiones()) {
+        Logger::error("NO HAY CONEXION A INTERNET.");
+        return;
+    }
+
+    if (administradorInfoTemporalIniciado() || administradorResultadosDiariosIniciado())
     {
         throw excepciones::ScrapingIniciadoPreviamente();
     }
@@ -58,6 +63,7 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
     Logger::marca("INICIO SCRAPING");
 
     depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
+    depuracion::Depurador::cargarMapeoUTF8("mapeo_utf8.csv");
 
     analisis::tecnicas::Sentimiento::cargar(ConfiguracionScraping::archivoConfigSentimiento());
 
@@ -75,75 +81,83 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
 
 void IAdministradorScraping::liberar()
 {
-        if (true == administradorInfoIniciado())
+    if (true == administradorInfoTemporalIniciado())
     {
-        delete administrador_info;
+        delete administrador_info_temporal;
     }
 
-    if (true == administradorResultadosAnalisisDiarioIniciado())
+    if (true == administradorResultadosDiariosIniciado())
     {
-        delete administrador_resultados_analisis_diario;
+        delete administrador_resultados_diarios;
     }
+
+    depuracion::Depurador::liberarMapeoUTF8();
 
     Logger::marca("FIN SCRAPING");
 
-    //herramientas::log::AdministradorLog::liberarTodo();
+    herramientas::log::AdministradorLog::liberarTodo();
 }
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
     Logger::info("iniciando admin info scraping.");
 
-    administrador_info = new AdministradorScrapingLocal();
-    administrador_info->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoScraping());
+    administrador_info_temporal = new AdministradorScrapingLocal();
+    administrador_info_temporal->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoTemporal());
 
     Logger::info("iniciando admin resultados scraping.");
 
-    administrador_resultados_analisis_diario = new AdministradorScrapingLocal();
-    administrador_resultados_analisis_diario->iniciarDB(ConfiguracionScraping::archivoConfigDBResultadosDiarios());
+    administrador_resultados_diarios = new AdministradorScrapingLocal();
+    administrador_resultados_diarios->iniciarDB(ConfiguracionScraping::archivoConfigDBResultadosDiarios());
 };
 
 void IAdministradorScraping::crearAdministradorScrapingDistribuido() {};
 
-bool IAdministradorScraping::administradorInfoIniciado()
+bool IAdministradorScraping::administradorInfoTemporalIniciado()
 {
-    return administrador_info != NULL;
+    return administrador_info_temporal != nullptr;
 }
 
-bool IAdministradorScraping::administradorResultadosAnalisisDiarioIniciado()
+bool IAdministradorScraping::administradorResultadosDiariosIniciado()
 {
-    return administrador_resultados_analisis_diario != NULL;
+    return administrador_resultados_diarios != nullptr;
 }
 // GETTERS
 
-IAdministradorScraping* IAdministradorScraping::getInstanciaAdminInfo()
+IAdministradorScraping* IAdministradorScraping::getInstanciaAdminInfoTemporal()
 {
-    if (administradorInfoIniciado())
+    if (administradorInfoTemporalIniciado())
     {
-        return administrador_info;
+        return administrador_info_temporal;
     }
     else
     {
-        throw excepciones::ScrapingNoInicializado("admin info");
+        throw excepciones::ScrapingNoInicializado("admin info temporal");
     }
 }
 
-IAdministradorScraping* IAdministradorScraping::getInstanciaAdminResultadosAnalisisDiario()
+IAdministradorScraping* IAdministradorScraping::getInstanciaAdminResultadosDiarios()
 {
-    if (administradorResultadosAnalisisDiarioIniciado())
+    if (administradorResultadosDiariosIniciado())
     {
-        return administrador_resultados_analisis_diario;
+        return administrador_resultados_diarios;
     }
     else
     {
-        throw excepciones::ScrapingNoInicializado("admin resultados");
+        throw excepciones::ScrapingNoInicializado("admin resultados diarios");
     }
+}
+
+bool IAdministradorScraping::guardar_checkpoint() {
+
+    std::string path_checkpoint = ConfiguracionScraping::dirCheckpointResultadosDiarios() + "/" + herramientas::utiles::Fecha::getFechaActual().getStringAAAAMMDDHHmmSS();
+    return this->admin_almacenamiento->checkpoint(path_checkpoint);
 }
 
 void scraping::IAdministradorScraping::recuperarIDsActuales()
 {
-    unsigned long long int id_actual_medio = this->recuperarIDActual<scraping::extraccion::Medio>();
-    unsigned long long int id_actual_contenido = this->recuperarIDActual<scraping::extraccion::Contenido>();
+    uintmax_t id_actual_medio = this->recuperarIDActual<scraping::extraccion::Medio>();
+    uintmax_t id_actual_contenido = this->recuperarIDActual<scraping::extraccion::Contenido>();
 
     scraping::extraccion::Medio::getGestorIDs()->setIdActual(id_actual_medio);
     scraping::extraccion::Contenido::getGestorIDs()->setIdActual(id_actual_contenido);
@@ -164,4 +178,36 @@ void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)
 { 
     this->handler_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::iniciarNuevo(path_config_db);
     this->admin_almacenamiento = almacenamiento::IAdministradorAlmacenamiento::getInstancia(this->handler_almacenamiento);
+}
+
+bool IAdministradorScraping::chequear_conexiones() {
+    if(false == InternetCheckConnection(L"http://www.google.com",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    if(false == InternetCheckConnection(L"http://www.twitter.com",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    if(false == InternetCheckConnection(L"http://www.facebook.com",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    if(false == InternetCheckConnection(L"http://www.clarin.com",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    if(false == InternetCheckConnection(L"http://www.infobae.com",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    if(false == InternetCheckConnection(L"http://www.lanacion.com.ar",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    if(false == InternetCheckConnection(L"http://www.pagina12.com.ar",FLAG_ICC_FORCE_CONNECTION,0))
+    {
+        return false;
+    }
+    return true;
 }
