@@ -1,0 +1,17 @@
+{
+    "log" :
+    {
+        "activado" : false,
+    	"nombre" : "info-temporal",
+    	"tamanio_cola_async" : 0,
+    	"agrupar_por_fecha" : true,
+    	"nivel_log" : "debug",
+    	"nivel_flush" : "info",
+    	"patron" : "",
+    	"salidas" :
+    	[
+            "log_temporal.log",
+            "log_info-temporal.log"
+    	]
+    }
+}

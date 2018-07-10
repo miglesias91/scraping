@@ -1,0 +1,9 @@
+{
+    "almacenamiento" :
+    {
+        "path_db" : "C:/temp/db_info_temporal_debug-testing",
+        "almacenamiento_local" : true,
+        "almacenamiento_distribuido" : false,
+        "log_db" : "log_db_info-temporal.json"
+    }
+}
