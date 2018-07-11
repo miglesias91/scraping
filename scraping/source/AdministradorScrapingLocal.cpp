@@ -54,15 +54,6 @@ bool AdministradorScrapingLocal::almacenar(scraping::IAlmacenable * entidad)
 
 	bool retorno = this->admin_almacenamiento->almacenar(entidad_a_almacenar);
 
-    if (retorno)
-    {
-        Logger::info("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
-    }
-    else
-    {
-        Logger::info("almacenar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ALMACENO NINGUN VALOR }");
-    }
-
 	delete entidad_a_almacenar;
 
 	return retorno;
@@ -83,16 +74,10 @@ bool AdministradorScrapingLocal::almacenar(std::vector<scraping::IAlmacenable*> 
         almacenamiento::IAlmacenableClaveValor* entidad_a_almacenar = new almacenamiento::IAlmacenableClaveValor(clave, grupo, valor);
 
         retorno = this->admin_almacenamiento->almacenar(entidad_a_almacenar);
-        if (false == retorno)
-        {
-            Logger::info("almacenar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE PUDO ALMACENAR }");
-
+        if (false == retorno) {
             delete entidad_a_almacenar;
             break;
         }
-
-        Logger::info("almacenar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
-
         delete entidad_a_almacenar;
     }
 
@@ -108,14 +93,8 @@ bool AdministradorScrapingLocal::recuperar(scraping::IAlmacenable * entidad)
 
 	bool existe_valor = this->admin_almacenamiento->recuperar(clave_valor_a_recuperar);
 
-    if (existe_valor)
-    {
-        Logger::info("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
+    if (existe_valor) {
         entidad->parsearValorAlmacenable(clave_valor_a_recuperar->getValor());
-    }
-    else
-    {
-        Logger::info("recuperar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE RECUPERO NINGUN VALOR }");
     }
 
 	delete clave_valor_a_recuperar;
@@ -131,15 +110,6 @@ bool AdministradorScrapingLocal::eliminar(scraping::IAlmacenable * entidad)
     almacenamiento::IAlmacenableClaveValor* entidad_a_eliminar = new almacenamiento::IAlmacenableClaveValor(clave, grupo);
 
     bool retorno = this->admin_almacenamiento->eliminar(entidad_a_eliminar);
-
-    if (retorno)
-    {
-        Logger::info("eliminar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
-    }
-    else
-    {
-        Logger::info("eliminar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ELIMINO NINGUN VALOR }");
-    }
 
     delete entidad_a_eliminar;
 
@@ -160,14 +130,10 @@ bool AdministradorScrapingLocal::eliminar(std::vector<scraping::IAlmacenable*> e
         almacenamiento::IAlmacenableClaveValor* entidad_a_eliminar = new almacenamiento::IAlmacenableClaveValor(clave, grupo);
 
         retorno = this->admin_almacenamiento->eliminar(entidad_a_eliminar);
-        if (false == retorno)
-        {
-            Logger::info("eliminar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE ELIMINO NINGUN VALOR }");
+        if (false == retorno) {
             delete entidad_a_eliminar;
             break;
         }
-
-        Logger::info("eliminar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
 
         delete entidad_a_eliminar;
     }
@@ -183,16 +149,7 @@ bool AdministradorScrapingLocal::modificar(scraping::IAlmacenable * entidad)
 
     almacenamiento::IAlmacenableClaveValor* entidad_a_modificar = new almacenamiento::IAlmacenableClaveValor(clave, grupo, valor);
 
-    bool retorno = this->admin_almacenamiento->almacenar(entidad_a_modificar);
-
-    if (retorno)
-    {
-        Logger::info("modificar{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
-    }
-    else
-    {
-        Logger::info("modificar{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE MODIFICO NINGUN VALOR }");
-    }
+    bool retorno = this->admin_almacenamiento->modificar(entidad_a_modificar);
 
     delete entidad_a_modificar;
 
@@ -214,14 +171,10 @@ bool AdministradorScrapingLocal::modificar(std::vector<scraping::IAlmacenable*> 
         almacenamiento::IAlmacenableClaveValor* entidad_a_modificar = new almacenamiento::IAlmacenableClaveValor(clave, grupo, valor);
 
         retorno = this->admin_almacenamiento->modificar(entidad_a_modificar);
-        if (false == retorno)
-        {
-            Logger::info("modificar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' - NO SE MODIFICO NINGUN VALOR }");
+        if (false == retorno) {
             delete entidad_a_modificar;
             break;
         }
-
-        Logger::info("modificar_vector{ grupo: '" + grupo + "' - clave: '" + clave + "' }");
 
         delete entidad_a_modificar;
     }

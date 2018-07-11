@@ -9,9 +9,6 @@
 #include <scraping/include/GestorMedios.h>
 #include <scraping/include/Logger.h>
 
-// extraccion
-#include <extraccion/include/ContenidoTwitter.h>
-
 namespace scraping::extraccion::interfaceo {
 
 MedioTwitter::MedioTwitter(const std::string & nombre_cuenta)
@@ -47,6 +44,8 @@ void MedioTwitter::id_ultima_publicacion(const uintmax_t & id_ultimo_tweet) {
 bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
 
     std::vector<medios::twitter::Tweet*> tweets = app.leerUltimosTweets(this->cuenta_twitter, this->id_ultimo_tweet_analizado);
+    
+    scraping::Logger::info("twitter", "extraccion: descargados " + std::to_string(tweets.size()) + " tweets de '" + this->cuenta_twitter->getNombre() + "'.");
 
     if (0 == tweets.size()) {  // si no descargo nada, entonces devuelvo false.
         return false;
@@ -72,8 +71,6 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         delete tweet;
     });
 
-    scraping::Logger::info("descargar_tweets: { cuenta = '" + this->cuenta_twitter->getNombre() + "' - id_ultimo_tweet_analizado = '" + std::to_string(this->id_ultimo_tweet_analizado) + "' }");
-
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
     gestor_analisis_diario.almacenarMedio(this);
 
@@ -90,9 +87,6 @@ Medio * MedioTwitter::clonar() {
     clon->setJson(this->getJson()->clonar());
     clon->id_ultima_publicacion(this->id_ultimo_tweet_analizado);
 
-    //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
-    //clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
-    //clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
 
     this->ids_para_depurar(&mapa);

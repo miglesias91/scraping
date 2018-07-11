@@ -132,9 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Contenido.cpp" />
-    <ClCompile Include="source\ContenidoFacebook.cpp" />
-    <ClCompile Include="source\ContenidoPortalNoticias.cpp" />
-    <ClCompile Include="source\ContenidoTwitter.cpp" />
     <ClCompile Include="source\extractor.cpp" />
     <ClCompile Include="source\Medio.cpp" />
     <ClCompile Include="source\MedioFacebook.cpp" />
@@ -143,9 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Contenido.h" />
-    <ClInclude Include="include\ContenidoFacebook.h" />
-    <ClInclude Include="include\ContenidoPortalNoticias.h" />
-    <ClInclude Include="include\ContenidoTwitter.h" />
     <ClInclude Include="include\extractor.h" />
     <ClInclude Include="include\Medio.h" />
     <ClInclude Include="include\MedioFacebook.h" />

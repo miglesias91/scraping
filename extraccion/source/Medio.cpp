@@ -97,62 +97,6 @@ bool Medio::ids_historicos(std::vector<uintmax_t> * vector) {
 
     return true;
 }
-//
-//std::unordered_map<std::string, std::vector<uintmax_t>> Medio::getMapaIDsContenidosParaDepurar()
-//{
-//    return this->mapa_ids_contenidos_analizados;
-//}
-//
-//std::unordered_map<std::string, std::vector<uintmax_t>> Medio::getMapaIDsContenidosParaDepurar()
-//{
-//    return this->mapa_ids_contenidos_analizados;
-//}
-//
-//std::unordered_map<std::string, std::vector<uintmax_t>> Medio::getMapaIDsContenidosParaAnalizar()
-//{
-//    return this->mapa_ids_contenidos_no_analizados;
-//}
-//
-//std::unordered_map<std::string, std::vector<uintmax_t>> Medio::getMapaIDsContenidosHistoricos()
-//{
-//    return this->mapa_ids_contenidos_historicos;
-//}
-//
-//std::vector<std::pair<std::string, std::vector<uintmax_t>>> Medio::getParesIDsContenidosAnalizados()
-//{
-//    return std::vector<std::pair<std::string, std::vector<uintmax_t>>>(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_analizados.end());
-//}
-//
-//std::vector<std::pair<std::string, std::vector<uintmax_t>>> Medio::getParesIDsContenidosNoAnalizados()
-//{
-//    return std::vector<std::pair<std::string, std::vector<uintmax_t>>>(this->mapa_ids_contenidos_analizados.begin(), this->mapa_ids_contenidos_no_analizados.end());
-//}
-//
-// GETTERS
-//
-//std::vector<uintmax_t> Medio::getIDsContenidosAnalizados()
-//{
-//    std::vector<uintmax_t> ids_contenidos_analizados;
-//
-//    for (std::unordered_map<std::string, std::vector<uintmax_t>>::iterator it = this->mapa_ids_contenidos_analizados.begin(); it != this->mapa_ids_contenidos_analizados.end(); it++)
-//    {
-//        ids_contenidos_analizados.insert(ids_contenidos_analizados.end(), it->second.begin(), it->second.end());
-//    }
-//
-//    return ids_contenidos_analizados;
-//}
-//
-//std::vector<uintmax_t> Medio::getIDsContenidosNoAnalizados()
-//{
-//    std::vector<uintmax_t> ids_contenidos_no_analizados;
-//
-//    for (std::unordered_map<std::string, std::vector<uintmax_t>>::iterator it = this->mapa_ids_contenidos_no_analizados.begin(); it != this->mapa_ids_contenidos_no_analizados.end(); it++)
-//    {
-//        ids_contenidos_no_analizados.insert(ids_contenidos_no_analizados.end(), it->second.begin(), it->second.end());
-//    }
-//
-//    return ids_contenidos_no_analizados;
-//}
 
 herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasReciente()
 {
@@ -259,45 +203,6 @@ std::string Medio::getValorAlmacenable()
 
         json_mapa_ids_contenidos_historicos.push_back(json_ids_contenidos_historicos);
     });
-
-    //for (std::vector<std::pair<std::string, std::vector<uintmax_t>>>::iterator it = vector_mapa_ids_contenidos_no_analizados.begin(); it != vector_mapa_ids_contenidos_no_analizados.end(); it++)
-    //{
-    //    std::string fecha = it->first;
-    //    std::vector<uintmax_t> ids = it->second;
-
-    //    herramientas::utiles::Json * json_ids_contenidos_no_analizados = new herramientas::utiles::Json();
-
-    //    json_ids_contenidos_no_analizados->agregarAtributoValor("fecha", fecha);
-    //    json_ids_contenidos_no_analizados->agregarAtributoArray("ids", ids);
-
-    //    json_mapa_ids_contenidos_no_analizados.push_back(json_ids_contenidos_no_analizados);
-    //}
-
-    //for (std::vector<std::pair<std::string, std::vector<uintmax_t>>>::iterator it = vector_mapa_ids_contenidos_analizados.begin(); it != vector_mapa_ids_contenidos_analizados.end(); it++)
-    //{
-    //    std::string fecha = it->first;
-    //    std::vector<uintmax_t> ids = it->second;
-
-    //    herramientas::utiles::Json * json_ids_contenidos_analizados = new herramientas::utiles::Json();
-
-    //    json_ids_contenidos_analizados->agregarAtributoValor("fecha", fecha);
-    //    json_ids_contenidos_analizados->agregarAtributoArray("ids", ids);
-
-    //    json_mapa_ids_contenidos_analizados.push_back(json_ids_contenidos_analizados);
-    //}
-
-    //for (std::vector<std::pair<std::string, std::vector<uintmax_t>>>::iterator it = vector_mapa_ids_contenidos_historicos.begin(); it != vector_mapa_ids_contenidos_historicos.end(); it++)
-    //{
-    //    std::string fecha = it->first;
-    //    std::vector<uintmax_t> ids = it->second;
-
-    //    herramientas::utiles::Json * json_ids_contenidos_historicos = new herramientas::utiles::Json();
-
-    //    json_ids_contenidos_historicos->agregarAtributoValor("fecha", fecha);
-    //    json_ids_contenidos_historicos->agregarAtributoArray("ids", ids);
-
-    //    json_mapa_ids_contenidos_historicos.push_back(json_ids_contenidos_historicos);
-    //}
 
     json_almacenable.agregarAtributoArray("mapa_ids_contenidos_para_depurar", json_mapa_ids_contenidos_para_depurar);
     json_almacenable.agregarAtributoArray("mapa_ids_contenidos_para_analizar", json_mapa_ids_contenidos_para_analizar);
@@ -441,73 +346,6 @@ herramientas::utiles::GestorIDs * Medio::getGestorIDs() {
 
 // SETTERS
 
-//void Medio::setMapaIDsContenidosAnalizados(std::unordered_map<std::string, std::vector<uintmax_t>> mapa)
-//{
-//    this->mapa_ids_contenidos_analizados = mapa;
-//}
-//
-//void Medio::setMapaIDsContenidosNoAnalizados(std::unordered_map<std::string, std::vector<uintmax_t>> mapa)
-//{
-//    this->mapa_ids_contenidos_no_analizados = mapa;
-//}
-//
-//void Medio::setMapaIDsContenidosHistoricos(std::unordered_map<std::string, std::vector<uintmax_t>> mapa)
-//{
-//    this->mapa_ids_contenidos_historicos = mapa;
-//}
-
-//bool Medio::setearContenidoComoAnalizado(Contenido * contenido)
-//{
-//    std::string string_fecha = contenido->getFecha().getStringAAAAMMDD();
-//
-//    std::vector<uintmax_t> * ids_contenidos_no_analizados = &this->mapa_ids_contenidos_no_analizados[string_fecha];
-//
-//    std::vector<uintmax_t>::iterator it_a_mover = std::find(ids_contenidos_no_analizados->begin(), ids_contenidos_no_analizados->end(), contenido->getId()->numero());
-//
-//    if (ids_contenidos_no_analizados->end() == it_a_mover)
-//    {
-//        return false;
-//    }
-//
-//    std::vector<uintmax_t> * ids_contenidos_analizados = &this->mapa_ids_contenidos_analizados[string_fecha];
-//    ids_contenidos_analizados->push_back(*it_a_mover);
-//
-//    ids_contenidos_no_analizados->erase(it_a_mover);
-//
-//    if (0 == ids_contenidos_no_analizados->size())
-//    {
-//        this->mapa_ids_contenidos_no_analizados.erase(string_fecha);
-//    }
-//
-//    return true;
-//}
-//
-//bool Medio::setearContenidoComoHistorico(Contenido * contenido)
-//{
-//    std::string string_fecha = contenido->getFecha().getStringAAAAMMDD();
-//
-//    std::vector<uintmax_t> * ids_contenidos_analizados = &this->mapa_ids_contenidos_analizados[string_fecha];
-//
-//    std::vector<uintmax_t>::iterator it_a_mover = std::find(ids_contenidos_analizados->begin(), ids_contenidos_analizados->end(), contenido->getId()->numero());
-//
-//    if (ids_contenidos_analizados->end() == it_a_mover)
-//    {
-//        return false;
-//    }
-//
-//    std::vector<uintmax_t> * ids_contenidos_historicos = &this->mapa_ids_contenidos_historicos[string_fecha];
-//    ids_contenidos_historicos->push_back(*it_a_mover);
-//
-//    ids_contenidos_analizados->erase(it_a_mover);
-//
-//    if (0 == ids_contenidos_analizados->size())
-//    {
-//        this->mapa_ids_contenidos_analizados.erase(string_fecha);
-//    }
-//
-//    return true;
-//}
-
 // METODOS
 
 void Medio::nuevo(Contenido * contenido) {
@@ -517,15 +355,6 @@ void Medio::nuevo(Contenido * contenido) {
 
     ids_contenidos_no_analizados->push_back(contenido->getId()->numero());
 }
-
-//void Medio::agregarContenidoParaAnalizar(Contenido * contenido)
-//{
-//    std::string string_fecha = contenido->getFecha().getStringAAAAMMDD();
-//
-//    std::vector<uintmax_t> * ids_contenidos_no_analizados = &this->mapa_ids_contenidos_no_analizados[string_fecha];
-//
-//    ids_contenidos_no_analizados->push_back(contenido->getId()->numero());
-//}
 
 // metodos de IAlmacenable
 
@@ -589,50 +418,8 @@ void Medio::parsearValorAlmacenable(std::string valor_almacenable)
     std::for_each(json_mapa_ids_contenidos_para_analizar.begin(), json_mapa_ids_contenidos_para_analizar.end(), [](herramientas::utiles::Json * json) { delete json; });
     std::for_each(json_mapa_ids_contenidos_para_preparar.begin(), json_mapa_ids_contenidos_para_preparar.end(), [](herramientas::utiles::Json * json) { delete json; });
     std::for_each(json_mapa_ids_contenidos_historicos.begin(), json_mapa_ids_contenidos_historicos.end(), [](herramientas::utiles::Json * json) { delete json; });
-
-    //for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_no_analizados.begin(); it != json_mapa_ids_contenidos_no_analizados.end(); it++)
-    //{
-    //    std::string fecha = (*it)->getAtributoValorString("fecha");
-    //    std::vector<uintmax_t> ids = (*it)->getAtributoArrayUint("ids");
-
-    //    this->mapa_ids_contenidos_no_analizados[fecha] = ids;
-    //}
-
-    //for(std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_analizados.begin(); it != json_mapa_ids_contenidos_analizados.end(); it++)
-    //{
-    //    std::string fecha = (*it)->getAtributoValorString("fecha");
-    //    std::vector<uintmax_t> ids = (*it)->getAtributoArrayUint("ids");
-
-    //    this->mapa_ids_contenidos_analizados[fecha] = ids;
-    //}
-
-    //for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_historicos.begin(); it != json_mapa_ids_contenidos_historicos.end(); it++)
-    //{
-    //    std::string fecha = (*it)->getAtributoValorString("fecha");
-    //    std::vector<uintmax_t> ids = (*it)->getAtributoArrayUint("ids");
-
-    //    this->mapa_ids_contenidos_historicos[fecha] = ids;
-    //}
-
-
-
-    //for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_no_analizados.begin(); it != json_mapa_ids_contenidos_no_analizados.end(); it++)
-    //{
-    //    delete *it;
-    //}
-    //
-    //for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_analizados.begin(); it != json_mapa_ids_contenidos_analizados.end(); it++)
-    //{
-    //    delete *it;
-    //}
-
-    //for (std::vector<herramientas::utiles::Json*>::iterator it = json_mapa_ids_contenidos_historicos.begin(); it != json_mapa_ids_contenidos_historicos.end(); it++)
-    //{
-    //    delete *it;
-    //}
 }
 
 std::string Medio::prefijoGrupo() {
     return this->prefijo_grupo;
-    //return ConfiguracionScraping::prefijoMedio();
 }

@@ -16,9 +16,7 @@ ResultadoAnalisisMedio::ResultadoAnalisisMedio(
     scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado_fuerza_en_noticia,
     scraping::analisis::tecnicas::ResultadoSentimiento * resultado_sentimiento
 )
-    : ResultadoAnalisis(ConfiguracionScraping::prefijoResultadoMedio(), resultado_fuerza_en_noticia, resultado_sentimiento)
-{
-}
+    : ResultadoAnalisis(ConfiguracionScraping::prefijoResultadoMedio(), resultado_fuerza_en_noticia, resultado_sentimiento) {}
 
 ResultadoAnalisisMedio::~ResultadoAnalisisMedio() {
     std::for_each(this->resultados.begin(), this->resultados.end(),

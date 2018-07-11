@@ -27,15 +27,6 @@
     <ClCompile Include="source\Medio.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="source\ContenidoFacebook.cpp">
-      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ContenidoPortalNoticias.cpp">
-      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ContenidoTwitter.cpp">
-      <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
-    </ClCompile>
     <ClCompile Include="source\MedioFacebook.cpp">
       <Filter>Archivos de código fuente\interfaceo-medios-digitales</Filter>
     </ClCompile>
@@ -55,15 +46,6 @@
     </ClInclude>
     <ClInclude Include="include\Medio.h">
       <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ContenidoFacebook.h">
-      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ContenidoPortalNoticias.h">
-      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ContenidoTwitter.h">
-      <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>
     </ClInclude>
     <ClInclude Include="include\MedioFacebook.h">
       <Filter>Archivos de encabezado\interfaceo-medios-digitales</Filter>

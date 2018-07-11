@@ -15,11 +15,6 @@
 #include <scraping/include/GestorAnalisisDiario.h>
 #include <scraping/include/ConfiguracionScraping.h>
 
-// extraccion
-//#include <extraccion/include/MedioTwitter.h>
-//#include <extraccion/include/MedioFacebook.h>
-//#include <extraccion/include/MedioPortalNoticias.h>
-
 // depuracion
 #include <depuracion/include/ContenidoDepurable.h>
 
@@ -113,8 +108,6 @@ bool Depurador::cargarStopwords(std::string path_archivo_stopwords)
         stopwords_espaniol.push_back(stopword);
     }
 
-    scraping::Logger::info("cargarStopwords: '" + path_archivo_stopwords + "' cargado. " + std::to_string(stopwords_espaniol.size()) + " stopwords cargados.");
-
     return true;
 }
 
@@ -128,25 +121,21 @@ void Depurador::liberarMapeoUTF8() {
 
 bool Depurador::cargarMapeoUTF8(std::string path_archivo_mapeo)
 {
-    if (nullptr != mapa_utf8)
-    {
-        scraping::Logger::info("cargarMapeoUTF8: mapa_utf8 ya esta cargado.");
+    if (nullptr != mapa_utf8) {
+        scraping::Logger::debug("scraping", "mapa '" + path_archivo_mapeo + "' ya esta cargado.");
         return true;
     }
 
-    try
-    {
-        scraping::Logger::info("cargarMapeoUTF8: cargando mapa '" + path_archivo_mapeo + "'.");
+    try {
         mapa_utf8 = new mapeo::MapaUTF8(path_archivo_mapeo);
     }
-    catch (herramientas::utiles::excepciones::Excepcion & e)
-    {
+    catch (herramientas::utiles::excepciones::Excepcion & e) {
         mapa_utf8 = nullptr;
-        scraping::Logger::error("cargarMapeoUTF8: " + e.getMensaje().str());
+        scraping::Logger::error("scraping", "cargarMapeoUTF8: " + e.getMensaje().str());
         throw;
     }
 
-    scraping::Logger::info("cargarMapeoUTF8: mapa '" + path_archivo_mapeo + "' cargado OK.");
+    scraping::Logger::debug("scraping", "mapa '" + path_archivo_mapeo + "' cargado OK.");
 
     return true;
 }
@@ -179,17 +168,6 @@ bool Depurador::depurar(IDepurable * depurable, ContenidoDepurado * depurado) co
     unsigned int cantidad_palabras_muy_largas_eliminadas = this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
     unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
-
-    scraping::Logger::debug("depurar: {\n"
-        "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +
-        "pasado a minuscula: " + std::to_string(pasado_a_minuscula) + ",\n" +
-        "urls eliminadas: " + std::to_string(urls_eliminadas) + ",\n" +
-        "signos y puntuacion eliminados: " + std::to_string(caracteres_signos_puntuacion_eliminados) + ",\n" +
-        "caracteres de control eliminados: " + std::to_string(caracteres_de_control_eliminados) + ",\n" +
-        "palabras muy cortas eliminadas: " + std::to_string(cantidad_palabras_muy_cortas_eliminadas) + ",\n" +
-        "palabras muy largas eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n" +
-        "stopwords eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n}"
-    );
 
     if (0 == bolsa_de_palabras.size()) {
         return false;
@@ -229,17 +207,6 @@ ContenidoDepurado Depurador::depurarConTildes(IDepurable * depurable) const
     unsigned int cantidad_palabras_muy_largas_eliminadas = this->eliminarPalabrasMuyLargas(bolsa_de_palabras);
 
     unsigned int cantidad_stopwords_eliminadas = this->eliminarStopwords(bolsa_de_palabras);
-
-    scraping::Logger::debug("depurarConTildes: {\n"
-        "caracteres especiales reemplazadas: " + std::to_string(caracteres_especiales_reemplazados) + ",\n" +
-        "pasado a minuscula: " + std::to_string(pasado_a_minuscula) + ",\n" +
-        "urls eliminadas: " + std::to_string(urls_eliminadas) + ",\n" +
-        "signos y puntuacion eliminados: " + std::to_string(caracteres_signos_puntuacion_eliminados) + ",\n" +
-        "caracteres de control eliminados: " + std::to_string(caracteres_de_control_eliminados) + ",\n" +
-        "palabras muy cortas eliminadas: " + std::to_string(cantidad_palabras_muy_cortas_eliminadas) + ",\n" +
-        "palabras muy largas eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n" +
-        "stopwords eliminadas: " + std::to_string(cantidad_palabras_muy_largas_eliminadas) + ",\n}"
-    );
 
     ContenidoDepurado contenido_depurado(bolsa_de_palabras, texto_a_depurar.size());
     return contenido_depurado;

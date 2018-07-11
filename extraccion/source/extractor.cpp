@@ -24,10 +24,14 @@ extractor::extractor() {}
 extractor::~extractor() {}
 
 bool extractor::extraer_facebook() {
+    scraping::Logger::info("facebook", "extraccion: iniciada.");
+
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas_facebook_existentes;
     gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas_facebook_existentes);
+
+    scraping::Logger::info("facebook", "extraccion: " + std::to_string(paginas_facebook_existentes.size()) + " paginas existentes.");
 
     medios::facebook::consumidor_api * consumidor_api_twitter = new medios::facebook::consumidor_api("929798640478438", "f36e906bf6b8445ac3ee53e95ac303a7");
 
@@ -40,14 +44,20 @@ bool extractor::extraer_facebook() {
         delete pagina;
     });
 
+    scraping::Logger::info("facebook", "extraccion: finalizada.");
+
     return true;
 }
 
 bool extractor::extraer_twitter() {
+    scraping::Logger::info("twitter", "extraccion: iniciada.");
+
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas_twitter_existentes;
     gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioTwitter>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas_twitter_existentes);
+
+    scraping::Logger::info("twitter", "extraccion: " + std::to_string(cuentas_twitter_existentes.size()) + " cuentas existentes.");
 
     medios::twitter::ConsumidorAPI * consumidor_api_twitter = new medios::twitter::ConsumidorAPI("aXPpXInb16k0jKIswOYuUS3ly", "MhuDBpN9EtnafrIUHvJEbleJ3WKiFCSBIulwRVNvZTWoXGs2eV");
     consumidor_api_twitter->obtenerTokenDeAcceso();
@@ -61,14 +71,20 @@ bool extractor::extraer_twitter() {
         delete cuenta;
     });
 
+    scraping::Logger::info("twitter", "extraccion: finalizada.");
+
     return true;
 }
 
 bool extractor::extraer_portales() {
+    scraping::Logger::info("portales", "extraccion: iniciada.");
+
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales_existentes;
     gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales_existentes);
+
+    scraping::Logger::info("portales", "extraccion: " + std::to_string(portales_existentes.size()) + " portales existentes.");
 
     medios::noticias::lector lector;
 
@@ -78,6 +94,7 @@ bool extractor::extraer_portales() {
 
         delete portal;
     });
+    scraping::Logger::info("portales", "extraccion: finalizada.");
 
     return true;
 }

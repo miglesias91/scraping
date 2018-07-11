@@ -53,6 +53,7 @@ bool GestorTareas::extraer_portales() {
 
 // depuracion
 bool GestorTareas::depurar_twitter() {
+    scraping::Logger::info("twitter", "depuracion: iniciada.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
@@ -60,13 +61,16 @@ bool GestorTareas::depurar_twitter() {
 
     depuracion::Depurador depu;
     std::for_each(cuentas.begin(), cuentas.end(), [=, &depu](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
+        scraping::Logger::info("twitter", "depuracion: depurando '" + cuenta->cuenta()->getNombre()+ "'.");
         depu.depurar(cuenta);
         delete cuenta;
     });
+    scraping::Logger::info("twitter", "depuracion: finalizada.");
     return true;
 }
 
 bool GestorTareas::depurar_facebook() {
+    scraping::Logger::info("facebook", "depuracion: iniciada.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
@@ -74,13 +78,16 @@ bool GestorTareas::depurar_facebook() {
 
     depuracion::Depurador depu;
     std::for_each(paginas.begin(), paginas.end(), [=, &depu](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
+        scraping::Logger::info("facebook", "depuracion: depurando '" + pagina->pagina()->getNombre()+ "'.");
         depu.depurar(pagina);
         delete pagina;
     });
+    scraping::Logger::info("facebook", "depuracion: finalizada.");
     return true;
 }
 
 bool GestorTareas::depurar_portales() {
+    scraping::Logger::info("portales", "depuracion: iniciada.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
@@ -88,14 +95,17 @@ bool GestorTareas::depurar_portales() {
 
     depuracion::Depurador depu;
     std::for_each(portales.begin(), portales.end(), [=, &depu](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
+        scraping::Logger::info("portales", "depuracion: depurando '" + portal->portal()->web()+ "'.");
         depu.depurar(portal);
         delete portal;
     });
+    scraping::Logger::info("portales", "depuracion: finalizada.");
     return true;
 }
 
 // analisis
 bool GestorTareas::analizar_twitter() {
+    scraping::Logger::info("twitter", "analisis: iniciado.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
@@ -103,13 +113,16 @@ bool GestorTareas::analizar_twitter() {
 
     analisis::Analizador analizador;
     std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
+        scraping::Logger::info("twitter", "analisis: analizando '" + cuenta->cuenta()->getNombre()+ "'.");
         analizador.analizar(cuenta);
         delete cuenta;
     });
+    scraping::Logger::info("twitter", "analisis: finalizado.");
     return true;
 }
 
 bool GestorTareas::analizar_facebook() {
+    scraping::Logger::info("facebook", "analisis: iniciado.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
@@ -117,13 +130,16 @@ bool GestorTareas::analizar_facebook() {
 
     analisis::Analizador analizador;
     std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
+        scraping::Logger::info("facebook", "analisis: analizando '" + pagina->pagina()->getNombre()+ "'.");
         analizador.analizar(pagina);
         delete pagina;
     });
+    scraping::Logger::info("facebook", "analisis: finalizado.");
     return true;
 }
 
 bool GestorTareas::analizar_portales() {
+    scraping::Logger::info("portales", "analisis: iniciado.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
@@ -131,14 +147,17 @@ bool GestorTareas::analizar_portales() {
 
     analisis::Analizador analizador;
     std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
+        scraping::Logger::info("portales", "analisis: analizando '" + portal->portal()->web()+ "'.");
         analizador.analizar(portal);
         delete portal;
     });
+    scraping::Logger::info("portales", "analisis: finalizado.");
     return true;
 }
 
 // preparacion
 bool GestorTareas::preparar_twitter() {
+    scraping::Logger::info("twitter", "preparacion: iniciada.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
@@ -146,13 +165,16 @@ bool GestorTareas::preparar_twitter() {
 
     preparacion::Preparador preparador;
     std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
+        scraping::Logger::info("twitter", "preparacion: preparando '" + cuenta->cuenta()->getNombre()+ "'.");
         preparador.preparar(cuenta);
         delete cuenta;
     });
+    scraping::Logger::info("twitter", "preparacion: finalizada.");
     return true;
 }
 
 bool GestorTareas::preparar_facebook() {
+    scraping::Logger::info("facebook", "preparacion: iniciada.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
@@ -160,13 +182,16 @@ bool GestorTareas::preparar_facebook() {
 
     preparacion::Preparador preparador;
     std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
+        scraping::Logger::info("facebook", "preparacion: preparando '" + pagina->pagina()->getNombre()+ "'.");
         preparador.preparar(pagina);
         delete pagina;
     });
+    scraping::Logger::info("facebook", "preparacion: finalizada.");
     return true;
 }
 
 bool GestorTareas::preparar_portales() {
+    scraping::Logger::info("portales", "preparacion: iniciada.");
     scraping::aplicacion::GestorMedios gestor_medios;
 
     std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
@@ -174,29 +199,37 @@ bool GestorTareas::preparar_portales() {
 
     preparacion::Preparador preparador;
     std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
+        scraping::Logger::info("portales", "preparacion: preparando '" + portal->portal()->web()+ "'.");
         preparador.preparar(portal);
         delete portal;
     });
+    scraping::Logger::info("portales", "preparacion: finalizada.");
     return true;
 }
 
 void GestorTareas::scrapear_facebook() {
+    scraping::Logger::info("facebook", "scraping: iniciado.");
     extraer_facebook();
     depurar_facebook();
     analizar_facebook();
     preparar_facebook();
+    scraping::Logger::info("facebook", "scraping: finalizado.");
 }
 
 void GestorTareas::scrapear_twitter() {
+    scraping::Logger::info("twitter", "scraping: iniciado.");
     extraer_twitter();
     depurar_twitter();
     analizar_twitter();
     preparar_twitter();
+    scraping::Logger::info("twitter", "scraping: finalizado.");
 }
 
 void GestorTareas::scrapear_portales() {
+    scraping::Logger::info("portales", "scraping: iniciado.");
     extraer_portales();
     depurar_portales();
     analizar_portales();
     preparar_portales();
+    scraping::Logger::info("portales", "scraping: finalizado.");
 }

@@ -43,8 +43,6 @@ void FuerzaEnNoticia::aplicar(const std::vector<std::string> & bolsa_de_palabras
 
     float factor_tamanio_de_bolsa = std::log10(cantidad_de_caracteres_en_bolsa_de_palabras);
 
-    scraping::Logger::info("FuerzaEnNoticia::aplicar: { cantidad de caracteres = " + std::to_string(cantidad_de_caracteres_en_bolsa_de_palabras) + " - factor tamanio bolsa = '" + std::to_string(factor_tamanio_de_bolsa) + "'}");
-
     // 2do: calculo la fuerza de cada palabra en la bolsa de palabras
     for (std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)
     {
@@ -85,8 +83,6 @@ void FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_analiz
     }
 
     float factor_tamanio_de_bolsa = std::log10(contenido_analizable->getTamanio());
-
-    scraping::Logger::info("FuerzaEnNoticia::aplicar: { cantidad de caracteres = " + std::to_string(cantidad_de_caracteres_en_bolsa_de_palabras) + " - factor tamanio bolsa = '" + std::to_string(factor_tamanio_de_bolsa) + "'}");
 
     // 2do: calculo la fuerza de cada palabra en la bolsa de palabras
     for (std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)

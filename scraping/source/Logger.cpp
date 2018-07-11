@@ -5,7 +5,7 @@ using namespace scraping;
 // stl
 #include <iostream>
 
-herramientas::log::Logger * Logger::log = nullptr;
+std::unordered_map<std::string, herramientas::log::Logger*> Logger::logs;
 
 Logger::Logger()
 {
@@ -15,44 +15,38 @@ Logger::~Logger()
 {
 }
 
-void Logger::iniciar(std::string config_log)
-{
-    log = herramientas::log::AdministradorLog::iniciarNuevo(config_log);
+void Logger::iniciar(const std::vector<std::string> & configs_logs) {
+    for(std::string config_log : configs_logs) {
+        herramientas::log::Logger * log = herramientas::log::AdministradorLog::iniciarNuevo(config_log);
+        logs[log->getNombre()] = log;
+    }
 }
 
-//std::string Logger::getDebugLog(twitter::modelo::Tweet * tweet)
-//{
-//    tweet->armarJson();
-// 
-//    return tweet->getJson()->jsonString();
-//}
-
-void Logger::marca(std::string mensaje)
-{
-    log->marca(mensaje);
+void Logger::iniciar(const std::string & config_log) {
+    herramientas::log::Logger * log = herramientas::log::AdministradorLog::iniciarNuevo(config_log);
+    logs[log->getNombre()] = log;
 }
 
-void Logger::debug(std::string mensaje)
-{
-    log->debug(mensaje);
+void Logger::marca(const std::string & nombre_log, const std::string & mensaje) {
+    logs[nombre_log]->marca(mensaje);
 }
 
-void Logger::info(std::string mensaje)
-{
-    log->info(mensaje);
+void Logger::debug(const std::string & nombre_log, const std::string & mensaje) {
+    logs[nombre_log]->debug(mensaje);
 }
 
-void Logger::advertencia(std::string mensaje)
-{
-    log->advertencia(mensaje);
+void Logger::info(const std::string & nombre_log, const std::string & mensaje) {
+    logs[nombre_log]->info(mensaje);
 }
 
-void Logger::error(std::string mensaje)
-{
-    log->error(mensaje);
+void Logger::advertencia(const std::string & nombre_log, const std::string & mensaje) {
+    logs[nombre_log]->advertencia(mensaje);
 }
 
-void Logger::critico(std::string mensaje)
-{
-    log->critico(mensaje);
+void Logger::error(const std::string & nombre_log, const std::string & mensaje) {
+    logs[nombre_log]->error(mensaje);
+}
+
+void Logger::critico(const std::string & nombre_log, const std::string & mensaje) {
+    logs[nombre_log]->critico(mensaje);
 }

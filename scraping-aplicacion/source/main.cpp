@@ -15,6 +15,9 @@
 // herramientas
 #include <utiles/include/FuncionesSistemaArchivos.h>
 
+// noticias
+#include <noticias/include/fabrica_portales.h>
+
 // scraping
 #include <scraping/include/IAdministradorScraping.h>
 #include <scraping/include/ConfiguracionScraping.h>
@@ -24,6 +27,7 @@
 // extraccion
 #include <extraccion/include/MedioTwitter.h>
 #include <extraccion/include/MedioFacebook.h>
+#include <extraccion/include/MedioPortalNoticias.h>
 
 void agregar_nuevos_medios(const std::string & path_json) {
 
@@ -49,6 +53,8 @@ void agregar_nuevos_medios(const std::string & path_json) {
 
             medios.push_back(nueva_cuenta);
 
+            scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' agregada.");
+
             delete json_twitter;
         });
     }
@@ -64,7 +70,26 @@ void agregar_nuevos_medios(const std::string & path_json) {
 
             medios.push_back(nueva_pagina);
 
+            scraping::Logger::info("scraping", "pagina de facebook '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
+
             delete json_facebook;
+        });
+    }
+
+    if(json.contieneAtributo("portales")) {
+        std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
+        std::for_each(json_portales.begin(), json_portales.end(), [=, &medios](herramientas::utiles::Json * json_portal) {
+            uintmax_t id = json_portal->getAtributoValorUint("id");
+            std::string web_portal = json_portal->getAtributoValorString("web");
+
+            scraping::extraccion::interfaceo::MedioPortalNoticias * nuevo_portal = new scraping::extraccion::interfaceo::MedioPortalNoticias(medios::noticias::fabrica_portales::nuevo(web_portal));
+            nuevo_portal->setId(new herramientas::utiles::ID(id));
+
+            medios.push_back(nuevo_portal);
+
+            scraping::Logger::info("scraping", "portal de noticias '" + nuevo_portal->portal()->web() + "' agregada.");
+
+            delete json_portal;
         });
     }
 
@@ -73,7 +98,7 @@ void agregar_nuevos_medios(const std::string & path_json) {
 
     std::for_each(medios.begin(), medios.end(), [=](scraping::extraccion::Medio * medio) { delete medio; });
 
-    std::experimental::filesystem::remove(path_json);
+    //std::experimental::filesystem::remove(path_json);
 }
 
 int main(int argc, char ** argv)
@@ -90,17 +115,17 @@ int main(int argc, char ** argv)
     agregar_nuevos_medios("nuevos_medios.json");
 
     // scrapeo
-    scraping::Logger::info("lanzo scraping twitter.");
+    scraping::Logger::info("scraping", "lanzo scraping twitter.");
     std::future<void> tarea_twitter = std::async(std::launch::async, [=]() { scraping::aplicacion::GestorTareas::scrapear_twitter(); });
-    scraping::Logger::info("lanzo scraping facebook.");
+    scraping::Logger::info("scraping", "lanzo scraping facebook.");
     std::future<void> tarea_facebook = std::async(std::launch::async, [=]() { scraping::aplicacion::GestorTareas::scrapear_facebook(); });
-    scraping::Logger::info("lanzo scraping portales.");
+    scraping::Logger::info("scraping", "lanzo scraping portales.");
     std::future<void> tarea_portales = std::async(std::launch::async, [=]() { scraping::aplicacion::GestorTareas::scrapear_portales(); });
 
     tarea_twitter.wait();
     tarea_facebook.wait();
     tarea_portales.wait();
-    scraping::Logger::info("scrapeo terminado.");
+    scraping::Logger::info("scraping", "scrapeo terminado.");
 
     scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->guardar_checkpoint();
 

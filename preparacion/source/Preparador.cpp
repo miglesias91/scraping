@@ -8,11 +8,6 @@
 // analisis
 #include <analisis/include/ResultadoAnalisis.h>
 
-// extraccion
-//#include <extraccion/include/MedioFacebook.h>
-//#include <extraccion/include/MedioTwitter.h>
-//#include <extraccion/include/MedioPortalNoticias.h>
-
 // preparacion
 #include <preparacion/include/ResultadoAnalisisContenido.h>
 #include <preparacion/include/ResultadoAnalisisMedio.h>

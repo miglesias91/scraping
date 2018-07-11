@@ -2,6 +2,7 @@
 
 // stl
 #include <string>
+#include <vector>
 
 namespace scraping
 {
@@ -41,7 +42,7 @@ public:
     static std::string claveIDContenidoActual();
     static uintmax_t claveIDCheckpointActual();
 
-    static std::string archivoConfigLog();
+    static std::vector<std::string> archivosConfigsLogs();
     static std::string archivoConfigSentimiento();
     static std::string archivoConfigNoticias();
 
@@ -72,7 +73,7 @@ public:
     static std::string tagPrefijoResultadoContenido();
     static std::string tagPrefijoResultadoDiario();
 
-    static std::string tagArchivoConfigLog();
+    static std::string tagArchivosConfigsLogs();
     static std::string tagArchivoConfigSentimiento();
     static std::string tagArchivoConfigNoticias();
 
@@ -106,7 +107,7 @@ private:
     static std::string clave_id_contenido_actual;
     static std::string clave_id_checkpoint_actual;
 
-    static std::string archivo_config_log;
+    static std::vector<std::string> archivos_configs_logs;
     static std::string archivo_config_sentimiento;
     static std::string archivo_config_noticias;
 

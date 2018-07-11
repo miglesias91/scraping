@@ -50,6 +50,8 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
     std::vector<medios::noticias::noticia*> todas_las_noticias;
     this->portal_noticias->noticias(&todas_las_noticias);
 
+    scraping::Logger::info("portales", "extraccion: descargadas " + std::to_string(todas_las_noticias.size()) + " noticias de '" + this->portal_noticias->web() + "'.");
+
     if (0 == todas_las_noticias.size()) {
         return false;
     }
@@ -71,11 +73,7 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         gestor_analisis_diario.almacenarIDActualContenido();
 
         this->fecha_ultima_noticia_analizada = noticia->fecha();
-
-        // delete noticia;
     });
-
-    scraping::Logger::info("descargar_noticias: { portal = '" + this->portal_noticias->web() + "' - fecha_ultima_publicacion_analizada = '" + this->fecha_ultima_noticia_analizada.getStringAAAAMMDDHHmmSS() + "' }");
 
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
     gestor_analisis_diario.almacenarMedio(this);
@@ -94,9 +92,6 @@ Medio * MedioPortalNoticias::clonar() {
     //clon->portal(this->portal_noticias->clon());
     clon->portal(this->portal_noticias);
 
-    //clon->setMapaIDsContenidosAnalizados(this->getMapaIDsContenidosAnalizados());
-    //clon->setMapaIDsContenidosNoAnalizados(this->getMapaIDsContenidosNoAnalizados());
-    //clon->setMapaIDsContenidosHistoricos(this->getMapaIDsContenidosHistoricos());
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
 
     this->ids_para_depurar(&mapa);

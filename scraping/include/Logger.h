@@ -14,7 +14,8 @@ class Logger
 {
 public:
 
-    static void iniciar(std::string config_log);
+    static void iniciar(const std::vector<std::string> & configs_logs);
+    static void iniciar(const std::string & config_log);
 
     // GETTERS
 
@@ -24,12 +25,12 @@ public:
 
     // METODOS
 
-    static void marca(std::string mensaje);
-    static void debug(std::string mensaje);
-    static void info(std::string mensaje);
-    static void advertencia(std::string mensaje);
-    static void error(std::string mensaje);
-    static void critico(std::string mensaje);
+    static void marca(const std::string & nombre_log, const std::string & mensaje);
+    static void debug(const std::string & nombre_log, const std::string & mensaje);
+    static void info(const std::string & nombre_log, const std::string & mensaje);
+    static void advertencia(const std::string & nombre_log, const std::string & mensaje);
+    static void error(const std::string & nombre_log, const std::string & mensaje);
+    static void critico(const std::string & nombre_log, const std::string & mensaje);
 
 protected:
 
@@ -38,7 +39,7 @@ private:
     Logger();
     virtual ~Logger();
 
-    static herramientas::log::Logger * log;
+    static std::unordered_map<std::string,herramientas::log::Logger*> logs;
     
 };
 

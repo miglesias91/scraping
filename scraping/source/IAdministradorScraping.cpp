@@ -40,7 +40,7 @@ IAdministradorScraping::~IAdministradorScraping() {}
 void IAdministradorScraping::iniciar(std::string path_configuracion)
 {
     if (false == chequear_conexiones()) {
-        Logger::error("NO HAY CONEXION A INTERNET.");
+        Logger::error("scraping", "NO HAY CONEXION A INTERNET.");
         return;
     }
 
@@ -58,9 +58,9 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
         throw;
     }
 
-    Logger::iniciar(ConfiguracionScraping::archivoConfigLog());
+    Logger::iniciar(ConfiguracionScraping::archivosConfigsLogs());
 
-    Logger::marca("INICIO SCRAPING");
+    Logger::marca("scraping", "INICIO SCRAPING");
 
     depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
     depuracion::Depurador::cargarMapeoUTF8("mapeo_utf8.csv");
@@ -93,19 +93,19 @@ void IAdministradorScraping::liberar()
 
     depuracion::Depurador::liberarMapeoUTF8();
 
-    Logger::marca("FIN SCRAPING");
+    Logger::marca("scraping", "FIN SCRAPING");
 
     herramientas::log::AdministradorLog::liberarTodo();
 }
 
 void IAdministradorScraping::crearAdministradorScrapingLocal()
 {
-    Logger::info("iniciando admin info scraping.");
+    Logger::info("scraping", "iniciando admin info scraping.");
 
     administrador_info_temporal = new AdministradorScrapingLocal();
     administrador_info_temporal->iniciarDB(ConfiguracionScraping::archivoConfigDBInfoTemporal());
 
-    Logger::info("iniciando admin resultados scraping.");
+    Logger::info("scraping", "iniciando admin resultados scraping.");
 
     administrador_resultados_diarios = new AdministradorScrapingLocal();
     administrador_resultados_diarios->iniciarDB(ConfiguracionScraping::archivoConfigDBResultadosDiarios());
@@ -171,7 +171,7 @@ void scraping::IAdministradorScraping::almacenarIDsActuales()
     this->almacenarIDActual<scraping::extraccion::Medio>();
     this->almacenarIDActual<scraping::extraccion::Contenido>();
 
-    Logger::info("id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
+    Logger::info("scraping", "id actuales almacenados: id_actual_medio = " + std::to_string(id_actual_medio) + " - id_actual_contenido = " + std::to_string(id_actual_contenido) + ".");
 }
 
 void scraping::IAdministradorScraping::iniciarDB(std::string path_config_db)

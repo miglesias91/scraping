@@ -24,52 +24,9 @@
 
 using namespace scraping::analisis;
 
-Analizador::Analizador()
-{
-}
+Analizador::Analizador() {}
 
-Analizador::~Analizador()
-{
-}
-
-//bool Analizador::analizar_twitter() const {
-//    scraping::aplicacion::GestorMedios gestor_medios;
-//
-//    std::vector<scraping::extraccion::interfaceo::MedioTwitter*> cuentas;
-//    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioTwitter>(scraping::ConfiguracionScraping::prefijoTwitter(), cuentas);
-//
-//    std::for_each(cuentas.begin(), cuentas.end(), [=](scraping::extraccion::interfaceo::MedioTwitter * cuenta) {
-//        this->analizar(cuenta);
-//        delete cuenta;
-//    });
-//    return true;
-//}
-//
-//bool Analizador::analizar_facebook() const {
-//    scraping::aplicacion::GestorMedios gestor_medios;
-//
-//    std::vector<scraping::extraccion::interfaceo::MedioFacebook*> paginas;
-//    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioFacebook>(scraping::ConfiguracionScraping::prefijoFacebook(), paginas);
-//
-//    std::for_each(paginas.begin(), paginas.end(), [=](scraping::extraccion::interfaceo::MedioFacebook * pagina) {
-//        this->analizar(pagina);
-//        delete pagina;
-//    });
-//    return true;
-//}
-//
-//bool Analizador::analizar_portales() const {
-//    scraping::aplicacion::GestorMedios gestor_medios;
-//
-//    std::vector<scraping::extraccion::interfaceo::MedioPortalNoticias*> portales;
-//    gestor_medios.recuperar<scraping::extraccion::interfaceo::MedioPortalNoticias>(scraping::ConfiguracionScraping::prefijoPortalNoticias(), portales);
-//
-//    std::for_each(portales.begin(), portales.end(), [=](scraping::extraccion::interfaceo::MedioPortalNoticias * portal) {
-//        this->analizar(portal);
-//        delete portal;
-//    });
-//    return true;
-//}
+Analizador::~Analizador() {}
 
 bool Analizador::analizar(scraping::extraccion::Medio * medio) const {
     std::vector<uintmax_t> ids_para_analizar;

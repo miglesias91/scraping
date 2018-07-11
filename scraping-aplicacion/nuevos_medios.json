@@ -1,0 +1,16 @@
+{
+	"facebook" :
+	[
+		{ "id" : 1, "pagina" : "cfkargentina" },
+		{ "id" : 2, "pagina" : "mauriciomacri" }
+	],
+	"twitter" :
+	[
+		{ "id" : 4, "cuenta" : "cfkargentina" },
+		{ "id" : 6, "cuenta" : "mauriciomacri" }
+	],
+	"portales" :
+	[
+		{ "id" : 7, "web" : "clarin.com" }
+	]
+}

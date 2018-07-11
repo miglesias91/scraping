@@ -45,6 +45,7 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
 
     std::vector<medios::facebook::Publicacion*> publicaciones = app.leer(this->pagina_facebook, this->fecha_ultima_publicacion_analizada);
 
+    scraping::Logger::info("facebook", "extraccion: descargadas " + std::to_string(publicaciones.size()) + " publicaciones de '" + this->pagina_facebook->getNombre() + "'.");
     if (0 == publicaciones.size()) {  // si no descargo nada, entonces devuelvo false.
         return false;
     }
@@ -58,7 +59,6 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
         Contenido contenido_nuevo("", publicacion->getTextoPublicacion(), "", publicacion->getFechaCreacion());
         contenido_nuevo.asignarNuevoId();
 
-        //this->agregarContenidoParaAnalizar(&contenido_nuevo);
         this->nuevo(&contenido_nuevo);
 
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
@@ -68,9 +68,6 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
 
         delete publicacion;
     });
-
-    scraping::Logger::info("descargar_publicacion: { pagina = '" + this->pagina_facebook->getNombre() + "' - fecha_ultima_publicacion_analizada = '" + this->fecha_ultima_publicacion_analizada.getStringAAAAMMDDHHmmSS() + "' }");
-
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
     gestor_analisis_diario.almacenarMedio(this);
 
