@@ -39,11 +39,6 @@ IAdministradorScraping::~IAdministradorScraping() {}
 
 void IAdministradorScraping::iniciar(std::string path_configuracion)
 {
-    if (false == chequear_conexiones()) {
-        Logger::error("scraping", "NO HAY CONEXION A INTERNET.");
-        return;
-    }
-
     if (administradorInfoTemporalIniciado() || administradorResultadosDiariosIniciado())
     {
         throw excepciones::ScrapingIniciadoPreviamente();
@@ -59,6 +54,11 @@ void IAdministradorScraping::iniciar(std::string path_configuracion)
     }
 
     Logger::iniciar(ConfiguracionScraping::archivosConfigsLogs());
+
+    if (false == chequear_conexiones()) {
+        Logger::error("scraping", "NO HAY CONEXION A INTERNET.");
+        return;
+    }
 
     Logger::marca("scraping", "INICIO SCRAPING");
 

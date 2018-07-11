@@ -1,16 +1,17 @@
 {
 	"facebook" :
 	[
-		{ "id" : 1, "pagina" : "cfkargentina" },
+		{ "id" : 1, "pagina" : "clarincom" },
 		{ "id" : 2, "pagina" : "mauriciomacri" }
 	],
 	"twitter" :
 	[
-		{ "id" : 4, "cuenta" : "cfkargentina" },
-		{ "id" : 6, "cuenta" : "mauriciomacri" }
+		{ "id" : 3, "cuenta" : "clarincom" },
+		{ "id" : 4, "cuenta" : "cambiemos" }
 	],
 	"portales" :
 	[
-		{ "id" : 7, "web" : "clarin.com" }
+		{ "id" : 5, "web" : "clarin.com" },
+		{ "id" : 6, "web" : "infobae.com" }
 	]
 }

@@ -136,6 +136,8 @@ bool ResultadoAnalisisMedio::parsearJson() {
             delete this->resultados[categoria];
         }
         this->resultados[categoria] = resultado;
+
+        delete json_categoria;
     });
 
     return true;
