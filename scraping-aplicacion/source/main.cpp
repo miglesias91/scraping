@@ -29,7 +29,7 @@
 #include <extraccion/include/MedioFacebook.h>
 #include <extraccion/include/MedioPortalNoticias.h>
 
-void agregar_nuevos_medios(const std::string & path_json) {
+void actualizar_medios(const std::string & path_json) {
 
     if (false == std::experimental::filesystem::exists(path_json)) {
         return;
@@ -112,7 +112,7 @@ int main(int argc, char ** argv)
     scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperarIDsActuales();
 
     // agrego nuevos medios
-    agregar_nuevos_medios("nuevos_medios.json");
+    actualizar_medios("medios.json");
 
     // scrapeo
     scraping::Logger::info("scraping", "lanzo scraping twitter.");
