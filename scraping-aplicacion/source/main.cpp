@@ -126,46 +126,44 @@ void actualizar_medios(const std::string & path_json) {
         delete json_twitter;
     }
 
-    if(json.contieneAtributo("facebook")) {
-        std::vector<herramientas::utiles::Json*> json_facebooks = json.getAtributoArrayJson("facebook");
-        std::for_each(json_facebooks.begin(), json_facebooks.end(), [=, &medios](herramientas::utiles::Json * json_facebook) {
-            uintmax_t id = json_facebook->getAtributoValorUint("id");
-            std::string nombre_pagina = json_facebook->getAtributoValorString("pagina");
+    //if(json.contieneAtributo("facebook")) {
+    //    std::vector<herramientas::utiles::Json*> json_facebooks = json.getAtributoArrayJson("facebook");
+    //    std::for_each(json_facebooks.begin(), json_facebooks.end(), [=, &medios](herramientas::utiles::Json * json_facebook) {
+    //        uintmax_t id = json_facebook->getAtributoValorUint("id");
+    //        std::string nombre_pagina = json_facebook->getAtributoValorString("pagina");
 
-            scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook(nombre_pagina);
-            nueva_pagina->setId(new herramientas::utiles::ID(id));
+    //        scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook(nombre_pagina);
+    //        nueva_pagina->setId(new herramientas::utiles::ID(id));
 
-            medios.push_back(nueva_pagina);
+    //        medios.push_back(nueva_pagina);
 
-            scraping::Logger::info("scraping", "pagina de facebook '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
+    //        scraping::Logger::info("scraping", "pagina de facebook '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
 
-            delete json_facebook;
-        });
-    }
+    //        delete json_facebook;
+    //    });
+    //}
 
-    if(json.contieneAtributo("portales")) {
-        std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
-        std::for_each(json_portales.begin(), json_portales.end(), [=, &medios](herramientas::utiles::Json * json_portal) {
-            uintmax_t id = json_portal->getAtributoValorUint("id");
-            std::string web_portal = json_portal->getAtributoValorString("web");
+    //if(json.contieneAtributo("portales")) {
+    //    std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
+    //    std::for_each(json_portales.begin(), json_portales.end(), [=, &medios](herramientas::utiles::Json * json_portal) {
+    //        uintmax_t id = json_portal->getAtributoValorUint("id");
+    //        std::string web_portal = json_portal->getAtributoValorString("web");
 
-            scraping::extraccion::interfaceo::MedioPortalNoticias * nuevo_portal = new scraping::extraccion::interfaceo::MedioPortalNoticias(medios::noticias::fabrica_portales::nuevo(web_portal));
-            nuevo_portal->setId(new herramientas::utiles::ID(id));
+    //        scraping::extraccion::interfaceo::MedioPortalNoticias * nuevo_portal = new scraping::extraccion::interfaceo::MedioPortalNoticias(medios::noticias::fabrica_portales::nuevo(web_portal));
+    //        nuevo_portal->setId(new herramientas::utiles::ID(id));
 
-            medios.push_back(nuevo_portal);
+    //        medios.push_back(nuevo_portal);
 
-            scraping::Logger::info("scraping", "portal de noticias '" + nuevo_portal->portal()->web() + "' agregada.");
+    //        scraping::Logger::info("scraping", "portal de noticias '" + nuevo_portal->portal()->web() + "' agregada.");
 
-            delete json_portal;
-        });
-    }
-
-
+    //        delete json_portal;
+    //    });
+    //}
 
     scraping::aplicacion::GestorMedios gestor_medios;
-    gestor_medios.almacenar(medios);
+    gestor_medios.almacenar(alta_de_medios);
 
-    std::for_each(medios.begin(), medios.end(), [=](scraping::extraccion::Medio * medio) { delete medio; });
+    std::for_each(alta_de_medios.begin(), alta_de_medios.end(), [=](scraping::extraccion::Medio * medio) { delete medio; });
 
     //std::experimental::filesystem::remove(path_json);
 }
