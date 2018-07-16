@@ -24,7 +24,10 @@ public:
 
     // METODOS
 
-    bool almacenar(const std::vector<scraping::extraccion::Medio*> & medios_a_almacenar) const;
+    // almacena en la base de datos en el momento.
+    bool almacenar_ya(const std::vector<scraping::extraccion::Medio*> & medios_a_almacenar) const;
+    // elimina de la base de datos en el momento.
+    bool eliminar_ya(const std::vector<scraping::extraccion::Medio*> & medios_a_eliminar) const;
 
     bool actualizarMedio(scraping::extraccion::Medio * medio_a_actualizar) const;
 

@@ -171,11 +171,21 @@ scraping::extraccion::Medio * GestorMedios::encontrar(scraping::extraccion::Medi
 
 // METODOS VIEJOS
 
-bool GestorMedios::almacenar(const std::vector<scraping::extraccion::Medio*>& medios_a_almacenar) const {
+bool GestorMedios::almacenar_ya(const std::vector<scraping::extraccion::Medio*>& medios_a_almacenar) const {
 
     std::for_each(medios_a_almacenar.begin(), medios_a_almacenar.end(),
         [=](scraping::extraccion::Medio * medio_a_almacenar) {
         this->almacenarMedio(medio_a_almacenar);
+    });
+    return true;
+}
+
+bool GestorMedios::eliminar_ya(const std::vector<scraping::extraccion::Medio*>& medios_a_eliminar) const {
+
+    std::for_each(medios_a_eliminar.begin(), medios_a_eliminar.end(),
+        [=](scraping::extraccion::Medio * medio_a_eliminar) {
+        medio_a_eliminar->setGrupo(medio_a_eliminar->getGrupoMedio());
+        scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->eliminar(medio_a_eliminar);
     });
     return true;
 }

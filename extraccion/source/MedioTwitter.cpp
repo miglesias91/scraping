@@ -59,12 +59,14 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         [=](medios::twitter::Tweet * tweet) {
 
         Contenido contenido_nuevo("", tweet->getTextoTweet(), "",tweet->getFechaCreacion());
+
+        mutex_modificacion_id_contenido.lock();
         contenido_nuevo.asignarNuevoId();
+        gestor_analisis_diario.almacenarIDActualContenido();
+        mutex_modificacion_id_contenido.unlock();
 
         this->nuevo(&contenido_nuevo);
-
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
-        gestor_analisis_diario.almacenarIDActualContenido();
 
         this->id_ultimo_tweet_analizado = tweet->getIdTweet();
 

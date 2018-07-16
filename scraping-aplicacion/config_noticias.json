@@ -25,7 +25,12 @@
     [
         {
             "categoria" : "todo",
-            "link" : "https://www.infobae.com/feeds/rss/"
+            "link" : "https://www.infobae.com/feeds/rss/",
+            "subcategorias" :
+            [
+            	{ "subcategoria" : "economia", "recurso_url" : "economia" },
+            	{ "subcategoria" : "politica", "recurso_url" : "politica" }
+            ]
         }
     ]
 }

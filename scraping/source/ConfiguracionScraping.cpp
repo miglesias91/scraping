@@ -34,12 +34,12 @@ std::string ConfiguracionScraping::prefijo_resultado_diario;
 
 std::string ConfiguracionScraping::clave_id_medio_actual;
 std::string ConfiguracionScraping::clave_id_contenido_actual;
-std::string ConfiguracionScraping::clave_id_checkpoint_actual;
 
 std::vector<std::string> ConfiguracionScraping::archivos_configs_logs;
 std::string ConfiguracionScraping::archivo_config_sentimiento;
 std::string ConfiguracionScraping::archivo_config_noticias;
-std::string ConfiguracionScraping::dir_checkpoint_resultados_diarios;
+std::string ConfiguracionScraping::path_checkpoint_resultados_diarios;
+std::string ConfiguracionScraping::dir_abms;
 
 void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configuracion)
 {
@@ -67,7 +67,8 @@ void ConfiguracionScraping::leerConfiguracion(std::string path_archivo_configura
 
         archivo_config_db_info_temporal = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBInfoTemporal());
         archivo_config_db_resultados_diarios = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios());
-        dir_checkpoint_resultados_diarios = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagDirCheckpointsResultadosDiarios());
+        path_checkpoint_resultados_diarios = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagPathCheckpointResultadosDiarios());
+        dir_abms = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagDirABMs());
 
         archivos_configs_logs = config_scraping_json->getAtributoArrayString(ConfiguracionScraping::tagArchivosConfigsLogs());
         archivo_config_sentimiento = config_scraping_json->getAtributoValorString(ConfiguracionScraping::tagArchivoConfigSentimiento());
@@ -195,8 +196,12 @@ std::string ConfiguracionScraping::archivoConfigNoticias()
     return archivo_config_noticias;
 }
 
-std::string scraping::ConfiguracionScraping::dirCheckpointResultadosDiarios() {
-    return dir_checkpoint_resultados_diarios;
+std::string scraping::ConfiguracionScraping::pathCheckpointResultadosDiarios() {
+    return path_checkpoint_resultados_diarios;
+}
+
+std::string scraping::ConfiguracionScraping::dirABMs() {
+    return dir_abms;
 }
 
 std::string ConfiguracionScraping::claveIDMedioActual()
@@ -207,11 +212,6 @@ std::string ConfiguracionScraping::claveIDMedioActual()
 std::string ConfiguracionScraping::claveIDContenidoActual()
 {
     return "id_contenido_actual";
-}
-
-uintmax_t ConfiguracionScraping::claveIDCheckpointActual()
-{
-    return 1234;
 }
 
 std::string ConfiguracionScraping::tagScrapingLocal()
@@ -229,8 +229,12 @@ std::string ConfiguracionScraping::tagArchivoConfigDBResultadosDiarios()
     return "db_resultados_diarios";
 }
 
-std::string ConfiguracionScraping::tagDirCheckpointsResultadosDiarios() {
-    return "dir_checkpoints_resultados_diarios";
+std::string ConfiguracionScraping::tagPathCheckpointResultadosDiarios() {
+    return "path_checkpoint_resultados_diarios";
+}
+
+std::string ConfiguracionScraping::tagDirABMs() {
+    return "dir_abms";
 }
 
 std::string ConfiguracionScraping::tagArchivoConfigDBInfoTemporal()

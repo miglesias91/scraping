@@ -8,6 +8,7 @@
 
 using namespace scraping::extraccion;
 
+std::mutex Medio::mutex_modificacion_id_contenido;
 herramientas::utiles::GestorIDs Medio::gestor_ids_medios;
 
 Medio::Medio(const std::string & prefijo_grupo, herramientas::utiles::Json * json)

@@ -3,6 +3,7 @@
 // stl
 #include <string>
 #include <vector>
+#include <mutex>
 #include <unordered_map>
 
 // utiles
@@ -45,26 +46,6 @@ public:
     virtual bool ids_historicos(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
     virtual bool ids_historicos(std::vector<uintmax_t> * vector);
 
-    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_para_depurar();
-
-    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_para_analizar();
-
-    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_para_preparar();
-
-    //std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_historias();
-
-    //std::vector<std::pair<std::string, std::vector<uintmax_t>>> pares_ids_para_depurar();
-
-    //std::vector<std::pair<std::string, std::vector<uintmax_t>>> pares_ids_para_analizar();
-
-    //std::vector<std::pair<std::string, std::vector<uintmax_t>>> pares_ids_para_preparar();
-
-    //std::vector<uintmax_t> ids_para_depurar();
-
-    //std::vector<uintmax_t> ids_para_analizar();
-
-    //std::vector<uintmax_t> ids_para_preparar();
-
     herramientas::utiles::Fecha getFechaContenidoHistoricoMasReciente();
 
     herramientas::utiles::Fecha getFechaContenidoHistoricoMasAntiguo();
@@ -96,19 +77,6 @@ public:
     virtual bool contenido_analizado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido);
     virtual bool contenido_preparado(const std::string & fecha_aaaammdd, const uintmax_t & id_contenido);
     virtual bool contenidos_preparados(const std::string & fecha_aaaammdd, const std::vector<uintmax_t> & ids_contenidos);
-    //void setMapaIDsContenidosParaDepurar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
-
-    //void setMapaIDsContenidosParaAnalizar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
-
-    //void setMapaIDsContenidosParaPreparar(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
-
-    //void setMapaIDsContenidosHistoricos(std::unordered_map<std::string, std::vector<uintmax_t>> mapa);
-
-    //virtual bool setearContenidoComoDepurado(Contenido* contenido);
-
-    //virtual bool setearContenidoComoAnalizado(Contenido* contenido);
-
-    //virtual bool setearContenidoComoHistorico(Contenido* contenido);
 
     // METODOS
 
@@ -125,9 +93,10 @@ public:
     virtual std::string prefijoGrupo();
 
     // CONSULTAS
+protected:
+    static std::mutex mutex_modificacion_id_contenido;
 
 private:
-
     static herramientas::utiles::GestorIDs gestor_ids_medios;
 
     // ATRIBUTOS

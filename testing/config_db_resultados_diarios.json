@@ -4,6 +4,7 @@
         "path_db" : "C:/temp/db_resultados_diarios_debug-testing",
         "almacenamiento_local" : true,
         "almacenamiento_distribuido" : false,
+        "solo_lectura" : false,
         "log_db" : "log_db_resultados-diarios.json"
     }
 }

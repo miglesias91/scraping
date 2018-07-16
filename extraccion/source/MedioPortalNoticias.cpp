@@ -65,12 +65,14 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         [=](medios::noticias::noticia * noticia) {
 
         Contenido contenido_nuevo(noticia->titulo(), noticia->contenido(), noticia->seccion(), noticia->fecha());
+
+        mutex_modificacion_id_contenido.lock();
         contenido_nuevo.asignarNuevoId();
+        gestor_analisis_diario.almacenarIDActualContenido();
+        mutex_modificacion_id_contenido.unlock();
 
         this->nuevo(&contenido_nuevo);
-
         gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
-        gestor_analisis_diario.almacenarIDActualContenido();
 
         this->fecha_ultima_noticia_analizada = noticia->fecha();
     });

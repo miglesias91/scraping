@@ -29,143 +29,110 @@
 #include <extraccion/include/MedioFacebook.h>
 #include <extraccion/include/MedioPortalNoticias.h>
 
-void actualizar_medios(const std::string & path_json) {
-
-    if (false == std::experimental::filesystem::exists(path_json)) {
-        return;
-    }
-
-    std::string contenido_json = "";
-    herramientas::utiles::FuncionesSistemaArchivos::leer(path_json, contenido_json);
-
-    herramientas::utiles::Json json(contenido_json);
-
-    //if(json.contieneAtributo("twitter")) {
-    //    std::vector<herramientas::utiles::Json*> json_twitters = json.getAtributoArrayJson("twitter");
-    //    std::for_each(json_twitters.begin(), json_twitters.end(), [=, &medios](herramientas::utiles::Json * json_twitter) {
-    //        uintmax_t id = json_twitter->getAtributoValorUint("id");
-    //        std::string nombre_cuenta = json_twitter->getAtributoValorString("cuenta");
-
-    //        scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter(nombre_cuenta);
-    //        nueva_cuenta->setId(new herramientas::utiles::ID(id));
-
-    //        medios.push_back(nueva_cuenta);
-
-    //        scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' agregada.");
-
-    //        delete json_twitter;
-    //    });
-    //}
-    //if(json.contieneAtributo("facebook")) {
-    //    std::vector<herramientas::utiles::Json*> json_facebooks = json.getAtributoArrayJson("facebook");
-    //    std::for_each(json_facebooks.begin(), json_facebooks.end(), [=, &medios](herramientas::utiles::Json * json_facebook) {
-    //        uintmax_t id = json_facebook->getAtributoValorUint("id");
-    //        std::string nombre_pagina = json_facebook->getAtributoValorString("pagina");
-
-    //        scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook(nombre_pagina);
-    //        nueva_pagina->setId(new herramientas::utiles::ID(id));
-
-    //        medios.push_back(nueva_pagina);
-
-    //        scraping::Logger::info("scraping", "pagina de facebook '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
-
-    //        delete json_facebook;
-    //    });
-    //}
-
-    //if(json.contieneAtributo("portales")) {
-    //    std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
-    //    std::for_each(json_portales.begin(), json_portales.end(), [=, &medios](herramientas::utiles::Json * json_portal) {
-    //        uintmax_t id = json_portal->getAtributoValorUint("id");
-    //        std::string web_portal = json_portal->getAtributoValorString("web");
-
-    //        scraping::extraccion::interfaceo::MedioPortalNoticias * nuevo_portal = new scraping::extraccion::interfaceo::MedioPortalNoticias(medios::noticias::fabrica_portales::nuevo(web_portal));
-    //        nuevo_portal->setId(new herramientas::utiles::ID(id));
-
-    //        medios.push_back(nuevo_portal);
-
-    //        scraping::Logger::info("scraping", "portal de noticias '" + nuevo_portal->portal()->web() + "' agregada.");
-
-    //        delete json_portal;
-    //    });
-    //}
+void registrar_abms() {
     std::vector<scraping::extraccion::Medio*> alta_de_medios;
     std::vector<scraping::extraccion::Medio*> baja_de_medios;
+    for (auto abm : std::experimental::filesystem::directory_iterator(scraping::ConfiguracionScraping::dirABMs())) {
 
-    if(json.contieneAtributo("twitter")) {
-        herramientas::utiles::Json* json_twitter = json.getAtributoValorJson("twitter");
+        std::string contenido_json = "";
+        herramientas::utiles::FuncionesSistemaArchivos::leer(abm.path().string(), contenido_json);
 
-        std::vector<herramientas::utiles::Json*> json_altas_twitter = json_twitter->getAtributoArrayJson("altas");
-        std::for_each(json_altas_twitter.begin(), json_altas_twitter.end(), [=, &alta_de_medios](herramientas::utiles::Json * json_twitter) {
-            uintmax_t id = json_twitter->getAtributoValorUint("id");
-            std::string nombre_cuenta = json_twitter->getAtributoValorString("cuenta");
+        herramientas::utiles::Json json(contenido_json);
 
-            scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter(nombre_cuenta);
-            nueva_cuenta->setId(new herramientas::utiles::ID(id));
+        if(json.contieneAtributo("twitter")) {
+            herramientas::utiles::Json* json_twitter = json.getAtributoValorJson("twitter");
 
-            alta_de_medios.push_back(nueva_cuenta);
+            std::vector<herramientas::utiles::Json*> json_altas_twitter = json_twitter->getAtributoArrayJson("altas");
+            std::for_each(json_altas_twitter.begin(), json_altas_twitter.end(), [=, &alta_de_medios](herramientas::utiles::Json * json_twitter) {
+                uintmax_t id = json_twitter->getAtributoValorUint("id");
+                std::string nombre_cuenta = json_twitter->getAtributoValorString("usuario");
 
-            scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' agregada.");
+                scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter(nombre_cuenta);
+                nueva_cuenta->setId(new herramientas::utiles::ID(id));
 
+                alta_de_medios.push_back(nueva_cuenta);
+
+                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' agregada.");
+
+                delete json_twitter;
+            });
+
+            std::vector<herramientas::utiles::Json*> json_bajas_twitter = json_twitter->getAtributoArrayJson("bajas");
+            std::for_each(json_bajas_twitter.begin(), json_bajas_twitter.end(), [=, &baja_de_medios](herramientas::utiles::Json * json_twitter) {
+                uintmax_t id = json_twitter->getAtributoValorUint("id");
+
+                scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter();
+                nueva_cuenta->setId(new herramientas::utiles::ID(id));
+
+                baja_de_medios.push_back(nueva_cuenta);
+
+                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' eliminada.");
+
+                delete json_twitter;
+            });
             delete json_twitter;
-        });
+        }
 
-        std::vector<herramientas::utiles::Json*> json_bajas_twitter = json_twitter->getAtributoArrayJson("bajas");
-        std::for_each(json_bajas_twitter.begin(), json_bajas_twitter.end(), [=, &baja_de_medios](herramientas::utiles::Json * json_twitter) {
-            uintmax_t id = json_twitter->getAtributoValorUint("id");
+        if(json.contieneAtributo("facebook")) {
+            herramientas::utiles::Json* json_facebook = json.getAtributoValorJson("facebook");
 
-            scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter();
-            nueva_cuenta->setId(new herramientas::utiles::ID(id));
+            std::vector<herramientas::utiles::Json*> json_altas_facebook = json_facebook->getAtributoArrayJson("altas");
+            std::for_each(json_altas_facebook.begin(), json_altas_facebook.end(), [=, &alta_de_medios](herramientas::utiles::Json * json_facebook) {
+                uintmax_t id = json_facebook->getAtributoValorUint("id");
+                std::string nombre_pagina = json_facebook->getAtributoValorString("usuario");
 
-            baja_de_medios.push_back(nueva_cuenta);
+                scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook(nombre_pagina);
+                nueva_pagina->setId(new herramientas::utiles::ID(id));
 
-            scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' eliminada.");
+                alta_de_medios.push_back(nueva_pagina);
 
-            delete json_twitter;
-        });
-        delete json_twitter;
+                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
+
+                delete json_facebook;
+            });
+
+            std::vector<herramientas::utiles::Json*> json_bajas_facebook = json_facebook->getAtributoArrayJson("bajas");
+            std::for_each(json_bajas_facebook.begin(), json_bajas_facebook.end(), [=, &baja_de_medios](herramientas::utiles::Json * json_facebook) {
+                uintmax_t id = json_facebook->getAtributoValorUint("id");
+
+                scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook();
+                nueva_pagina->setId(new herramientas::utiles::ID(id));
+
+                baja_de_medios.push_back(nueva_pagina);
+
+                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_pagina->pagina()->getNombre() + "' eliminada.");
+
+                delete json_facebook;
+            });
+            delete json_facebook;
+        }
+
+        if(json.contieneAtributo("portales")) {
+            std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
+            std::for_each(json_portales.begin(), json_portales.end(), [=, &alta_de_medios](herramientas::utiles::Json * json_portal) {
+                uintmax_t id = json_portal->getAtributoValorUint("id");
+                std::string web_portal = json_portal->getAtributoValorString("web");
+
+                scraping::extraccion::interfaceo::MedioPortalNoticias * nuevo_portal = new scraping::extraccion::interfaceo::MedioPortalNoticias(medios::noticias::fabrica_portales::nuevo(web_portal));
+                nuevo_portal->setId(new herramientas::utiles::ID(id));
+
+                alta_de_medios.push_back(nuevo_portal);
+
+                scraping::Logger::info("scraping", "portal de noticias '" + nuevo_portal->portal()->web() + "' agregada.");
+
+                delete json_portal;
+            });
+        }
+
+        std::experimental::filesystem::remove(abm);
     }
 
-    //if(json.contieneAtributo("facebook")) {
-    //    std::vector<herramientas::utiles::Json*> json_facebooks = json.getAtributoArrayJson("facebook");
-    //    std::for_each(json_facebooks.begin(), json_facebooks.end(), [=, &medios](herramientas::utiles::Json * json_facebook) {
-    //        uintmax_t id = json_facebook->getAtributoValorUint("id");
-    //        std::string nombre_pagina = json_facebook->getAtributoValorString("pagina");
-
-    //        scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook(nombre_pagina);
-    //        nueva_pagina->setId(new herramientas::utiles::ID(id));
-
-    //        medios.push_back(nueva_pagina);
-
-    //        scraping::Logger::info("scraping", "pagina de facebook '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
-
-    //        delete json_facebook;
-    //    });
-    //}
-
-    //if(json.contieneAtributo("portales")) {
-    //    std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
-    //    std::for_each(json_portales.begin(), json_portales.end(), [=, &medios](herramientas::utiles::Json * json_portal) {
-    //        uintmax_t id = json_portal->getAtributoValorUint("id");
-    //        std::string web_portal = json_portal->getAtributoValorString("web");
-
-    //        scraping::extraccion::interfaceo::MedioPortalNoticias * nuevo_portal = new scraping::extraccion::interfaceo::MedioPortalNoticias(medios::noticias::fabrica_portales::nuevo(web_portal));
-    //        nuevo_portal->setId(new herramientas::utiles::ID(id));
-
-    //        medios.push_back(nuevo_portal);
-
-    //        scraping::Logger::info("scraping", "portal de noticias '" + nuevo_portal->portal()->web() + "' agregada.");
-
-    //        delete json_portal;
-    //    });
-    //}
-
     scraping::aplicacion::GestorMedios gestor_medios;
-    gestor_medios.almacenar(alta_de_medios);
+    gestor_medios.almacenar_ya(alta_de_medios);
+    gestor_medios.eliminar_ya(baja_de_medios);
 
     std::for_each(alta_de_medios.begin(), alta_de_medios.end(), [=](scraping::extraccion::Medio * medio) { delete medio; });
-
-    //std::experimental::filesystem::remove(path_json);
+    std::for_each(baja_de_medios.begin(), baja_de_medios.end(), [=](scraping::extraccion::Medio * medio) { delete medio; });
 }
 
 int main(int argc, char ** argv)
@@ -179,7 +146,7 @@ int main(int argc, char ** argv)
     scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperarIDsActuales();
 
     // agrego nuevos medios
-    actualizar_medios("medios.json");
+    registrar_abms();
 
     // scrapeo
     scraping::Logger::info("scraping", "lanzo scraping twitter.");
