@@ -25,6 +25,10 @@ std::string MedioFacebook::getGrupoMedio() {
     return scraping::ConfiguracionScraping::prefijoFacebook();
 }
 
+std::string MedioFacebook::etiqueta() const {
+    return this->pagina_facebook->getNombre();
+}
+
 medios::facebook::Pagina * MedioFacebook::pagina() const {
     return this->pagina_facebook;
 }

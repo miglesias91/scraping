@@ -17,6 +17,7 @@ public:
     // GETTERS
 
     virtual std::string getGrupoMedio();
+    virtual std::string etiqueta() const;
 
     virtual medios::facebook::Pagina * pagina() const;
     virtual herramientas::utiles::Fecha fecha_ultima_publicacion() const;

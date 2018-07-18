@@ -20,6 +20,7 @@ public:
     // GETTERS
 
     virtual std::string getGrupoMedio();
+    virtual std::string etiqueta() const;
 
     virtual medios::noticias::portal * portal() const;
     virtual herramientas::utiles::Fecha fecha_ultima_noticia() const;

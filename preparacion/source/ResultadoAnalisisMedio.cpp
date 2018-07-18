@@ -25,6 +25,18 @@ ResultadoAnalisisMedio::~ResultadoAnalisisMedio() {
     });
 }
 
+void ResultadoAnalisisMedio::sentimiento_de_categoria(scraping::analisis::tecnicas::ResultadoSentimiento * resultado, const std::string & categoria) const {
+    *resultado = *(this->resultados.at(categoria)->getResultadoSentimiento());
+}
+
+void ResultadoAnalisisMedio::fuerza_en_noticia_de_categoria(scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado, const std::string & categoria) const {
+    *resultado = *(this->resultados.at(categoria)->getResultadoFuerzaEnNoticia());
+}
+
+void ResultadoAnalisisMedio::resultado_de_categoria(ResultadoAnalisisContenido * resultado, const std::string & categoria) const {
+    *resultado = *(this->resultados.at(categoria));
+}
+
 void ResultadoAnalisisMedio::resultados_por_categoria(std::unordered_map<std::string, ResultadoAnalisisContenido*>* resultados) {
     *resultados = this->resultados;
 }

@@ -25,6 +25,10 @@ std::string MedioTwitter::getGrupoMedio() {
     return scraping::ConfiguracionScraping::prefijoTwitter();
 }
 
+std::string MedioTwitter::etiqueta() const {
+    return this->cuenta_twitter->getNombre();
+}
+
 medios::twitter::Cuenta * MedioTwitter::cuenta() const {
     return this->cuenta_twitter;
 }

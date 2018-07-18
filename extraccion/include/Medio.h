@@ -57,6 +57,7 @@ public:
     static herramientas::utiles::GestorIDs * getGestorIDs();
     
     virtual std::string getGrupoMedio() = 0;
+    virtual std::string etiqueta() const = 0;
 
     // getters de IAlmacenable
 

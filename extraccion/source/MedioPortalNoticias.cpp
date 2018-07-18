@@ -28,6 +28,10 @@ std::string MedioPortalNoticias::getGrupoMedio() {
     return scraping::ConfiguracionScraping::prefijoPortalNoticias();
 }
 
+std::string MedioPortalNoticias::etiqueta() const {
+    return this->portal_noticias->web();
+}
+
 medios::noticias::portal * MedioPortalNoticias::portal() const {
     return this->portal_noticias.get();
 }

@@ -17,6 +17,7 @@ public:
     // GETTERS
     
     virtual std::string getGrupoMedio();
+    virtual std::string etiqueta() const;
 
     virtual medios::twitter::Cuenta * cuenta() const;
 
