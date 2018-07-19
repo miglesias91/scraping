@@ -2,7 +2,7 @@
     "log" :
     {
         "activado" : true,
-    	"nombre" : "scraping",
+    	"nombre" : "portales",
     	"tamanio_cola_async" : 0,
     	"agrupar_por_fecha" : true,
     	"nivel_log" : "debug",
@@ -10,7 +10,7 @@
     	"patron" : "",
     	"salidas" :
     	[
-            "log_scraping.log"
+            "log_scraping.log", "log_portales.log"
     	]
     }
 }

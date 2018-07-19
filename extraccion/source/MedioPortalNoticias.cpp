@@ -44,8 +44,16 @@ herramientas::utiles::Fecha MedioPortalNoticias::fecha_ultima_noticia() const {
     return this->fecha_ultima_noticia_analizada;
 }
 
+std::unordered_map<std::string, seccion> MedioPortalNoticias::secciones() const {
+    return this->info_secciones;
+}
+
 void MedioPortalNoticias::fecha_ultima_noticia(const herramientas::utiles::Fecha & fecha) {
     this->fecha_ultima_noticia_analizada = fecha;
+}
+
+void MedioPortalNoticias::secciones(const std::unordered_map<std::string, seccion>& info_secciones) {
+    this->info_secciones = info_secciones;
 }
 
 bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & lector) {
@@ -81,6 +89,21 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         this->fecha_ultima_noticia_analizada = noticia->fecha();
     });
 
+    std::unordered_map<std::string, std::vector<medios::noticias::noticia*>> noticias_por_seccion;
+    this->portal_noticias->noticias(&noticias_por_seccion);
+
+    // guardo info de cada seccion
+    std::for_each(noticias_por_seccion.begin(), noticias_por_seccion.end(), [=](std::pair<std::string, std::vector<medios::noticias::noticia*>> seccion_noticias) {
+        seccion info = this->info_secciones[seccion_noticias.first];
+        info.cantidad_total += seccion_noticias.second.size();
+        std::sort(seccion_noticias.second.begin(), seccion_noticias.second.end(), [](medios::noticias::noticia * a, medios::noticias::noticia * b) {
+            return a->fecha() < b->fecha();
+        });
+        info.mas_antiguo = (*seccion_noticias.second.begin())->fecha();
+        info.mas_reciente = (*(seccion_noticias.second.end() - 1))->fecha();
+        this->info_secciones[seccion_noticias.first] = info;
+    });
+
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
     gestor_analisis_diario.almacenarMedio(this);
 
@@ -95,8 +118,8 @@ Medio * MedioPortalNoticias::clonar() {
     MedioPortalNoticias * clon = new MedioPortalNoticias();
     clon->setId(this->getId()->copia());
     clon->setJson(this->getJson()->clonar());
-    //clon->portal(this->portal_noticias->clon());
     clon->portal(this->portal_noticias);
+    clon->secciones(this->info_secciones);
 
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa;
 
@@ -125,15 +148,41 @@ bool MedioPortalNoticias::armarJson() {
     this->getJson()->agregarAtributoValor("web_portal", this->portal_noticias->web());
     this->getJson()->agregarAtributoValor("fecha_ultima_publicacion_analizada", this->fecha_ultima_noticia_analizada.getStringAAAAMMDDHHmmSS());
 
+    std::vector<herramientas::utiles::Json*> json_info_secciones;
+    std::for_each(this->info_secciones.begin(), this->info_secciones.end(), [=, &json_info_secciones](std::pair<std::string, seccion> info_seccion) {
+        herramientas::utiles::Json * json_info_seccion = new herramientas::utiles::Json();
+        json_info_seccion->agregarAtributoValor("nombre", info_seccion.first);
+        json_info_seccion->agregarAtributoValor("cantidad_total", info_seccion.second.cantidad_total);
+        json_info_seccion->agregarAtributoValor("mas_antiguo", info_seccion.second.mas_antiguo.getStringAAAAMMDDHHmmSS());
+        json_info_seccion->agregarAtributoValor("mas_reciente", info_seccion.second.mas_reciente.getStringAAAAMMDDHHmmSS());
+
+        json_info_secciones.push_back(json_info_seccion);
+    });
+    this->getJson()->agregarAtributoArray("secciones", json_info_secciones);
+
+    std::for_each(json_info_secciones.begin(), json_info_secciones.end(), [](herramientas::utiles::Json* json) { delete json; });
     return true;
 }
 
 bool MedioPortalNoticias::parsearJson() {
     std::string web_portal = this->getJson()->getAtributoValorString("web_portal");
     std::string fecha_ultima_publicacion_analizada = this->getJson()->getAtributoValorString("fecha_ultima_publicacion_analizada");
+    std::vector<herramientas::utiles::Json*> json_info_secciones = this->getJson()->getAtributoArrayJson("secciones");
 
     this->portal_noticias = medios::noticias::fabrica_portales::nuevo(web_portal);
     this->fecha_ultima_noticia_analizada = herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(fecha_ultima_publicacion_analizada);
+
+    std::for_each(json_info_secciones.begin(), json_info_secciones.end(), [=](herramientas::utiles::Json* json_info_seccion) {
+        seccion info_seccion;
+        info_seccion.nombre = json_info_seccion->getAtributoValorString("nombre");
+        info_seccion.cantidad_total = json_info_seccion->getAtributoValorUint("cantidad_total");
+        info_seccion.mas_antiguo = herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(json_info_seccion->getAtributoValorString("mas_antiguo"));
+        info_seccion.mas_reciente = herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(json_info_seccion->getAtributoValorString("mas_reciente"));
+
+        this->info_secciones[info_seccion.nombre] = info_seccion;
+
+        delete json_info_seccion;
+    });
 
     return true;
 }

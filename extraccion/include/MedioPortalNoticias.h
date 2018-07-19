@@ -11,6 +11,13 @@
 #include <extraccion/include/Medio.h>
 
 namespace scraping { namespace extraccion { namespace interfaceo {
+
+    struct seccion {
+        std::string nombre;
+        uintmax_t cantidad_total;
+        herramientas::utiles::Fecha mas_reciente, mas_antiguo;
+    };
+
 class MedioPortalNoticias : public Medio {
 public:
     explicit MedioPortalNoticias(std::shared_ptr<medios::noticias::portal> portal_noticias);
@@ -24,11 +31,13 @@ public:
 
     virtual medios::noticias::portal * portal() const;
     virtual herramientas::utiles::Fecha fecha_ultima_noticia() const;
+    virtual std::unordered_map<std::string, seccion> secciones() const;
 
     // SETTERS
 
     virtual void portal(std::shared_ptr<medios::noticias::portal> portal_noticias);
     virtual void fecha_ultima_noticia(const herramientas::utiles::Fecha & fecha);
+    virtual void secciones(const std::unordered_map<std::string, seccion> & info_secciones);
 
     // METODOS
 
@@ -56,6 +65,8 @@ private:
     std::shared_ptr<medios::noticias::portal> portal_noticias;
 
     herramientas::utiles::Fecha fecha_ultima_noticia_analizada;
+
+    std::unordered_map<std::string, seccion> info_secciones;
 };
 };
 };

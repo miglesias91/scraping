@@ -99,8 +99,7 @@ bool Medio::ids_historicos(std::vector<uintmax_t> * vector) {
     return true;
 }
 
-herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasReciente()
-{
+herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasReciente() const {
     std::vector<std::pair<std::string, std::vector<uintmax_t>>> vector_mapa_ids_contenidos_historicos(this->mapa_ids_contenidos_historicos.begin(), this->mapa_ids_contenidos_historicos.end());
 
     if (vector_mapa_ids_contenidos_historicos.empty())
@@ -113,8 +112,7 @@ herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasReciente()
     return herramientas::utiles::Fecha::parsearFormatoAAAAMMDD((vector_mapa_ids_contenidos_historicos.end() - 1)->first);
 }
 
-herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasAntiguo()
-{
+herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasAntiguo() const {
     std::vector<std::pair<std::string, std::vector<uintmax_t>>> vector_mapa_ids_contenidos_historicos(this->mapa_ids_contenidos_historicos.begin(), this->mapa_ids_contenidos_historicos.end());
 
     if (vector_mapa_ids_contenidos_historicos.empty())
@@ -127,8 +125,7 @@ herramientas::utiles::Fecha Medio::getFechaContenidoHistoricoMasAntiguo()
     return herramientas::utiles::Fecha::parsearFormatoAAAAMMDD(vector_mapa_ids_contenidos_historicos.begin()->first);
 }
 
-uintmax_t Medio::getCantidadDeContenidosHistoricos()
-{
+uintmax_t Medio::getCantidadDeContenidosHistoricos() const {
     if (this->mapa_ids_contenidos_historicos.empty())
     {
         return 0;

@@ -46,11 +46,11 @@ public:
     virtual bool ids_historicos(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
     virtual bool ids_historicos(std::vector<uintmax_t> * vector);
 
-    herramientas::utiles::Fecha getFechaContenidoHistoricoMasReciente();
+    herramientas::utiles::Fecha getFechaContenidoHistoricoMasReciente() const;
 
-    herramientas::utiles::Fecha getFechaContenidoHistoricoMasAntiguo();
+    herramientas::utiles::Fecha getFechaContenidoHistoricoMasAntiguo() const;
 
-    uintmax_t getCantidadDeContenidosHistoricos();
+    uintmax_t getCantidadDeContenidosHistoricos() const;
 
     static std::string getClaveIDActual();
 

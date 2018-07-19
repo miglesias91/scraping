@@ -230,35 +230,35 @@ TEST_CASE("extraer_twitter", "extraccion[.]") {
 
     scraping::extraccion::interfaceo::MedioTwitter cuenta("clarincom");
     cuenta.asignarNuevoId();
-    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->almacenar(&cuenta);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&cuenta);
 
     scraping::extraccion::extractor ex;
     ex.extraer_twitter();
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->eliminar(&cuenta);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->eliminar(&cuenta);
 }
 
 TEST_CASE("extraer_facebook", "extraccion[.]") {
 
     scraping::extraccion::interfaceo::MedioFacebook pagina("clarincom");
     pagina.asignarNuevoId();
-    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->almacenar(&pagina);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&pagina);
 
     scraping::extraccion::extractor ex;
     ex.extraer_facebook();
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->eliminar(&pagina);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->eliminar(&pagina);
 }
 
-TEST_CASE("extraer_portal", "extraccion[.]") {
+TEST_CASE("extraer_portal", "extraccion") {
 
     scraping::extraccion::interfaceo::MedioPortalNoticias portal(std::make_shared<medios::noticias::clarin>());
     portal.asignarNuevoId();
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->almacenar(&portal);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(&portal);
 
     scraping::extraccion::extractor ex;
     ex.extraer_portales();
 
-    scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->eliminar(&portal);
+    scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->eliminar(&portal);
 }
