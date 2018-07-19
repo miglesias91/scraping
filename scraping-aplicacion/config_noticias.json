@@ -1,36 +1,48 @@
 {
     "la nacion" :
-    [
-        {
-            "categoria" : "politica",
-            "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=30"
-        },
-        {
-            "categoria" : "economia",
-            "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=272"
-        }
-    ],
+    {
+        "web" : "lanacion.com",
+        "canales" :
+        [
+            {
+                "categoria" : "politica",
+                "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=30"
+            },
+            {
+                "categoria" : "economia",
+                "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=272"
+            }
+        ]
+    },
     "clarin" :
-    [
-        {
-            "categoria" : "politica",
-            "link" : "https://www.clarin.com/rss/politica/"
-        },
-        {
-            "categoria" : "economia",
-            "link" : "https://www.clarin.com/rss/economia/"
-        }
-    ],
+    {
+        "web" : "clarin.com",
+        "canales" :
+        [
+            {
+                "categoria" : "politica",
+                "link" : "https://www.clarin.com/rss/politica/"
+            },
+            {
+                "categoria" : "economia",
+                "link" : "https://www.clarin.com/rss/economia/"
+            }
+        ]
+    },
     "infobae" :
-    [
-        {
-            "categoria" : "todo",
-            "link" : "https://www.infobae.com/feeds/rss/",
-            "subcategorias" :
-            [
-            	{ "subcategoria" : "economia", "recurso_url" : "economia" },
-            	{ "subcategoria" : "politica", "recurso_url" : "politica" }
-            ]
-        }
-    ]
+    {
+        "web" : "infobae.com",
+        "canales" : 
+        [
+            {
+                "categoria" : "todo",
+                "link" : "https://www.infobae.com/feeds/rss/",
+                "subcategorias" :
+                [
+                	{ "subcategoria" : "economia", "recurso_url" : "economia" },
+                	{ "subcategoria" : "politica", "recurso_url" : "politica" }
+                ]
+            }
+        ]
+    }
 }

@@ -108,8 +108,10 @@ void registrar_abms() {
         }
 
         if(json.contieneAtributo("portales")) {
-            std::vector<herramientas::utiles::Json*> json_portales = json.getAtributoArrayJson("portales");
-            std::for_each(json_portales.begin(), json_portales.end(), [=, &alta_de_medios](herramientas::utiles::Json * json_portal) {
+            herramientas::utiles::Json* json_portales = json.getAtributoValorJson("portales");
+
+            std::vector<herramientas::utiles::Json*> json_altas_portales = json_portales->getAtributoArrayJson("altas");
+            std::for_each(json_altas_portales.begin(), json_altas_portales.end(), [=, &alta_de_medios](herramientas::utiles::Json * json_portal) {
                 uintmax_t id = json_portal->getAtributoValorUint("id");
                 std::string web_portal = json_portal->getAtributoValorString("web");
 
@@ -122,6 +124,7 @@ void registrar_abms() {
 
                 delete json_portal;
             });
+            delete json_portales;
         }
 
         std::experimental::filesystem::remove(abm);
