@@ -30,6 +30,9 @@ public:
     virtual ~Medio();
 
     // GETTERS
+    virtual uintmax_t tamanio() const;
+    virtual void tamanio(const uintmax_t& tamanio_total);
+
     virtual bool ids_para_depurar(std::unordered_map<std::string, std::vector<uintmax_t>> * mapa);
     virtual bool ids_para_depurar(std::vector<std::pair<std::string, std::vector<uintmax_t>>> * pares);
     virtual bool ids_para_depurar(std::vector<uintmax_t> * vector);
@@ -97,17 +100,16 @@ public:
 protected:
     static std::mutex mutex_modificacion_id_contenido;
 
+    uintmax_t tamanio_total;
+
 private:
     static herramientas::utiles::GestorIDs gestor_ids_medios;
 
     // ATRIBUTOS
 
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_contenidos_para_depurar;
-
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_contenidos_para_analizar;
-    
     std::unordered_map<std::string,std::vector<uintmax_t>> mapa_ids_contenidos_para_preparar;
-
     std::unordered_map<std::string, std::vector<uintmax_t>> mapa_ids_contenidos_historicos;
 
     std::string prefijo_grupo;

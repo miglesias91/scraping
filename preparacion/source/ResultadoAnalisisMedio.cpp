@@ -25,16 +25,31 @@ ResultadoAnalisisMedio::~ResultadoAnalisisMedio() {
     });
 }
 
-void ResultadoAnalisisMedio::sentimiento_de_categoria(scraping::analisis::tecnicas::ResultadoSentimiento * resultado, const std::string & categoria) const {
+bool ResultadoAnalisisMedio::sentimiento_de_categoria(scraping::analisis::tecnicas::ResultadoSentimiento * resultado, const std::string & categoria) const {
+    if (0 == this->resultados.count(categoria)) {
+        return false;
+    }
+
     *resultado = *(this->resultados.at(categoria)->getResultadoSentimiento());
+    return true;
 }
 
-void ResultadoAnalisisMedio::fuerza_en_noticia_de_categoria(scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado, const std::string & categoria) const {
+bool ResultadoAnalisisMedio::fuerza_en_noticia_de_categoria(scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia * resultado, const std::string & categoria) const {
+    if (0 == this->resultados.count(categoria)) {
+        return false;
+    }
+
     *resultado = *(this->resultados.at(categoria)->getResultadoFuerzaEnNoticia());
+    return true;
 }
 
-void ResultadoAnalisisMedio::resultado_de_categoria(ResultadoAnalisisContenido * resultado, const std::string & categoria) const {
+bool ResultadoAnalisisMedio::resultado_de_categoria(ResultadoAnalisisContenido * resultado, const std::string & categoria) const {
+    if (0 == this->resultados.count(categoria)) {
+        return false;
+    }
+
     *resultado = *(this->resultados.at(categoria));
+    return true;
 }
 
 void ResultadoAnalisisMedio::resultados_por_categoria(std::unordered_map<std::string, ResultadoAnalisisContenido*>* resultados) {

@@ -62,7 +62,7 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
     std::for_each(tweets.begin(), tweets.end(),
         [=](medios::twitter::Tweet * tweet) {
 
-        Contenido contenido_nuevo("", tweet->getTextoTweet(), "",tweet->getFechaCreacion());
+        Contenido contenido_nuevo("", tweet->getTextoTweet(), "", tweet->getFechaCreacion());
 
         mutex_modificacion_id_contenido.lock();
         contenido_nuevo.asignarNuevoId();
@@ -74,11 +74,15 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
 
         this->id_ultimo_tweet_analizado = tweet->getIdTweet();
 
+        if(tweet->getTextoTweet().size()) {
+            this->tamanio_total += std::log10(tweet->getTextoTweet().size());
+        }
+
         delete tweet;
     });
 
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
-    gestor_analisis_diario.almacenarMedio(this);
+    //gestor_analisis_diario.almacenarMedio(this);
 
     scraping::aplicacion::GestorMedios gestor_medios;
     // almaceno el id del ultimo tweet analizado.

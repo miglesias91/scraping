@@ -13,8 +13,8 @@
 namespace scraping { namespace extraccion { namespace interfaceo {
 
     struct seccion {
-        std::string nombre;
-        uintmax_t cantidad_total;
+        std::string nombre = "";
+        uintmax_t cantidad_total = 0, tamanio_total = 0;
         herramientas::utiles::Fecha mas_reciente, mas_antiguo;
     };
 

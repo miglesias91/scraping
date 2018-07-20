@@ -101,11 +101,18 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         });
         info.mas_antiguo = (*seccion_noticias.second.begin())->fecha();
         info.mas_reciente = (*(seccion_noticias.second.end() - 1))->fecha();
+
+        std::for_each(seccion_noticias.second.begin(), seccion_noticias.second.end(), [&info](medios::noticias::noticia * noti){
+            if(noti->contenido().size()) {
+                info.tamanio_total += std::log10(noti->contenido().size());
+            }
+        });
+
         this->info_secciones[seccion_noticias.first] = info;
     });
 
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
-    gestor_analisis_diario.almacenarMedio(this);
+    //gestor_analisis_diario.almacenarMedio(this);
 
     // almaceno el id del ultimo publicacion analizado.
     scraping::aplicacion::GestorMedios gestor_medios;
@@ -153,6 +160,7 @@ bool MedioPortalNoticias::armarJson() {
         herramientas::utiles::Json * json_info_seccion = new herramientas::utiles::Json();
         json_info_seccion->agregarAtributoValor("nombre", info_seccion.first);
         json_info_seccion->agregarAtributoValor("cantidad_total", info_seccion.second.cantidad_total);
+        json_info_seccion->agregarAtributoValor("tamanio_total", info_seccion.second.tamanio_total);
         json_info_seccion->agregarAtributoValor("mas_antiguo", info_seccion.second.mas_antiguo.getStringAAAAMMDDHHmmSS());
         json_info_seccion->agregarAtributoValor("mas_reciente", info_seccion.second.mas_reciente.getStringAAAAMMDDHHmmSS());
 
@@ -176,6 +184,7 @@ bool MedioPortalNoticias::parsearJson() {
         seccion info_seccion;
         info_seccion.nombre = json_info_seccion->getAtributoValorString("nombre");
         info_seccion.cantidad_total = json_info_seccion->getAtributoValorUint("cantidad_total");
+        info_seccion.tamanio_total = json_info_seccion->getAtributoValorUint("tamanio_total");
         info_seccion.mas_antiguo = herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(json_info_seccion->getAtributoValorString("mas_antiguo"));
         info_seccion.mas_reciente = herramientas::utiles::Fecha::parsearFormatoAAAAMMDDHHmmSS(json_info_seccion->getAtributoValorString("mas_reciente"));
 

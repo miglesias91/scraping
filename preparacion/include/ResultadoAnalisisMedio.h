@@ -26,9 +26,13 @@ public:
     virtual ~ResultadoAnalisisMedio();
 
     // GETTERS
-    void sentimiento_de_categoria(scraping::analisis::tecnicas::ResultadoSentimiento* resultado, const std::string & categoria) const;
-    void fuerza_en_noticia_de_categoria(scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia* resultado, const std::string & categoria) const;
-    void resultado_de_categoria(ResultadoAnalisisContenido* resultado, const std::string & categoria) const;
+
+    // si no existe la categoria, devuelve false.
+    bool sentimiento_de_categoria(scraping::analisis::tecnicas::ResultadoSentimiento* resultado, const std::string & categoria) const;
+    // si no existe la categoria, devuelve false.
+    bool fuerza_en_noticia_de_categoria(scraping::analisis::tecnicas::ResultadoFuerzaEnNoticia* resultado, const std::string & categoria) const;
+    // si no existe la categoria, devuelve false.
+    bool resultado_de_categoria(ResultadoAnalisisContenido* resultado, const std::string & categoria) const;
     void resultados_por_categoria(std::unordered_map<std::string, ResultadoAnalisisContenido*> * resultados);
 
     // SETTERS

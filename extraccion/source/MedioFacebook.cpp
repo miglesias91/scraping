@@ -72,10 +72,14 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
 
         this->fecha_ultima_publicacion_analizada = publicacion->getFechaCreacion();
 
+        if(publicacion->getTextoPublicacion().size()) {
+            this->tamanio_total += std::log10(publicacion->getTextoPublicacion().size());
+        }
+
         delete publicacion;
     });
     // almaceno los datos de ids analizados y no analizados, agruapados por fecha.
-    gestor_analisis_diario.almacenarMedio(this);
+    //gestor_analisis_diario.almacenarMedio(this);
 
     scraping::aplicacion::GestorMedios gestor_medios;
     // almaceno el id del ultimo publicacion analizado.

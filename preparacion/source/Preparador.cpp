@@ -64,7 +64,7 @@ bool Preparador::preparar(scraping::extraccion::Medio * medio) const {
         mutex_modificacion_resultado_diario.lock();
         gestor_analisis.recuperarResultadoAnalisisDiario(&resultado_diario);  // recupero resultado diario para la fecha en cuestion,
         resultado_diario.agregarResultadoDeMedio(resultado_por_fecha);  // agrego los resultados del medio y
-        gestor_analisis.almacenarResultadoAnalisisDiario(&resultado_diario);  // almaceno el resultado diario actualizado con la info del medio.
+        gestor_analisis.modificarResultadoAnalisisDiario(&resultado_diario);  // almaceno el resultado diario actualizado con la info del medio.
         mutex_modificacion_resultado_diario.unlock();
 
         medio->contenidos_preparados(fecha_ids.first, fecha_ids.second);

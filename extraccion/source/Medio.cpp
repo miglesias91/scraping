@@ -12,9 +12,17 @@ std::mutex Medio::mutex_modificacion_id_contenido;
 herramientas::utiles::GestorIDs Medio::gestor_ids_medios;
 
 Medio::Medio(const std::string & prefijo_grupo, herramientas::utiles::Json * json)
-    : prefijo_grupo(prefijo_grupo), IAlmacenable(prefijo_grupo), IContieneJson(json), IHashable() {}
+    : prefijo_grupo(prefijo_grupo), IAlmacenable(prefijo_grupo), IContieneJson(json), IHashable(), tamanio_total(0) {}
 
 Medio::~Medio() {}
+
+uintmax_t Medio::tamanio() const {
+    return this->tamanio_total;
+}
+
+void Medio::tamanio(const uintmax_t & tamanio_total) {
+    this->tamanio_total = tamanio_total;
+}
 
 bool Medio::ids_para_depurar(std::unordered_map<std::string, std::vector<uintmax_t>> * mapa) {
     *mapa = this->mapa_ids_contenidos_para_depurar;
@@ -206,6 +214,7 @@ std::string Medio::getValorAlmacenable()
     json_almacenable.agregarAtributoArray("mapa_ids_contenidos_para_analizar", json_mapa_ids_contenidos_para_analizar);
     json_almacenable.agregarAtributoArray("mapa_ids_contenidos_para_preparar", json_mapa_ids_contenidos_para_preparar);
     json_almacenable.agregarAtributoArray("mapa_ids_contenidos_historicos", json_mapa_ids_contenidos_historicos);
+    json_almacenable.agregarAtributoValor("tamanio_total", this->tamanio_total);
 
     // seteo la info del medio.
     herramientas::utiles::Json* json_info_medio = this->getJson();
@@ -369,6 +378,7 @@ void Medio::parsearValorAlmacenable(std::string valor_almacenable)
     std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_para_analizar = json_almacenable.getAtributoArrayJson("mapa_ids_contenidos_para_analizar");
     std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_para_preparar = json_almacenable.getAtributoArrayJson("mapa_ids_contenidos_para_preparar");
     std::vector<herramientas::utiles::Json*> json_mapa_ids_contenidos_historicos = json_almacenable.getAtributoArrayJson("mapa_ids_contenidos_historicos");
+    this->tamanio_total = json_almacenable.getAtributoValorUint("tamanio_total");
 
     std::for_each(json_mapa_ids_contenidos_para_depurar.begin(), json_mapa_ids_contenidos_para_depurar.end(),
         [this](herramientas::utiles::Json * json_contenidos_por_fecha) {

@@ -42,6 +42,10 @@ public:
     bool recuperarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_recuperar) const;
     bool recuperarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_recuperar) const;
 
+    bool modificarMedio(scraping::extraccion::Medio * medio_a_almacenar) const;
+    bool modificarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_almacenar) const;
+    bool modificarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_almacenar) const;
+
     void recuperarIDActualContenido() const;
 
     // CONSULTAS
