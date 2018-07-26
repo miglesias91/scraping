@@ -38,14 +38,13 @@ herramientas::utiles::Json * ResultadoAnalisisDiario::getRegistroAExportar()
     return nullptr;
 }
 
-ResultadoAnalisisMedio * ResultadoAnalisisDiario::getResultadoMedio(unsigned long long int id_medio)
-{
+ResultadoAnalisisMedio * ResultadoAnalisisDiario::getResultadoMedio(unsigned long long int id_medio) const {
     if (false == this->existeResultadoDeMedio(id_medio))
     {
         return nullptr;
     }
 
-    return this->resultados_medios[id_medio];
+    return this->resultados_medios.at(id_medio);
 }
 
 herramientas::utiles::ID ResultadoAnalisisDiario::getIDDiario()
@@ -188,7 +187,7 @@ std::string ResultadoAnalisisDiario::prefijoGrupo()
 
 // CONSULTAS
 
-bool ResultadoAnalisisDiario::existeResultadoDeMedio(unsigned long long int id_medio)
+bool ResultadoAnalisisDiario::existeResultadoDeMedio(unsigned long long int id_medio) const
 {
     if (this->resultados_medios.end() == this->resultados_medios.find(id_medio))
     {

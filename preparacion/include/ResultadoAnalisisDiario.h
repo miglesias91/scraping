@@ -20,7 +20,7 @@ public:
 
     virtual herramientas::utiles::Json * getRegistroAExportar();
 
-    virtual ResultadoAnalisisMedio * getResultadoMedio(unsigned long long int id_medio);
+    virtual ResultadoAnalisisMedio * getResultadoMedio(unsigned long long int id_medio) const;
 
     static herramientas::utiles::ID getIDDiario();
 
@@ -57,7 +57,7 @@ public:
     virtual std::string prefijoGrupo();
 
     // CONSULTAS
-    bool existeResultadoDeMedio(unsigned long long int id_medio);
+    bool existeResultadoDeMedio(unsigned long long int id_medio) const;
 
 private:
 
