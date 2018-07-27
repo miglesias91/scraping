@@ -99,7 +99,7 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         std::sort(seccion_noticias.second.begin(), seccion_noticias.second.end(), [](medios::noticias::noticia * a, medios::noticias::noticia * b) {
             return a->fecha() < b->fecha();
         });
-        if (info.mas_antiguo > (*seccion_noticias.second.begin())->fecha()) {
+        if (info.mas_antiguo == herramientas::utiles::Fecha() || info.mas_antiguo > (*seccion_noticias.second.begin())->fecha()) {
             info.mas_antiguo = (*seccion_noticias.second.begin())->fecha();
         }
         info.mas_reciente = (*(seccion_noticias.second.end() - 1))->fecha();
