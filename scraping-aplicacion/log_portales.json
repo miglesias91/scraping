@@ -10,7 +10,7 @@
     	"patron" : "",
     	"salidas" :
     	[
-            "log_scraping.log", "log_portales.log"
+            "scraping.log", "portales.log"
     	]
     }
 }

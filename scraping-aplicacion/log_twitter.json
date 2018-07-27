@@ -10,7 +10,7 @@
     	"patron" : "",
     	"salidas" :
     	[
-            "log_scraping.log", "log_twitter.log"
+            "scraping.log", "twitter.log"
     	]
     }
 }

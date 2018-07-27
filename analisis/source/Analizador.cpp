@@ -38,7 +38,7 @@ bool Analizador::analizar(scraping::extraccion::Medio * medio) const {
         depuracion::ContenidoDepurado * contenido = new depuracion::ContenidoDepurado();
         contenido->setId(new herramientas::utiles::ID(id));
 
-        gestor_analisis.recuperar(contenido);
+        gestor_analisis.recuperarContenido(contenido);
 
         contenidos_a_analizar.push_back(contenido);
     });
@@ -62,7 +62,7 @@ bool Analizador::analizar(scraping::extraccion::Medio * medio) const {
 
     scraping::aplicacion::GestorMedios gestor_medios;
     std::for_each(resultados.begin(), resultados.end(), [=](preparacion::ResultadoAnalisisContenido * resultado) {
-        gestor_analisis.almacenarResultadoAnalisis(resultado);
+        gestor_analisis.modificarResultadoAnalisis(resultado);  // si existe, lo reemplaza
 
         medio->contenido_analizado(resultado->fecha().getStringAAAAMMDD(), resultado->getId()->numero());
         gestor_medios.actualizarMedio(medio);

@@ -10,8 +10,8 @@
     	"patron" : "",
     	"salidas" :
     	[
-            "log_temporal.log",
-            "log_info-temporal.log"
+            "scraping.log",
+            "info-temporal.log"
     	]
     }
 }

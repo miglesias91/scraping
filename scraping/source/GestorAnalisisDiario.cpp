@@ -28,8 +28,20 @@ bool GestorAnalisisDiario::almacenar(scraping::IAlmacenable * contenido_a_almace
     return scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->almacenar(contenido_a_almacenar);
 }
 
-bool GestorAnalisisDiario::almacenarContenido(scraping::extraccion::Contenido * contenido_a_almacenar) const {
+bool GestorAnalisisDiario::modificar(scraping::IAlmacenable * contenido_a_modificar) const {
+    return scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->modificar(contenido_a_modificar);
+}
+
+bool GestorAnalisisDiario::recuperarContenido(scraping::IAlmacenable * contenido_a_recuperar) const {
+    return scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->recuperar(contenido_a_recuperar);
+}
+
+bool GestorAnalisisDiario::almacenarContenido(scraping::IAlmacenable * contenido_a_almacenar) const {
     return scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->almacenar(contenido_a_almacenar);
+}
+
+bool GestorAnalisisDiario::modificarContenido(scraping::IAlmacenable * contenido_a_modificar) const {
+    return scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->modificar(contenido_a_modificar);
 }
 
 bool GestorAnalisisDiario::almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar)  const {
@@ -48,9 +60,9 @@ bool GestorAnalisisDiario::almacenarIDActualContenido() const {
     return scraping::IAdministradorScraping::getInstanciaAdminInfoTemporal()->almacenarIDActual<scraping::extraccion::Contenido>();
 }
 
-bool GestorAnalisisDiario::recuperarContenido(scraping::extraccion::Contenido * contenido_a_almacenar) const {
-    return IAdministradorScraping::getInstanciaAdminInfoTemporal()->recuperar(contenido_a_almacenar);
-}
+//bool GestorAnalisisDiario::recuperarContenido(scraping::extraccion::Contenido * contenido_a_almacenar) const {
+//    return IAdministradorScraping::getInstanciaAdminInfoTemporal()->recuperar(contenido_a_almacenar);
+//}
 
 bool GestorAnalisisDiario::recuperarMedio(scraping::extraccion::Medio * medio_a_almacenar) const {
     return IAdministradorScraping::getInstanciaAdminResultadosDiarios()->recuperar(medio_a_almacenar);

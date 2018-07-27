@@ -29,15 +29,18 @@ public:
 
     bool recuperar(scraping::IAlmacenable * contenido_a_recuperar) const;
     bool almacenar(scraping::IAlmacenable * contenido_a_almacenar) const;
+    bool modificar(scraping::IAlmacenable * contenido_a_modificar) const;
 
-    bool almacenarContenido(scraping::extraccion::Contenido * contenido_a_almacenar) const;
+    bool recuperarContenido(scraping::IAlmacenable * contenido_a_recuperar) const;
+    bool almacenarContenido(scraping::IAlmacenable * contenido_a_almacenar) const;
+    bool modificarContenido(scraping::IAlmacenable * contenido_a_modificar) const;
 
     bool almacenarMedio(scraping::extraccion::Medio * medio_a_almacenar) const;
     bool almacenarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_almacenar) const;
     bool almacenarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_almacenar) const;
     bool almacenarIDActualContenido() const;
 
-    bool recuperarContenido(scraping::extraccion::Contenido * contenido_a_recuperar) const;
+    //bool recuperarContenido(scraping::extraccion::Contenido * contenido_a_recuperar) const;
     bool recuperarMedio(scraping::extraccion::Medio * medio_a_recuperar) const;
     bool recuperarResultadoAnalisis(scraping::analisis::ResultadoAnalisis * resultado_a_recuperar) const;
     bool recuperarResultadoAnalisisDiario(scraping::preparacion::ResultadoAnalisisDiario * resultado_a_recuperar) const;

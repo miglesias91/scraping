@@ -70,7 +70,8 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         mutex_modificacion_id_contenido.unlock();
 
         this->nuevo(&contenido_nuevo);
-        gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
+        // gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
+        gestor_analisis_diario.modificarContenido(&contenido_nuevo);  // si existe contenido con el mismo id, lo reemplaza
 
         this->id_ultimo_tweet_analizado = tweet->getIdTweet();
 

@@ -84,7 +84,8 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
         mutex_modificacion_id_contenido.unlock();
 
         this->nuevo(&contenido_nuevo);
-        gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
+        //gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
+        gestor_analisis_diario.modificarContenido(&contenido_nuevo);  // si existe un contenido con el mismo id, lo reemplaza
 
         this->fecha_ultima_noticia_analizada = noticia->fecha();
     });

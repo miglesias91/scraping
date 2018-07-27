@@ -79,7 +79,8 @@ bool Depurador::depurar(extraccion::Medio * medio) const {
 
     scraping::aplicacion::GestorMedios gestor_medios;
     std::for_each(contenidos_depurados.begin(), contenidos_depurados.end(), [=](ContenidoDepurado * contenido_depurado) {
-        gestor_analisis.almacenar(contenido_depurado);
+        //gestor_analisis.almacenar(contenido_depurado);
+        gestor_analisis.modificarContenido(contenido_depurado);  // si existe, lo reemplaza
 
         medio->contenido_depurado(contenido_depurado->fecha().getStringAAAAMMDD(), contenido_depurado->getId()->numero());
         gestor_medios.actualizarMedio(medio);

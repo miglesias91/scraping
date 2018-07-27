@@ -68,7 +68,8 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
         mutex_modificacion_id_contenido.unlock();
 
         this->nuevo(&contenido_nuevo);
-        gestor_analisis_diario.almacenarContenido(&contenido_nuevo);
+        // gestor_analisis_diario.almacenarContenido(&contenido_nuevo);  // si existe, lo reemplaza
+        gestor_analisis_diario.modificarContenido(&contenido_nuevo);  // si existe, lo reemplaza
 
         this->fecha_ultima_publicacion_analizada = publicacion->getFechaCreacion();
 

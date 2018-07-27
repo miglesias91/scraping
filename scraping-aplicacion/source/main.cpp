@@ -57,18 +57,15 @@ void registrar_abms() {
                 delete json_twitter;
             });
 
-            std::vector<herramientas::utiles::Json*> json_bajas_twitter = json_twitter->getAtributoArrayJson("bajas");
-            std::for_each(json_bajas_twitter.begin(), json_bajas_twitter.end(), [=, &baja_de_medios](herramientas::utiles::Json * json_twitter) {
-                uintmax_t id = json_twitter->getAtributoValorUint("id");
+            std::vector<uintmax_t> json_bajas_twitter = json_twitter->getAtributoArrayUint("bajas");
+            std::for_each(json_bajas_twitter.begin(), json_bajas_twitter.end(), [=, &baja_de_medios](uintmax_t id_twitter) {
 
                 scraping::extraccion::interfaceo::MedioTwitter * nueva_cuenta = new scraping::extraccion::interfaceo::MedioTwitter();
-                nueva_cuenta->setId(new herramientas::utiles::ID(id));
+                nueva_cuenta->setId(new herramientas::utiles::ID(id_twitter));
 
                 baja_de_medios.push_back(nueva_cuenta);
 
-                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_cuenta->cuenta()->getNombre() + "' eliminada.");
-
-                delete json_twitter;
+                scraping::Logger::info("scraping", "cuenta de twitter '" + std::to_string(id_twitter) + "' eliminada.");
             });
             delete json_twitter;
         }
@@ -86,21 +83,19 @@ void registrar_abms() {
 
                 alta_de_medios.push_back(nueva_pagina);
 
-                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
+                scraping::Logger::info("scraping", "cuenta de facebook '" + nueva_pagina->pagina()->getNombre() + "' agregada.");
 
                 delete json_facebook;
             });
 
-            std::vector<herramientas::utiles::Json*> json_bajas_facebook = json_facebook->getAtributoArrayJson("bajas");
-            std::for_each(json_bajas_facebook.begin(), json_bajas_facebook.end(), [=, &baja_de_medios](herramientas::utiles::Json * json_facebook) {
-                uintmax_t id = json_facebook->getAtributoValorUint("id");
-
+            std::vector<uintmax_t> json_bajas_facebook = json_facebook->getAtributoArrayUint("bajas");
+            std::for_each(json_bajas_facebook.begin(), json_bajas_facebook.end(), [=, &baja_de_medios](uintmax_t id_facebook) {
                 scraping::extraccion::interfaceo::MedioFacebook * nueva_pagina = new scraping::extraccion::interfaceo::MedioFacebook();
-                nueva_pagina->setId(new herramientas::utiles::ID(id));
+                nueva_pagina->setId(new herramientas::utiles::ID(id_facebook));
 
                 baja_de_medios.push_back(nueva_pagina);
 
-                scraping::Logger::info("scraping", "cuenta de twitter '" + nueva_pagina->pagina()->getNombre() + "' eliminada.");
+                scraping::Logger::info("scraping", "cuenta de facebook '" + std::to_string(id_facebook) + "' eliminada.");
 
                 delete json_facebook;
             });

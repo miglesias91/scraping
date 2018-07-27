@@ -10,8 +10,8 @@
     	"patron" : "",
     	"salidas" :
     	[
-    		"log_scraping.log",
-            "log_db_resultados-diarios.log"
+    		"scraping.log",
+            "resultados-diarios.log"
     	]
     }
 }
