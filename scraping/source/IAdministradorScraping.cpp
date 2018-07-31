@@ -150,14 +150,6 @@ IAdministradorScraping* IAdministradorScraping::getInstanciaAdminResultadosDiari
 }
 
 bool IAdministradorScraping::guardar_checkpoint() {
-
-    //std::experimental::filesystem::path path_resultados(ConfiguracionScraping::pathCheckpointResultadosDiarios());
-    //if(std::experimental::filesystem::exists(path_resultados)) {  // si ya existe, lo renombro
-    //    herramientas::utiles::Fecha fecha_de_creacion = herramientas::utiles::Fecha::parsear(std::experimental::filesystem::last_write_time(path_resultados));
-    //    std::experimental::filesystem::path path_resultados_viejo(ConfiguracionScraping::pathCheckpointResultadosDiarios() + "_" + fecha_de_creacion.getStringAAAAMMDDHHmmSS());
-    //    std::experimental::filesystem::rename(path_resultados, path_resultados_viejo); 
-    //}
-
     return this->admin_almacenamiento->checkpoint(ConfiguracionScraping::pathCheckpointResultadosDiarios() + "_" + herramientas::utiles::Fecha::getFechaActual().getStringAAAAMMDDHHmmSS());
 }
 
