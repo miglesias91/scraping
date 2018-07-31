@@ -74,7 +74,7 @@ bool MedioFacebook::descargar_publicaciones(const medios::facebook::aplicacion &
         this->fecha_ultima_publicacion_analizada = publicacion->getFechaCreacion();
 
         if(publicacion->getTextoPublicacion().size()) {
-            this->tamanio_total += std::log10(publicacion->getTextoPublicacion().size());
+            this->tamanio_total += publicacion->getTextoPublicacion().size();
         }
 
         delete publicacion;

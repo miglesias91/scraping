@@ -76,7 +76,7 @@ bool MedioTwitter::descargar_tweets(const medios::twitter::Aplicacion & app) {
         this->id_ultimo_tweet_analizado = tweet->getIdTweet();
 
         if(tweet->getTextoTweet().size()) {
-            this->tamanio_total += std::log10(tweet->getTextoTweet().size());
+            this->tamanio_total += tweet->getTextoTweet().size();
         }
 
         delete tweet;

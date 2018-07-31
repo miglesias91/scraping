@@ -107,7 +107,7 @@ bool MedioPortalNoticias::descargar_noticias(const medios::noticias::lector & le
 
         std::for_each(seccion_noticias.second.begin(), seccion_noticias.second.end(), [&info](medios::noticias::noticia * noti){
             if(noti->contenido().size()) {
-                info.tamanio_total += std::log10(noti->contenido().size());
+                info.tamanio_total += noti->contenido().size();
             }
         });
 

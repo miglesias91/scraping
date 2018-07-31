@@ -83,6 +83,7 @@ bool Depurador::depurar(extraccion::Medio * medio) const {
         gestor_analisis.modificarContenido(contenido_depurado);  // si existe, lo reemplaza
 
         medio->contenido_depurado(contenido_depurado->fecha().getStringAAAAMMDD(), contenido_depurado->getId()->numero());
+
         gestor_medios.actualizarMedio(medio);
 
         delete contenido_depurado;
