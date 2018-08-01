@@ -54,8 +54,6 @@ bool Analizador::analizar(scraping::extraccion::Medio * medio) const {
 
         this->analizar(contenido_analizable, resultado_analisis_contenido);
 
-        resultado_analisis_contenido->sumar_fuerza_total(contenido->getBolsaDePalabras().size() * std::log10(contenido->tamanio()));
-
         resultados.push_back(resultado_analisis_contenido);
 
         delete contenido_analizable;
