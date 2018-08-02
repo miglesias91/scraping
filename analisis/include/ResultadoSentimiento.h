@@ -126,7 +126,7 @@ public:
     // se aceptan comodines.
     // 'expresion' puede ser una palabra literal o un termino+comodin
     // (por ahora solo reconoce el comodin '*' al final de la palabra)
-    virtual sentimiento valores(const std::string expresion);
+    virtual sentimiento valores(const std::string expresion) const;
 
     virtual void sumar(const std::string & palabra, const sentimiento & valoracion);
 
@@ -152,12 +152,12 @@ public:
 
     // CONSULTAS
 
-    virtual bool existePalabra(std::string palabra);
+    virtual bool existePalabra(const std::string &palabra) const;
 
 private:
 
     // metodos privados
-    sentimiento sentimiento_comodin(const std::string & comodin);
+    sentimiento sentimiento_comodin(const std::string & comodin) const;
 
     // valoracion
     std::unordered_map<std::string, sentimiento> sentimiento_por_palabra;

@@ -22,8 +22,8 @@
         "db_resultados_diarios" : "config_db_resultados_diarios.json",
         "db_info_temporal" : "config_db_info_temporal.json",
 
-        "path_checkpoint_resultados_diarios" : "C:/temp/checkpoints/resultados_diarios",
-        "dir_abms" : "C:/temp/abms",
+        "path_checkpoint_resultados_diarios" : "C:/Users/Usuario/Desktop/visu_20180729/almacenamiento/checkpoints/resultados_diarios",
+        "dir_abms" : "C:/Users/Usuario/Desktop/visu_20180729/scraping/abms",
 
         "config_sentimiento" : "config_sentimiento.json",
         "config_noticias" : "config_noticias.json",

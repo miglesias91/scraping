@@ -44,7 +44,7 @@ std::unordered_map<std::string, ResultadoSentimiento::sentimiento> scraping::ana
     return this->sentimiento_por_palabra;
 }
 
-ResultadoSentimiento::sentimiento ResultadoSentimiento::valores(const std::string expresion)
+ResultadoSentimiento::sentimiento ResultadoSentimiento::valores(const std::string expresion) const
 {
     if ('*' == *(expresion.end() - 1)) {
         std::string comienzo_de_palabra(expresion.begin(), expresion.end() - 1);
@@ -56,7 +56,7 @@ ResultadoSentimiento::sentimiento ResultadoSentimiento::valores(const std::strin
         return sentimiento();
     }
 
-    return this->sentimiento_por_palabra[expresion];
+    return this->sentimiento_por_palabra.at(expresion);
 }
 
 void ResultadoSentimiento::sumar(const std::string & palabra, const sentimiento & sentimiento)
@@ -205,7 +205,7 @@ bool ResultadoSentimiento::parsearJson()
 
 // CONSULTAS
 
-bool ResultadoSentimiento::existePalabra(std::string palabra)
+bool ResultadoSentimiento::existePalabra(const std::string &palabra) const
 {
     if (this->sentimiento_por_palabra.end() == this->sentimiento_por_palabra.find(palabra))
     {
@@ -215,7 +215,7 @@ bool ResultadoSentimiento::existePalabra(std::string palabra)
     return true;
 }
 
-ResultadoSentimiento::sentimiento ResultadoSentimiento::sentimiento_comodin(const std::string & comodin)
+ResultadoSentimiento::sentimiento ResultadoSentimiento::sentimiento_comodin(const std::string & comodin) const
 {
     sentimiento sentimiento_total;
     std::for_each(this->sentimiento_por_palabra.begin(), this->sentimiento_por_palabra.end(),

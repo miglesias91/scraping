@@ -1,7 +1,7 @@
 {
     "almacenamiento" :
     {
-        "path_db" : "C:/temp/info_temporal",
+        "path_db" : "C:/Users/Usuario/Desktop/visu_20180729/almacenamiento/info_temporal",
         "almacenamiento_local" : true,
         "almacenamiento_distribuido" : false,
         "solo_lectura" : false,
