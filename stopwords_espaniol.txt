@@ -55,6 +55,7 @@ despues
 dice
 dijo
 donde
+dos
 durante
 e
 el
@@ -220,6 +221,7 @@ le
 les
 lo
 los
+luego
 lx
 lxs
 mas

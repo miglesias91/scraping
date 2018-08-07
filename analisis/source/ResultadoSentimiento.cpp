@@ -39,7 +39,7 @@ ResultadoSentimiento::valoracion ResultadoSentimiento::neutralidad(const std::st
 
 // METODOS
 
-std::unordered_map<std::string, ResultadoSentimiento::sentimiento> scraping::analisis::tecnicas::ResultadoSentimiento::sentimientos()
+std::unordered_map<std::string, ResultadoSentimiento::sentimiento> ResultadoSentimiento::sentimientos()
 {
     return this->sentimiento_por_palabra;
 }
