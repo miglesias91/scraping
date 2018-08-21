@@ -34,6 +34,10 @@ void registrar_abms() {
     std::vector<scraping::extraccion::Medio*> baja_de_medios;
     for (auto abm : std::experimental::filesystem::directory_iterator(scraping::ConfiguracionScraping::dirABMs())) {
 
+        if (false == std::experimental::filesystem::is_regular_file(abm)) {
+            continue;
+        }
+
         std::string contenido_json = "";
         herramientas::utiles::FuncionesSistemaArchivos::leer(abm.path().string(), contenido_json);
 
