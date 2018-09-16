@@ -18,7 +18,7 @@
 #include <extraccion/include/Contenido.h>
 #include <extraccion/include/extractor.h>
 
-TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
+TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion[.]")
 {
     //// probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
     //// agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
@@ -88,7 +88,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_twitter", "extraccion")
 }
 
 
-TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
+TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion[.]")
 {
     //// probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
     //// agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
@@ -157,7 +157,7 @@ TEST_CASE("almacenar_y_recuperar_correctamente_medio_facebook", "extraccion")
     delete contenido2;
 }
 
-TEST_CASE("almacenar_y_recuperar_correctamente_medio_portal_noticias", "extraccion")
+TEST_CASE("almacenar_y_recuperar_correctamente_medio_portal_noticias", "extraccion[.]")
 {
     //// probar almacenar y recuperar una cuenta de twitter como Medio, y los tweets como Contenidos.
     //// agregarles los Tweets leidos desde disco. a partir de ahi hacer que se almacene el Medio (1 registro) y los Contenidos (1 registro por cada medio),
@@ -250,7 +250,7 @@ TEST_CASE("extraer_facebook", "extraccion[.]") {
     scraping::IAdministradorScraping::getInstanciaAdminResultadosDiarios()->eliminar(&pagina);
 }
 
-TEST_CASE("extraer_portal", "extraccion") {
+TEST_CASE("extraer_portal", "extraccion[.]") {
 
     scraping::extraccion::interfaceo::MedioPortalNoticias portal(std::make_shared<medios::noticias::clarin>());
     portal.asignarNuevoId();

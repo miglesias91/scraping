@@ -106,7 +106,7 @@ public:
         }
     };
 
-    explicit ResultadoSentimiento(const uint32_t & maximo_valores_a_almacenar = 100);
+    explicit ResultadoSentimiento(const uint32_t & maximo_valores_a_almacenar = 300);
     virtual ~ResultadoSentimiento();
 
     // GETTERS

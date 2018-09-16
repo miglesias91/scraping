@@ -10,7 +10,7 @@
 
 using namespace scraping::analisis::tecnicas;
 
-ResultadoFuerzaEnNoticia::ResultadoFuerzaEnNoticia(unsigned int maximo_valores_a_almacenar) : IResultadoTecnica(), maximo_valores_a_almacenar(maximo_valores_a_almacenar)
+ResultadoFuerzaEnNoticia::ResultadoFuerzaEnNoticia(uint32_t maximo_valores_a_almacenar) : IResultadoTecnica(), maximo_valores_a_almacenar(maximo_valores_a_almacenar)
 {
 }
 
@@ -55,7 +55,7 @@ double ResultadoFuerzaEnNoticia::getFuerzaTotal()
     return fuerza_total;
 }
 
-std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(unsigned int cantidad_de_valores_a_recuperar)
+std::vector<std::pair<std::string, float>> ResultadoFuerzaEnNoticia::getTop(uint32_t cantidad_de_valores_a_recuperar)
 {
     std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = this->getFuerzas();
 
@@ -80,7 +80,7 @@ std::unordered_map<std::string, float> ResultadoFuerzaEnNoticia::getFuerzaPorPal
 
 // METODOS
 
-unsigned int ResultadoFuerzaEnNoticia::cantidadDePalabras()
+uint32_t ResultadoFuerzaEnNoticia::cantidadDePalabras()
 {
     return this->fuerza_por_palabra.size();
 }
@@ -105,7 +105,7 @@ float ResultadoFuerzaEnNoticia::sumarFuerza(std::pair<std::string, float> fuerza
     return this->fuerza_por_palabra[palabra];
 }
 
-unsigned int ResultadoFuerzaEnNoticia::sumarFuerzas(ResultadoFuerzaEnNoticia * fuerza_a_sumar)
+uint32_t ResultadoFuerzaEnNoticia::sumarFuerzas(ResultadoFuerzaEnNoticia * fuerza_a_sumar)
 {
     std::vector<std::pair<std::string, float>> vector_fuerza_por_palabra = fuerza_a_sumar->getFuerzas();
 

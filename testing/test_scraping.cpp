@@ -37,7 +37,7 @@
 
 using namespace scraping;
 
-TEST_CASE("levantar_config_correctamente", "scraping")
+TEST_CASE("levantar_config_correctamente", "scraping[.]")
 {
     REQUIRE(true == ConfiguracionScraping::scrapingLocal());
     REQUIRE(false == ConfiguracionScraping::scrapingDistribuido());
@@ -200,7 +200,7 @@ TEST_CASE("depurar_analizar_y_preparar", "scraping[.]")
 }
 
 
-TEST_CASE("gestor_medios_almacenar_y_eliminar_correctamente", "scraping")
+TEST_CASE("gestor_medios_almacenar_y_eliminar_correctamente", "scraping[.]")
 {
     // creo cuentas de prueba.
     extraccion::interfaceo::MedioTwitter * cuenta_uno = new extraccion::interfaceo::MedioTwitter("cuenta_uno");
@@ -281,7 +281,7 @@ TEST_CASE("gestor_medios_almacenar_y_eliminar_correctamente", "scraping")
     delete cuenta_cinco;
 }
 
-TEST_CASE("gestionar_cuentas_de_twitter", "scraping")
+TEST_CASE("gestionar_cuentas_de_twitter", "scraping[.]")
 {
     scraping::aplicacion::GestorMedios gestor_medios;
 
@@ -318,7 +318,7 @@ TEST_CASE("gestionar_cuentas_de_twitter", "scraping")
     cuentas_twitter_existentes.clear();
 }
 
-TEST_CASE("scrapear_twitter", "scraping") {
+TEST_CASE("scrapear_twitter", "scraping[.]") {
 
     extraccion::interfaceo::MedioTwitter clarin("clarincom");
     clarin.asignarNuevoId();

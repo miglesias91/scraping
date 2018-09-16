@@ -10,6 +10,8 @@ alguno
 algunos
 algunx
 algunxs
+ano
+anos
 ante
 antes
 aquel
@@ -24,6 +26,9 @@ aquellxs
 aunque
 bajo
 cabe
+cada
+ciento
+cientos
 como
 con
 conmigo
@@ -48,7 +53,11 @@ demasiados
 demasiadx
 demasiadxs
 desde
+despues
+dice
+dijo
 donde
+dos
 durante
 e
 el
@@ -179,6 +188,7 @@ habriais
 habriamos
 habrian
 habrias
+hace
 hacia
 han
 has
@@ -213,6 +223,7 @@ le
 les
 lo
 los
+luego
 lx
 lxs
 mas
@@ -222,6 +233,10 @@ menos
 mi
 mia
 mias
+mil
+miles
+millon
+millones
 mio
 mios
 mis

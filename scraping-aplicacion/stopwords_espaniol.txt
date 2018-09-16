@@ -27,6 +27,8 @@ aunque
 bajo
 cabe
 cada
+ciento
+cientos
 como
 con
 conmigo
@@ -231,6 +233,10 @@ menos
 mi
 mia
 mias
+mil
+miles
+millon
+millones
 mio
 mios
 mis

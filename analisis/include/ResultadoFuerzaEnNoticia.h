@@ -17,7 +17,7 @@ namespace tecnicas
 class ResultadoFuerzaEnNoticia : public IResultadoTecnica
 {
 public:
-    ResultadoFuerzaEnNoticia(unsigned int maximo_valores_a_almacenar = 100);
+    ResultadoFuerzaEnNoticia(uint32_t maximo_valores_a_almacenar = 300);
     virtual ~ResultadoFuerzaEnNoticia();
 
     // GETTERS
@@ -31,7 +31,7 @@ public:
     
     virtual double getFuerzaTotal();
 
-    virtual std::vector<std::pair<std::string, float>> getTop(unsigned int cantidad_de_valores_a_recuperar);
+    virtual std::vector<std::pair<std::string, float>> getTop(uint32_t cantidad_de_valores_a_recuperar);
 
     // getters de IResultadoTecnica
 
@@ -41,7 +41,7 @@ public:
 
     // METODOS
 
-    virtual unsigned int cantidadDePalabras();
+    virtual uint32_t cantidadDePalabras();
 
     // suma la fuerza a la palabra: fuerza_a_sumar = <palabra a modificar, fuerza a agregar>
     // si no se encuentra la palabra, se crea con el valor que se quiere sumar.
@@ -50,7 +50,7 @@ public:
 
     // suma las fuerzas de cada palabra.
     // devuelve la cantida de fuerzas sumadas.
-    virtual unsigned int sumarFuerzas(ResultadoFuerzaEnNoticia * fuerzas_a_sumar);
+    virtual uint32_t sumarFuerzas(ResultadoFuerzaEnNoticia * fuerzas_a_sumar);
 
     static bool compararFuerzasMayorAMenor(std::pair<std::string, float> a, std::pair<std::string, float> b);
 
@@ -80,7 +80,7 @@ private:
 
     // atributos
 
-    unsigned int maximo_valores_a_almacenar;
+    uint32_t maximo_valores_a_almacenar;
 
     std::unordered_map<std::string, float> fuerza_por_palabra;
 };

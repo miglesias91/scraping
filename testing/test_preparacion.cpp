@@ -72,7 +72,7 @@ TEST_CASE("almacenar_y_recuperar_resultado_analisis_medio_correctamente", "prepa
     REQUIRE(std::round(100. * 1.93951929) == std::round(100. * resultado_fuerza_en_noticia_combinado->getFuerza("chau")));
 }
 
-TEST_CASE("almacenar_y_recuperar_resultado_analisis_contenido_correctamente", "preparacion")
+TEST_CASE("almacenar_y_recuperar_resultado_analisis_contenido_correctamente", "preparacion[.]")
 {
     scraping::analisis::tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 

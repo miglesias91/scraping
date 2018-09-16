@@ -59,6 +59,10 @@ public:
 
 private:
 
+    void aumentar_positividad(const std::vector<std::string> & bolsa_de_palabras, ResultadoSentimiento *resultado_sentimiento);
+    void aumentar_negatividad(const std::vector<std::string> & bolsa_de_palabras, ResultadoSentimiento *resultado_sentimiento);
+    void aumentar_neutralidad(const std::vector<std::string> & bolsa_de_palabras, ResultadoSentimiento *resultado_sentimiento);
+
     static ia::clasificacion::Vocabulario vocabulario;
     static ia::clasificacion::Clasificador clasificador_tres_clases;
     static ia::clasificacion::Clasificador clasificador_dos_clases;

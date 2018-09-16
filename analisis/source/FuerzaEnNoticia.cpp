@@ -6,7 +6,9 @@
 // scraping
 #include <scraping/include/Logger.h>
 
-using namespace scraping::analisis::tecnicas;
+namespace scraping {
+    namespace analisis {
+        namespace tecnicas {
 
 FuerzaEnNoticia::FuerzaEnNoticia(float fuerza_minima) : fuerza_minima(fuerza_minima)
 {
@@ -20,33 +22,41 @@ void FuerzaEnNoticia::aplicar(const std::vector<std::string> & bolsa_de_palabras
 {
     ResultadoFuerzaEnNoticia * resultado_fza_en_noticia = static_cast<ResultadoFuerzaEnNoticia*>(resultado);
 
-    unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
-    std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
+    uint32_t cantidad_de_caracteres_en_bolsa_de_palabras = 0;
+    std::unordered_map<std::string, uint32_t> cantidad_de_apariciones_por_termino;
 
     // 1ero: calculo la cantidad de caracteres en la bolsa de palabras + cuento cuantas veces aparece cada palabra en la bolsa.
-    for (std::vector<std::string>::const_iterator it_bolsa = bolsa_de_palabras.cbegin(); it_bolsa != bolsa_de_palabras.cend(); it_bolsa++)
-    {
+    std::vector<std::string>::const_iterator it_segunda_palabra = bolsa_de_palabras.cbegin() + 1;
+    std::vector<std::string>::const_iterator it_tercera_palabra = bolsa_de_palabras.cbegin() + 2;
+    for (std::vector<std::string>::const_iterator it_bolsa = bolsa_de_palabras.cbegin(); it_bolsa != bolsa_de_palabras.cend(); it_bolsa++) {
         cantidad_de_caracteres_en_bolsa_de_palabras += it_bolsa->size();
 
-        std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.find(*it_bolsa);
+        std::string una_palabra = *it_bolsa;
+        this->nueva_aparicion(&cantidad_de_apariciones_por_termino, una_palabra);
 
-        if (cantidad_de_apariciones_por_palabra.end() != it_apariciones)
-        {
-            unsigned int nuevo_valor = it_apariciones->second + 1;
-            cantidad_de_apariciones_por_palabra[*it_bolsa] = nuevo_valor;
+        std::string dos_palabras = "";
+        if (bolsa_de_palabras.cend() != it_segunda_palabra) {
+            dos_palabras = una_palabra + " " + *it_segunda_palabra;
+
+            this->nueva_aparicion(&cantidad_de_apariciones_por_termino, dos_palabras);
+            it_segunda_palabra++;
         }
-        else
-        {
-            cantidad_de_apariciones_por_palabra[*it_bolsa] = 1;
+
+        std::string tres_palabras = "";
+        if (bolsa_de_palabras.cend() != it_tercera_palabra) {
+            tres_palabras = dos_palabras + " " + *it_tercera_palabra;
+
+            this->nueva_aparicion(&cantidad_de_apariciones_por_termino, tres_palabras);
+            it_tercera_palabra++;
         }
     }
 
     float factor_tamanio_de_bolsa = std::log10(cantidad_de_caracteres_en_bolsa_de_palabras);
 
     // 2do: calculo la fuerza de cada palabra en la bolsa de palabras
-    for (std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)
+    for (std::unordered_map<std::string, uint32_t>::iterator it_apariciones = cantidad_de_apariciones_por_termino.begin(); it_apariciones != cantidad_de_apariciones_por_termino.end(); it_apariciones++)
     {
-        unsigned int cantidad_de_apariciones = it_apariciones->second;
+        uint32_t cantidad_de_apariciones = it_apariciones->second;
 
         float fuerza_palabra_en_bolsa = factor_tamanio_de_bolsa * cantidad_de_apariciones;
 
@@ -61,19 +71,19 @@ void FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_analiz
 {
     ResultadoFuerzaEnNoticia * resultado_fza_en_noticia = static_cast<ResultadoFuerzaEnNoticia*>(resultado);
 
-    unsigned int cantidad_de_caracteres_en_bolsa_de_palabras = 0;
-    std::unordered_map<std::string, unsigned int> cantidad_de_apariciones_por_palabra;
+    uint32_t cantidad_de_caracteres_en_bolsa_de_palabras = 0;
+    std::unordered_map<std::string, uint32_t> cantidad_de_apariciones_por_palabra;
 
     std::vector<std::string> bolsa_de_palabras = contenido_analizable->getBolsaDePalabras();
 
     // 1ero: calculo la cantidad de caracteres en la bolsa de palabras + cuento cuantas veces aparece cada palabra en la bolsa.
     for (std::vector<std::string>::const_iterator it_bolsa = bolsa_de_palabras.cbegin(); it_bolsa != bolsa_de_palabras.cend(); it_bolsa++)
     {
-        std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.find(*it_bolsa);
+        std::unordered_map<std::string, uint32_t>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.find(*it_bolsa);
 
         if (cantidad_de_apariciones_por_palabra.end() != it_apariciones)
         {
-            unsigned int nuevo_valor = it_apariciones->second + 1;
+            uint32_t nuevo_valor = it_apariciones->second + 1;
             cantidad_de_apariciones_por_palabra[*it_bolsa] = nuevo_valor;
         }
         else
@@ -85,9 +95,9 @@ void FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_analiz
     float factor_tamanio_de_bolsa = std::log10(contenido_analizable->getTamanio());
 
     // 2do: calculo la fuerza de cada palabra en la bolsa de palabras
-    for (std::unordered_map<std::string, unsigned int>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)
+    for (std::unordered_map<std::string, uint32_t>::iterator it_apariciones = cantidad_de_apariciones_por_palabra.begin(); it_apariciones != cantidad_de_apariciones_por_palabra.end(); it_apariciones++)
     {
-        unsigned int cantidad_de_apariciones = it_apariciones->second;
+        uint32_t cantidad_de_apariciones = it_apariciones->second;
 
         float fuerza_palabra_en_bolsa = factor_tamanio_de_bolsa * cantidad_de_apariciones;
 
@@ -98,10 +108,15 @@ void FuerzaEnNoticia::aplicar(scraping::analisis::IAnalizable * contenido_analiz
     }
 }
 
-// GETTERS
-
-// SETTERS
-
-// METODOS
-
-// CONSULTAS
+void FuerzaEnNoticia::nueva_aparicion(std::unordered_map<std::string, uint32_t>* cantidad_de_apariciones_por_termino, const std::string & termino) {
+    if (cantidad_de_apariciones_por_termino->count(termino)) {
+        uint32_t nuevo_valor = (*cantidad_de_apariciones_por_termino)[termino] + 1;
+        (*cantidad_de_apariciones_por_termino)[termino] = nuevo_valor;
+    }
+    else {
+        (*cantidad_de_apariciones_por_termino)[termino] = 1;
+    }
+}
+}
+}
+}

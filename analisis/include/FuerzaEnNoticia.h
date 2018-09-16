@@ -35,6 +35,8 @@ public:
 
 private:
 
+    void nueva_aparicion(std::unordered_map<std::string, uint32_t> *cantidad_de_apariciones_por_termino, const std::string &termino);
+
     // valor a partir del cual se consideran relevante la fuerza de un termino.
     float fuerza_minima;
 };

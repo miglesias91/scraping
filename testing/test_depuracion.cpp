@@ -15,7 +15,7 @@
 #include <depuracion/include/Depurador.h>
 #include <depuracion/include/ContenidoDepurable.h>
 
-TEST_CASE("cargar_mapeo", "depuracion")
+TEST_CASE("cargar_mapeo", "depuracion[.]")
 {
     scraping::depuracion::mapeo::MapaUTF8 mapa_utf8("mapeo_utf8.csv");
     
@@ -46,7 +46,7 @@ TEST_CASE("cargar_mapeo", "depuracion")
     REQUIRE("3/4" == mapa_utf8.getTraduccion("¾"));
 }
 
-TEST_CASE("depurar_texto", "depuracion")
+TEST_CASE("depurar_texto", "depuracion[.]")
 {
     std::string texto = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
 
@@ -77,7 +77,7 @@ TEST_CASE("depurar_texto", "depuracion")
     REQUIRE("sur" == bolsa_de_palabras[8]);
 }
 
-TEST_CASE("depurar_texto_con_tildes", "depuracion")
+TEST_CASE("depurar_texto_con_tildes", "depuracion[.]")
 {
     std::string texto = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza… https:\/\/t.co\/eqSJm9AkQB";
 
@@ -107,7 +107,7 @@ TEST_CASE("depurar_texto_con_tildes", "depuracion")
     REQUIRE("sur" == bolsa_de_palabras[8]);
 }
 
-TEST_CASE("reemplazar_caracteres_especiales", "depuracion")
+TEST_CASE("reemplazar_caracteres_especiales", "depuracion[.]")
 {
     std::string caracteres_normales_especiales_a_reemplazar = "µ a ¶ · ¸ ¹ º b » ¼ c ½ ¾ ¿ d À Á Â 1 Ã Ä Å Æ 2 Ç È É Ê Ë Ì Í Î Ï 3 Ð Ñ Ò Ó Ô Õ Ö × Ø Ù Ú Û Ü Ý Þ 4 ß à á â ã ä å æ";
     std::string caracteres_reemplazados = "u a p . . ^1 o b >> 1/4 c 1/2 3/4 ? d A A A 1 A A A AE 2 C E E E E I I I I 3 D N O O O O O x O U U U U Y P 4 B a a a a a a ae";
@@ -120,7 +120,7 @@ TEST_CASE("reemplazar_caracteres_especiales", "depuracion")
     REQUIRE(caracteres_reemplazados == caracteres_normales_especiales_a_reemplazar);
 }
 
-TEST_CASE("reemplazar_caracteres_especiales_de_texto", "depuracion")
+TEST_CASE("reemplazar_caracteres_especiales_de_texto", "depuracion[.]")
 {
     //std::string texto = "Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibiran una compensacion.\nâ€ªEs sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometiÃ³ que, con la nueva fÃ³rmula, las jubilaciones iban a aumentar mÃ¡s que la inflaciÃ³n.Falso.La inflaciÃ³n estÃ¡ descontrolada y las jubilaciones no paran de perder poder adquisitivo.â€¬\nPor eso, resulta necesario que el Congreso de la NaciÃ³n haga valer las facultades que le otorga la ConstituciÃ³n Nacional para reparar el daÃ±o que el Gobierno de Cambiemos ha causado a mÃ¡s de diez millones de argentinxs.\nConocÃ© el proyecto completoðŸ‘‡ðŸ¼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
     //std::wstring texto_con_simbolos = L"Hoy presentamos un proyecto de ley para que lxs jubiladxs y beneficiarixs de la AUH cobren un bono de emergencia.\nCon este bono, lxs ciudadanxs que padecen en carne propia el ajuste previsional consumado por el Gobierno de Cambiemos en diciembre de 2017, recibirán una compensación.\n‪Es sabido.El Gobierno de Cambiemos miente todo el tiempo.Esta vez lo hizo cuando prometió que, con la nueva fórmula, las jubilaciones iban a aumentar más que la inflación.Falso.La inflación está descontrolada y las jubilaciones no paran de perder poder adquisitivo.‬\nPor eso, resulta necesario que el Congreso de la Nación haga valer las facultades que le otorga la Constitución Nacional para reparar el daño que el Gobierno de Cambiemos ha causado a más de diez millones de argentinxs.\nConocé el proyecto completo👇🏼\nhttp://telegra.ph/Bono-compensatorio-del-ajuste-ocasionado-por-la-Reforma-Previsional-03-19";
@@ -142,7 +142,7 @@ TEST_CASE("reemplazar_caracteres_especiales_de_texto", "depuracion")
     REQUIRE(texto_sin_caracteres_especiales == texto_con_caracteres_especiales);
 }
 
-TEST_CASE("eliminar_tildes", "depuracion")
+TEST_CASE("eliminar_tildes", "depuracion[.]")
 {
     std::string oracion_con_tildes = "había una vez un café que usaba una cámara con mucha emoción.";
     std::string cafe_sin_tilde = "habia una vez un cafe que usaba una camara con mucha emocion.";
@@ -157,7 +157,7 @@ TEST_CASE("eliminar_tildes", "depuracion")
     REQUIRE(cafe_sin_tilde == palabra_transformada);
 }
 
-TEST_CASE("todo_minuscula", "depuracion")
+TEST_CASE("todo_minuscula", "depuracion[.]")
 {
     std::string oracion_con_mayusculas = "HabIa uNa veZ un CafE qUE uSaBa UnA cAmArA CoN MuChA EmOCiOn.";
     std::string oracion_sin_mayusculas = "habia una vez un cafe que usaba una camara con mucha emocion.";
@@ -169,7 +169,7 @@ TEST_CASE("todo_minuscula", "depuracion")
     REQUIRE(oracion_sin_mayusculas == oracion_con_mayusculas);
 }
 
-TEST_CASE("eliminar_signos_y_puntuacion", "depuracion")
+TEST_CASE("eliminar_signos_y_puntuacion", "depuracion[.]")
 {
     std::string oracion_con_simbolos_no_caracteres = "y matori dijo: \"me quedan $20,35.-\". habia (mal)gastado el premio -que no habia ganado- en un monton de m&m y demas basuras.";
     std::string oracion_sin_simbolos_no_caracteres = "y matori dijo me quedan 20 35 habia mal gastado el premio que no habia ganado en un monton de m m y demas basuras ";
@@ -181,7 +181,7 @@ TEST_CASE("eliminar_signos_y_puntuacion", "depuracion")
     REQUIRE(oracion_con_simbolos_no_caracteres == oracion_sin_simbolos_no_caracteres);
 }
 
-TEST_CASE("eliminar_urls", "depuracion")
+TEST_CASE("eliminar_urls", "depuracion[.]")
 {
     std::string texto_con_urls = "Jerusalén: ftp:\/\/t.co\/asdijv1m2_1234.html#matorito suenan sirenas de alarma en el sur de Israel http:\/\/userid:password@example.com:8080\/ tras el disparo de un cohete desde Gaza…https:\/\/t.co\/eqSJm9AkQB";
     std::string texto_sin_urls = "Jerusalén: suenan sirenas de alarma en el sur de Israel tras el disparo de un cohete desde Gaza…";
@@ -200,7 +200,7 @@ TEST_CASE("eliminar_urls", "depuracion")
     REQUIRE(texto_con_urls_2 == texto_sin_urls_2);
 }
 
-TEST_CASE("eliminar_palabras_muy_cortas", "depuracion")
+TEST_CASE("eliminar_palabras_muy_cortas", "depuracion[.]")
 {
     std::vector<std::string> palabras_a_depurar = { "hola", "si", "que", "tal", "como", "le", "va", "espero", "que", "bien" };
 
@@ -217,7 +217,7 @@ TEST_CASE("eliminar_palabras_muy_cortas", "depuracion")
     REQUIRE("bien" == palabras_a_depurar[6]);
 }
 
-TEST_CASE("eliminar_palabras_muy_largas", "depuracion")
+TEST_CASE("eliminar_palabras_muy_largas", "depuracion[.]")
 {
     std::vector<std::string> palabras_a_depurar = { "otorrinolaringolo", "profesion", "nombre", "extramegadificil", "pronunciacion" };
 
@@ -230,7 +230,7 @@ TEST_CASE("eliminar_palabras_muy_largas", "depuracion")
     REQUIRE("pronunciacion" == palabras_a_depurar[2]);
 }
 
-TEST_CASE("eliminar_preposiciones", "depuracion")
+TEST_CASE("eliminar_preposiciones", "depuracion[.]")
 {
     std::vector<std::string> palabras_a_depurar = { "hola", "que", "tal", "con", "mucho", "gusto", "hacia", "usted", "durante" };
 
@@ -246,7 +246,7 @@ TEST_CASE("eliminar_preposiciones", "depuracion")
     REQUIRE("usted" == palabras_a_depurar[5]);
 }
 
-TEST_CASE("eliminar_stopwords", "depuracion")
+TEST_CASE("eliminar_stopwords", "depuracion[.]")
 {
     std::vector<std::string> palabras_a_depurar = { "hola", "hola", "que", "tal", "con", "mucho", "mucho", "gusto", "hacia", "hacia", "usted", "durante" };
 
