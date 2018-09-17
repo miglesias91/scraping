@@ -23,6 +23,7 @@
 #include <analisis/include/Analizador.h>
 #include <analisis/include/FuerzaEnNoticia.h>
 #include <analisis/include/ResultadoFuerzaEnNoticia.h>
+#include <analisis/include/ContenidoAnalizable.h>
 
 // preparacion
 #include <preparacion/include/Preparador.h>
@@ -453,4 +454,56 @@ TEST_CASE("scrapear_portal_infobae", "scraping[.]") {
 
     gestor_medios.eliminar(&infobae);
     gestor_medios.guardarCambios();
+}
+
+TEST_CASE("scrapear_leydoymipalabra", "scraping") {
+
+    // extraccion
+    std::vector<std::string> paths = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
+        "le_doy_mi_palabra_20171225.txt", "le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
+
+    std::vector<extraccion::Contenido> extraidos;
+    for (auto path : paths) {
+        std::string texto = "";
+        herramientas::utiles::FuncionesSistemaArchivos::leer(path, texto);
+        extraccion::Contenido contenido(path, texto, "", herramientas::utiles::Fecha::getFechaActual());
+        extraidos.push_back(contenido);
+    }
+
+    depuracion::Depurador depurador;
+    depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
+    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    std::vector<depuracion::ContenidoDepurado*> depurados;
+    for (auto extraido : extraidos) {
+        depuracion::ContenidoDepurable depurable(&extraido);
+        depuracion::ContenidoDepurado * depurado = new depuracion::ContenidoDepurado();
+        depurado->setId(extraido.getId()->copia());
+        depurado->fecha(extraido.getFecha());
+        depurado->categoria(extraido.getCategoria());
+
+        depurador.depurar(&depurable, depurado);
+        depurados.push_back(depurado);
+    }
+
+    analisis::Analizador analizador;
+    std::vector<analisis::ResultadoAnalisis*> resultados;
+    for (auto depurado : depurados) {
+        analisis::IAnalizable * contenido_analizable = new analisis::ContenidoAnalizable(depurado->getBolsaDePalabras(), depurado->tamanio());
+
+        preparacion::ResultadoAnalisisContenido * resultado_analisis_contenido = new preparacion::ResultadoAnalisisContenido();
+        resultado_analisis_contenido->setId(depurado->getId()->copia());
+        resultado_analisis_contenido->fecha(depurado->fecha());
+        resultado_analisis_contenido->categoria(depurado->categoria());
+
+        analizador.analizar(contenido_analizable, resultado_analisis_contenido);
+
+        resultados.push_back(resultado_analisis_contenido);
+
+        delete contenido_analizable;
+        delete depurado;
+    }
+
+    preparacion::Preparador preparador;
+    preparacion::ResultadoAnalisisContenido * resultado_categoria = new preparacion::ResultadoAnalisisContenido();
+    preparador.combinar(resultados, resultado_categoria);
 }

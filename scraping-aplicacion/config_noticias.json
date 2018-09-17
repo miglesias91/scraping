@@ -11,6 +11,14 @@
             {
                 "categoria" : "economia",
                 "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=272"
+            },
+            {
+                "categoria" : "mundo",
+                "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=7"
+            },
+            {
+                "categoria" : "sociedad",
+                "link" : "http://contenidos.lanacion.com.ar/herramientas/rss-categoria_id=7773"
             }
         ]
     },
@@ -26,6 +34,18 @@
             {
                 "categoria" : "economia",
                 "link" : "https://www.clarin.com/rss/economia/"
+            },
+            {
+                "categoria" : "mundo",
+                "link" : "https://www.clarin.com/rss/mundo/"
+            },
+            {
+                "categoria" : "sociedad",
+                "link" : "https://www.clarin.com/rss/sociedad/"
+            },
+            {
+                "categoria" : "policiales",
+                "link" : "https://www.clarin.com/rss/policiales/"
             }
         ]
     },
@@ -39,8 +59,45 @@
                 "link" : "https://www.infobae.com/feeds/rss/",
                 "subcategorias" :
                 [
-                	{ "subcategoria" : "economia", "recurso_url" : "economia" },
-                	{ "subcategoria" : "politica", "recurso_url" : "politica" }
+                    { "subcategoria" : "economia", "recurso_url" : "economia" },
+                    { "subcategoria" : "politica", "recurso_url" : "politica" },
+                    { "subcategoria" : "sociedad", "recurso_url" : "sociedad" }
+                ]
+            }
+        ]
+    },
+    "paginadoce" :
+    {
+        "web" : "pagina12.com",
+        "canales" : 
+        [
+            {
+                "categoria" : "todo",
+                "link" : "https://www.pagina12.com.ar/breakingnews.xml",
+                "subcategorias" :
+                [
+                    { "subcategoria" : "economia", "recurso_url" : "Economia" },
+                    { "subcategoria" : "el pais", "recurso_url" : "El pais" },
+                    { "subcategoria" : "sociedad", "recurso_url" : "Sociedad" },
+                    { "subcategoria" : "el mundo", "recurso_url" : "El mundo" }
+                ]
+            }
+        ]
+    },
+    "eldestape" :
+    {
+        "web" : "eldestapeweb.com",
+        "canales" : 
+        [
+            {
+                "categoria" : "todo",
+                "link" : "https://www.eldestapeweb.com/sitemap-news.xml",
+                "subcategorias" :
+                [
+                    { "subcategoria" : "economia", "recurso_url" : "Economia" },
+                    { "subcategoria" : "politica", "recurso_url" : "Politica" },
+                    { "subcategoria" : "sociedad", "recurso_url" : "Sociedad" },
+                    { "subcategoria" : "internacionales", "recurso_url" : "Internacionales" }
                 ]
             }
         ]

@@ -69,6 +69,7 @@ TEST_CASE("fuerza_en_noticia_armar_json", "analisis")
     REQUIRE(std::round(1000. * 5.67628384) == std::round(1000. * resultado.getFuerza("jerusalen")));
     REQUIRE(std::round(1000. * 3.78418922) == std::round(1000. * resultado.getFuerza("israel")));
     REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado.getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado.getFuerza("suenan sirenas alarma")));
 }
 
 TEST_CASE("fuerza_en_noticia_sumar", "analisis")
@@ -156,7 +157,7 @@ TEST_CASE("combinar_resultados", "analisis")
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("holis chau").cantidad));
 }
 
-TEST_CASE("armar_json_resultados", "analisis[.]")
+TEST_CASE("armar_json_resultados", "analisis")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     tecnicas::Sentimiento sentimiento;
@@ -174,7 +175,7 @@ TEST_CASE("armar_json_resultados", "analisis[.]")
     resultado_analisis.armarJson();
 
     std::string json_string = resultado_analisis.getJson()->jsonString();
-    std::string json_string_correcto = "{\"fuerza_en_noticia\":{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"gaza_1.8921\",\"suenan_1.8921\",\"sur_1.8921\",\"sirenas_1.8921\",\"alarma_1.8921\",\"disparo_1.8921\",\"cohete_1.8921\"]},\"sentimiento\":{\"valores\":[\"jerusalen_0/0-0/0-3/3\",\"israel_0/0-0/0-2/2\",\"gaza_0/0-0/0-1/1\",\"sur_0/0-0/0-1/1\",\"suenan_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\"]},\"fecha\":\"00000000000000\",\"categoria\":\"\"}";
+    std::string json_string_correcto = "{\"fuerza_en_noticia\":{\"valores\":[\"jerusalen_5.6763\",\"israel_3.7842\",\"suenan sirenas alarma_1.8921\",\"jerusalen suenan_1.8921\",\"suenan sirenas_1.8921\",\"jerusalen suenan sirenas_1.8921\",\"suenan_1.8921\",\"sirenas_1.8921\",\"sirenas alarma_1.8921\",\"sirenas alarma jerusalen_1.8921\",\"alarma_1.8921\",\"alarma jerusalen_1.8921\",\"jerusalen sur_1.8921\",\"alarma jerusalen sur_1.8921\",\"cohete gaza_1.8921\",\"jerusalen sur israel_1.8921\",\"israel disparo jerusalen_1.8921\",\"sur_1.8921\",\"sur israel_1.8921\",\"sur israel disparo_1.8921\",\"israel disparo_1.8921\",\"disparo_1.8921\",\"disparo jerusalen_1.8921\",\"disparo jerusalen cohete_1.8921\",\"jerusalen cohete_1.8921\",\"jerusalen cohete gaza_1.8921\",\"cohete_1.8921\",\"cohete gaza israel_1.8921\",\"gaza_1.8921\",\"gaza israel_1.8921\"]},\"sentimiento\":{\"valores\":[\"jerusalen_0/0-0/0-3/3\",\"israel_0/0-0/0-2/2\",\"suenan sirenas alarma_0/0-0/0-1/1\",\"suenan sirenas_0/0-0/0-1/1\",\"jerusalen suenan_0/0-0/0-1/1\",\"suenan_0/0-0/0-1/1\",\"jerusalen suenan sirenas_0/0-0/0-1/1\",\"sirenas_0/0-0/0-1/1\",\"sirenas alarma_0/0-0/0-1/1\",\"sirenas alarma jerusalen_0/0-0/0-1/1\",\"alarma_0/0-0/0-1/1\",\"jerusalen sur_0/0-0/0-1/1\",\"alarma jerusalen_0/0-0/0-1/1\",\"cohete gaza_0/0-0/0-1/1\",\"alarma jerusalen sur_0/0-0/0-1/1\",\"israel disparo jerusalen_0/0-0/0-1/1\",\"jerusalen sur israel_0/0-0/0-1/1\",\"sur_0/0-0/0-1/1\",\"sur israel_0/0-0/0-1/1\",\"sur israel disparo_0/0-0/0-1/1\",\"israel disparo_0/0-0/0-1/1\",\"disparo_0/0-0/0-1/1\",\"disparo jerusalen_0/0-0/0-1/1\",\"disparo jerusalen cohete_0/0-0/0-1/1\",\"jerusalen cohete_0/0-0/0-1/1\",\"jerusalen cohete gaza_0/0-0/0-1/1\",\"cohete_0/0-0/0-1/1\",\"cohete gaza israel_0/0-0/0-1/1\",\"gaza_0/0-0/0-1/1\",\"gaza israel_0/0-0/0-1/1\"]},\"fecha\":\"00000000000000\",\"categoria\":\"\"}";
 
     REQUIRE(json_string_correcto == json_string);
 
@@ -187,6 +188,7 @@ TEST_CASE("armar_json_resultados", "analisis[.]")
     REQUIRE(std::round(1000. * 5.67628384) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("jerusalen")));
     REQUIRE(std::round(1000. * 3.78418922) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("israel")));
     REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("gaza")));
+    REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado_fuerza_en_noticia_nuevo->getFuerza("suenan sirenas alarma")));
 
     tecnicas::ResultadoSentimiento * resultado_sentimiento_combinado = resultado_analisis_nuevo.getResultadoSentimiento();
 
@@ -196,6 +198,8 @@ TEST_CASE("armar_json_resultados", "analisis[.]")
     REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_sentimiento_combinado->negatividad("israel").cantidad));
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").suma));
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("suenan sirenas alarma").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("suenan sirenas alarma").cantidad));
 }
 
 TEST_CASE("almacenar_y_recuperar_resultados", "analisis[.]")
@@ -254,6 +258,8 @@ TEST_CASE("sentimiento_analisis_correcto", "analisis")
     REQUIRE(std::round(1000. * 0) == std::round(1000. * resultado_1.negatividad("israel").cantidad));
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("gaza").suma));
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("gaza").cantidad));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("suenan sirenas").suma));
+    REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("suenan sirenas").cantidad));
 }
 
 TEST_CASE("resultado_sentimiento_armar_json_correctamente", "analisis")
