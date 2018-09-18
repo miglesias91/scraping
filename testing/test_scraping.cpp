@@ -4,6 +4,13 @@
 // stl
 #include <fstream>
 
+// analisis
+#include <analisis/include/Analizador.h>
+#include <analisis/include/FuerzaEnNoticia.h>
+#include <analisis/include/Sentimiento.h>
+#include <analisis/include/ResultadoFuerzaEnNoticia.h>
+#include <analisis/include/ContenidoAnalizable.h>
+
 // medios
 #include <noticias/include/clarin.h>
 #include <noticias/include/la_nacion.h>
@@ -19,11 +26,7 @@
 #include <depuracion/include/Depurador.h>
 #include <depuracion/include/ContenidoDepurable.h>
 
-// analisis
-#include <analisis/include/Analizador.h>
-#include <analisis/include/FuerzaEnNoticia.h>
-#include <analisis/include/ResultadoFuerzaEnNoticia.h>
-#include <analisis/include/ContenidoAnalizable.h>
+
 
 // preparacion
 #include <preparacion/include/Preparador.h>
@@ -458,33 +461,40 @@ TEST_CASE("scrapear_portal_infobae", "scraping[.]") {
 
 TEST_CASE("scrapear_leydoymipalabra", "scraping") {
 
+    ConfiguracionScraping::leerConfiguracion("config_scraping.json");
+    Logger::iniciar(ConfiguracionScraping::archivosConfigsLogs());
+
     // extraccion
     std::vector<std::string> paths = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
         "le_doy_mi_palabra_20171225.txt", "le_doy_mi_palabra_20171222.txt", "le_doy_mi_palabra_20171031.txt" };
 
-    std::vector<extraccion::Contenido> extraidos;
+    std::vector<extraccion::Contenido*> extraidos;
     for (auto path : paths) {
         std::string texto = "";
         herramientas::utiles::FuncionesSistemaArchivos::leer(path, texto);
-        extraccion::Contenido contenido(path, texto, "", herramientas::utiles::Fecha::getFechaActual());
+        extraccion::Contenido *contenido = new extraccion::Contenido(path, texto, "", herramientas::utiles::Fecha::getFechaActual());
+        contenido->asignarNuevoId();
         extraidos.push_back(contenido);
     }
 
     depuracion::Depurador depurador;
     depuracion::Depurador::cargarStopwords("stopwords_espaniol.txt");
-    depurador.cargarMapeoUTF8("mapeo_utf8.json");
+    depurador.cargarMapeoUTF8("mapeo_utf8.csv");
     std::vector<depuracion::ContenidoDepurado*> depurados;
     for (auto extraido : extraidos) {
-        depuracion::ContenidoDepurable depurable(&extraido);
+        depuracion::ContenidoDepurable depurable(extraido);
         depuracion::ContenidoDepurado * depurado = new depuracion::ContenidoDepurado();
-        depurado->setId(extraido.getId()->copia());
-        depurado->fecha(extraido.getFecha());
-        depurado->categoria(extraido.getCategoria());
+        depurado->setId(extraido->getId()->copia());
+        depurado->fecha(extraido->getFecha());
+        depurado->categoria(extraido->getCategoria());
 
         depurador.depurar(&depurable, depurado);
         depurados.push_back(depurado);
+
+        delete extraido;
     }
 
+    //tecnicas::Sentimiento::cargar("config_sentimiento.json");
     analisis::Analizador analizador;
     std::vector<analisis::ResultadoAnalisis*> resultados;
     for (auto depurado : depurados) {

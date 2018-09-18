@@ -16,7 +16,7 @@
 
 using namespace scraping::analisis;
 
-TEST_CASE("fuerza_en_noticia_analizar", "analisis")
+TEST_CASE("fuerza_en_noticia_analizar", "analisis[.]")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -46,7 +46,7 @@ TEST_CASE("fuerza_en_noticia_analizar", "analisis")
 
 }
 
-TEST_CASE("fuerza_en_noticia_armar_json", "analisis")
+TEST_CASE("fuerza_en_noticia_armar_json", "analisis[.]")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -72,7 +72,7 @@ TEST_CASE("fuerza_en_noticia_armar_json", "analisis")
     REQUIRE(std::round(1000. * 1.89209461) == std::round(1000. * resultado.getFuerza("suenan sirenas alarma")));
 }
 
-TEST_CASE("fuerza_en_noticia_sumar", "analisis")
+TEST_CASE("fuerza_en_noticia_sumar", "analisis[.]")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
 
@@ -97,7 +97,7 @@ TEST_CASE("fuerza_en_noticia_sumar", "analisis")
     REQUIRE(std::round(1000. * 1.93951929) == std::round(1000. * resultado_1.getFuerza("israel holis chau")));
 }
 
-TEST_CASE("combinar_resultados", "analisis")
+TEST_CASE("combinar_resultados", "analisis[.]")
 {
     tecnicas::Sentimiento::cargar("config_sentimiento.json");
 
@@ -157,7 +157,7 @@ TEST_CASE("combinar_resultados", "analisis")
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_sentimiento_combinado->neutralidad("holis chau").cantidad));
 }
 
-TEST_CASE("armar_json_resultados", "analisis")
+TEST_CASE("armar_json_resultados", "analisis[.]")
 {
     tecnicas::FuerzaEnNoticia fuerza_en_noticia;
     tecnicas::Sentimiento sentimiento;
@@ -243,7 +243,7 @@ TEST_CASE("almacenar_y_recuperar_resultados", "analisis[.]")
 }
 
 
-TEST_CASE("sentimiento_analisis_correcto", "analisis")
+TEST_CASE("sentimiento_analisis_correcto", "analisis[.]")
 {
     tecnicas::Sentimiento sentimiento;
 
@@ -262,7 +262,7 @@ TEST_CASE("sentimiento_analisis_correcto", "analisis")
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_1.neutralidad("suenan sirenas").cantidad));
 }
 
-TEST_CASE("resultado_sentimiento_armar_json_correctamente", "analisis")
+TEST_CASE("resultado_sentimiento_armar_json_correctamente", "analisis[.]")
 {
     tecnicas::Sentimiento sentimiento;
 
@@ -290,7 +290,7 @@ TEST_CASE("resultado_sentimiento_armar_json_correctamente", "analisis")
     REQUIRE(std::round(1000. * 1) == std::round(1000. * resultado_nuevo.neutralidad("gaza").cantidad));
 }
 
-TEST_CASE("resultado_sentimiento_sumar_correctamente", "analisis")
+TEST_CASE("resultado_sentimiento_sumar_correctamente", "analisis[.]")
 {
     tecnicas::Sentimiento sentimiento;
 
