@@ -463,6 +463,7 @@ TEST_CASE("scrapear_leydoymipalabra", "scraping") {
 
     ConfiguracionScraping::leerConfiguracion("config_scraping.json");
     Logger::iniciar(ConfiguracionScraping::archivosConfigsLogs());
+    analisis::tecnicas::Sentimiento::cargar(ConfiguracionScraping::archivoConfigSentimiento());
 
     // extraccion
     std::vector<std::string> paths = { "le_doy_mi_palabra_20171228.txt", "le_doy_mi_palabra_20171227.txt",
@@ -516,4 +517,9 @@ TEST_CASE("scrapear_leydoymipalabra", "scraping") {
     preparacion::Preparador preparador;
     preparacion::ResultadoAnalisisContenido * resultado_categoria = new preparacion::ResultadoAnalisisContenido();
     preparador.combinar(resultados, resultado_categoria);
+
+    resultado_categoria->armarJson();
+    std::string valor_resultado_diario = resultado_categoria->getJson()->jsonString();
+    delete resultado_categoria;
+    std::for_each(resultados.begin(), resultados.end(), [](analisis::ResultadoAnalisis *resultado) { delete resultado; });
 }

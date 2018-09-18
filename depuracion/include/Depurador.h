@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <mutex>
 #include <thread>
+#include <set>
 
 // extraccion
 #include <extraccion/include/Medio.h>
@@ -101,7 +102,8 @@ private:
     // mapa que contiene la traduccion de cada caracter especial a su valor de caracter normal.
     static mapeo::MapaUTF8 * mapa_utf8;
 
-    static std::vector<std::string> stopwords_espaniol;
+    //static std::vector<std::string> stopwords_espaniol;
+    static std::set<std::string> stopwords_espaniol;
 
     std::mutex mutex;
 };

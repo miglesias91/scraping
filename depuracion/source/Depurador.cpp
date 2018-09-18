@@ -21,7 +21,7 @@
 namespace scraping::depuracion {
 
 mapeo::MapaUTF8 * Depurador::mapa_utf8 = nullptr;
-std::vector<std::string> Depurador::stopwords_espaniol;
+std::set<std::string> Depurador::stopwords_espaniol;
 
 Depurador::Depurador() {}
 
@@ -44,7 +44,7 @@ void Depurador::setMapaUTF8(mapeo::MapaUTF8 * mapa)
 
 void Depurador::setStopwords(std::vector<std::string> stopwords)
 {
-    stopwords_espaniol = stopwords;
+    stopwords_espaniol = std::set<std::string>(stopwords.begin(), stopwords.end());
 }
 
 bool Depurador::depurar(extraccion::Medio * medio) const {
@@ -107,7 +107,7 @@ bool Depurador::cargarStopwords(std::string path_archivo_stopwords)
     while (false == archivo_stopwords.eof())
     {
         std::getline(archivo_stopwords, stopword);
-        stopwords_espaniol.push_back(stopword);
+        stopwords_espaniol.insert(stopword);
     }
 
     return true;
@@ -524,28 +524,38 @@ unsigned int Depurador::eliminarPronombres(std::vector<std::string>& bolsa_de_pa
 
 unsigned int Depurador::eliminarStopwords(std::vector<std::string>& bolsa_de_palabras) const
 {
-    std::sort(bolsa_de_palabras.begin(), bolsa_de_palabras.end());
+    //std::sort(bolsa_de_palabras.begin(), bolsa_de_palabras.end());
 
-    std::vector<std::string> bolsa_de_palabras_sin_stopwords = bolsa_de_palabras;
+    //std::vector<std::string> bolsa_de_palabras_sin_stopwords = bolsa_de_palabras;
 
-    bool quedan_stopwords_por_eliminar = true;
-    while (quedan_stopwords_por_eliminar)
-    {// itero hasta que no haya ningun stopword.
-        std::vector<std::string> diff;
-        std::set_difference(bolsa_de_palabras_sin_stopwords.begin(), bolsa_de_palabras_sin_stopwords.end(), stopwords_espaniol.begin(), stopwords_espaniol.end(), std::inserter(diff, diff.begin()));
-        quedan_stopwords_por_eliminar = bolsa_de_palabras_sin_stopwords.size() - diff.size();
+    //bool quedan_stopwords_por_eliminar = true;
+    //while (quedan_stopwords_por_eliminar)
+    //{// itero hasta que no haya ningun stopword.
+    //    std::vector<std::string> diff;
+    //    std::set_difference(bolsa_de_palabras_sin_stopwords.begin(), bolsa_de_palabras_sin_stopwords.end(), stopwords_espaniol.begin(), stopwords_espaniol.end(), std::inserter(diff, diff.begin()));
+    //    quedan_stopwords_por_eliminar = bolsa_de_palabras_sin_stopwords.size() - diff.size();
 
-        if(quedan_stopwords_por_eliminar)
-        {
-            bolsa_de_palabras_sin_stopwords = diff;
-        }
-    }
+    //    if(quedan_stopwords_por_eliminar)
+    //    {
+    //        bolsa_de_palabras_sin_stopwords = diff;
+    //    }
+    //}
 
-    unsigned int cantidad_de_stopwords_eliminadas = bolsa_de_palabras.size() - bolsa_de_palabras_sin_stopwords.size();
+    //unsigned int cantidad_de_stopwords_eliminadas = bolsa_de_palabras.size() - bolsa_de_palabras_sin_stopwords.size();
 
-    bolsa_de_palabras = bolsa_de_palabras_sin_stopwords;
+    //bolsa_de_palabras = bolsa_de_palabras_sin_stopwords;
 
-    return cantidad_de_stopwords_eliminadas;
+    //return cantidad_de_stopwords_eliminadas;
+
+    unsigned int cantidad_inicial = bolsa_de_palabras.size();
+
+    bolsa_de_palabras.erase(
+        std::remove_if(bolsa_de_palabras.begin(), bolsa_de_palabras.end(), [=](std::string palabra) {
+        return stopwords_espaniol.count(palabra);
+    }),
+        bolsa_de_palabras.end());
+
+    return cantidad_inicial - bolsa_de_palabras.size();
 }
 
 // CONSULTAS

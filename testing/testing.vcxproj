@@ -80,7 +80,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <EnableModules>false</EnableModules>
-      <ShowIncludes>true</ShowIncludes>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(repos-git)herramientas_desarrollo\Debug;$(repos-git)almacenamiento\Debug;$(repos-git)ia\Debug;$(repos-git)medios-digitales\Debug;$(repos)rocksdb\build_x86\Debug;$(repos)cpprestsdk\Binaries\Win32\Debug;$(repos)pugixml\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
